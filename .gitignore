@@ -1,0 +1,6 @@
+*.suo
+*.user
+*.useroscache
+*.sln.docstates
+[Dd]ebug/
+[Rr]elease

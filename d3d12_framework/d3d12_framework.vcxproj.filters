@@ -1,0 +1,516 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\D3D12">
+      <UniqueIdentifier>{f91ded4b-492c-4ccc-b1df-e2e1d1581034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{4fccfff8-3f7d-4625-a22d-fa86c969df9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Time">
+      <UniqueIdentifier>{8c88b181-1091-49ee-afb3-8d6291fd6cfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_inc">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="public_inc">
+      <UniqueIdentifier>{19192373-d627-46e7-8524-2e23987b0f0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_inc\Graphics">
+      <UniqueIdentifier>{6ea27cd0-6083-47b5-b539-d49b6e4a8ae9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{f8e33ad6-e6aa-4b16-9c6a-ee3162c9ef2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_inc\D3D12">
+      <UniqueIdentifier>{5bc7d7e7-0366-45a8-a332-20468a231c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_inc\Input">
+      <UniqueIdentifier>{4e0ca107-45b9-4ef0-a8d7-4c61223a14ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_inc\Time">
+      <UniqueIdentifier>{cd049b8b-cf03-4333-bf62-41028fb6d43b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_inc\Graphics\VertexDeclarations">
+      <UniqueIdentifier>{4984b0da-5307-41cb-8a9f-f230a4804442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_inc\Graphics\Buffers">
+      <UniqueIdentifier>{bc46f89a-8e04-451f-b6d3-1296d1969636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_inc\D3D12\Buffers">
+      <UniqueIdentifier>{baf442ba-8ee2-4c7c-8ae1-213ffa56a92d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Buffers">
+      <UniqueIdentifier>{6e82981b-98d1-4270-85df-5168455676b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\D3D12\Buffers">
+      <UniqueIdentifier>{ae52b864-79ef-4598-8da0-a9206a861d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public_inc\Graphics\Textures">
+      <UniqueIdentifier>{2c8b90c0-eccd-4cb9-a961-df47dafe7638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Textures">
+      <UniqueIdentifier>{a755976d-fd75-4370-8b0d-c1c6a77e3f8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\D3D12\Textures">
+      <UniqueIdentifier>{081b8b77-0dc1-4ece-8fc6-1512b6b8099e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="private_inc\D3D12\Textures">
+      <UniqueIdentifier>{85dba891-1923-4320-9574-439afab59468}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Time\PerformanceTimer.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Time\TickTimer.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Time\Timer.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\KeyboardState.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\MouseState.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_Core.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\VectorOps.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\GraphicsCore.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Shader.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_Shader.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_InputLayout.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Semantics.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\InputLayout.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Pipeline.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_Pipeline.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\RenderTargetViewConfig.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_RenderTargetViewConfig.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\RootSignatureConfig.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_RootSignatureConfig.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\RootSignature.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_RootSignature.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_PositionTexture.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\IndexBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\IndexBuffer16.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBuffer16.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBuffer.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_Custom.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_Custom.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBufferArray.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBufferArray.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Viewports.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_CommandList.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\CommandList.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\BackBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\RenderTarget.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_BackBuffer.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_RenderTarget.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\CommandListBundle.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_CommandListBundle.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Viewport.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\ConstantBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_ConstantBuffer.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_PositionColor.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionColor.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\HeapArray.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_HeapArray.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_BufferResourceHeap.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\BufferResourceHeap.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_TextureResourceHeap.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\Texture.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\TextureResourceHeap.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_TextureUploadBuffer.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\TextureUploadBuffer.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencil.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\DepthStencil.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_DepthStencilDescHeap.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\DepthStencilDescHeap.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencilResourceHeap.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\DepthStencilResourceHeap.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\ShaderResourceDescHeap.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_ShaderResourceDescHeap.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_Core.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Input\KeyboardState.h">
+      <Filter>public_inc\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Input\MouseState.h">
+      <Filter>public_inc\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Time\PerformanceTimer.h">
+      <Filter>public_inc\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Time\TickTimer.h">
+      <Filter>public_inc\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Time\Timer.h">
+      <Filter>public_inc\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Game.h">
+      <Filter>public_inc</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Window.h">
+      <Filter>public_inc</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\VectorOps.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Shader.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_Shader.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_InputLayout.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Semantics.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\InputLayout.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\GraphicsDataFormat.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Pipeline.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_Pipeline.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Topology.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\RenderTargetViewConfig.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\RenderTargetViewFormats.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_RenderTargetViewConfig.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_Limits.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\RootSignatureConfig.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_RootSignatureConfig.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\ShaderVisibility.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\TextureEnums.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\CompareFuncs.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\RootSignature.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_RootSignature.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\BlendEnums.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\LogicOp.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\VertexDeclarations\Vertex_PositionTexture.h">
+      <Filter>public_inc\Graphics\VertexDeclarations</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_PositionTexture.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer16.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBuffer16.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBuffer.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_Custom.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_Custom.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBufferArray.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferArray.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Viewport.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Viewports.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\VertexDeclarations\Vertex_Position.h">
+      <Filter>public_inc\Graphics\VertexDeclarations</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\CommandList.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_CommandList.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\BackBuffer.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\RenderTarget.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_BackBuffer.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_RenderTarget.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_CommandListBundle.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\CommandListBundle.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\ConstantBuffer.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_ConstantBuffer.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\VertexDeclarations\Vertex_PositionColor.h">
+      <Filter>public_inc\Graphics\VertexDeclarations</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_PositionColor.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionColor.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\HeapArray.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_HeapArray.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\BufferResourceHeap.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_BufferResourceHeap.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureResourceHeap.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\TextureResourceHeap.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\Texture.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureUploadBuffer.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\TextureUploadBuffer.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\DepthEnums.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\DepthStencil.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencil.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\DepthStencilDescHeap.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_DepthStencilDescHeap.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencilResourceHeap.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\DepthStencilResourceHeap.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\ShaderResourceDescHeap.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_ShaderResourceDescHeap.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

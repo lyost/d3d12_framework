@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B0C22B79-D33D-443A-AE91-BB8DBF16ADCB}</ProjectGuid>
+    <RootNamespace>d3d12_framework</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(SolutionDir)log_library\public_inc;$(SolutionDir)d3d12_framework\public_inc;$(SolutionDir)d3d12_framework;$(SolutionDir)\external_tools\D3D12_DDSTextureLoader\public_inc</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>
+      </Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_BackBuffer.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_ConstantBuffer.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_DepthStencilDescHeap.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_HeapArray.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBuffer.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBuffer16.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_RenderTarget.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_BufferResourceHeap.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_ShaderResourceDescHeap.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBufferArray.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_Custom.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionColor.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_CommandList.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_CommandListBundle.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_Core.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_InputLayout.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_Pipeline.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_RenderTargetViewConfig.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_RootSignature.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_RootSignatureConfig.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_Shader.cpp" />
+    <ClCompile Include="src\D3D12\Semantics.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencil.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencilResourceHeap.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_TextureResourceHeap.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_TextureUploadBuffer.cpp" />
+    <ClCompile Include="src\D3D12\VectorOps.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\BackBuffer.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\ConstantBuffer.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\DepthStencilDescHeap.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\HeapArray.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\IndexBuffer.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\IndexBuffer16.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\RenderTarget.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\BufferResourceHeap.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\ShaderResourceDescHeap.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\VertexBufferArray.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_Custom.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_PositionColor.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_PositionTexture.cpp" />
+    <ClCompile Include="src\Graphics\CommandList.cpp" />
+    <ClCompile Include="src\Graphics\CommandListBundle.cpp" />
+    <ClCompile Include="src\Graphics\GraphicsCore.cpp" />
+    <ClCompile Include="src\Graphics\InputLayout.cpp" />
+    <ClCompile Include="src\Graphics\Pipeline.cpp" />
+    <ClCompile Include="src\Graphics\RenderTargetViewConfig.cpp" />
+    <ClCompile Include="src\Graphics\RootSignature.cpp" />
+    <ClCompile Include="src\Graphics\RootSignatureConfig.cpp" />
+    <ClCompile Include="src\Graphics\Shader.cpp" />
+    <ClCompile Include="src\Graphics\Textures\DepthStencil.cpp" />
+    <ClCompile Include="src\Graphics\Textures\DepthStencilResourceHeap.cpp" />
+    <ClCompile Include="src\Graphics\Textures\TextureResourceHeap.cpp" />
+    <ClCompile Include="src\Graphics\Textures\Texture.cpp" />
+    <ClCompile Include="src\Graphics\Textures\TextureUploadBuffer.cpp" />
+    <ClCompile Include="src\Graphics\Viewport.cpp" />
+    <ClCompile Include="src\Graphics\Viewports.cpp" />
+    <ClCompile Include="src\Input\KeyboardState.cpp" />
+    <ClCompile Include="src\Input\MouseState.cpp" />
+    <ClCompile Include="src\Time\PerformanceTimer.cpp" />
+    <ClCompile Include="src\Time\TickTimer.cpp" />
+    <ClCompile Include="src\Time\Timer.cpp" />
+    <ClCompile Include="src\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_BackBuffer.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_ConstantBuffer.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_DepthStencilDescHeap.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_HeapArray.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBuffer.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBuffer16.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_RenderTarget.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_BufferResourceHeap.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_ShaderResourceDescHeap.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferArray.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_Custom.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionColor.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_CommandList.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_CommandListBundle.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_Core.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_InputLayout.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_Limits.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_Pipeline.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_RenderTargetViewConfig.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_RootSignature.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_RootSignatureConfig.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_Shader.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencil.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencilResourceHeap.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureResourceHeap.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureUploadBuffer.h" />
+    <ClInclude Include="public_inc\Game.h" />
+    <ClInclude Include="public_inc\Graphics\BlendEnums.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\BackBuffer.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\ConstantBuffer.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\DepthStencilDescHeap.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\HeapArray.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer16.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\RenderTarget.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\BufferResourceHeap.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\ShaderResourceDescHeap.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBufferArray.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_Custom.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_PositionColor.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_PositionTexture.h" />
+    <ClInclude Include="public_inc\Graphics\CommandList.h" />
+    <ClInclude Include="public_inc\Graphics\CommandListBundle.h" />
+    <ClInclude Include="public_inc\Graphics\CompareFuncs.h" />
+    <ClInclude Include="public_inc\Graphics\DepthEnums.h" />
+    <ClInclude Include="public_inc\Graphics\GraphicsCore.h" />
+    <ClInclude Include="public_inc\Graphics\GraphicsDataFormat.h" />
+    <ClInclude Include="public_inc\Graphics\InputLayout.h" />
+    <ClInclude Include="public_inc\Graphics\LogicOp.h" />
+    <ClInclude Include="public_inc\Graphics\Pipeline.h" />
+    <ClInclude Include="public_inc\Graphics\RenderTargetViewConfig.h" />
+    <ClInclude Include="public_inc\Graphics\RenderTargetViewFormats.h" />
+    <ClInclude Include="public_inc\Graphics\RootSignature.h" />
+    <ClInclude Include="public_inc\Graphics\RootSignatureConfig.h" />
+    <ClInclude Include="public_inc\Graphics\Semantics.h" />
+    <ClInclude Include="public_inc\Graphics\Shader.h" />
+    <ClInclude Include="public_inc\Graphics\ShaderVisibility.h" />
+    <ClInclude Include="public_inc\Graphics\TextureEnums.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\DepthStencil.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\DepthStencilResourceHeap.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\TextureResourceHeap.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\Texture.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\TextureUploadBuffer.h" />
+    <ClInclude Include="public_inc\Graphics\Topology.h" />
+    <ClInclude Include="public_inc\Graphics\VectorOps.h" />
+    <ClInclude Include="public_inc\Graphics\VertexDeclarations\Vertex_Position.h" />
+    <ClInclude Include="public_inc\Graphics\VertexDeclarations\Vertex_PositionColor.h" />
+    <ClInclude Include="public_inc\Graphics\VertexDeclarations\Vertex_PositionTexture.h" />
+    <ClInclude Include="public_inc\Graphics\Viewport.h" />
+    <ClInclude Include="public_inc\Graphics\Viewports.h" />
+    <ClInclude Include="public_inc\Input\KeyboardState.h" />
+    <ClInclude Include="public_inc\Input\MouseState.h" />
+    <ClInclude Include="public_inc\Time\PerformanceTimer.h" />
+    <ClInclude Include="public_inc\Time\TickTimer.h" />
+    <ClInclude Include="public_inc\Time\Timer.h" />
+    <ClInclude Include="public_inc\Window.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
