@@ -1,9 +1,6 @@
 #include "private_inc/D3D12/D3D12_Pipeline.h"
 #include "private_inc/D3D12/D3D12_Core.h"
-#include "private_inc/D3D12/D3D12_InputLayout.h"
 #include "private_inc/D3D12/D3D12_Shader.h"
-#include "private_inc/D3D12/D3D12_RenderTargetViewConfig.h"
-#include "private_inc/D3D12/D3D12_RootSignature.h"
 #include "log.h"
 #include <sstream>
 
@@ -70,31 +67,9 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  desc.pRootSignature = root.GetRootSignature();
-  desc.InputLayout.pInputElementDescs = layout.GetLayout();
-  desc.InputLayout.NumElements = layout.GetNum();
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology);
   desc.VS = vs.GetShader();
   desc.PS = ps.GetShader();
-  desc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-  desc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
-  desc.RasterizerState.FrontCounterClockwise = false;
-  desc.RasterizerState.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
-  desc.RasterizerState.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
-  desc.RasterizerState.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
-  desc.RasterizerState.DepthClipEnable = true;
-  desc.RasterizerState.MultisampleEnable = false;
-  desc.RasterizerState.AntialiasedLineEnable = false;
-  desc.RasterizerState.ForcedSampleCount = 0;
-  desc.RasterizerState.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
-  desc.BlendState = rtv.GetBlendState();
-  desc.DepthStencilState.DepthEnable = false;
-  desc.DepthStencilState.StencilEnable = false;
-  desc.SampleMask = UINT_MAX;
-  desc.PrimitiveTopologyType = (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology;
-  desc.NumRenderTargets = rtv.GetNumRenderTargets();
-  memcpy(desc.RTVFormats, rtv.GetFormats(), sizeof(RenderTargetViewFormat) * desc.NumRenderTargets);
-  desc.SampleDesc.Count = 1;
-  desc.SampleDesc.Quality = 0;
 
   ID3D12PipelineState* pipeline = NULL;
   HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
@@ -110,42 +85,57 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& pixel_shader,
   DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig)
 {
-  const D3D12_Core&                   core = (const D3D12_Core&)graphics_core;
+  const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
-  const D3D12_Shader&                 vs = (const D3D12_Shader&)vertex_shader;
-  const D3D12_Shader&                 ps = (const D3D12_Shader&)pixel_shader;
-  const D3D12_RenderTargetViewConfig& rtv = (const D3D12_RenderTargetViewConfig&)rtv_config;
-  const D3D12_RootSignature&          root = (const D3D12_RootSignature&)root_sig;
+  const D3D12_Shader&                 vs     = (const D3D12_Shader&)vertex_shader;
+  const D3D12_Shader&                 ps     = (const D3D12_Shader&)pixel_shader;
+  const D3D12_RenderTargetViewConfig& rtv    = (const D3D12_RenderTargetViewConfig&)rtv_config;
+  const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  desc.pRootSignature = root.GetRootSignature();
-  desc.InputLayout.pInputElementDescs = layout.GetLayout();
-  desc.InputLayout.NumElements = layout.GetNum();
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology);
   desc.VS = vs.GetShader();
   desc.PS = ps.GetShader();
-  desc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-  desc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
-  desc.RasterizerState.FrontCounterClockwise = false;
-  desc.RasterizerState.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
-  desc.RasterizerState.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
-  desc.RasterizerState.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
-  desc.RasterizerState.DepthClipEnable = true;
-  desc.RasterizerState.MultisampleEnable = false;
-  desc.RasterizerState.AntialiasedLineEnable = false;
-  desc.RasterizerState.ForcedSampleCount = 0;
-  desc.RasterizerState.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
-  desc.BlendState = rtv.GetBlendState();
-  desc.DepthStencilState.DepthEnable = true;
+  desc.DepthStencilState.DepthEnable    = true;
   desc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-  desc.DepthStencilState.DepthFunc = (D3D12_COMPARISON_FUNC)depth_func;
-  desc.DepthStencilState.StencilEnable = false;
-  desc.DSVFormat = DXGI_FORMAT_D32_FLOAT; // todo: make configurable?
-  desc.SampleMask = UINT_MAX;
-  desc.PrimitiveTopologyType = (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology;
-  desc.NumRenderTargets = rtv.GetNumRenderTargets();
-  memcpy(desc.RTVFormats, rtv.GetFormats(), sizeof(RenderTargetViewFormat) * desc.NumRenderTargets);
-  desc.SampleDesc.Count = 1;
-  desc.SampleDesc.Quality = 0;
+  desc.DepthStencilState.DepthFunc      = (D3D12_COMPARISON_FUNC)depth_func;
+  desc.DepthStencilState.StencilEnable  = false;
+  desc.DSVFormat                        = DXGI_FORMAT_D32_FLOAT; // todo: make configurable
+  desc.SampleMask                       = UINT_MAX;
+
+  ID3D12PipelineState* pipeline = NULL;
+  HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
+  if (FAILED(rc))
+  {
+    log_print("Failed to create pipeline state\n");
+    return NULL;
+  }
+
+  return new D3D12_Pipeline(pipeline);
+}
+
+D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& geometry_shader,
+  const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig)
+{
+  const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
+  const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
+  const D3D12_Shader&                 vs     = (const D3D12_Shader&)vertex_shader;
+  const D3D12_Shader&                 gs     = (const D3D12_Shader&)geometry_shader;
+  const D3D12_Shader&                 ps     = (const D3D12_Shader&)pixel_shader;
+  const D3D12_RenderTargetViewConfig& rtv    = (const D3D12_RenderTargetViewConfig&)rtv_config;
+  const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
+
+  D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology);
+  desc.VS                               = vs.GetShader();
+  desc.GS                               = gs.GetShader();
+  desc.PS                               = ps.GetShader();
+  desc.DepthStencilState.DepthEnable    = true;
+  desc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+  desc.DepthStencilState.DepthFunc      = (D3D12_COMPARISON_FUNC)depth_func;
+  desc.DepthStencilState.StencilEnable  = false;
+  desc.DSVFormat                        = DXGI_FORMAT_D32_FLOAT; // todo: make configurable
+  desc.SampleMask                       = UINT_MAX;
 
   ID3D12PipelineState* pipeline = NULL;
   HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
@@ -171,4 +161,32 @@ D3D12_Pipeline::~D3D12_Pipeline()
 ID3D12PipelineState* D3D12_Pipeline::GetPipeline() const
 {
   return m_pipeline;
+}
+
+void D3D12_Pipeline::CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc, const D3D12_InputLayout& layout, const D3D12_RenderTargetViewConfig& rtv, const D3D12_RootSignature& root,
+  D3D12_PRIMITIVE_TOPOLOGY_TYPE topology)
+{
+  desc.pRootSignature                        = root.GetRootSignature();
+  desc.InputLayout.pInputElementDescs        = layout.GetLayout();
+  desc.InputLayout.NumElements               = layout.GetNum();
+  desc.RasterizerState.FillMode              = D3D12_FILL_MODE_SOLID;
+  desc.RasterizerState.CullMode              = D3D12_CULL_MODE_BACK;
+  desc.RasterizerState.FrontCounterClockwise = false;
+  desc.RasterizerState.DepthBias             = D3D12_DEFAULT_DEPTH_BIAS;
+  desc.RasterizerState.DepthBiasClamp        = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
+  desc.RasterizerState.SlopeScaledDepthBias  = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
+  desc.RasterizerState.DepthClipEnable       = true;
+  desc.RasterizerState.MultisampleEnable     = false;
+  desc.RasterizerState.AntialiasedLineEnable = false;
+  desc.RasterizerState.ForcedSampleCount     = 0;
+  desc.RasterizerState.ConservativeRaster    = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
+  desc.BlendState                            = rtv.GetBlendState();
+  desc.DepthStencilState.DepthEnable         = false;
+  desc.DepthStencilState.StencilEnable       = false;
+  desc.SampleMask                            = UINT_MAX;
+  desc.PrimitiveTopologyType                 = topology;
+  desc.NumRenderTargets                      = rtv.GetNumRenderTargets();
+  memcpy(desc.RTVFormats, rtv.GetFormats(), sizeof(RenderTargetViewFormat) * desc.NumRenderTargets);
+  desc.SampleDesc.Count = 1;
+  desc.SampleDesc.Quality = 0;
 }
