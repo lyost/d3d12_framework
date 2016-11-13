@@ -1,6 +1,8 @@
+#include <cassert>
 #include "private_inc/D3D12/Buffers/D3D12_DepthStencilDescHeap.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "log.h"
+using namespace std;
 
 // todo: add class for D3D12_ShaderSamplerHeap
 
@@ -45,6 +47,8 @@ D3D12_DepthStencilDescHeap::D3D12_DepthStencilDescHeap(UINT num_descriptors, con
 
 void D3D12_DepthStencilDescHeap::GetNextDescriptor(D3D12_CPU_DESCRIPTOR_HANDLE& cpu_handle, D3D12_GPU_DESCRIPTOR_HANDLE& gpu_handle)
 {
+  assert(m_next_descriptor_index < m_num_descriptors);
+  
   cpu_handle.ptr = m_cpu_start.ptr + m_descriptor_size * m_next_descriptor_index;
   gpu_handle.ptr = m_gpu_start.ptr + m_descriptor_size * m_next_descriptor_index;
 

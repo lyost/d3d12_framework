@@ -1,4 +1,5 @@
 #include <sstream>
+#include <cassert>
 #include "private_inc/D3D12/Buffers/D3D12_BackBuffer.h"
 #include "log.h"
 using namespace std;
@@ -74,6 +75,8 @@ D3D12_BackBuffers::~D3D12_BackBuffers()
 
 void D3D12_BackBuffers::AddRenderTarget(UINT index, ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle)
 {
+  assert(index < m_num);
+
   m_targets[index] = new D3D12_RenderTarget(target, handle);
 }
 

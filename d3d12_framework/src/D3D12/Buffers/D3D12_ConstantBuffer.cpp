@@ -1,8 +1,10 @@
+#include <cassert>
 #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/Buffers/D3D12_BufferResourceHeap.h"
 #include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
 #include "log.h"
+using namespace std;
 
 UINT D3D12_ConstantBuffer::GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes)
 {
@@ -80,6 +82,9 @@ D3D12_ConstantBuffer::~D3D12_ConstantBuffer()
 
 void D3D12_ConstantBuffer::Upload(void* data, UINT start, UINT len)
 {
+  assert((start + len) < m_num_bytes); // bounds
+  assert((start + len) >= start); // roll over
+
   memcpy(m_host_mem_start + start, data, len);
 }
 

@@ -1,3 +1,4 @@
+#include <cassert>
 #include "private_inc/D3D12/D3D12_CommandListBundle.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
 using namespace std;
@@ -51,6 +52,8 @@ void D3D12_CommandListBundle::RemoveCommandList(const CommandList& list)
 
 void D3D12_CommandListBundle::RemoveCommandList(UINT index)
 {
+  assert(index <= m_lists.size());
+
   m_lists[index]->Release();
   m_lists[index] = NULL;
   // todo: is compressing the array over the now null element needed?

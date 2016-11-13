@@ -64,11 +64,7 @@ class D3D12_InputLayout : public InputLayout
     /// only needs to be specified if instance is true
     /// </remarks>
     /// </param>
-    /// <returns>
-    /// true if the element was successfully set
-    /// false otherwise (i.e. no element was available to be set)
-    /// </returns>
-    bool SetNextElement(Semantics semantic, UINT index, GraphicsDataFormat format, UINT input_slot, bool instance, UINT step_rate = 1);
+    void SetNextElement(Semantics semantic, UINT index, GraphicsDataFormat format, UINT input_slot, bool instance, UINT step_rate = 1);
     
     /// <summary>
     /// Retrieves the number of elements in the layout

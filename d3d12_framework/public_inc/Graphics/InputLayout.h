@@ -63,11 +63,7 @@ class InputLayout
     /// only needs to be specified if instance is true
     /// </remarks>
     /// </param>
-    /// <returns>
-    /// true if the element was successfully set
-    /// false otherwise (e.g. no element was available to be set)
-    /// </returns>
-    virtual bool SetNextElement(Semantics semantic, UINT index, GraphicsDataFormat format, UINT input_slot, bool instance, UINT step_rate = 1) = 0;
+    virtual void SetNextElement(Semantics semantic, UINT index, GraphicsDataFormat format, UINT input_slot, bool instance, UINT step_rate = 1) = 0;
 
   protected:
     InputLayout();

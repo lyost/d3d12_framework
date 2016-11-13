@@ -1,5 +1,7 @@
+#include <cassert>
 #include "private_inc/D3D12/Buffers/D3D12_HeapArray.h"
 #include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
+using namespace std;
 
 HeapArray* D3D12_HeapArray::Create(UINT num_entries)
 {
@@ -28,6 +30,8 @@ D3D12_HeapArray::~D3D12_HeapArray()
 
 void D3D12_HeapArray::SetHeap(UINT index, const ShaderResourceDescHeap& heap)
 {
+  assert(index < m_len);
+
   if (m_heaps[index])
   {
     m_heaps[index]->Release();

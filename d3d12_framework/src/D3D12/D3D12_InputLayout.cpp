@@ -1,4 +1,6 @@
+#include <cassert>
 #include "private_inc/D3D12/D3D12_InputLayout.h"
+using namespace std;
 
 D3D12_InputLayout::D3D12_InputLayout(UINT num)
 :m_num(num),
@@ -12,12 +14,9 @@ D3D12_InputLayout::~D3D12_InputLayout()
   delete m_layout;
 }
 
-bool D3D12_InputLayout::SetNextElement(Semantics semantic,UINT index, GraphicsDataFormat format, UINT input_slot, bool instance, UINT step_rate)
+void D3D12_InputLayout::SetNextElement(Semantics semantic,UINT index, GraphicsDataFormat format, UINT input_slot, bool instance, UINT step_rate)
 {
-  if (m_next >= m_num)
-  {
-    return false;
-  }
+  assert(m_next < m_num);
   
   m_layout[m_next].SemanticName           = GetSemanticName(semantic);
   m_layout[m_next].SemanticIndex          = index;
@@ -37,8 +36,6 @@ bool D3D12_InputLayout::SetNextElement(Semantics semantic,UINT index, GraphicsDa
   }
   
   ++m_next;
-  
-  return true;
 }
 
 UINT D3D12_InputLayout::GetNum() const
