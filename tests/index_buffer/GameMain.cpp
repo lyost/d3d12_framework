@@ -107,11 +107,47 @@ void GameMain::UnloadContent()
 
 void GameMain::Update(UINT ms)
 {
+  static bool resized = false;
+  static bool fullscreen = false;
+
   Window& window = GetWindow();
   const KeyboardState& keyboard = window.GetKeyboardState();
   if (keyboard.IsKeyDown(VK_ESCAPE,false))
   {
     Exit();
+  }
+  else if (keyboard.IsKeyDown(VK_F1, false) && !resized)
+  {
+    window.Resize(1024, 768);
+    resized = true;
+  }
+  else if (keyboard.IsKeyDown(VK_F2, false) && !fullscreen)
+  {
+    // enter full screen mode
+    Fullscreen(true);
+    fullscreen = true;
+  }
+  else if (keyboard.IsKeyDown(VK_F3, false) && fullscreen)
+  {
+    // return to window mode
+    Fullscreen(false);
+    fullscreen = false;
+  }
+  else if (keyboard.IsKeyDown(VK_OEM_4, false))
+  {
+    window.ShowMousePointer(false);
+  }
+  else if (keyboard.IsKeyDown(VK_OEM_6, false))
+  {
+    window.ShowMousePointer(true);
+  }
+  else if (keyboard.IsKeyDown('9', false))
+  {
+    window.ConstrainMousePointer(true);
+  }
+  else if (keyboard.IsKeyDown('0', false))
+  {
+    window.ConstrainMousePointer(false);
   }
 }
 
