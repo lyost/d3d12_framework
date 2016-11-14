@@ -126,11 +126,47 @@ void GameMain::UnloadContent()
 
 void GameMain::Update(UINT ms)
 {
+  static bool resized = false;
+  static bool fullscreen = false;
+
   Window& window = GetWindow();
   const KeyboardState& keyboard = window.GetKeyboardState();
   if (keyboard.IsKeyDown(VK_ESCAPE,false))
   {
     Exit();
+  }
+  else if (keyboard.IsKeyDown(VK_F1, false) && !resized)
+  {
+    window.Resize(1024, 768);
+    resized = true;
+  }
+  else if (keyboard.IsKeyDown(VK_F2, false) && !fullscreen)
+  {
+    // enter full screen mode
+    Fullscreen(true);
+    fullscreen = true;
+  }
+  else if (keyboard.IsKeyDown(VK_F3, false) && fullscreen)
+  {
+    // return to window mode
+    Fullscreen(false);
+    fullscreen = false;
+  }
+  else if (keyboard.IsKeyDown(VK_OEM_4, false))
+  {
+    window.ShowMousePointer(false);
+  }
+  else if (keyboard.IsKeyDown(VK_OEM_6, false))
+  {
+    window.ShowMousePointer(true);
+  }
+  else if (keyboard.IsKeyDown('9', false))
+  {
+    window.ConstrainMousePointer(true);
+  }
+  else if (keyboard.IsKeyDown('0', false))
+  {
+    window.ConstrainMousePointer(false);
   }
 }
 
@@ -166,26 +202,7 @@ void GameMain::Draw(UINT ms)
 void GameMain::OnResize(UINT width,UINT height)
 {
   Game::OnResize(width,height);
-  
-  // resize the viewports
-  /*D3D11_Core& graphics = GetGraphics();
-  D3D11_VIEWPORT full_viewport = graphics.GetDefaultViewport();
-  D3D11_VIEWPORT section_viewport = full_viewport;
-  section_viewport.Width /= 2;
-  section_viewport.Height /= 2;
-  m_viewports.SetViewport(0,section_viewport);
-  section_viewport.TopLeftX = section_viewport.Width;
-  m_viewports.SetViewport(1,section_viewport);
-  section_viewport.TopLeftX = 0;
-  section_viewport.TopLeftY = section_viewport.Height;
-  m_viewports.SetViewport(2,section_viewport);
-  section_viewport.TopLeftX = section_viewport.Width;
-  m_viewports.SetViewport(3,section_viewport);
-  
-  // setup the cameras for the viewports
-  float aspect_ratio = full_viewport.Width / full_viewport.Height;
-  m_cameras[0]->SetAspecRatio(aspect_ratio);
-  m_cameras[1]->SetAspecRatio(aspect_ratio);
-  m_cameras[2]->SetAspecRatio(aspect_ratio);
-  m_cameras[3]->SetAspecRatio(aspect_ratio);*/
+
+  GraphicsCore& graphics = GetGraphics();
+  m_scissor_rect = ViewportToScissorRect(graphics.GetDefaultViewport());
 }

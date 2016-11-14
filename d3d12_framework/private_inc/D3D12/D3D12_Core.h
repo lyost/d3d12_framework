@@ -176,6 +176,11 @@ class D3D12_Core : public GraphicsCore
     /// viewport specification that covers the window's client area
     /// </summary>
     Viewport                m_default_viewport;
+
+    /// <summary>
+    /// keeps track if in full screen mode or not
+    /// </summary>
+    bool m_fullscreen;
 };
 
 #endif /* D3D12_CORE_H */

@@ -146,26 +146,7 @@ void GameMain::Draw(UINT ms)
 void GameMain::OnResize(UINT width,UINT height)
 {
   Game::OnResize(width,height);
-  
-  // resize the viewports
-  /*D3D11_Core& graphics = GetGraphics();
-  D3D11_VIEWPORT full_viewport = graphics.GetDefaultViewport();
-  D3D11_VIEWPORT section_viewport = full_viewport;
-  section_viewport.Width /= 2;
-  section_viewport.Height /= 2;
-  m_viewports.SetViewport(0,section_viewport);
-  section_viewport.TopLeftX = section_viewport.Width;
-  m_viewports.SetViewport(1,section_viewport);
-  section_viewport.TopLeftX = 0;
-  section_viewport.TopLeftY = section_viewport.Height;
-  m_viewports.SetViewport(2,section_viewport);
-  section_viewport.TopLeftX = section_viewport.Width;
-  m_viewports.SetViewport(3,section_viewport);
-  
-  // setup the cameras for the viewports
-  float aspect_ratio = full_viewport.Width / full_viewport.Height;
-  m_cameras[0]->SetAspecRatio(aspect_ratio);
-  m_cameras[1]->SetAspecRatio(aspect_ratio);
-  m_cameras[2]->SetAspecRatio(aspect_ratio);
-  m_cameras[3]->SetAspecRatio(aspect_ratio);*/
+
+  GraphicsCore& graphics = GetGraphics();
+  m_scissor_rect = ViewportToScissorRect(graphics.GetDefaultViewport());
 }

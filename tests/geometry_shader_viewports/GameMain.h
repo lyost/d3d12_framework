@@ -99,6 +99,11 @@ class GameMain : public Game
     /// </summary>
     void UpdateCamera();
 
+    /// <summary>
+    /// Helper function for creating the depth stencil on load and on resize
+    /// </summary>
+    void CreateDepthStencil();
+
     enum { NUM_VIEWPORTS = 4};
     
     /// <summary>

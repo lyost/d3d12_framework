@@ -186,9 +186,6 @@ void GameMain::LoadContent()
   CreateTexture(width, height, format, tex_bytes);
   UINT texture_aligned_size = Texture::GetAlignedSize(graphics, width, height, format);
 
-  // determine the memory requirements of the depth stencil
-  UINT depth_stencil_aligned_size = DepthStencil::GetAlignedSize(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height);
-
   // create the resource heap
   UINT constant_buffer_size = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX) * NUM_VIEWPORTS);
   m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size + texture_aligned_size);
@@ -237,23 +234,7 @@ void GameMain::LoadContent()
   // start uploading the texture
   m_upload_texture->PrepUpload(graphics, *m_command_list, *m_texture, tex_bytes);
 
-
-  // create the depth stencil
-  m_depth_stencil_resource_heap = DepthStencilResourceHeap::CreateD3D12(graphics, depth_stencil_aligned_size);
-  if (m_depth_stencil_resource_heap == NULL)
-  {
-    exit(1);
-  }
-  m_depth_stencil_desc_heap = DepthStencilDescHeap::CreateD3D12(graphics, 1);
-  if (m_depth_stencil_desc_heap == NULL)
-  {
-    exit(1);
-  }
-  m_depth_stencil = DepthStencil::CreateD3D12(graphics, *m_depth_stencil_resource_heap, *m_depth_stencil_desc_heap, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
-  if (m_depth_stencil == NULL)
-  {
-    exit(1);
-  }
+  CreateDepthStencil();
 
   // create the heap array
   m_heap_array = HeapArray::CreateD3D12(1);
@@ -297,6 +278,9 @@ void GameMain::UnloadContent()
 
 void GameMain::Update(UINT ms)
 {
+  static bool resized = false;
+  static bool fullscreen = false;
+
   Window& window = GetWindow();
   const KeyboardState& keyboard = window.GetKeyboardState();
   if (keyboard.IsKeyDown(VK_ESCAPE, false))
@@ -312,6 +296,39 @@ void GameMain::Update(UINT ms)
   {
     m_camera_angle += XM_PI * ms / 1000.0f; // todo: bounds
     UpdateCamera();
+  }
+  else if (keyboard.IsKeyDown(VK_F1, false) && !resized)
+  {
+    window.Resize(1024, 768);
+    resized = true;
+  }
+  else if (keyboard.IsKeyDown(VK_F2, false) && !fullscreen)
+  {
+    // enter full screen mode
+    Fullscreen(true);
+    fullscreen = true;
+  }
+  else if (keyboard.IsKeyDown(VK_F3, false) && fullscreen)
+  {
+    // return to window mode
+    Fullscreen(false);
+    fullscreen = false;
+  }
+  else if (keyboard.IsKeyDown(VK_OEM_4, false))
+  {
+    window.ShowMousePointer(false);
+  }
+  else if (keyboard.IsKeyDown(VK_OEM_6, false))
+  {
+    window.ShowMousePointer(true);
+  }
+  else if (keyboard.IsKeyDown('9', false))
+  {
+    window.ConstrainMousePointer(true);
+  }
+  else if (keyboard.IsKeyDown('0', false))
+  {
+    window.ConstrainMousePointer(false);
   }
 }
 
@@ -364,28 +381,41 @@ void GameMain::Draw(UINT ms)
 void GameMain::OnResize(UINT width,UINT height)
 {
   Game::OnResize(width,height);
-  
-  // resize the viewports
-  /*D3D11_Core& graphics = GetGraphics();
-  D3D11_VIEWPORT full_viewport = graphics.GetDefaultViewport();
-  D3D11_VIEWPORT section_viewport = full_viewport;
-  section_viewport.Width /= 2;
-  section_viewport.Height /= 2;
-  m_viewports.SetViewport(0,section_viewport);
-  section_viewport.TopLeftX = section_viewport.Width;
-  m_viewports.SetViewport(1,section_viewport);
-  section_viewport.TopLeftX = 0;
-  section_viewport.TopLeftY = section_viewport.Height;
-  m_viewports.SetViewport(2,section_viewport);
-  section_viewport.TopLeftX = section_viewport.Width;
-  m_viewports.SetViewport(3,section_viewport);
-  
-  // setup the cameras for the viewports
-  float aspect_ratio = full_viewport.Width / full_viewport.Height;
-  m_cameras[0]->SetAspecRatio(aspect_ratio);
-  m_cameras[1]->SetAspecRatio(aspect_ratio);
-  m_cameras[2]->SetAspecRatio(aspect_ratio);
-  m_cameras[3]->SetAspecRatio(aspect_ratio);*/
+
+  GraphicsCore& graphics = GetGraphics();
+  Viewport full_viewport = graphics.GetDefaultViewport();
+
+  m_scissor_rects.clear();
+  Viewport section_viewport = full_viewport;
+  section_viewport.width /= 2;
+  section_viewport.height /= 2;
+  m_viewports.SetViewport(0, section_viewport);
+  m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
+  section_viewport.top_left_x = section_viewport.width;
+  m_viewports.SetViewport(1, section_viewport);
+  m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
+  section_viewport.top_left_x = 0;
+  section_viewport.top_left_y = section_viewport.height;
+  m_viewports.SetViewport(2, section_viewport);
+  m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
+  section_viewport.top_left_x = section_viewport.width;
+  m_viewports.SetViewport(3, section_viewport);
+  m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
+
+  for (int i = 0; i < NUM_VIEWPORTS; i++)
+  {
+    delete m_camera[i];
+  }
+  m_camera[0] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(  0, 0, -10, 1), XMFLOAT4( 0,  0, 1, 0), XMFLOAT4(0, 1,  0, 0));
+  m_camera[1] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4( 10, 0,   0, 1), XMFLOAT4(-1,  0, 0, 0), XMFLOAT4(0, 1,  0, 0));
+  m_camera[2] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(-10, 0,   0, 1), XMFLOAT4( 1,  0, 0, 0), XMFLOAT4(0, 1,  0, 0));
+  m_camera[3] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(  0, 10,  0, 1), XMFLOAT4( 0, -1, 0, 0), XMFLOAT4(0, 0, -1, 0));
+  UpdateCamera();
+
+  delete m_depth_stencil;
+  delete m_depth_stencil_desc_heap;
+  delete m_depth_stencil_resource_heap;
+  CreateDepthStencil();
 }
 
 void GameMain::CreateTexture(UINT& width, UINT& height, GraphicsDataFormat& format, std::vector<UINT8>& bytes)
@@ -458,4 +488,30 @@ void GameMain::UpdateCamera()
   XMStoreFloat4(&dir, dir_vector);
 
   m_camera[0]->SetView(pos, dir, up);
+}
+
+void GameMain::CreateDepthStencil()
+{
+  GraphicsCore& graphics = GetGraphics();
+  Viewport full_viewport = graphics.GetDefaultViewport();
+
+  // determine the memory requirements of the depth stencil
+  UINT depth_stencil_aligned_size = DepthStencil::GetAlignedSize(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height);
+
+  // create the depth stencil
+  m_depth_stencil_resource_heap = DepthStencilResourceHeap::CreateD3D12(graphics, depth_stencil_aligned_size);
+  if (m_depth_stencil_resource_heap == NULL)
+  {
+    exit(1);
+  }
+  m_depth_stencil_desc_heap = DepthStencilDescHeap::CreateD3D12(graphics, 1);
+  if (m_depth_stencil_desc_heap == NULL)
+  {
+    exit(1);
+  }
+  m_depth_stencil = DepthStencil::CreateD3D12(graphics, *m_depth_stencil_resource_heap, *m_depth_stencil_desc_heap, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
+  if (m_depth_stencil == NULL)
+  {
+    exit(1);
+  }
 }

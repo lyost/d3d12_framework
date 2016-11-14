@@ -98,6 +98,11 @@ class GameMain : public Game
     /// Updates m_camera based on m_camera_angle
     /// </summary>
     void UpdateCamera();
+
+    /// <summary>
+    /// Helper function for creating the depth stencil on load and on resize
+    /// </summary>
+    void CreateDepthStencil();
     
     /// <summary>
     /// root signatures for the test case

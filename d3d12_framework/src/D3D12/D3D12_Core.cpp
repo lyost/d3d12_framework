@@ -6,6 +6,9 @@
 #include "log.h"
 using namespace std;
 
+// todo: move this to exist entirely in D3D12_BackBuffer and query it
+const UINT NumRenderTargets = 2;
+
 D3D12_Core* D3D12_Core::Create(HWND& wnd)
 {
   HRESULT rc = S_OK;
@@ -81,15 +84,15 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   }
 
   DXGI_SWAP_CHAIN_DESC sd = {};
-  sd.BufferCount = 2;
-  sd.BufferDesc.Width = width;
+  sd.BufferCount       = NumRenderTargets;
+  sd.BufferDesc.Width  = width;
   sd.BufferDesc.Height = height;
   sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-  sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-  sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-  sd.OutputWindow = wnd;
-  sd.SampleDesc.Count = 1;
-  sd.Windowed = true;
+  sd.BufferUsage       = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+  sd.SwapEffect        = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+  sd.OutputWindow      = wnd;
+  sd.SampleDesc.Count  = 1;
+  sd.Windowed          = true;
   rc = factory->CreateSwapChain(command_queue, &sd, &swap_chain);
   if (FAILED(rc))
   {
@@ -154,7 +157,8 @@ D3D12_Core::D3D12_Core(ID3D12Device* device, ID3D12Fence* fence, HANDLE fence_ev
  m_swap_chain(swap_chain),
  m_command_alloc(command_alloc),
  m_command_queue(command_queue),
- m_back_buffer(back_buffer)
+ m_back_buffer(back_buffer),
+ m_fullscreen(false)
 {
   memcpy(&m_default_viewport, &viewport, sizeof(Viewport));
 
@@ -173,6 +177,13 @@ D3D12_Core::D3D12_Core(ID3D12Device* device, ID3D12Fence* fence, HANDLE fence_ev
 D3D12_Core::~D3D12_Core()
 {
   WaitOnFence();
+
+  if (m_fullscreen)
+  {
+    DXGI_SWAP_CHAIN_DESC desc = {};
+    m_swap_chain->GetDesc(&desc);
+    Fullscreen(desc.BufferDesc.Width, desc.BufferDesc.Height, false);
+  }
 
   CloseHandle(m_fence_event);
   m_fence->Release();
@@ -278,96 +289,34 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
     }
     return;
   }
+
+  m_fullscreen = enable;
 }
 
 void D3D12_Core::OnResize(UINT width,UINT height)
 {
-  // todo
-#if 0
-  // get the descriptions of the current render target view and depth stencil
-  // stuff
-  D3D12_RENDER_TARGET_VIEW_DESC desc_rend;
-  D3D12_TEXTURE2D_DESC          desc_depth;
-  D3D12_DEPTH_STENCIL_VIEW_DESC desc_dsv;
-  m_render_target_view_wrapper->GetView()->GetDesc(&desc_rend);
-  m_depth_stencil->GetDesc(&desc_depth);
-  m_depth_view_wrapper->GetView()->GetDesc(&desc_dsv);
-  
-  // get the current clear color
-  float clear_color[4];
-  m_render_target_view_wrapper->GetClearColor(clear_color);
-  
-  // release the current render target view and depth stencil stuff
-  delete m_render_target_view_wrapper;
-  delete m_depth_view_wrapper;
-  m_depth_stencil->Release();
-  
-  // clear the pipeline
-  m_immediate_context->ClearState();
-  
-  // not implemented: handle deferred contexts
-  
-  // resize the buffers (note: the first 0 and DXGI_FORMAT_UNKNOWN are to
-  // preserve the current values)
-  HRESULT rc = m_swap_chain->ResizeBuffers(0,width,height,DXGI_FORMAT_UNKNOWN,
-    0);
-  if (FAILED(rc))
-  {
-    log_print("Failed to resize swap chain\n");
-  }
-  
-  // create the new render target view
-  ID3D12Texture2D* back_buffer = NULL;
-  rc = m_swap_chain->GetBuffer(0,__uuidof(ID3D12Texture2D),
-    (LPVOID*)&back_buffer);
-  if (FAILED(rc))
-  {
-    log_print("Failed to retrieve resized buffer for render target\n");
-    return;
-  }
-  ID3D12RenderTargetView* render_target_view = NULL;
-  rc = m_device->CreateRenderTargetView(back_buffer,&desc_rend,
-    &render_target_view);
-  back_buffer->Release();
-  if (FAILED(rc))
-  {
-    log_print("Failed to create resized render target view\n");
-    return;
-  }
-  m_render_target_view_wrapper = new RenderTargetView(render_target_view);
-  m_render_target_view_wrapper->SetClearColor(clear_color);
-  
-  // create the new depth stencil texture
-  desc_depth.Width  = width;
-  desc_depth.Height = height;
-  rc = m_device->CreateTexture2D(&desc_depth,NULL,&m_depth_stencil);
-  if (FAILED(rc))
-  {
-    log_print("Failed to create resized depth stencil texture\n");
-    return;
-  }
-  
-  // create the new depth stencil view
-  ID3D12DepthStencilView* depth_stencil_view = NULL;
-  rc = m_device->CreateDepthStencilView(m_depth_stencil,&desc_dsv,
-    &depth_stencil_view);
-  if (FAILED(rc))
-  {
-    log_print("Failed to create resized depth stencil view\n");
-    return;
-  }
-  m_depth_view_wrapper = new DepthStencilView(depth_stencil_view);
-  
-  m_immediate_context->OMSetRenderTargets(1,&render_target_view,
-    depth_stencil_view);
+  WaitOnFence();
 
-  // setup the viewport and update the default
-  m_default_viewport.Width  = (FLOAT)width;
-  m_default_viewport.Height = (FLOAT)height;
-  // rest of the default parameters should be at the same values, so skip
-  // resetting them here
-  m_immediate_context->RSSetViewports(1,&m_default_viewport);
-#endif /* 0 */
+  delete m_back_buffer;
+
+  DXGI_SWAP_CHAIN_DESC desc = {};
+  m_swap_chain->GetDesc(&desc);
+  HRESULT rc = m_swap_chain->ResizeBuffers(desc.BufferCount, width, height, desc.BufferDesc.Format, desc.Flags);
+  if (FAILED(rc))
+  {
+    if (log_would_output())
+    {
+      ostringstream out;
+      out << "Error resizing swap chain: " << rc << '\n';
+      log_print(out.str().c_str());
+    }
+    exit(1);
+  }
+
+  m_back_buffer = D3D12_BackBuffers::Create(m_device, m_swap_chain);
+
+  m_default_viewport.width  = (float)width;
+  m_default_viewport.height = (float)height;
 }
 
 bool D3D12_Core::WaitOnFence()
