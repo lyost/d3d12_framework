@@ -1,6 +1,7 @@
 #include <cassert>
 #include "private_inc/D3D12/Buffers/D3D12_VertexBufferArray.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Custom.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Position.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTexture.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionColor.h"
 #include "log.h"
@@ -23,6 +24,15 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_Custom& buffer)
   assert(index <= m_num);
 
   const D3D12_VertexBuffer_Custom& vertex_buffer = (const D3D12_VertexBuffer_Custom&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_Position& buffer)
+{
+  assert(index <= m_num);
+
+  const D3D12_VertexBuffer_Position& vertex_buffer = (const D3D12_VertexBuffer_Position&)buffer;
 
   m_vertex_buffers[index] = vertex_buffer.m_view;
 }

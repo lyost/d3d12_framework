@@ -2,11 +2,13 @@
 #define VERTEX_BUFFER_ARRAY_H
 
 class VertexBuffer_Custom;
+class VertexBuffer_Position;
 class VertexBuffer_PositionTexture;
 class VertexBuffer_PositionColor;
 
 #include <windows.h>
 #include "Graphics/Buffers/VertexBuffer_Custom.h"
+#include "Graphics/Buffers/VertexBuffer_Position.h"
 #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
 #include "Graphics/Buffers/VertexBuffer_PositionColor.h"
 
@@ -46,6 +48,23 @@ class VertexBufferArray
     /// buffer to set the element to
     /// </param>
     virtual void Set(UINT index, const VertexBuffer_Custom& buffer) = 0;
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If a vertex buffer is to be destroyed, then it must be cleared from this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// <remarks>
+    /// This does not perform bounds checking
+    /// </remarks>
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    virtual void Set(UINT index, const VertexBuffer_Position& buffer) = 0;
 
     /// <summary>
     /// Sets the element at that specified index to the specified buffer

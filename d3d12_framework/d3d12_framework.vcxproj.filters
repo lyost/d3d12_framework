@@ -270,6 +270,12 @@
     <ClCompile Include="src\D3D12\Buffers\D3D12_ShaderResourceDescHeap.cpp">
       <Filter>Source Files\D3D12\Buffers</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_Position.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_Position.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -510,6 +516,12 @@
       <Filter>public_inc\Graphics\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_ShaderResourceDescHeap.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_Position.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_Position.h">
       <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
   </ItemGroup>

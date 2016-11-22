@@ -57,7 +57,7 @@ void dump_pso_desc(const D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc)
 #endif /* 0 */
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& pixel_shader,
-  const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig)
+  const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -67,7 +67,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology);
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
   desc.VS = vs.GetShader();
   desc.PS = ps.GetShader();
 
@@ -83,7 +83,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 }
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& pixel_shader,
-  DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig)
+  DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -93,7 +93,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology);
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
   desc.VS = vs.GetShader();
   desc.PS = ps.GetShader();
   desc.DepthStencilState.DepthEnable    = true;
@@ -114,8 +114,44 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   return new D3D12_Pipeline(pipeline);
 }
 
+D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
+  const Shader& domain_shader, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
+{
+  const D3D12_Core&                   core = (const D3D12_Core&)graphics_core;
+  const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
+  const D3D12_Shader&                 vs = (const D3D12_Shader&)vertex_shader;
+  const D3D12_Shader&                 hs = (const D3D12_Shader&)hull_shader;
+  const D3D12_Shader&                 ds = (const D3D12_Shader&)domain_shader;
+  const D3D12_Shader&                 ps = (const D3D12_Shader&)pixel_shader;
+  const D3D12_RenderTargetViewConfig& rtv = (const D3D12_RenderTargetViewConfig&)rtv_config;
+  const D3D12_RootSignature&          root = (const D3D12_RootSignature&)root_sig;
+
+  D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
+  desc.VS = vs.GetShader();
+  desc.HS = hs.GetShader();
+  desc.DS = ds.GetShader();
+  desc.PS = ps.GetShader();
+  desc.DepthStencilState.DepthEnable = true;
+  desc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+  desc.DepthStencilState.DepthFunc = (D3D12_COMPARISON_FUNC)depth_func;
+  desc.DepthStencilState.StencilEnable = false;
+  desc.DSVFormat = DXGI_FORMAT_D32_FLOAT; // todo: make configurable
+  desc.SampleMask = UINT_MAX;
+
+  ID3D12PipelineState* pipeline = NULL;
+  HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
+  if (FAILED(rc))
+  {
+    log_print("Failed to create pipeline state\n");
+    return NULL;
+  }
+
+  return new D3D12_Pipeline(pipeline);
+}
+
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& geometry_shader,
-  const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig)
+  const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -126,7 +162,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology);
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
   desc.VS                               = vs.GetShader();
   desc.GS                               = gs.GetShader();
   desc.PS                               = ps.GetShader();
@@ -164,12 +200,12 @@ ID3D12PipelineState* D3D12_Pipeline::GetPipeline() const
 }
 
 void D3D12_Pipeline::CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc, const D3D12_InputLayout& layout, const D3D12_RenderTargetViewConfig& rtv, const D3D12_RootSignature& root,
-  D3D12_PRIMITIVE_TOPOLOGY_TYPE topology)
+  D3D12_PRIMITIVE_TOPOLOGY_TYPE topology, bool wireframe)
 {
   desc.pRootSignature                        = root.GetRootSignature();
   desc.InputLayout.pInputElementDescs        = layout.GetLayout();
   desc.InputLayout.NumElements               = layout.GetNum();
-  desc.RasterizerState.FillMode              = D3D12_FILL_MODE_SOLID;
+  desc.RasterizerState.FillMode              = wireframe ? D3D12_FILL_MODE_WIREFRAME : D3D12_FILL_MODE_SOLID;
   desc.RasterizerState.CullMode              = D3D12_CULL_MODE_BACK;
   desc.RasterizerState.FrontCounterClockwise = false;
   desc.RasterizerState.DepthBias             = D3D12_DEFAULT_DEPTH_BIAS;
