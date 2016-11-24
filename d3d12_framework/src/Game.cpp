@@ -1,7 +1,6 @@
 #include <sstream>
 #include "Game.h"
 #include "Time/Timer.h"
-#include "log.h"
 using namespace std;
 
 Game::Game(WCHAR* title)

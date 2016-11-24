@@ -2,7 +2,6 @@
 #include "private_inc/D3D12/D3D12_Pipeline.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_Shader.h"
-#include "log.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 using namespace std;
