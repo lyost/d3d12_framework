@@ -16,9 +16,11 @@ class ShaderResourceDescHeap
     /// Number of descriptors the heap is to contain
     /// </param>
     /// <returns>
-    /// pointer to the descriptor heap on success
-    /// NULL otherwise
+    /// pointer to the descriptor heap
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static ShaderResourceDescHeap* CreateD3D12(const GraphicsCore& graphics, UINT num_descriptors);
 
     virtual ~ShaderResourceDescHeap();

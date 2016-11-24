@@ -1,6 +1,8 @@
+#include <sstream>
 #include "private_inc/D3D12/Textures/D3D12_DepthStencilResourceHeap.h"
 #include "private_inc/D3D12/D3D12_Core.h"
-#include "log.h"
+#include "FrameworkException.h"
+using namespace std;
 
 D3D12_DepthStencilResourceHeap* D3D12_DepthStencilResourceHeap::Create(const GraphicsCore& graphics, UINT64 num_bytes)
 {
@@ -21,8 +23,9 @@ D3D12_DepthStencilResourceHeap* D3D12_DepthStencilResourceHeap::Create(const Gra
   HRESULT rc = device->CreateHeap(&desc, __uuidof(ID3D12Heap), (void**)&heap);
   if (FAILED(rc))
   {
-    log_print("Failed to create depth stencil resource heap");
-    return NULL;
+    ostringstream out;
+    out << "Failed to create depth stencil resource heap.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
 
   return new D3D12_DepthStencilResourceHeap(num_bytes, heap);
@@ -49,8 +52,9 @@ ID3D12Resource* D3D12_DepthStencilResourceHeap::CreateResource(const GraphicsCor
   HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, &clear, __uuidof(ID3D12Resource), (void**)&buffer);
   if (FAILED(rc))
   {
-    log_print("Failed to create placed texture");
-    return NULL;
+    ostringstream out;
+    out << "Failed to create placed texture.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
 
   D3D12_RESOURCE_ALLOCATION_INFO mem_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);

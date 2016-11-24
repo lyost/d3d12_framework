@@ -1,9 +1,10 @@
-#include <cassert>
+#include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/Buffers/D3D12_BufferResourceHeap.h"
 #include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
-#include "log.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 using namespace std;
 
 UINT D3D12_ConstantBuffer::GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes)
@@ -17,7 +18,7 @@ UINT D3D12_ConstantBuffer::GetAlignedSize(const GraphicsCore& graphics, UINT num
   D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
   if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
   {
-    return -1;
+    throw new FrameworkException("computed size is too large");
   }
   else
   {
@@ -43,7 +44,7 @@ D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics,
   ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
   if (buffer == NULL)
   {
-    return NULL;
+    throw new FrameworkException("Unable to create resource buffer");
   }
 
   D3D12_CONSTANT_BUFFER_VIEW_DESC view_desc;
@@ -59,8 +60,10 @@ D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics,
   if (FAILED(rc))
   {
     buffer->Release();
-    log_print("Failed to map constant buffer memory");
-    return NULL;
+
+    ostringstream out;
+    out << "Failed to map constant buffer memory.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
 
   return new D3D12_ConstantBuffer(buffer, host_mem, view_desc.BufferLocation, num_bytes);
@@ -82,8 +85,17 @@ D3D12_ConstantBuffer::~D3D12_ConstantBuffer()
 
 void D3D12_ConstantBuffer::Upload(void* data, UINT start, UINT len)
 {
-  assert((start + len) < m_num_bytes); // bounds
-  assert((start + len) >= start); // roll over
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  UINT total = start + len;
+  if (total >= m_num_bytes)
+  {
+    throw new FrameworkException("attempting to send more bytes than are available in the buffer");
+  }
+  if (total < start)
+  {
+    throw new FrameworkException("rollover detected");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   memcpy(m_host_mem_start + start, data, len);
 }

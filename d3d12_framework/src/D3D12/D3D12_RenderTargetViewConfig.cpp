@@ -1,11 +1,20 @@
-#include <cassert>
+#include <sstream>
 #include "private_inc/D3D12/D3D12_RenderTargetViewConfig.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 using namespace std;
 
 D3D12_RenderTargetViewConfig::D3D12_RenderTargetViewConfig(UINT num)
 :m_num(num)
 {
-  assert(num < MAX_RENDER_TARGETS);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (num >= MAX_RENDER_TARGETS)
+  {
+    ostringstream out;
+    out << "Requested number of render targets of " << num << " exceeds max of " << MAX_RENDER_TARGETS;
+    throw new FrameworkException(out.str());
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   // D3D12's pipeline creation needs the blend state fields set to valid values for pipeline creation to work even if blending is disabled
   for (UINT i = 0; i < MAX_RENDER_TARGETS; i++)
@@ -40,12 +49,28 @@ void D3D12_RenderTargetViewConfig::SetIndependentBlendEnable(bool enable)
 
 void D3D12_RenderTargetViewConfig::SetFormat(UINT index, RenderTargetViewFormat format)
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    ostringstream out;
+    out << "Index of " << index << "exceeds created size of " << m_num;
+    throw new FrameworkException(out.str());
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
   m_formats[index] = format;
 }
 
 void D3D12_RenderTargetViewConfig::DisableBlend(UINT index)
 {
-  assert(index < MAX_RENDER_TARGETS);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    ostringstream out;
+    out << "Index of " << index << "exceeds created size of " << m_num;
+    throw new FrameworkException(out.str());
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   m_desc.RenderTarget[index].BlendEnable   = false;
 }
@@ -53,7 +78,14 @@ void D3D12_RenderTargetViewConfig::DisableBlend(UINT index)
 void D3D12_RenderTargetViewConfig::EnableBlend(UINT index, bool enable_logic_op, LogicOp logic_op, BlendModes src, BlendModes dst, BlendOp blend_op, BlendModes src_alpha, BlendModes dst_alpha,
   BlendOp alpha_op, COLOR_WRITE_MODE write_mask)
 {
-  assert(index < m_num);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    ostringstream out;
+    out << "Index of " << index << "exceeds created size of " << m_num;
+    throw new FrameworkException(out.str());
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_RENDER_TARGET_BLEND_DESC& blend = m_desc.RenderTarget[index];
   blend.BlendEnable                     = true;

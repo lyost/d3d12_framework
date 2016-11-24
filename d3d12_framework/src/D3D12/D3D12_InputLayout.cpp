@@ -1,5 +1,6 @@
-#include <cassert>
 #include "private_inc/D3D12/D3D12_InputLayout.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 using namespace std;
 
 D3D12_InputLayout::D3D12_InputLayout(UINT num)
@@ -16,7 +17,12 @@ D3D12_InputLayout::~D3D12_InputLayout()
 
 void D3D12_InputLayout::SetNextElement(Semantics semantic,UINT index, GraphicsDataFormat format, UINT input_slot, bool instance, UINT step_rate)
 {
-  assert(m_next < m_num);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (m_next >= m_num)
+  {
+    throw new FrameworkException("No more input layout slots available");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
   
   m_layout[m_next].SemanticName           = GetSemanticName(semantic);
   m_layout[m_next].SemanticIndex          = index;
@@ -41,6 +47,11 @@ void D3D12_InputLayout::SetNextElement(Semantics semantic,UINT index, GraphicsDa
 UINT D3D12_InputLayout::GetNum() const
 {
   return m_num;
+}
+
+UINT D3D12_InputLayout::GetNextIndex() const
+{
+  return m_next;
 }
 
 const D3D12_INPUT_ELEMENT_DESC* D3D12_InputLayout::GetLayout() const

@@ -17,9 +17,11 @@ class D3D12_DepthStencilResourceHeap : public DepthStencilResourceHeap
     /// Number of bytes the heap is to contain
     /// </param>
     /// <returns>
-    /// pointer to the heap on success
-    /// NULL otherwise
+    /// pointer to the heap
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static D3D12_DepthStencilResourceHeap* Create(const GraphicsCore& graphics, UINT64 num_bytes);
 
     ~D3D12_DepthStencilResourceHeap();
@@ -37,9 +39,11 @@ class D3D12_DepthStencilResourceHeap : public DepthStencilResourceHeap
     /// default value to use for clearing the depth stencil
     /// </param>
     /// <returns>
-    /// pointer to the D3D12 resource on success
-    /// NULL otherwise
+    /// pointer to the D3D12 resource
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     ID3D12Resource* CreateResource(const GraphicsCore& graphics, const D3D12_RESOURCE_DESC& resource_desc, float default_depth_clear);
 
     /// <summary>

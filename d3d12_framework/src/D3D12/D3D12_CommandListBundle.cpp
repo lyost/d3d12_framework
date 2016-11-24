@@ -1,6 +1,7 @@
-#include <cassert>
 #include "private_inc/D3D12/D3D12_CommandListBundle.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 using namespace std;
 
 D3D12_CommandListBundle* D3D12_CommandListBundle::Create()
@@ -52,7 +53,12 @@ void D3D12_CommandListBundle::RemoveCommandList(const CommandList& list)
 
 void D3D12_CommandListBundle::RemoveCommandList(UINT index)
 {
-  assert(index <= m_lists.size());
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_lists.size())
+  {
+    throw new FrameworkException("index beyond number of command lists");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   m_lists[index]->Release();
   m_lists[index] = NULL;

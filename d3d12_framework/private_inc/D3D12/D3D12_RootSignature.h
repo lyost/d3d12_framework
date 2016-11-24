@@ -20,17 +20,27 @@ class D3D12_RootSignature : public RootSignature
     /// configuration data for the root signature
     /// </param>
     /// <returns>
-    /// pointer to the root signature config instance on success
-    /// NULL on error
+    /// pointer to the root signature config instance
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered in creating the instance
+    /// </exception>
     static D3D12_RootSignature* Create(const GraphicsCore& graphics, const RootSignatureConfig& config);
     
     ~D3D12_RootSignature();
 
     ID3D12RootSignature* GetRootSignature() const;
+
+    /// <summary>
+    /// Retrieves the flags for which stages are enabled
+    /// <remarks>
+    /// This allows pipeline creation to validate that all and only the correct shaders are provided
+    /// </remarks>
+    /// </summary>
+    D3D12_ROOT_SIGNATURE_FLAGS GetStageAccess() const;
     
   private:
-    D3D12_RootSignature(ID3D12RootSignature* root_sig);
+    D3D12_RootSignature(ID3D12RootSignature* root_sig, D3D12_ROOT_SIGNATURE_FLAGS stage_acess);
 
     // disabled
     D3D12_RootSignature();
@@ -41,6 +51,11 @@ class D3D12_RootSignature : public RootSignature
     /// D3D12 root signature
     /// </summary>
     ID3D12RootSignature* m_root_sig;
+
+    /// <summary>
+    /// Flags for which stages are enabled
+    /// </summary>
+    D3D12_ROOT_SIGNATURE_FLAGS m_stage_access;
 };
 
 #endif /* D3D12_ROOT_SIGNATURE_H */

@@ -15,8 +15,7 @@ class D3D12_CommandListBundle : public CommandListBundle
     /// Creates a D3D12 command list bundle
     ///</summary>
     /// <returns>
-    /// pointer to the command list bundle on success
-    /// NULL otherwise
+    /// pointer to the command list bundle
     /// </returns>
     static D3D12_CommandListBundle* Create();
 

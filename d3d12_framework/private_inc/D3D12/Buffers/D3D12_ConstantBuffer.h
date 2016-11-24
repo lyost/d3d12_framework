@@ -21,8 +21,10 @@ class D3D12_ConstantBuffer : public ConstantBuffer
     /// </param>
     /// <returns>
     /// number of bytes the constant buffer should be created with
-    /// -1 if the computed size is too large
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static UINT GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes);
 
     /// <summary>
@@ -50,9 +52,11 @@ class D3D12_ConstantBuffer : public ConstantBuffer
     /// </remarks>
     /// </param>
     /// <returns>
-    /// D3D12 constant buffer on success
-    /// NULL on error
+    /// D3D12 constant buffer
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static D3D12_ConstantBuffer* Create(const GraphicsCore& graphics, BufferResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes);
 
     ~D3D12_ConstantBuffer();

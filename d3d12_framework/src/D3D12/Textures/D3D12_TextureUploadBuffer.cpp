@@ -4,7 +4,8 @@
 #include "private_inc/D3D12/D3D12_CommandList.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
 #include "private_inc/D3D12/D3D12_Core.h"
-#include "log.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 
 D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture& texture, BufferResourceHeap& resource_heap)
 {
@@ -29,7 +30,7 @@ D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore&
   ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
   if (buffer == NULL)
   {
-    return NULL;
+    throw new FrameworkException("Unable to create buffer resource");
   }
 
   return new D3D12_TextureUploadBuffer(buffer);
@@ -45,7 +46,7 @@ D3D12_TextureUploadBuffer::~D3D12_TextureUploadBuffer()
   m_buffer->Release();
 }
 
-bool D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture, const std::vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture, const std::vector<UINT8>& data)
 {
   ID3D12Device* device = ((D3D12_Core&)graphics).GetDevice();
   ID3D12Resource* dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
@@ -61,26 +62,22 @@ bool D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   D3D12_RESOURCE_DESC src_desc = m_buffer->GetDesc();
   if (src_desc.Width < (dst_total_bytes + dst_layout.Offset))
   {
-    log_print("Upload texture buffer too small for target texture");
-    return false;
+    throw new FrameworkException("Upload texture buffer too small for target texture");
   }
   else if (dst_row_size_in_bytes != memcpy_size)
   {
-    log_print("Target texture row size too large for upload texture buffer");
-    return false;
+    throw new FrameworkException("Target texture row size too large for upload texture buffer");
   }
   else if (data.size() < (memcpy_size * dst_num_rows))
   {
-    log_print("Insufficient number of bytes for upload texture buffer");
-    return false;
+    throw new FrameworkException("Insufficient number of bytes for upload texture buffer");
   }
 
   UINT8* cpu_mem_start;
   HRESULT rc = m_buffer->Map(0, NULL, (void**)&cpu_mem_start);
   if (FAILED(rc))
   {
-    log_print("Failed to map texture upload buffer memory");
-    return false;
+    throw new FrameworkException("Failed to map texture upload buffer memory");
   }
   cpu_mem_start += dst_layout.Offset;
   for (UINT row = 0; row < dst_num_rows; row++)
@@ -120,6 +117,4 @@ bool D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   done_copy.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
   done_copy.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
   cmd_list->ResourceBarrier(1, &done_copy);
-
-  return true;
 }

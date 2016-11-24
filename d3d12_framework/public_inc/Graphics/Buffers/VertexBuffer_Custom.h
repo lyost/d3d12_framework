@@ -26,9 +26,11 @@ class VertexBuffer_Custom : public VertexBuffer
     /// initial data for the vertex buffer
     /// </param>
     /// <returns>
-    /// pointer to the vertex buffer instance on success
-    /// NULL on error
+    /// pointer to the vertex buffer instance
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static VertexBuffer_Custom* CreateD3D12(GraphicsCore& graphics, UINT num, UINT size, const void* data);
     
     /// <summary>

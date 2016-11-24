@@ -21,9 +21,11 @@ class GraphicsCore
     /// handle to the window to setup D3D12 for
     /// </param>
     /// <returns>
-    /// pointer to the GraphicsCore instance for the window on success
-    /// NULL on error
+    /// pointer to the GraphicsCore instance for the window
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered in creating the instance
+    /// </exception>
     static GraphicsCore* CreateD3D12(HWND& wnd);
     
     /// <summary>
@@ -44,6 +46,9 @@ class GraphicsCore
     /// true  if the window should be fullscreen
     /// false if the window should be in windowed mode
     /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     virtual void Fullscreen(UINT width, UINT height, bool enable) = 0;
 
     /// <summary>
@@ -55,16 +60,15 @@ class GraphicsCore
     /// <param name="height">
     /// height of the new client area, in pixels
     /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     virtual void OnResize(UINT width, UINT height) = 0;
     
     /// <summary>
     /// Waits for the fence for the default command queue to indicate that the command queue has finished
     /// </summary>
-    /// <returns>
-    /// true  if the fence was successfully waited for.
-    /// false otherwise
-    /// </returns>
-    virtual bool WaitOnFence() = 0;
+    virtual void WaitOnFence() = 0;
     
     /// <summary>
     /// Swaps the back and front buffers to display the frame to the user

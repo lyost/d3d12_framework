@@ -20,9 +20,11 @@ class RootSignature
     /// configuration data for the root signature
     /// </param>
     /// <returns>
-    /// pointer to the root signature instance on success
-    /// NULL on error
+    /// pointer to the root signature instance
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered in creating the instance
+    /// </exception>
     static RootSignature* CreateD3D12(const GraphicsCore& graphics, const RootSignatureConfig& config);
 
     virtual ~RootSignature();

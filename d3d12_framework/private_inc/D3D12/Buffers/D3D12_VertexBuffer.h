@@ -27,11 +27,10 @@ namespace D3D12_VertexBuffer
   /// <param name="view">
   /// output parameter for where to put the created vertex buffer view
   /// </param>
-  /// <returns>
-  /// true  on success
-  /// false on error
-  /// </returns>
-  bool CreateBuffer(GraphicsCore& graphics, UINT stride, UINT num, const void* data, ID3D12Resource*& buffer, D3D12_VERTEX_BUFFER_VIEW& view);
+  /// <exception cref="FrameworkException">
+  /// Thrown when an error is encountered
+  /// </exception>
+  void CreateBuffer(GraphicsCore& graphics, UINT stride, UINT num, const void* data, ID3D12Resource*& buffer, D3D12_VERTEX_BUFFER_VIEW& view);
 }
 
 #endif /* D3D12_VERTEX_BUFFER_H */

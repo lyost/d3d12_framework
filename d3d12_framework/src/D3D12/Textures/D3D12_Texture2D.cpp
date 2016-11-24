@@ -2,6 +2,7 @@
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
 #include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
+#include "FrameworkException.h"
 
 UINT D3D12_Texture2D::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format)
 {
@@ -14,7 +15,7 @@ UINT D3D12_Texture2D::GetAlignedSize(const GraphicsCore& graphics, UINT width, U
   D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
   if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
   {
-    return -1;
+    throw new FrameworkException("computed size is too large");
   }
   else
   {
@@ -41,7 +42,7 @@ Texture* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResourceHe
   ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
   if (buffer == NULL)
   {
-    return NULL;
+    throw new FrameworkException("Unable to create buffer resource");
   }
 
   D3D12_SHADER_RESOURCE_VIEW_DESC src_desc;

@@ -26,9 +26,11 @@ class D3D12_BackBuffers : public BackBuffers
     /// swap chain to create the back buffer for
     /// </param>
     /// <returns>
-    /// pointer to the D3D12_BackBuffers instance on success
-    /// NULL otherwise
+    /// pointer to the D3D12_BackBuffers instance
     // </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static D3D12_BackBuffers* Create(ID3D12Device* device, IDXGISwapChain3* swap_chain);
 
     ~D3D12_BackBuffers();

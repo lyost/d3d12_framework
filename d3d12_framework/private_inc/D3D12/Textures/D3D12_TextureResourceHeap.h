@@ -17,9 +17,11 @@ class D3D12_TextureResourceHeap : public TextureResourceHeap
     /// Number of bytes the heap is to contain
     /// </param>
     /// <returns>
-    /// pointer to the heap on success
-    /// NULL otherwise
+    /// pointer to the heap
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static D3D12_TextureResourceHeap* Create(const GraphicsCore& graphics, UINT64 num_bytes);
 
     ~D3D12_TextureResourceHeap();
@@ -34,9 +36,11 @@ class D3D12_TextureResourceHeap : public TextureResourceHeap
     /// D3D12 description of the resource to create
     /// </param>
     /// <returns>
-    /// pointer to the D3D12 resource on success
-    /// NULL otherwise
+    /// pointer to the D3D12 resource
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     ID3D12Resource* CreateResource(const GraphicsCore& graphics, const D3D12_RESOURCE_DESC& resource_desc);
 
     /// <summary>

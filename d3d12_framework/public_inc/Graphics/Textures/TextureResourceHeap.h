@@ -16,9 +16,11 @@ class TextureResourceHeap
     /// Number of bytes the heap is to contain
     /// </param>
     /// <returns>
-    /// pointer to the heap on success
-    /// NULL otherwise
+    /// pointer to the heap
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static TextureResourceHeap* CreateD3D12(const GraphicsCore& graphics, UINT64 num_bytes);
 
     virtual ~TextureResourceHeap();

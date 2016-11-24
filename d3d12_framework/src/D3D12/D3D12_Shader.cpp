@@ -1,5 +1,8 @@
 #include <fstream>
+#include <sstream>
 #include "private_inc/D3D12/D3D12_Shader.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 using namespace std;
 
 D3D12_Shader* D3D12_Shader::Load(const char* path)
@@ -7,7 +10,9 @@ D3D12_Shader* D3D12_Shader::Load(const char* path)
   ifstream in(path, ios_base::in | ios_base::binary);
   if (!in.good())
   {
-    return NULL;
+    ostringstream out;
+    out << "Unable to open \"" << path << '\"';
+    throw new FrameworkException(out.str());
   }
 
   // get the file length, in bytes
@@ -17,7 +22,10 @@ D3D12_Shader* D3D12_Shader::Load(const char* path)
   {
     // only handles files whose length fits into a UINT for now
     in.close();
-    return NULL;
+
+    ostringstream out;
+    out << "\"" << path << "\" is too large";
+    throw new FrameworkException(out.str());
   }
 
   // load the file

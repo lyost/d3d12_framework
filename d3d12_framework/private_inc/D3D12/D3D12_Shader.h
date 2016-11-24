@@ -15,8 +15,10 @@ class D3D12_Shader : public Shader
     /// </param>
     /// <returns>
     /// pointer to the Shader instance on success
-    /// NULL on error
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered in creating the instance
+    /// </exception>
     static D3D12_Shader* Load(const char* path);
 
     ~D3D12_Shader();

@@ -1,6 +1,6 @@
-#include <cassert>
 #include "private_inc/D3D12/D3D12_RootSignatureConfig.h"
-using namespace std;
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 
 D3D12_RootSignatureConfig::D3D12_RootSignatureConfig(UINT num_params, UINT num_sampler)
 {
@@ -64,7 +64,12 @@ void D3D12_RootSignatureConfig::SetStageAccess(bool ia, bool vs, bool hs, bool d
 void D3D12_RootSignatureConfig::SetSampler(UINT index, TextureFilters filter, TextureAddressMode address_u, TextureAddressMode address_v, TextureAddressMode address_w, float mip_lod_bias,
   UINT max_anisotropy, CompareFuncs compare_func, TextureBorderColor border_color, float min_lod, float max_lod, UINT shader_register, UINT register_space, ShaderVisibility shaders)
 {
-  assert(index < m_desc.NumStaticSamplers);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_desc.NumStaticSamplers)
+  {
+    throw new FrameworkException("index beyond number of static samplers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_STATIC_SAMPLER_DESC& sampler = m_samplers[index];
   sampler.Filter                     = (D3D12_FILTER)filter;
@@ -84,7 +89,12 @@ void D3D12_RootSignatureConfig::SetSampler(UINT index, TextureFilters filter, Te
 
 void D3D12_RootSignatureConfig::SetParamAsConstants(UINT param_index, UINT shader_register, UINT register_space, UINT num_32bit_values, ShaderVisibility shaders)
 {
-  assert(param_index < m_desc.NumParameters);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (param_index >= m_desc.NumParameters)
+  {
+    throw new FrameworkException("param_index beyond number of parameters");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_ROOT_PARAMETER& param    = m_params[param_index];
   param.ParameterType            = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
@@ -96,7 +106,12 @@ void D3D12_RootSignatureConfig::SetParamAsConstants(UINT param_index, UINT shade
 
 void D3D12_RootSignatureConfig::SetParamAsConstantBufferView(UINT param_index, UINT shader_register, UINT register_space, ShaderVisibility shaders)
 {
-  assert(param_index < m_desc.NumParameters);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (param_index >= m_desc.NumParameters)
+  {
+    throw new FrameworkException("param_index beyond number of parameters");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_ROOT_PARAMETER& param     = m_params[param_index];
   param.ParameterType             = D3D12_ROOT_PARAMETER_TYPE_CBV;
@@ -107,7 +122,12 @@ void D3D12_RootSignatureConfig::SetParamAsConstantBufferView(UINT param_index, U
 
 void D3D12_RootSignatureConfig::SetParamAsShaderResourceView(UINT param_index, UINT shader_register, UINT register_space, ShaderVisibility shaders)
 {
-  assert(param_index < m_desc.NumParameters);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (param_index >= m_desc.NumParameters)
+  {
+    throw new FrameworkException("param_index beyond number of parameters");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_ROOT_PARAMETER& param     = m_params[param_index];
   param.ParameterType             = D3D12_ROOT_PARAMETER_TYPE_SRV;
@@ -118,7 +138,12 @@ void D3D12_RootSignatureConfig::SetParamAsShaderResourceView(UINT param_index, U
 
 void D3D12_RootSignatureConfig::SetParamAsUnorderedAccessView(UINT param_index, UINT shader_register, UINT register_space, ShaderVisibility shaders)
 {
-  assert(param_index < m_desc.NumParameters);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (param_index >= m_desc.NumParameters)
+  {
+    throw new FrameworkException("param_index beyond number of parameters");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_ROOT_PARAMETER& param     = m_params[param_index];
   param.ParameterType             = D3D12_ROOT_PARAMETER_TYPE_UAV;
@@ -129,7 +154,12 @@ void D3D12_RootSignatureConfig::SetParamAsUnorderedAccessView(UINT param_index, 
 
 void D3D12_RootSignatureConfig::SetParamAsDescriptorTable(UINT param_index, UINT num_ranges, ShaderVisibility shaders)
 {
-  assert(param_index < m_desc.NumParameters);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (param_index >= m_desc.NumParameters)
+  {
+    throw new FrameworkException("param_index beyond number of parameters");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_ROOT_PARAMETER& param               = m_params[param_index];
   param.ParameterType                       = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
@@ -140,9 +170,20 @@ void D3D12_RootSignatureConfig::SetParamAsDescriptorTable(UINT param_index, UINT
 
 void D3D12_RootSignatureConfig::SetRangeAsConstantBufferView(UINT param_index, UINT range_index, UINT num_descriptors, UINT base_shader_register, UINT register_space)
 {
-  assert(param_index < m_desc.NumParameters);
-  assert(m_params[param_index].ParameterType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE);
-  assert(range_index < m_params[param_index].DescriptorTable.NumDescriptorRanges);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (param_index >= m_desc.NumParameters)
+  {
+    throw new FrameworkException("param_index beyond number of parameters");
+  }
+  if (m_params[param_index].ParameterType != D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
+  {
+    throw new FrameworkException("parameter type is not a descriptor table");
+  }
+  if (range_index >= m_params[param_index].DescriptorTable.NumDescriptorRanges)
+  {
+    throw new FrameworkException("range_index beyond number of ranges");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_DESCRIPTOR_RANGE* range            = (D3D12_DESCRIPTOR_RANGE*)&m_params[param_index].DescriptorTable.pDescriptorRanges[range_index];
   range->RangeType                         = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
@@ -154,9 +195,20 @@ void D3D12_RootSignatureConfig::SetRangeAsConstantBufferView(UINT param_index, U
 
 void D3D12_RootSignatureConfig::SetRangeAsShaderResourceView(UINT param_index, UINT range_index, UINT num_descriptors, UINT base_shader_register, UINT register_space)
 {
-  assert(param_index < m_desc.NumParameters);
-  assert(m_params[param_index].ParameterType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE);
-  assert(range_index < m_params[param_index].DescriptorTable.NumDescriptorRanges);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (param_index >= m_desc.NumParameters)
+  {
+    throw new FrameworkException("param_index beyond number of parameters");
+  }
+  if (m_params[param_index].ParameterType != D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
+  {
+    throw new FrameworkException("parameter type is not a descriptor table");
+  }
+  if (range_index >= m_params[param_index].DescriptorTable.NumDescriptorRanges)
+  {
+    throw new FrameworkException("range_index beyond number of ranges");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_DESCRIPTOR_RANGE* range            = (D3D12_DESCRIPTOR_RANGE*)&m_params[param_index].DescriptorTable.pDescriptorRanges[range_index];
   range->RangeType                         = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
@@ -168,9 +220,20 @@ void D3D12_RootSignatureConfig::SetRangeAsShaderResourceView(UINT param_index, U
 
 void D3D12_RootSignatureConfig::SetRangeAsUnorderedAccessView(UINT param_index, UINT range_index, UINT num_descriptors, UINT base_shader_register, UINT register_space)
 {
-  assert(param_index < m_desc.NumParameters);
-  assert(m_params[param_index].ParameterType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE);
-  assert(range_index < m_params[param_index].DescriptorTable.NumDescriptorRanges);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (param_index >= m_desc.NumParameters)
+  {
+    throw new FrameworkException("param_index beyond number of parameters");
+  }
+  if (m_params[param_index].ParameterType != D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
+  {
+    throw new FrameworkException("parameter type is not a descriptor table");
+  }
+  if (range_index >= m_params[param_index].DescriptorTable.NumDescriptorRanges)
+  {
+    throw new FrameworkException("range_index beyond number of ranges");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_DESCRIPTOR_RANGE* range            = (D3D12_DESCRIPTOR_RANGE*)&m_params[param_index].DescriptorTable.pDescriptorRanges[range_index];
   range->RangeType                         = D3D12_DESCRIPTOR_RANGE_TYPE_UAV;
@@ -182,9 +245,20 @@ void D3D12_RootSignatureConfig::SetRangeAsUnorderedAccessView(UINT param_index, 
 
 void D3D12_RootSignatureConfig::SetRangeAsSampler(UINT param_index, UINT range_index, UINT num_descriptors, UINT base_shader_register, UINT register_space)
 {
-  assert(param_index < m_desc.NumParameters);
-  assert(m_params[param_index].ParameterType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE);
-  assert(range_index < m_params[param_index].DescriptorTable.NumDescriptorRanges);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (param_index >= m_desc.NumParameters)
+  {
+    throw new FrameworkException("param_index beyond number of parameters");
+  }
+  if (m_params[param_index].ParameterType != D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
+  {
+    throw new FrameworkException("parameter type is not a descriptor table");
+  }
+  if (range_index >= m_params[param_index].DescriptorTable.NumDescriptorRanges)
+  {
+    throw new FrameworkException("range_index beyond number of ranges");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_DESCRIPTOR_RANGE* range            = (D3D12_DESCRIPTOR_RANGE*)&m_params[param_index].DescriptorTable.pDescriptorRanges[range_index];
   range->RangeType                         = D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER;

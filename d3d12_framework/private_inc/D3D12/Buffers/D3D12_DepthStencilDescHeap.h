@@ -17,9 +17,11 @@ class D3D12_DepthStencilDescHeap : public DepthStencilDescHeap
     /// Number of descriptors the heap is to contain
     /// </param>
     /// <returns>
-    /// pointer to the descriptor heap on success
-    /// NULL otherwise
+    /// pointer to the descriptor heap
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static D3D12_DepthStencilDescHeap* Create(const GraphicsCore& graphics, UINT num_descriptors);
 
     ~D3D12_DepthStencilDescHeap();

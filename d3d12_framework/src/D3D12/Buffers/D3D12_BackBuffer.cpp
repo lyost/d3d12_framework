@@ -1,7 +1,7 @@
 #include <sstream>
-#include <cassert>
 #include "private_inc/D3D12/Buffers/D3D12_BackBuffer.h"
-#include "log.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 using namespace std;
 
 const UINT NumRenderTargets = 2;
@@ -16,8 +16,9 @@ D3D12_BackBuffers* D3D12_BackBuffers::Create(ID3D12Device* device, IDXGISwapChai
   HRESULT rc = device->CreateDescriptorHeap(&rtv_heap_desc, __uuidof(ID3D12DescriptorHeap), (void**)&render_target_view);
   if (FAILED(rc))
   {
-    log_print("Failed to create render target view heap\n");
-    return NULL;
+    ostringstream out;
+    out << "Failed to create render target view heap.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
 
   UINT rtv_desc_size = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
@@ -31,13 +32,9 @@ D3D12_BackBuffers* D3D12_BackBuffers::Create(ID3D12Device* device, IDXGISwapChai
     rc = swap_chain->GetBuffer(i, __uuidof(ID3D12Resource), (void**)&back_tmp);
     if (FAILED(rc))
     {
-      if (log_would_output())
-      {
-        ostringstream out;
-        out << "Failed to get back buffer " << i << '\n';
-        log_print(out.str().c_str());
-      }
-      return NULL;
+      ostringstream out;
+      out << "Failed to get back buffer " << i << ".  HRESULT = " << rc;
+      throw new FrameworkException(out.str());
     }
     device->CreateRenderTargetView(back_tmp, NULL, rtv_handle);
     back_buffer->AddRenderTarget(i, back_tmp, rtv_handle);
@@ -75,7 +72,12 @@ D3D12_BackBuffers::~D3D12_BackBuffers()
 
 void D3D12_BackBuffers::AddRenderTarget(UINT index, ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle)
 {
-  assert(index < m_num);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw new FrameworkException("index beyond number of render targets");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   m_targets[index] = new D3D12_RenderTarget(target, handle);
 }

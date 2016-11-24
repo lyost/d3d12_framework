@@ -23,9 +23,11 @@ class IndexBuffer16 : public IndexBuffer
     /// initial data for the index buffer
     /// </param>
     /// <returns>
-    /// pointer to the index buffer instance on success
-    /// NULL on error
+    /// pointer to the index buffer instance
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static IndexBuffer16* CreateD3D12(GraphicsCore& graphics, UINT num, const WORD* data);
     
     /// <summary>

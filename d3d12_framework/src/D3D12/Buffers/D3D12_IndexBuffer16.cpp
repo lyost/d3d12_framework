@@ -5,14 +5,8 @@ D3D12_IndexBuffer16* D3D12_IndexBuffer16::Create(GraphicsCore& graphics, UINT nu
 {
   ID3D12Resource* buffer;
   D3D12_INDEX_BUFFER_VIEW view;
-  if (D3D12_IndexBuffer::CreateBuffer(graphics, sizeof(WORD), DXGI_FORMAT_R16_UINT, num, data, buffer, view))
-  {
-    return new D3D12_IndexBuffer16(num, buffer, view);
-  }
-  else
-  {
-    return NULL;
-  }
+  D3D12_IndexBuffer::CreateBuffer(graphics, sizeof(WORD), DXGI_FORMAT_R16_UINT, num, data, buffer, view);
+  return new D3D12_IndexBuffer16(num, buffer, view);
 }
 
 D3D12_IndexBuffer16::D3D12_IndexBuffer16(UINT num, ID3D12Resource* buffer, D3D12_INDEX_BUFFER_VIEW& view)

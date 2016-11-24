@@ -1,8 +1,10 @@
+#include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer.h"
 #include "private_inc/D3D12/D3D12_Core.h"
-#include "log.h"
+#include "FrameworkException.h"
+using namespace std;
 
-bool D3D12_VertexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, UINT num, const void* data, ID3D12Resource*& buffer, D3D12_VERTEX_BUFFER_VIEW& view)
+void D3D12_VertexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, UINT num, const void* data, ID3D12Resource*& buffer, D3D12_VERTEX_BUFFER_VIEW& view)
 {
   D3D12_Core& core = (D3D12_Core&)graphics;
 
@@ -30,17 +32,20 @@ bool D3D12_VertexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, UINT 
     (void**)&buffer);
   if (FAILED(rc))
   {
-    log_print("Failed to create committed resource for vertex buffer position texture");
-    return false;
+    ostringstream out;
+    out << "Failed to create committed resource for vertex buffer.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
 
   void* buffer_data;
   rc = buffer->Map(0, NULL, &buffer_data);
   if (FAILED(rc))
   {
-    log_print("Failed to map buffer for vertex buffer position texture");
     buffer->Release();
-    return false;
+
+    ostringstream out;
+    out << "Failed to map buffer for vertex buffer.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
   memcpy(buffer_data, data, num * stride);
   buffer->Unmap(0, NULL);
@@ -48,6 +53,4 @@ bool D3D12_VertexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, UINT 
   view.BufferLocation = buffer->GetGPUVirtualAddress();
   view.SizeInBytes    = num * stride;
   view.StrideInBytes  = stride;
-
-  return true;
 }

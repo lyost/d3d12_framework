@@ -1,17 +1,16 @@
-#include <cassert>
 #include "private_inc/D3D12/Buffers/D3D12_VertexBufferArray.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Custom.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Position.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTexture.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionColor.h"
-#include "log.h"
-using namespace std;
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 
 D3D12_VertexBufferArray::D3D12_VertexBufferArray(UINT num_buffers)
 :m_num(num_buffers)
 {
   m_vertex_buffers = new D3D12_VERTEX_BUFFER_VIEW[m_num];
-  memset(m_vertex_buffers, 0, sizeof(D3D12_VERTEX_BUFFER_VIEW*) * m_num);
+  memset(m_vertex_buffers, 0, sizeof(D3D12_VERTEX_BUFFER_VIEW) * m_num);
 }
 
 D3D12_VertexBufferArray::~D3D12_VertexBufferArray()
@@ -21,7 +20,12 @@ D3D12_VertexBufferArray::~D3D12_VertexBufferArray()
 
 void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_Custom& buffer)
 {
-  assert(index <= m_num);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw new FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   const D3D12_VertexBuffer_Custom& vertex_buffer = (const D3D12_VertexBuffer_Custom&)buffer;
 
@@ -30,7 +34,12 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_Custom& buffer)
 
 void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_Position& buffer)
 {
-  assert(index <= m_num);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw new FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   const D3D12_VertexBuffer_Position& vertex_buffer = (const D3D12_VertexBuffer_Position&)buffer;
 
@@ -39,7 +48,12 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_Position& buffe
 
 void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTexture& buffer)
 {
-  assert(index <= m_num);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw new FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   const D3D12_VertexBuffer_PositionTexture& vertex_buffer = (const D3D12_VertexBuffer_PositionTexture&)buffer;
 
@@ -48,7 +62,12 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTexture
 
 void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionColor& buffer)
 {
-  assert(index <= m_num);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw new FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   const D3D12_VertexBuffer_PositionColor& vertex_buffer = (const D3D12_VertexBuffer_PositionColor&)buffer;
 
@@ -57,7 +76,12 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionColor& 
 
 void D3D12_VertexBufferArray::Clear(UINT index)
 {
-  assert(index <= m_num);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw new FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   m_vertex_buffers[index].BufferLocation = 0;
   m_vertex_buffers[index].SizeInBytes    = 0;

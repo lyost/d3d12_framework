@@ -18,8 +18,8 @@ HullShaderConstantOutput hsConstantFunc(InputPatch<VertexShaderOutput, 4> input,
 {
   HullShaderConstantOutput output;
 
-  output.edgeTesselation[0] = output.edgeTesselation[1] = output.edgeTesselation[2] = output.edgeTesselation[3] = 32;
-  output.insideTesselation[0] = output.insideTesselation[1] = 32;
+  output.edgeTesselation[0] = output.edgeTesselation[1] = output.edgeTesselation[2] = output.edgeTesselation[3] = 16;
+  output.insideTesselation[0] = output.insideTesselation[1] = 8;
 
   return output;
 }

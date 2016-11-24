@@ -1,8 +1,10 @@
+#include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_IndexBuffer.h"
 #include "private_inc/D3D12/D3D12_Core.h"
-#include "log.h"
+#include "FrameworkException.h"
+using namespace std;
 
-bool D3D12_IndexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, DXGI_FORMAT format, UINT num, const void* data, ID3D12Resource*& buffer, D3D12_INDEX_BUFFER_VIEW& view)
+void D3D12_IndexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, DXGI_FORMAT format, UINT num, const void* data, ID3D12Resource*& buffer, D3D12_INDEX_BUFFER_VIEW& view)
 {
   D3D12_Core& core = (D3D12_Core&)graphics;
 
@@ -30,17 +32,20 @@ bool D3D12_IndexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, DXGI_F
     (void**)&buffer);
   if (FAILED(rc))
   {
-    log_print("Failed to create committed resource for index buffer");
-    return false;
+    ostringstream out;
+    out << "Failed to create committed resource for index buffer.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
 
   void* buffer_data;
   rc = buffer->Map(0, NULL, &buffer_data);
   if (FAILED(rc))
   {
-    log_print("Failed to map buffer for index buffer");
     buffer->Release();
-    return false;
+
+    ostringstream out;
+    out << "Failed to map buffer for index buffer.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
   memcpy(buffer_data, data, num * stride);
   buffer->Unmap(0, NULL);
@@ -48,6 +53,4 @@ bool D3D12_IndexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, DXGI_F
   view.BufferLocation = buffer->GetGPUVirtualAddress();
   view.SizeInBytes    = num * stride;
   view.Format         = format;
-
-  return true;
 }

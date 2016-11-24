@@ -1,7 +1,8 @@
-#include <cassert>
+#include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
 #include "private_inc/D3D12/D3D12_Core.h"
-#include "log.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 using namespace std;
 
 // todo: add class for D3D12_ShaderSamplerHeap
@@ -21,8 +22,9 @@ D3D12_ShaderResourceDescHeap* D3D12_ShaderResourceDescHeap::Create(const Graphic
   HRESULT rc = device->CreateDescriptorHeap(&desc, __uuidof(ID3D12DescriptorHeap), (void**)&heap);
   if (FAILED(rc))
   {
-    log_print("Failed to create descriptor heap for shader buffers");
-    return NULL;
+    ostringstream out;
+    out << "Failed to create descriptor heap for shader buffers.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
 
   UINT increment_size = device->GetDescriptorHandleIncrementSize(desc.Type);
@@ -47,7 +49,12 @@ D3D12_ShaderResourceDescHeap::D3D12_ShaderResourceDescHeap(UINT num_descriptors,
 
 void D3D12_ShaderResourceDescHeap::GetNextDescriptor(D3D12_CPU_DESCRIPTOR_HANDLE& cpu_handle, D3D12_GPU_DESCRIPTOR_HANDLE& gpu_handle)
 {
-  assert(m_next_descriptor_index < m_num_descriptors);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (m_next_descriptor_index >= m_num_descriptors)
+  {
+    throw new FrameworkException("No descriptors available");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   cpu_handle.ptr = m_cpu_start.ptr + m_descriptor_size * m_next_descriptor_index;
   gpu_handle.ptr = m_gpu_start.ptr + m_descriptor_size * m_next_descriptor_index;

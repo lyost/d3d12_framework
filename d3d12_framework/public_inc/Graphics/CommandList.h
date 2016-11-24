@@ -53,20 +53,18 @@ class CommandList
     /// <param name="pipeline">
     /// Optional pipleline state to use initally for the command list.  This should be NULL if no inital pipeline is to be specified for the command list.
     /// </param>
-    /// <returns>
-    /// true if the reset was successful
-    /// false otherwise
-    /// </returns>
-    virtual bool Reset(Pipeline* pipeline) = 0;
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void Reset(Pipeline* pipeline) = 0;
 
     /// <summary>
     /// Informs the command list that recording of commands is complete
     /// </summary>
-    /// <returns>
-    /// true if the command list was successfully close
-    /// false otherwise
-    /// </returns>
-    virtual bool Close() = 0;
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void Close() = 0;
 
     /// <summary>
     /// Sets the root signature that is applicable to the subsequent member function calls

@@ -1,8 +1,11 @@
+#include <sstream>
 #include "private_inc/D3D12/D3D12_Pipeline.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_Shader.h"
 #include "log.h"
-#include <sstream>
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
+using namespace std;
 
 #if 0 /* old debug code, keeping around just in case it is needed again */
 void dump_pso_desc(const D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc)
@@ -66,6 +69,18 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   const D3D12_RenderTargetViewConfig& rtv    = (const D3D12_RenderTargetViewConfig&)rtv_config;
   const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
 
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
   CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
   desc.VS = vs.GetShader();
@@ -75,8 +90,9 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
   if (FAILED(rc))
   {
-    log_print("Failed to create pipeline state\n");
-    return NULL;
+    ostringstream out;
+    out << "Failed to create pipeline state (HRESULT = " << rc << ')';
+    throw new FrameworkException(out.str());
   }
 
   return new D3D12_Pipeline(pipeline);
@@ -91,6 +107,18 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   const D3D12_Shader&                 ps     = (const D3D12_Shader&)pixel_shader;
   const D3D12_RenderTargetViewConfig& rtv    = (const D3D12_RenderTargetViewConfig&)rtv_config;
   const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
   CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
@@ -107,8 +135,9 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
   if (FAILED(rc))
   {
-    log_print("Failed to create pipeline state\n");
-    return NULL;
+    ostringstream out;
+    out << "Failed to create pipeline state (HRESULT = " << rc << ')';
+    throw new FrameworkException(out.str());
   }
 
   return new D3D12_Pipeline(pipeline);
@@ -117,34 +146,60 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
   const Shader& domain_shader, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
 {
-  const D3D12_Core&                   core = (const D3D12_Core&)graphics_core;
+  const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
-  const D3D12_Shader&                 vs = (const D3D12_Shader&)vertex_shader;
-  const D3D12_Shader&                 hs = (const D3D12_Shader&)hull_shader;
-  const D3D12_Shader&                 ds = (const D3D12_Shader&)domain_shader;
-  const D3D12_Shader&                 ps = (const D3D12_Shader&)pixel_shader;
-  const D3D12_RenderTargetViewConfig& rtv = (const D3D12_RenderTargetViewConfig&)rtv_config;
-  const D3D12_RootSignature&          root = (const D3D12_RootSignature&)root_sig;
+  const D3D12_Shader&                 vs     = (const D3D12_Shader&)vertex_shader;
+  const D3D12_Shader&                 hs     = (const D3D12_Shader&)hull_shader;
+  const D3D12_Shader&                 ds     = (const D3D12_Shader&)domain_shader;
+  const D3D12_Shader&                 ps     = (const D3D12_Shader&)pixel_shader;
+  const D3D12_RenderTargetViewConfig& rtv    = (const D3D12_RenderTargetViewConfig&)rtv_config;
+  const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a hull shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a domain shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+  }
+
+  if (topology != TOPOLOGY_PATCH)
+  {
+    throw new FrameworkException("Hull and domain shaders being used requires the topology to be set to TOPOLOGY_PATCH");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
   CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
-  desc.VS = vs.GetShader();
-  desc.HS = hs.GetShader();
-  desc.DS = ds.GetShader();
-  desc.PS = ps.GetShader();
-  desc.DepthStencilState.DepthEnable = true;
+  desc.VS                               = vs.GetShader();
+  desc.HS                               = hs.GetShader();
+  desc.DS                               = ds.GetShader();
+  desc.PS                               = ps.GetShader();
+  desc.DepthStencilState.DepthEnable    = true;
   desc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-  desc.DepthStencilState.DepthFunc = (D3D12_COMPARISON_FUNC)depth_func;
-  desc.DepthStencilState.StencilEnable = false;
-  desc.DSVFormat = DXGI_FORMAT_D32_FLOAT; // todo: make configurable
-  desc.SampleMask = UINT_MAX;
+  desc.DepthStencilState.DepthFunc      = (D3D12_COMPARISON_FUNC)depth_func;
+  desc.DepthStencilState.StencilEnable  = false;
+  desc.DSVFormat                        = DXGI_FORMAT_D32_FLOAT; // todo: make configurable
+  desc.SampleMask                       = UINT_MAX;
 
   ID3D12PipelineState* pipeline = NULL;
   HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
   if (FAILED(rc))
   {
-    log_print("Failed to create pipeline state\n");
-    return NULL;
+    ostringstream out;
+    out << "Failed to create pipeline state (HRESULT = " << rc << ')';
+    throw new FrameworkException(out.str());
   }
 
   return new D3D12_Pipeline(pipeline);
@@ -160,6 +215,22 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   const D3D12_Shader&                 ps     = (const D3D12_Shader&)pixel_shader;
   const D3D12_RenderTargetViewConfig& rtv    = (const D3D12_RenderTargetViewConfig&)rtv_config;
   const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a geometry shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
   CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
@@ -177,8 +248,77 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
   if (FAILED(rc))
   {
-    log_print("Failed to create pipeline state\n");
-    return NULL;
+    ostringstream out;
+    out << "Failed to create pipeline state (HRESULT = " << rc << ')';
+    throw new FrameworkException(out.str());
+  }
+
+  return new D3D12_Pipeline(pipeline);
+}
+
+D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
+  const Shader& domain_shader, const Shader& geometry_shader, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
+{
+  const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
+  const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
+  const D3D12_Shader&                 vs     = (const D3D12_Shader&)vertex_shader;
+  const D3D12_Shader&                 hs     = (const D3D12_Shader&)hull_shader;
+  const D3D12_Shader&                 ds     = (const D3D12_Shader&)domain_shader;
+  const D3D12_Shader&                 gs     = (const D3D12_Shader&)geometry_shader;
+  const D3D12_Shader&                 ps     = (const D3D12_Shader&)pixel_shader;
+  const D3D12_RenderTargetViewConfig& rtv    = (const D3D12_RenderTargetViewConfig&)rtv_config;
+  const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a hull shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a domain shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a geometry shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
+  {
+    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+  }
+
+  if (topology != TOPOLOGY_PATCH)
+  {
+    throw new FrameworkException("Hull and domain shaders being used requires the topology to be set to TOPOLOGY_PATCH");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+  
+  D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
+  desc.VS                               = vs.GetShader();
+  desc.HS                               = hs.GetShader();
+  desc.DS                               = ds.GetShader();
+  desc.GS                               = gs.GetShader();
+  desc.PS                               = ps.GetShader();
+  desc.DepthStencilState.DepthEnable    = true;
+  desc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+  desc.DepthStencilState.DepthFunc      = (D3D12_COMPARISON_FUNC)depth_func;
+  desc.DepthStencilState.StencilEnable  = false;
+  desc.DSVFormat                        = DXGI_FORMAT_D32_FLOAT; // todo: make configurable
+  desc.SampleMask                       = UINT_MAX;
+
+  ID3D12PipelineState* pipeline = NULL;
+  HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
+  if (FAILED(rc))
+  {
+    ostringstream out;
+    out << "Failed to create pipeline state (HRESULT = " << rc << ')';
+    throw new FrameworkException(out.str());
   }
 
   return new D3D12_Pipeline(pipeline);
@@ -202,6 +342,13 @@ ID3D12PipelineState* D3D12_Pipeline::GetPipeline() const
 void D3D12_Pipeline::CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc, const D3D12_InputLayout& layout, const D3D12_RenderTargetViewConfig& rtv, const D3D12_RootSignature& root,
   D3D12_PRIMITIVE_TOPOLOGY_TYPE topology, bool wireframe)
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (layout.GetNextIndex() != layout.GetNum())
+  {
+    throw new FrameworkException("Not all input layout entries have been set");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
   desc.pRootSignature                        = root.GetRootSignature();
   desc.InputLayout.pInputElementDescs        = layout.GetLayout();
   desc.InputLayout.NumElements               = layout.GetNum();

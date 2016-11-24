@@ -24,8 +24,10 @@ class DepthStencil
     /// </param>
     /// <returns>
     /// number of bytes the depth stencil should be created with
-    /// -1 if the computed size is too large
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height);
 
     /// <summary>
@@ -56,9 +58,11 @@ class DepthStencil
     /// default value to use for clearing the depth stencil
     /// </param>
     /// <returns>
-    /// D3D12 depth stencil on success
-    /// NULL on error
+    /// D3D12 depth stencil
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static DepthStencil* CreateD3D12(const GraphicsCore& graphics, DepthStencilResourceHeap& resource_heap, DepthStencilDescHeap& depth_stencil_buffer_heap, UINT width, UINT height,
       float default_depth_clear);
 

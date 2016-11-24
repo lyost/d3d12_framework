@@ -16,14 +16,13 @@ class RenderTargetViewConfig
 {
   public:
     /// <summary>
-    /// Creates a RenderTargetViewConfig with the specified number of entries to be configured via the various Set* functions
+    /// Creates a RenderTargetViewConfig with the specified number of entries, each of which can be configured via the modifier member functions
     /// </summary>
     /// <param name="num">
-    /// number of elements that make up the layout
+    /// number of elements that make up the render target view
     /// </param>
     /// <returns>
     /// pointer to the input layout instance on success
-    /// NULL on error
     /// </returns>
     static RenderTargetViewConfig* CreateD3D12(UINT num);
 

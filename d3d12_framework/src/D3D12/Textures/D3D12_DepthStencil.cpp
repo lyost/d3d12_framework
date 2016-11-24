@@ -2,6 +2,7 @@
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/Textures/D3D12_DepthStencilResourceHeap.h"
 #include "private_inc/D3D12/Buffers/D3D12_DepthStencilDescHeap.h"
+#include "FrameworkException.h"
 
 UINT D3D12_DepthStencil::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height)
 {
@@ -14,7 +15,7 @@ UINT D3D12_DepthStencil::GetAlignedSize(const GraphicsCore& graphics, UINT width
   D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
   if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
   {
-    return -1;
+    throw new FrameworkException("computed size is too large");
   }
   else
   {
@@ -41,7 +42,7 @@ D3D12_DepthStencil* D3D12_DepthStencil::Create(const GraphicsCore& graphics, Dep
   ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc, default_depth_clear);
   if (buffer == NULL)
   {
-    return NULL;
+    throw new FrameworkException("Unable to create buffer resource");
   }
 
   D3D12_DEPTH_STENCIL_VIEW_DESC view_desc;

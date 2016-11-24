@@ -16,15 +16,11 @@ class D3D12_RenderTargetViewConfig : public RenderTargetViewConfig
 {
   public:
     /// <summary>
-    /// Creates a render target view config that supports [0,num) render targets, each of which must be configured via the Set* functions that take an index
+    /// Creates a render target view config that supports [0,num) render targets, each of which can be configured via the modifier member functions
     /// </summary>
     /// <param name="num">
-    /// number of elements that make up the layout
+    /// number of elements that make up the render target view
     /// </param>
-    /// <remarks>
-    /// Each element must be set via SetNextElement before passing the instance
-    /// to a ContentManager
-    /// </remarks>
     D3D12_RenderTargetViewConfig(UINT num);
     
     ~D3D12_RenderTargetViewConfig();

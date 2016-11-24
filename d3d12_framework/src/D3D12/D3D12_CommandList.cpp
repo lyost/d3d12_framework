@@ -1,5 +1,5 @@
+#include <sstream>
 #include <d3d12.h>
-
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
 #include "private_inc/D3D12/D3D12_Pipeline.h"
@@ -11,20 +11,24 @@
 #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
 #include "private_inc/D3D12/Textures/D3D12_DepthStencil.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 using namespace std;
 
 D3D12_CommandList* D3D12_CommandList::Create(const GraphicsCore& graphics, Pipeline* pipeline)
 {
   // todo: determine if there is a need to have an overload of this that also takes the command allocator instead of always using the default
 
-  const D3D12_Core& core = (const D3D12_Core&)graphics;
-  ID3D12CommandAllocator* commandAlloc = core.GetDefaultCommandAlloc();
-  ID3D12PipelineState* d3d12_pipeline = pipeline ? ((D3D12_Pipeline*)pipeline)->GetPipeline() : NULL;
-  ID3D12GraphicsCommandList* commandList = NULL;
+  const D3D12_Core&          core           = (const D3D12_Core&)graphics;
+  ID3D12CommandAllocator*    commandAlloc   = core.GetDefaultCommandAlloc();
+  ID3D12PipelineState*       d3d12_pipeline = pipeline ? ((D3D12_Pipeline*)pipeline)->GetPipeline() : NULL;
+  ID3D12GraphicsCommandList* commandList    = NULL;
   HRESULT rc = core.GetDevice()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAlloc, d3d12_pipeline, __uuidof(ID3D12GraphicsCommandList), (void**)&commandList);
   if (FAILED(rc))
   {
-    return NULL;
+    ostringstream out;
+    out << "Unable to create command list.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
 
   return new D3D12_CommandList(commandList, commandAlloc);
@@ -43,26 +47,37 @@ D3D12_CommandList::~D3D12_CommandList()
   m_command_list->Release();
 }
 
-bool D3D12_CommandList::Reset(Pipeline* pipeline)
+void D3D12_CommandList::Reset(Pipeline* pipeline)
 {
   // todo: determine if there is ever a need to handle allocator reset separate from command list reset
   ID3D12PipelineState* d3d12_pipeline = pipeline ? ((D3D12_Pipeline*)pipeline)->GetPipeline() : NULL;
 
-  if (FAILED(m_allocated_from->Reset()))
+  HRESULT rc = m_allocated_from->Reset();
+  if (FAILED(rc))
   {
-    return false;
+    ostringstream out;
+    out << "Unable to reset command allocator.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
-  if (FAILED(m_command_list->Reset(m_allocated_from, d3d12_pipeline)))
+  rc = m_command_list->Reset(m_allocated_from, d3d12_pipeline);
+  if (FAILED(rc))
   {
-    return false;
+    ostringstream out;
+    out << "Unable to reset command list.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
-
-  return true;
 }
 
-bool D3D12_CommandList::Close()
+void D3D12_CommandList::Close()
 {
-  return SUCCEEDED(m_command_list->Close());
+  HRESULT rc = m_command_list->Close();
+
+  if (FAILED(rc))
+  {
+    ostringstream out;
+    out << "Failed to close command list.  HRESULT = " << rc;
+    throw new FrameworkException(out.str());
+  }
 }
 
 void D3D12_CommandList::SetRootSignature(const RootSignature& sig)
@@ -119,6 +134,13 @@ void D3D12_CommandList::RSSetViewports(const Viewports& viewports)
 
 void D3D12_CommandList::RSSetViewports(const Viewports& viewports, UINT start, UINT num)
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if ((start + num) >= Viewports::GetMaxViewports())
+  {
+    throw new FrameworkException("Requested start index and number of viewports is beyond the length of the array stored in a Viewports instance");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
   const D3D12_VIEWPORT* viewport_array = (const D3D12_VIEWPORT*)viewports.GetViewports();
   m_command_list->RSSetViewports(num, viewport_array + start);
 }
@@ -135,6 +157,13 @@ void D3D12_CommandList::RSSetScissorRects(const vector<RECT>& rects)
 
 void D3D12_CommandList::RSSetScissorRects(const vector<RECT>& rects, UINT start, UINT num)
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if ((start + num) >= rects.size())
+  {
+    throw new FrameworkException("Requested start index and number of elements is beyond the length of the array");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
   m_command_list->RSSetScissorRects(num, &rects[start]);
 }
 

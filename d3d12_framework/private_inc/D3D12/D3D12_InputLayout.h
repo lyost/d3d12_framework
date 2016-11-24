@@ -73,6 +73,14 @@ class D3D12_InputLayout : public InputLayout
     /// number of elements
     /// </returns>
     UINT GetNum() const;
+
+    /// <summary>
+    /// Retrieves the next index of the layout array to set
+    /// </summary>
+    /// <returns>
+    /// next index to set
+    /// </returns>
+    UINT GetNextIndex() const;
     
     /// <summary>
     /// Retrieves the D3D11 layout description

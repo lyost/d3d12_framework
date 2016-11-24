@@ -24,6 +24,12 @@ class D3D12_VertexBuffer_PositionTexture : public VertexBuffer_PositionTexture
     /// <param name="data">
     /// initial data for the vertex buffer
     /// </param>
+    /// <returns>
+    /// pointer to the vertex buffer instance
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static D3D12_VertexBuffer_PositionTexture* Create(GraphicsCore& graphics, UINT num, const Vertex_PositionTexture* data);
     
     /// <summary>

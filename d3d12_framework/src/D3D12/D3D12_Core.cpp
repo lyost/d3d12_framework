@@ -3,7 +3,8 @@
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_CommandListBundle.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
-#include "log.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 using namespace std;
 
 // todo: move this to exist entirely in D3D12_BackBuffer and query it
@@ -39,7 +40,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   }
   else
   {
-    log_print("Failed to get debug controller\n");
+    throw new FrameworkException("Failed to get debug controller");
   }
 #endif
 
@@ -47,7 +48,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   rc = CreateDXGIFactory1(__uuidof(IDXGIFactory4), (void**)&factory);
   if (FAILED(rc))
   {
-    log_print("Failed to create DXGI factory\n");
+    throw new FrameworkException("Failed to create DXGI factory");
     return false;
   }
 
@@ -69,8 +70,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   }
   if (device == NULL)
   {
-    log_print("Failed to create device\n");
-    return NULL;
+    throw new FrameworkException("Failed to create device");
   }
 
   D3D12_COMMAND_QUEUE_DESC queue_desc = {};
@@ -79,8 +79,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   rc = device->CreateCommandQueue(&queue_desc, __uuidof(ID3D12CommandQueue), (void**)&command_queue);
   if (FAILED(rc))
   {
-    log_print("Failed to create command queue\n");
-    return NULL;
+    throw new FrameworkException("Failed to create command queue");
   }
 
   DXGI_SWAP_CHAIN_DESC sd = {};
@@ -96,14 +95,12 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   rc = factory->CreateSwapChain(command_queue, &sd, &swap_chain);
   if (FAILED(rc))
   {
-    log_print("Failed to create the swap chain\n");
-    return NULL;
+    throw new FrameworkException("Failed to create the swap chain");
   }
   rc = swap_chain->QueryInterface(__uuidof(IDXGISwapChain3), (void**)&swap_chain3);
   if (FAILED(rc))
   {
-    log_print("Failed to convert swap chain\n");
-    return NULL;
+    throw new FrameworkException("Failed to convert swap chain");
   }
 
   factory->Release();
@@ -113,27 +110,21 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   rc = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), (void**)&command_alloc);
   if (FAILED(rc))
   {
-    log_print("Failed to create command allocator\n");
-    return NULL;
+    throw new FrameworkException("Failed to create command allocator");
   }
 
   rc = device->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)&fence);
   if (FAILED(rc))
   {
-    log_print("Failed to create fence\n");
-    return NULL;
+    throw new FrameworkException("Failed to create fence");
   }
 
   fence_event = CreateEventEx(NULL, NULL, FALSE, EVENT_ALL_ACCESS);
   if (fence_event == NULL)
   {
-    if (log_would_output())
-    {
-      ostringstream out;
-      out << "Failed to create fence event. Error code: " << GetLastError() << '\n';
-      log_print(out.str().c_str());
-    }
-    return NULL;
+    ostringstream out;
+    out << "Failed to create fence event. Error code: " << GetLastError();
+    throw new FrameworkException(out.str());
   }
 
   // todo: Setup the viewport
@@ -161,17 +152,6 @@ D3D12_Core::D3D12_Core(ID3D12Device* device, ID3D12Fence* fence, HANDLE fence_ev
  m_fullscreen(false)
 {
   memcpy(&m_default_viewport, &viewport, sizeof(Viewport));
-
-  /*
-  // create the default blend and depth stencil states
-  m_blend_state = BlendState::GetCurrent(m_immediate_context);
-  m_depth_state = DepthStencilState::GetCurrent(m_immediate_context);
-  
-  // create the wrapped versions of the depth stencil view and render target
-  // views
-  m_depth_view_wrapper = new DepthStencilView(depth_stencil_view);
-  m_render_target_view_wrapper = new RenderTargetView(render_target_view);
-  */
 }
 
 D3D12_Core::~D3D12_Core()
@@ -199,22 +179,16 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
 {
   HRESULT rc;
   
-  // get the current swap chain description and update to the desired width and
-  // height
+  // get the current swap chain description and update to the desired width and height
   DXGI_SWAP_CHAIN_DESC desc_swap;
   rc = m_swap_chain->GetDesc(&desc_swap);
   if (FAILED(rc))
   {
-    if (log_would_output())
-    {
-      ostringstream out;
-      out << "Failed to get swap chain description.  Error code: " << rc
-          << '\n';
-      log_print(out.str().c_str());
-    }
-    return;
+    ostringstream out;
+    out << "Failed to get swap chain description.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
-  desc_swap.BufferDesc.Width = width;
+  desc_swap.BufferDesc.Width  = width;
   desc_swap.BufferDesc.Height = height;
   
   // find the closest matching mode
@@ -222,56 +196,36 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
   rc = m_swap_chain->GetContainingOutput(&monitor);
   if (FAILED(rc))
   {
-    if (log_would_output())
-    {
-      ostringstream out;
-      out << "Failed to get swap chain output.  Error code: " << rc
-          << '\n';
-      log_print(out.str().c_str());
-    }
-    return;
+    ostringstream out;
+    out << "Failed to get swap chain output.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
   DXGI_MODE_DESC match;
   rc = monitor->FindClosestMatchingMode(&desc_swap.BufferDesc,&match,m_device);
   monitor->Release();
   if (FAILED(rc))
   {
-    if (log_would_output())
-    {
-      ostringstream out;
-      out << "Failed to find closest matching mode.  Error code: " << rc
-          << '\n';
-      log_print(out.str().c_str());
-    }
-    return;
+    ostringstream out;
+    out << "Failed to find closest matching mode.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
   
   // inform the swap chain of the change in resolution
   rc = m_swap_chain->ResizeTarget(&match);
   if (FAILED(rc))
   {
-    if (log_would_output())
-    {
-      ostringstream out;
-      out << "Failed to resize target.  Error code: " << rc
-          << '\n';
-      log_print(out.str().c_str());
-    }
-    return;
+    ostringstream out;
+    out << "Failed to resize target.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
   
   // go full screen
   rc = m_swap_chain->SetFullscreenState(enable,NULL);
   if (FAILED(rc))
   {
-    if (log_would_output())
-    {
-      ostringstream out;
-      out << "Failed to set the full screen state.  Error code: " << rc
-          << '\n';
-      log_print(out.str().c_str());
-    }
-    return;
+    ostringstream out;
+    out << "Failed to set the full screen state.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
   
   // take care of refresh rate issues
@@ -280,14 +234,9 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
   rc = m_swap_chain->ResizeTarget(&match);
   if (FAILED(rc))
   {
-    if (log_would_output())
-    {
-      ostringstream out;
-      out << "Failed to take care of refresh rate issue.  Error code: " << rc
-          << '\n';
-      log_print(out.str().c_str());
-    }
-    return;
+    ostringstream out;
+    out << "Failed to take care of refresh rate issue.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
 
   m_fullscreen = enable;
@@ -304,13 +253,9 @@ void D3D12_Core::OnResize(UINT width,UINT height)
   HRESULT rc = m_swap_chain->ResizeBuffers(desc.BufferCount, width, height, desc.BufferDesc.Format, desc.Flags);
   if (FAILED(rc))
   {
-    if (log_would_output())
-    {
-      ostringstream out;
-      out << "Error resizing swap chain: " << rc << '\n';
-      log_print(out.str().c_str());
-    }
-    exit(1);
+    ostringstream out;
+    out << "Error resizing swap chain.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
 
   m_back_buffer = D3D12_BackBuffers::Create(m_device, m_swap_chain);
@@ -319,28 +264,30 @@ void D3D12_Core::OnResize(UINT width,UINT height)
   m_default_viewport.height = (float)height;
 }
 
-bool D3D12_Core::WaitOnFence()
+void D3D12_Core::WaitOnFence()
 {
   // todo: Make thread-safe or a separate thread-safe version of the function
   const UINT64 fence_val = m_fence_value;
-  if (FAILED(m_command_queue->Signal(m_fence, fence_val)))
+  HRESULT rc = m_command_queue->Signal(m_fence, fence_val);
+  if (FAILED(rc))
   {
-    log_print("Failed signaling command queue for fence");
-    return false;
+    ostringstream out;
+    out << "Failed signaling command queue for fence.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
   }
   ++m_fence_value;
 
   if (m_fence->GetCompletedValue() < fence_val)
   {
-    if (FAILED(m_fence->SetEventOnCompletion(fence_val, m_fence_event)))
+    rc = m_fence->SetEventOnCompletion(fence_val, m_fence_event);
+    if (FAILED(rc))
     {
-      log_print("Failed waiting on fence event");
-      return false;
+      ostringstream out;
+      out << "Failed waiting on fence event.  HRESULT: " << rc;
+      throw new FrameworkException(out.str());
     }
     WaitForSingleObject(m_fence_event, INFINITE);
   }
-
-  return true;
 }
 
 void D3D12_Core::ExecuteCommandList(const CommandList& list) const
@@ -371,67 +318,6 @@ BackBuffers& D3D12_Core::GetBackBuffer() const
 {
   return *m_back_buffer;
 }
-
-// todo
-#if 0
-
-ID3D12DeviceContext* D3D12_Core::GetImmediateContext()
-{
-  return m_immediate_context;
-}
-
-const BlendState& D3D12_Core::GetDefaultBlendState() const
-{
-  return *m_blend_state;
-}
-
-const DepthStencilState& D3D12_Core::GetDefaultDepthStencilState() const
-{
-  return *m_depth_state;
-}
-
-DepthStencilView& D3D12_Core::GetDefaultDepthStencilView() const
-{
-  return *m_depth_view_wrapper;
-}
-
-RenderTargetView& D3D12_Core::GetDefaultRenderTargetView() const
-{
-  return *m_render_target_view_wrapper;
-}
-
-void D3D12_Core::DrawIndexedPrimitives(ID3D12DeviceContext* context,
-  D3D12_PRIMITIVE_TOPOLOGY primitive,UINT start_index,UINT num_indices)
-{
-  // set the primitive topology
-  context->IASetPrimitiveTopology(primitive);
-  
-  // draw
-  context->DrawIndexed(num_indices,start_index,0);
-}
-
-void D3D12_Core::DrawInstancedPrimitives(ID3D12DeviceContext* context,
-  D3D12_PRIMITIVE_TOPOLOGY primitive,UINT start_index,UINT num_indices,
-  UINT start_instance,UINT num_instances)
-{
-  // set the primitive topology
-  context->IASetPrimitiveTopology(primitive);
-  
-  // draw
-  context->DrawIndexedInstanced(num_indices,num_instances,start_index,0,
-    start_instance);
-}
-
-void D3D12_Core::DrawStreamOutput(ID3D12DeviceContext* context,
-  D3D12_PRIMITIVE_TOPOLOGY primitive)
-{
-  // set the primitive topology
-  context->IASetPrimitiveTopology(primitive);
-  
-  // draw
-  context->DrawAuto();
-}
-#endif /* 0 */
 
 ID3D12Device* D3D12_Core::GetDevice() const
 {

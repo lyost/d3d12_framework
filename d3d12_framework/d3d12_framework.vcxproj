@@ -161,6 +161,7 @@
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_TextureUploadBuffer.cpp" />
     <ClCompile Include="src\D3D12\VectorOps.cpp" />
+    <ClCompile Include="src\FrameworkException.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics\Buffers\BackBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\ConstantBuffer.cpp" />
@@ -201,6 +202,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="private_inc\BuildSettings.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_BackBuffer.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_ConstantBuffer.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_DepthStencilDescHeap.h" />
@@ -231,6 +233,7 @@
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureResourceHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureUploadBuffer.h" />
+    <ClInclude Include="public_inc\FrameworkException.h" />
     <ClInclude Include="public_inc\Game.h" />
     <ClInclude Include="public_inc\Graphics\BlendEnums.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\BackBuffer.h" />

@@ -1,7 +1,10 @@
+#include <sstream>
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_RootSignature.h"
 #include "private_inc/D3D12/D3D12_RootSignatureConfig.h"
-#include "log.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
+using namespace std;
 
 /*void dump_root_sig_config(const D3D12_ROOT_SIGNATURE_DESC& desc)
 {
@@ -80,8 +83,9 @@ D3D12_RootSignature* D3D12_RootSignature::Create(const GraphicsCore& graphics, c
   HRESULT rc = D3D12SerializeRootSignature(&conf.GetDesc(), D3D_ROOT_SIGNATURE_VERSION_1, &sig, &err);
   if (FAILED(rc))
   {
-    log_print("Failed to serialize graphics root signature");
-    return NULL;
+    ostringstream out;
+    out << "Failed to serialize root signature, HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
   const void* root_data = sig->GetBufferPointer();
   UINT root_len = sig->GetBufferSize();
@@ -89,15 +93,17 @@ D3D12_RootSignature* D3D12_RootSignature::Create(const GraphicsCore& graphics, c
   rc = core.GetDevice()->CreateRootSignature(0, sig->GetBufferPointer(), sig->GetBufferSize(), IID_PPV_ARGS(&root_sig));
   if (FAILED(rc))
   {
-    log_print("Failed to create graphics root signature");
-    return NULL;
+    ostringstream out;
+    out << "Failed to create root signature, HRESULT = " << rc;
+    throw new FrameworkException(out.str());
   }
 
-  return new D3D12_RootSignature(root_sig);
+  return new D3D12_RootSignature(root_sig, conf.GetDesc().Flags);
 }
 
-D3D12_RootSignature::D3D12_RootSignature(ID3D12RootSignature* root_sig)
-:m_root_sig(root_sig)
+D3D12_RootSignature::D3D12_RootSignature(ID3D12RootSignature* root_sig, D3D12_ROOT_SIGNATURE_FLAGS stage_acess)
+:m_root_sig(root_sig),
+ m_stage_access(stage_acess)
 {
 }
 
@@ -109,4 +115,9 @@ D3D12_RootSignature::~D3D12_RootSignature()
 ID3D12RootSignature* D3D12_RootSignature::GetRootSignature() const
 {
   return m_root_sig;
+}
+
+D3D12_ROOT_SIGNATURE_FLAGS D3D12_RootSignature::GetStageAccess() const
+{
+  return m_stage_access;
 }

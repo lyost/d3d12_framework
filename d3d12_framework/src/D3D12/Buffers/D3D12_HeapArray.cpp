@@ -1,7 +1,7 @@
-#include <cassert>
 #include "private_inc/D3D12/Buffers/D3D12_HeapArray.h"
 #include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
-using namespace std;
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 
 HeapArray* D3D12_HeapArray::Create(UINT num_entries)
 {
@@ -30,7 +30,12 @@ D3D12_HeapArray::~D3D12_HeapArray()
 
 void D3D12_HeapArray::SetHeap(UINT index, const ShaderResourceDescHeap& heap)
 {
-  assert(index < m_len);
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_len)
+  {
+    throw new FrameworkException("index beyond number of heap entries");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   if (m_heaps[index])
   {

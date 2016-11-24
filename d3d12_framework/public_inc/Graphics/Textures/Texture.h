@@ -27,8 +27,10 @@ class Texture
     /// </param>
     /// <returns>
     /// number of bytes the texture should be created with
-    /// -1 if the computed size is too large
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format);
 
     /// <summary>
@@ -59,9 +61,11 @@ class Texture
     /// texture format
     /// </param>
     /// <returns>
-    /// D3D12 texture 2D on success
-    /// NULL on error
+    /// D3D12 texture 2D
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static Texture* CreateD3D12_2D(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
       GraphicsDataFormat format);
 

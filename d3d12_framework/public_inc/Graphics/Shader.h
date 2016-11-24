@@ -11,9 +11,11 @@ class Shader
     /// path to the file to load
     /// </param>
     /// <returns>
-    /// pointer to the Shader instance on success
-    /// NULL on error
+    /// pointer to the Shader instance
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered in creating the instance
+    /// </exception>
     static Shader* LoadD3D12(const char* path);
 
     virtual ~Shader();

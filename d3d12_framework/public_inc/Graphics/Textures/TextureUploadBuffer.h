@@ -25,9 +25,11 @@ class TextureUploadBuffer
     /// </remarks>
     /// </param>
     /// <returns>
-    /// D3D12 texture upload buffer on success
-    /// NULL on error
+    /// D3D12 texture upload buffer
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture& texture, BufferResourceHeap& resource_heap);
 
     virtual ~TextureUploadBuffer();
@@ -47,11 +49,10 @@ class TextureUploadBuffer
     /// <param name="data">
     /// bytes to write to the texture
     /// </param>
-    /// <returns>
-    /// true if the texture needs a fence for the transfer to complete
-    /// false on error
-    /// </returns>
-    virtual bool PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture, const std::vector<UINT8>& data) = 0;
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture, const std::vector<UINT8>& data) = 0;
 
   protected:
     TextureUploadBuffer();
