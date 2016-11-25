@@ -2,16 +2,15 @@
 #define D3D12_DEPTH_STENCIL_DESC_HEAP_H
 
 #include <d3d12.h>
-#include "Graphics/Buffers/DepthStencilDescHeap.h"
 
-class D3D12_DepthStencilDescHeap : public DepthStencilDescHeap
+class D3D12_DepthStencilDescHeap
 {
   public:
     /// <summary>
     /// Creates a D3D12 descriptor heap for depth stencils
     ///</summary>
-    /// <param name="graphics">
-    /// core graphics interface
+    /// <param name="device">
+    /// d3d12 device
     /// </param>
     /// <param name="num_descriptors">
     /// Number of descriptors the heap is to contain
@@ -22,7 +21,7 @@ class D3D12_DepthStencilDescHeap : public DepthStencilDescHeap
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static D3D12_DepthStencilDescHeap* Create(const GraphicsCore& graphics, UINT num_descriptors);
+    static D3D12_DepthStencilDescHeap* Create(ID3D12Device* device, UINT num_descriptors);
 
     ~D3D12_DepthStencilDescHeap();
 

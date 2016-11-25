@@ -2,16 +2,15 @@
 #define D3D12_DEPTH_STENCIL_RESOURCE_HEAP_H
 
 #include <d3d12.h>
-#include "Graphics/Textures/DepthStencilResourceHeap.h"
 
-class D3D12_DepthStencilResourceHeap : public DepthStencilResourceHeap
+class D3D12_DepthStencilResourceHeap
 {
   public:
     /// <summary>
     /// Creates a D3D12 placed resource heap for depth stencils
     ///</summary>
-    /// <param name="graphics">
-    /// core graphics interface
+    /// <param name="device">
+    /// d3d12 device
     /// </param>
     /// <param name="num_bytes">
     /// Number of bytes the heap is to contain
@@ -22,15 +21,15 @@ class D3D12_DepthStencilResourceHeap : public DepthStencilResourceHeap
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static D3D12_DepthStencilResourceHeap* Create(const GraphicsCore& graphics, UINT64 num_bytes);
+    static D3D12_DepthStencilResourceHeap* Create(ID3D12Device* device, UINT64 num_bytes);
 
     ~D3D12_DepthStencilResourceHeap();
 
     /// <summary>
     /// Creates a placed resource in the heap
     ///</summary>
-    /// <param name="graphics">
-    /// core graphics interface
+    /// <param name="device">
+    /// d3d12 device
     /// </param>
     /// <param name="resource_desc">
     /// D3D12 description of the resource to create
@@ -44,7 +43,7 @@ class D3D12_DepthStencilResourceHeap : public DepthStencilResourceHeap
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    ID3D12Resource* CreateResource(const GraphicsCore& graphics, const D3D12_RESOURCE_DESC& resource_desc, float default_depth_clear);
+    ID3D12Resource* CreateResource(ID3D12Device* device, const D3D12_RESOURCE_DESC& resource_desc, float default_depth_clear);
 
     /// <summary>
     /// Retrieves the number of bytes the heap was created to hold

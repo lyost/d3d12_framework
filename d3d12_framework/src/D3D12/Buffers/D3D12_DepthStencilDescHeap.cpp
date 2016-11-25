@@ -7,11 +7,8 @@ using namespace std;
 
 // todo: add class for D3D12_ShaderSamplerHeap
 
-D3D12_DepthStencilDescHeap* D3D12_DepthStencilDescHeap::Create(const GraphicsCore& graphics, UINT num_descriptors)
+D3D12_DepthStencilDescHeap* D3D12_DepthStencilDescHeap::Create(ID3D12Device* device, UINT num_descriptors)
 {
-  const D3D12_Core& core   = (const D3D12_Core&)graphics;
-  ID3D12Device*     device = core.GetDevice();
-
   D3D12_DESCRIPTOR_HEAP_DESC desc;
   desc.Type           = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
   desc.NumDescriptors = num_descriptors;

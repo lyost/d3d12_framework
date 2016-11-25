@@ -13,13 +13,11 @@
 #include "Camera.h"
 #include "Graphics/Buffers/BufferResourceHeap.h"
 #include "Graphics/Buffers/ShaderResourceDescHeap.h"
-#include "Graphics/Buffers/DepthStencilDescHeap.h"
 #include "Graphics/Buffers/ConstantBuffer.h"
 #include "Graphics/Buffers/HeapArray.h"
 #include "Graphics/Textures/TextureResourceHeap.h"
 #include "Graphics/Textures/Texture.h"
 #include "Graphics/Textures/TextureUploadBuffer.h"
-#include "Graphics/Textures/DepthStencilResourceHeap.h"
 #include "Graphics/Textures/DepthStencil.h"
 
 class GameMain : public Game
@@ -181,16 +179,6 @@ class GameMain : public Game
     /// Constant buffer 
     /// </summary>
     ConstantBuffer* m_constant_buffer;
-
-    /// <summary>
-    /// resource heap for the depth stencil
-    /// </summary>
-    DepthStencilResourceHeap* m_depth_stencil_resource_heap;
-
-    /// <summary>
-    /// descriptor heap for the depth stencil
-    /// </summary>
-    DepthStencilDescHeap* m_depth_stencil_desc_heap;
 
     /// <summary>
     /// depth stencil

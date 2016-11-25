@@ -165,7 +165,6 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics\Buffers\BackBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\ConstantBuffer.cpp" />
-    <ClCompile Include="src\Graphics\Buffers\DepthStencilDescHeap.cpp" />
     <ClCompile Include="src\Graphics\Buffers\HeapArray.cpp" />
     <ClCompile Include="src\Graphics\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\IndexBuffer16.cpp" />
@@ -188,7 +187,6 @@
     <ClCompile Include="src\Graphics\RootSignatureConfig.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Graphics\Textures\DepthStencil.cpp" />
-    <ClCompile Include="src\Graphics\Textures\DepthStencilResourceHeap.cpp" />
     <ClCompile Include="src\Graphics\Textures\TextureResourceHeap.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture.cpp" />
     <ClCompile Include="src\Graphics\Textures\TextureUploadBuffer.cpp" />
@@ -238,7 +236,6 @@
     <ClInclude Include="public_inc\Graphics\BlendEnums.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\BackBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\ConstantBuffer.h" />
-    <ClInclude Include="public_inc\Graphics\Buffers\DepthStencilDescHeap.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\HeapArray.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer16.h" />
@@ -269,7 +266,6 @@
     <ClInclude Include="public_inc\Graphics\ShaderVisibility.h" />
     <ClInclude Include="public_inc\Graphics\TextureEnums.h" />
     <ClInclude Include="public_inc\Graphics\Textures\DepthStencil.h" />
-    <ClInclude Include="public_inc\Graphics\Textures\DepthStencilResourceHeap.h" />
     <ClInclude Include="public_inc\Graphics\Textures\TextureResourceHeap.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture.h" />
     <ClInclude Include="public_inc\Graphics\Textures\TextureUploadBuffer.h" />

@@ -4,11 +4,8 @@
 #include "FrameworkException.h"
 using namespace std;
 
-D3D12_DepthStencilResourceHeap* D3D12_DepthStencilResourceHeap::Create(const GraphicsCore& graphics, UINT64 num_bytes)
+D3D12_DepthStencilResourceHeap* D3D12_DepthStencilResourceHeap::Create(ID3D12Device* device, UINT64 num_bytes)
 {
-  const D3D12_Core& core   = (const D3D12_Core&)graphics;
-  ID3D12Device*     device = core.GetDevice();
-
   D3D12_HEAP_DESC desc;
   desc.SizeInBytes                     = num_bytes;
   desc.Properties.Type                 = D3D12_HEAP_TYPE_DEFAULT;
@@ -38,11 +35,8 @@ D3D12_DepthStencilResourceHeap::D3D12_DepthStencilResourceHeap(UINT64 num_bytes,
 {
 }
 
-ID3D12Resource* D3D12_DepthStencilResourceHeap::CreateResource(const GraphicsCore& graphics, const D3D12_RESOURCE_DESC& resource_desc, float default_depth_clear)
+ID3D12Resource* D3D12_DepthStencilResourceHeap::CreateResource(ID3D12Device* device, const D3D12_RESOURCE_DESC& resource_desc, float default_depth_clear)
 {
-  const D3D12_Core& core   = (const D3D12_Core&)graphics;
-  ID3D12Device*     device = core.GetDevice();
-
   D3D12_CLEAR_VALUE clear;
   clear.Format               = DXGI_FORMAT_D32_FLOAT;
   clear.DepthStencil.Depth   = default_depth_clear;

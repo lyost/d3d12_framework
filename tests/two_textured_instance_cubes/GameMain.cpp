@@ -226,8 +226,6 @@ void GameMain::LoadContent()
 
 void GameMain::UnloadContent()
 {
-  delete m_depth_stencil_resource_heap;
-  delete m_depth_stencil_desc_heap;
   delete m_depth_stencil;
   delete m_tex_heap;
   delete m_upload_heap;
@@ -362,8 +360,6 @@ void GameMain::OnResize(UINT width,UINT height)
   UpdateCamera();
 
   delete m_depth_stencil;
-  delete m_depth_stencil_desc_heap;
-  delete m_depth_stencil_resource_heap;
   CreateDepthStencil();
 }
 
@@ -444,23 +440,9 @@ void GameMain::CreateDepthStencil()
   GraphicsCore& graphics = GetGraphics();
   Viewport full_viewport = graphics.GetDefaultViewport();
 
-  // determine the memory requirements of the depth stencil
-  UINT depth_stencil_aligned_size = DepthStencil::GetAlignedSize(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height);
-
-  // create the depth stencil
-  m_depth_stencil_resource_heap = DepthStencilResourceHeap::CreateD3D12(graphics, depth_stencil_aligned_size);
-  if (m_depth_stencil_resource_heap == NULL)
-  {
-    exit(1);
-  }
-  m_depth_stencil_desc_heap = DepthStencilDescHeap::CreateD3D12(graphics, 1);
-  if (m_depth_stencil_desc_heap == NULL)
-  {
-    exit(1);
-  }
-  m_depth_stencil = DepthStencil::CreateD3D12(graphics, *m_depth_stencil_resource_heap, *m_depth_stencil_desc_heap, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
-  if (m_depth_stencil == NULL)
-  {
-    exit(1);
-  }
+  vector<DepthStencil::Config> configs;
+  vector<DepthStencil*> depth_stencils;
+  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
+  DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
+  m_depth_stencil = depth_stencils[0];
 }

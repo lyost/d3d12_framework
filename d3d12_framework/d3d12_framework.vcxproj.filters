@@ -255,14 +255,8 @@
     <ClCompile Include="src\D3D12\Buffers\D3D12_DepthStencilDescHeap.cpp">
       <Filter>Source Files\D3D12\Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Buffers\DepthStencilDescHeap.cpp">
-      <Filter>Source Files\Graphics\Buffers</Filter>
-    </ClCompile>
     <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencilResourceHeap.cpp">
       <Filter>Source Files\D3D12\Textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Textures\DepthStencilResourceHeap.cpp">
-      <Filter>Source Files\Graphics\Textures</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Buffers\ShaderResourceDescHeap.cpp">
       <Filter>Source Files\Graphics\Buffers</Filter>
@@ -503,17 +497,11 @@
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencil.h">
       <Filter>private_inc\D3D12\Textures</Filter>
     </ClInclude>
-    <ClInclude Include="public_inc\Graphics\Buffers\DepthStencilDescHeap.h">
-      <Filter>public_inc\Graphics\Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_DepthStencilDescHeap.h">
       <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencilResourceHeap.h">
       <Filter>private_inc\D3D12\Textures</Filter>
-    </ClInclude>
-    <ClInclude Include="public_inc\Graphics\Textures\DepthStencilResourceHeap.h">
-      <Filter>public_inc\Graphics\Textures</Filter>
     </ClInclude>
     <ClInclude Include="public_inc\Graphics\Buffers\ShaderResourceDescHeap.h">
       <Filter>public_inc\Graphics\Buffers</Filter>
