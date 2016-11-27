@@ -114,18 +114,10 @@ class D3D12_Core : public GraphicsCore
     /// D3D12 device
     /// </returns>
     ID3D12Device* GetDevice() const;
-
-    /// <summary>
-    /// Retrieves the default D3D12 command allocator
-    /// </summary>
-    /// <returns>
-    /// default D3D12 command allocator
-    /// </returns>
-    ID3D12CommandAllocator* GetDefaultCommandAlloc() const;
     
   private:
-    D3D12_Core(ID3D12Device* device, ID3D12Fence* fence, HANDLE fence_event, IDXGISwapChain* swap_chain_base, IDXGISwapChain3* swap_chain, ID3D12CommandAllocator* command_alloc,
-      ID3D12CommandQueue* command_queue, D3D12_BackBuffers* back_buffer, const D3D12_VIEWPORT& viewport);
+    D3D12_Core(ID3D12Device* device, ID3D12Fence* fence, HANDLE fence_event, IDXGISwapChain* swap_chain_base, IDXGISwapChain3* swap_chain, ID3D12CommandQueue* command_queue,
+      D3D12_BackBuffers* back_buffer, const D3D12_VIEWPORT& viewport);
     
     // disabled
     D3D12_Core(const D3D12_Core& cpy);
@@ -160,11 +152,6 @@ class D3D12_Core : public GraphicsCore
     /// swap chain
     /// </summary>
     IDXGISwapChain3*        m_swap_chain;
-
-    /// <summary>
-    /// command allocator
-    /// </summary>
-    ID3D12CommandAllocator* m_command_alloc;
 
     /// <summary>
     /// command queue

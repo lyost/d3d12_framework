@@ -17,13 +17,22 @@ using namespace std;
 
 D3D12_CommandList* D3D12_CommandList::Create(const GraphicsCore& graphics, Pipeline* pipeline)
 {
-  // todo: determine if there is a need to have an overload of this that also takes the command allocator instead of always using the default
-
   const D3D12_Core&          core           = (const D3D12_Core&)graphics;
-  ID3D12CommandAllocator*    commandAlloc   = core.GetDefaultCommandAlloc();
+  ID3D12Device*              device         = core.GetDevice();
   ID3D12PipelineState*       d3d12_pipeline = pipeline ? ((D3D12_Pipeline*)pipeline)->GetPipeline() : NULL;
+  ID3D12CommandAllocator*    command_alloc  = NULL;
   ID3D12GraphicsCommandList* commandList    = NULL;
-  HRESULT rc = core.GetDevice()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAlloc, d3d12_pipeline, __uuidof(ID3D12GraphicsCommandList), (void**)&commandList);
+  HRESULT                    rc;
+
+  rc = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), (void**)&command_alloc);
+  if (FAILED(rc))
+  {
+    ostringstream out;
+    out << "Unable to create command allocator.  HRESULT: " << rc;
+    throw new FrameworkException(out.str());
+  }
+
+  rc = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, command_alloc, d3d12_pipeline, __uuidof(ID3D12GraphicsCommandList), (void**)&commandList);
   if (FAILED(rc))
   {
     ostringstream out;
@@ -31,14 +40,13 @@ D3D12_CommandList* D3D12_CommandList::Create(const GraphicsCore& graphics, Pipel
     throw new FrameworkException(out.str());
   }
 
-  return new D3D12_CommandList(commandList, commandAlloc);
+  return new D3D12_CommandList(commandList, command_alloc);
 }
 
 D3D12_CommandList::D3D12_CommandList(ID3D12GraphicsCommandList* command_list, ID3D12CommandAllocator* allocated_from)
 :m_command_list(command_list),
  m_allocated_from(allocated_from)
 {
-  m_allocated_from->AddRef();
 }
 
 D3D12_CommandList::~D3D12_CommandList()

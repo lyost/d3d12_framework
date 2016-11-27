@@ -19,7 +19,6 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   IDXGISwapChain*         swap_chain         = NULL;
   IDXGISwapChain3*        swap_chain3        = NULL;
   ID3D12CommandQueue*     command_queue      = NULL;
-  ID3D12CommandAllocator* command_alloc      = NULL;
   ID3D12Fence*            fence              = NULL;
   HANDLE                  fence_event;
 
@@ -107,12 +106,6 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
 
   back_buffer = D3D12_BackBuffers::Create(device, swap_chain3);
 
-  rc = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), (void**)&command_alloc);
-  if (FAILED(rc))
-  {
-    throw new FrameworkException("Failed to create command allocator");
-  }
-
   rc = device->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)&fence);
   if (FAILED(rc))
   {
@@ -136,17 +129,16 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   vp.TopLeftX = 0;
   vp.TopLeftY = 0;
 
-  return new D3D12_Core(device, fence, fence_event, swap_chain, swap_chain3, command_alloc, command_queue, back_buffer, vp);
+  return new D3D12_Core(device, fence, fence_event, swap_chain, swap_chain3, command_queue, back_buffer, vp);
 }
 
-D3D12_Core::D3D12_Core(ID3D12Device* device, ID3D12Fence* fence, HANDLE fence_event, IDXGISwapChain* swap_chain_base, IDXGISwapChain3* swap_chain, ID3D12CommandAllocator* command_alloc,
-  ID3D12CommandQueue* command_queue, D3D12_BackBuffers* back_buffer, const D3D12_VIEWPORT& viewport)
+D3D12_Core::D3D12_Core(ID3D12Device* device, ID3D12Fence* fence, HANDLE fence_event, IDXGISwapChain* swap_chain_base, IDXGISwapChain3* swap_chain, ID3D12CommandQueue* command_queue,
+  D3D12_BackBuffers* back_buffer, const D3D12_VIEWPORT& viewport)
 :m_device(device),
  m_fence(fence),
  m_fence_event(fence_event),
  m_swap_chain_base(swap_chain_base),
  m_swap_chain(swap_chain),
- m_command_alloc(command_alloc),
  m_command_queue(command_queue),
  m_back_buffer(back_buffer),
  m_fullscreen(false)
@@ -167,7 +159,6 @@ D3D12_Core::~D3D12_Core()
 
   CloseHandle(m_fence_event);
   m_fence->Release();
-  m_command_alloc->Release();
   delete m_back_buffer;
   m_swap_chain->Release();
   m_swap_chain_base->Release();
@@ -322,9 +313,4 @@ BackBuffers& D3D12_Core::GetBackBuffer() const
 ID3D12Device* D3D12_Core::GetDevice() const
 {
   return m_device;
-}
-
-ID3D12CommandAllocator* D3D12_Core::GetDefaultCommandAlloc() const
-{
-  return m_command_alloc;
 }
