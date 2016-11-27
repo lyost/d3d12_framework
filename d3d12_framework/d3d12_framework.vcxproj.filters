@@ -273,6 +273,12 @@
     <ClCompile Include="src\FrameworkException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetDescHeap.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetResourceHeap.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -520,6 +526,12 @@
     </ClInclude>
     <ClInclude Include="public_inc\FrameworkException.h">
       <Filter>public_inc</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetDescHeap.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetResourceHeap.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

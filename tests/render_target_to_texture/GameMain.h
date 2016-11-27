@@ -75,27 +75,22 @@ class GameMain : public Game
     GameMain(const GameMain& cpy);
     GameMain& operator=(const GameMain& cpy);
 
+    enum
+    {
+      RTV_TEX_WIDTH  = 64,
+      RTV_TEX_HEIGHT = 64,
+      RTV_TEX_FORMAT = R8B8G8A8_UNORM,
+    };
+
     /// <summary>
-    /// Helper function that takes care of the setup and creation of the test texture that uses a render target to generate the image
+    /// Helper function that takes care of the setup of the test texture that uses a render target to generate the image
     /// </summary>
     void CreateRTV();
 
     /// <summary>
-    /// Creates a test texture
+    /// Helper function that draws the test texture
     /// </summary>
-    /// <param name="width">
-    /// width of the texture in pixels
-    /// </param>
-    /// <param name="height">
-    /// height of the texture in pixels
-    /// </param>
-    /// <param name="format">
-    /// format of the pixels
-    /// </param>
-    /// <param name="bytes">
-    /// bytes of the image
-    /// </param>
-    static void CreateTexture(UINT& width, UINT& height, GraphicsDataFormat& format, std::vector<UINT8>& bytes);
+    void DrawRTV();
 
     /// <summary>
     /// Updates m_camera based on m_camera_angle
@@ -146,11 +141,6 @@ class GameMain : public Game
     /// command list to draw with
     /// </summary>
     CommandList* m_command_list;
-
-    /// <summary>
-    /// command list to draw with for creating the test texture
-    /// </summary>
-    CommandList* m_rtv_command_list;
 
     /// <summary>
     /// vertex buffer for the test case
@@ -213,19 +203,14 @@ class GameMain : public Game
     TextureResourceHeap* m_tex_heap;
 
     /// <summary>
-    /// heap for texture upload buffers
-    /// </summary>
-    BufferResourceHeap* m_upload_heap;
-
-    /// <summary>
     /// texture
     /// </summary>
     Texture* m_texture;
 
     /// <summary>
-    /// buffer for uploading the texture's data
+    /// render target view of m_texture
     /// </summary>
-    TextureUploadBuffer* m_upload_texture;
+    RenderTarget* m_rtv_texture;
 
     /// <summary>
     /// depth stencil

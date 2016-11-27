@@ -57,7 +57,6 @@ D3D12_CommandList::~D3D12_CommandList()
 
 void D3D12_CommandList::Reset(Pipeline* pipeline)
 {
-  // todo: determine if there is ever a need to handle allocator reset separate from command list reset
   ID3D12PipelineState* d3d12_pipeline = pipeline ? ((D3D12_Pipeline*)pipeline)->GetPipeline() : NULL;
 
   HRESULT rc = m_allocated_from->Reset();

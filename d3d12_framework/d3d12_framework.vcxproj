@@ -157,6 +157,8 @@
     <ClCompile Include="src\D3D12\Semantics.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencil.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencilResourceHeap.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetDescHeap.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetResourceHeap.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_TextureResourceHeap.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_TextureUploadBuffer.cpp" />
@@ -228,6 +230,8 @@
     <ClInclude Include="private_inc\D3D12\D3D12_Shader.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencil.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencilResourceHeap.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetDescHeap.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetResourceHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureResourceHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureUploadBuffer.h" />

@@ -1,6 +1,7 @@
 #ifndef BACK_BUFFER_H
 #define BACK_BUFFER_H
 
+class RenderTarget;
 #include "Graphics/Buffers/RenderTarget.h"
 
 /// <summary>

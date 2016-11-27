@@ -5,7 +5,7 @@
 #include "FrameworkException.h"
 using namespace std;
 
-void D3D12_DepthStencil::Create(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<DepthStencil*>& out)
+void D3D12_DepthStencil::Create(const GraphicsCore& graphics, const vector<Config>& configs, vector<DepthStencil*>& out)
 {
   const D3D12_Core& core = (const D3D12_Core&)graphics;
   ID3D12Device* device = core.GetDevice();

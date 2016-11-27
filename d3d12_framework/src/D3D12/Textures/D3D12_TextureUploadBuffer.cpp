@@ -9,8 +9,8 @@
 
 D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture& texture, BufferResourceHeap& resource_heap)
 {
-  const D3D12_Core& core = (const D3D12_Core&)graphics;
-  ID3D12Device* device = core.GetDevice();
+  const D3D12_Core& core   = (const D3D12_Core&)graphics;
+  ID3D12Device*     device = core.GetDevice();
 
   D3D12_BufferResourceHeap& buffer_heap = (D3D12_BufferResourceHeap&)resource_heap;
 
@@ -48,11 +48,11 @@ D3D12_TextureUploadBuffer::~D3D12_TextureUploadBuffer()
 
 void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture, const std::vector<UINT8>& data)
 {
-  ID3D12Device* device = ((D3D12_Core&)graphics).GetDevice();
-  ID3D12Resource* dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
-  D3D12_RESOURCE_DESC dst_desc = dst_texture->GetDesc();
+  ID3D12Device*       device      = ((D3D12_Core&)graphics).GetDevice();
+  ID3D12Resource*     dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
+  D3D12_RESOURCE_DESC dst_desc    = dst_texture->GetDesc();
   D3D12_PLACED_SUBRESOURCE_FOOTPRINT dst_layout;
-  UINT dst_num_rows;
+  UINT   dst_num_rows;
   UINT64 dst_row_size_in_bytes;
   UINT64 dst_total_bytes;
   device->GetCopyableFootprints(&dst_desc, 0, 1, 0, &dst_layout, &dst_num_rows, &dst_row_size_in_bytes, &dst_total_bytes);
@@ -99,22 +99,22 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
 
   ID3D12GraphicsCommandList* cmd_list = ((D3D12_CommandList&)command_list).GetCommandList();
   D3D12_RESOURCE_BARRIER prep_copy;
-  prep_copy.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  prep_copy.Type  = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
   prep_copy.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-  prep_copy.Transition.pResource = dst_texture;
+  prep_copy.Transition.pResource   = dst_texture;
   prep_copy.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
   prep_copy.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
-  prep_copy.Transition.StateAfter = D3D12_RESOURCE_STATE_COPY_DEST;
+  prep_copy.Transition.StateAfter  = D3D12_RESOURCE_STATE_COPY_DEST;
   cmd_list->ResourceBarrier(1, &prep_copy);
 
   cmd_list->CopyTextureRegion(&dst, 0, 0, 0, &src, NULL);
 
   D3D12_RESOURCE_BARRIER done_copy;
-  done_copy.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  done_copy.Type  = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
   done_copy.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-  done_copy.Transition.pResource = dst_texture;
+  done_copy.Transition.pResource   = dst_texture;
   done_copy.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
   done_copy.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-  done_copy.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+  done_copy.Transition.StateAfter  = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
   cmd_list->ResourceBarrier(1, &done_copy);
 }

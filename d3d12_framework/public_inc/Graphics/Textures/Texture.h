@@ -1,7 +1,9 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+class GraphicsCore;
 class TextureResourceHeap;
+class ShaderResourceDescHeap;
 
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/Textures/TextureResourceHeap.h"

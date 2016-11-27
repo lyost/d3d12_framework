@@ -144,13 +144,8 @@ void GameMain::LoadContent()
   m_vert_array = VertexBufferArray::CreateD3D12(1);
   m_vert_array->Set(0, *m_verts);
 
-  // create the texture image
-  UINT width;
-  UINT height;
-  GraphicsDataFormat format;
-  vector<UINT8> tex_bytes;
-  CreateTexture(width, height, format, tex_bytes);
-  UINT texture_aligned_size = Texture::GetAlignedSize(graphics, width, height, format);
+  // compute the bytes needed for the texture
+  UINT texture_aligned_size = Texture::GetAlignedSize(graphics, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
 
   // create the resource heap
   UINT constant_buffer_size = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX));
@@ -174,32 +169,6 @@ void GameMain::LoadContent()
     exit(1);
   }
 
-  // create the texture
-  m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
-  if (m_tex_heap == NULL)
-  {
-    exit(1);
-  }
-  m_texture = Texture::CreateD3D12_2D(graphics, *m_tex_heap, *m_shader_buffer_heap, width, height, format);
-  if (m_texture == NULL)
-  {
-    exit(1);
-  }
-  const UINT64 upload_buffer_size = m_texture->GetUploadBufferSize();
-  m_upload_heap = BufferResourceHeap::CreateD3D12(graphics, upload_buffer_size);
-  if (m_upload_heap == NULL)
-  {
-    exit(1);
-  }
-  m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture, *m_upload_heap);
-  if (m_upload_texture == NULL)
-  {
-    exit(1);
-  }
-
-  // start uploading the texture
-  m_upload_texture->PrepUpload(graphics, *m_command_list, *m_texture, tex_bytes);
-
   CreateDepthStencil();
 
   // create the heap array
@@ -207,20 +176,15 @@ void GameMain::LoadContent()
   m_heap_array->SetHeap(0, *m_shader_buffer_heap);
 
   CreateRTV();
-
-  // finish uploading the textures
-  m_command_list->Close();
-  graphics.ExecuteCommandList(*m_command_list);
-  graphics.WaitOnFence();
+  DrawRTV();
 }
 
 void GameMain::UnloadContent()
 {
+  delete m_rtv_texture;
   delete m_depth_stencil;
   delete m_tex_heap;
-  delete m_upload_heap;
   delete m_texture;
-  delete m_upload_texture;
   delete m_camera;
   delete m_resource_heap;
   delete m_shader_buffer_heap;
@@ -354,60 +318,6 @@ void GameMain::OnResize(UINT width, UINT height)
   CreateDepthStencil();
 }
 
-void GameMain::CreateTexture(UINT& width, UINT& height, GraphicsDataFormat& format, std::vector<UINT8>& bytes)
-{
-  width = 64;
-  height = 64;
-  format = R8B8G8A8_UNORM;
-  const UINT bytes_per_pixel = 4; // 4 due to using a RGBA texture
-
-  const UINT center_x = width / 2;
-  const UINT center_y = height / 2;
-  const UINT radius_sq = center_x * center_x;
-
-  const UINT tex_size = width * height * bytes_per_pixel;
-  bytes.resize(tex_size);
-  UINT byte_index = 0;
-  for (UINT y = 0; y < height; y++)
-  {
-    for (UINT x = 0; x < width; x++, byte_index += bytes_per_pixel)
-    {
-      const float dx = x + .5f - center_x;
-      const float dy = y + .5f - center_y;
-      const float dist_sq = dx * dx + dy * dy;
-
-      if (dist_sq > radius_sq)
-      {
-        bytes[byte_index] = 0;
-        bytes[byte_index + 1] = 0;
-        bytes[byte_index + 2] = 0;
-        bytes[byte_index + 3] = 255;
-      }
-      else if (dy >= 0)
-      {
-        bytes[byte_index] = 255;
-        bytes[byte_index + 1] = 0;
-        bytes[byte_index + 2] = 0;
-        bytes[byte_index + 3] = 255;
-      }
-      else if (dx < 0)
-      {
-        bytes[byte_index] = 0;
-        bytes[byte_index + 1] = 255;
-        bytes[byte_index + 2] = 0;
-        bytes[byte_index + 3] = 255;
-      }
-      else
-      {
-        bytes[byte_index] = 0;
-        bytes[byte_index + 1] = 0;
-        bytes[byte_index + 2] = 255;
-        bytes[byte_index + 3] = 255;
-      }
-    }
-  }
-}
-
 void GameMain::UpdateCamera()
 {
   const float orbit_dist = 10;
@@ -458,5 +368,89 @@ void GameMain::CreateRTV()
     exit(1);
   }
 
-  //m_rtv_command_list = CommandList::CreateD3D12Direct(graphics, m_rtv_pipeline);
+  // create the texture
+  UINT texture_aligned_size = Texture::GetAlignedSize(graphics, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
+  m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
+  if (m_tex_heap == NULL)
+  {
+    exit(1);
+  }
+  m_texture = Texture::CreateD3D12_2D(graphics, *m_tex_heap, *m_shader_buffer_heap, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
+  if (m_texture == NULL)
+  {
+    exit(1);
+  }
+
+  vector<RenderTarget::Config> configs;
+  configs.push_back({ RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT });
+  vector<RenderTarget*> render_targets;
+  RenderTarget::CreateD3D12(graphics, configs, render_targets);
+  m_rtv_texture = render_targets[0];
+  if (m_rtv_texture == NULL)
+  {
+    exit(1);
+  }
+}
+
+void GameMain::DrawRTV()
+{
+  GraphicsCore& graphics = GetGraphics();
+
+  m_command_list->Close();
+  m_command_list->Reset(m_rtv_pipeline);
+
+  Viewport viewport   = graphics.GetDefaultViewport();
+  viewport.width      = RTV_TEX_WIDTH;
+  viewport.height     = RTV_TEX_HEIGHT;
+  viewport.top_left_x = 0;
+  viewport.top_left_y = 0;
+
+  RECT scissor_rect = ViewportToScissorRect(viewport);
+
+  m_command_list->SetRootSignature(*m_root_sig);
+  m_command_list->RSSetViewport(viewport);
+  m_command_list->RSSetScissorRect(scissor_rect);
+
+  Camera* camera = new Camera(RTV_TEX_WIDTH / (float)RTV_TEX_HEIGHT, 0.01f, 100.0f, XMFLOAT4(0, 0, -2, 1), XMFLOAT4(0, 0, 1, 0), XMFLOAT4(0, 1, 0, 0));
+
+  // upload the wvp matrix for the camera to the constant buffer
+  XMMATRIX tmp;
+  XMMATRIX wvp = XMMatrixIdentity();
+  camera->GetView(tmp);
+  wvp *= tmp;
+  camera->GetProjection(tmp);
+  wvp *= tmp;
+  wvp = XMMatrixTranspose(wvp);
+  m_constant_buffer->Upload(&wvp, 0, sizeof(wvp));
+
+  m_command_list->SetHeapArray(*m_heap_array);
+  m_command_list->SetTexture(0, *m_texture);
+  m_command_list->SetConstantBuffer(1, *m_constant_buffer);
+
+  float clear_color[4] = { 0, 0, 0, 1 };
+  m_command_list->PrepRenderTarget(*m_rtv_texture);
+  m_command_list->OMSetRenderTarget(*m_rtv_texture, *m_depth_stencil);
+  m_command_list->ClearRenderTarget(*m_rtv_texture, clear_color);
+  m_command_list->ClearDepthStencil(*m_depth_stencil, 1);
+
+  m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
+  m_command_list->IASetVertexBuffers(*m_vert_array);
+  m_command_list->IASetIndexBuffer(*m_indices);
+
+  m_command_list->DrawIndexedInstanced(m_indices->GetNumIndices(), 1, 0);
+
+  m_command_list->RenderTargetToPresent(*m_rtv_texture);
+
+  m_command_list->Close();
+  graphics.ExecuteCommandList(*m_command_list);
+  graphics.WaitOnFence();
+
+  // move the render target image to the texture used in normal rendering
+  m_command_list->Reset(m_rtv_pipeline);
+  m_rtv_texture->PrepUpload(graphics, *m_command_list, *m_texture);
+  m_command_list->Close();
+  graphics.ExecuteCommandList(*m_command_list);
+  graphics.WaitOnFence();
+
+  delete camera;
 }

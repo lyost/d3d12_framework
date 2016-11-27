@@ -2,6 +2,7 @@
 #define GRAPHICS_CORE_H
 
 class CommandListBundle;
+class BackBuffers;
 
 #include <windows.h>
 #include "Graphics/Viewport.h"
