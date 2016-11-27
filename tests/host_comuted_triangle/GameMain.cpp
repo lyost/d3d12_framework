@@ -22,6 +22,7 @@ void GameMain::LoadContent()
   RootSignatureConfig* config = RootSignatureConfig::CreateD3D12(0, 0);
   config->SetStageAccess(true, true, false, false, false, true, false);
   m_root_sig = RootSignature::CreateD3D12(graphics, *config);
+  delete config;
   if (m_root_sig == NULL)
   {
     exit(1);
@@ -47,6 +48,7 @@ void GameMain::LoadContent()
   rtv_config->SetIndependentBlendEnable(false);
   rtv_config->SetFormat(0, RTVF_R8G8B8A8_UNORM);
   m_pipeline = Pipeline::CreateD3D12(graphics, *m_input_layout, TOPOLOGY_TRIANGLE, *m_vertex_shader, *m_pixel_shader, *rtv_config, *m_root_sig);
+  delete rtv_config;
   if (m_pipeline == NULL)
   {
     exit(1);
