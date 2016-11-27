@@ -5,6 +5,7 @@
 #include "private_inc/D3D12/Textures/D3D12_RenderTargetResourceHeap.h"
 #include "private_inc/D3D12/Textures/D3D12_RenderTargetDescHeap.h"
 #include "FrameworkException.h"
+#include "private_inc/BuildSettings.h"
 using namespace std;
 
 void D3D12_RenderTarget::Create(const GraphicsCore& graphics, const vector<Config>& configs, vector<RenderTarget*>& out)
@@ -97,6 +98,7 @@ void D3D12_RenderTarget::PrepUpload(GraphicsCore& graphics, CommandList& command
   ID3D12Resource*            dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
   ID3D12GraphicsCommandList* cmd_list    = ((D3D12_CommandList&)command_list).GetCommandList();
 
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
   D3D12_RESOURCE_DESC src_desc = m_render_target->GetDesc();
   D3D12_RESOURCE_DESC dst_desc = dst_texture->GetDesc();
 
@@ -104,6 +106,7 @@ void D3D12_RenderTarget::PrepUpload(GraphicsCore& graphics, CommandList& command
   {
     throw new FrameworkException("Incompatible dimensions");
   }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_RESOURCE_BARRIER prep_copy;
   prep_copy.Type  = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
