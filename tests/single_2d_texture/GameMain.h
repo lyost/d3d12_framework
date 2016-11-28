@@ -8,11 +8,11 @@
 #include "Graphics/Pipeline.h"
 #include "Graphics/CommandListBundle.h"
 #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
-#include "Graphics/Buffers/ShaderResourceDescHeap.h"
+#include "Graphics/ShaderResourceDescHeap.h"
 #include "Graphics/Textures/TextureResourceHeap.h"
 #include "Graphics/Textures/Texture.h"
 #include "Graphics/Textures/TextureUploadBuffer.h"
-#include "Graphics/Buffers/HeapArray.h"
+#include "Graphics/HeapArray.h"
 
 class GameMain : public Game
 {

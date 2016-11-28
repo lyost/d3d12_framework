@@ -4,7 +4,7 @@
 #include <d3d12.h>
 #include <dxgi1_4.h>
 #include "Graphics/Buffers/BackBuffer.h"
-#include "private_inc/D3D12/Buffers/D3D12_RenderTarget.h"
+#include "private_inc/D3D12/Textures/D3D12_RenderTarget.h"
 
 /// <summary>
 /// Manages the back buffers

@@ -8,10 +8,10 @@
 #include "Graphics/Pipeline.h"
 #include "Graphics/CommandListBundle.h"
 #include "Graphics/Buffers/VertexBuffer_PositionColor.h"
-#include "Graphics/Buffers/BufferResourceHeap.h"
-#include "Graphics/Buffers/ShaderResourceDescHeap.h"
+#include "Graphics/BufferResourceHeap.h"
+#include "Graphics/ShaderResourceDescHeap.h"
 #include "Graphics/Buffers/ConstantBuffer.h"
-#include "Graphics/Buffers/HeapArray.h"
+#include "Graphics/HeapArray.h"
 
 class GameMain : public Game
 {

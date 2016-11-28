@@ -183,13 +183,7 @@
     <ClCompile Include="src\Graphics\Buffers\BackBuffer.cpp">
       <Filter>Source Files\Graphics\Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Buffers\RenderTarget.cpp">
-      <Filter>Source Files\Graphics\Buffers</Filter>
-    </ClCompile>
     <ClCompile Include="src\D3D12\Buffers\D3D12_BackBuffer.cpp">
-      <Filter>Source Files\D3D12\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\D3D12\Buffers\D3D12_RenderTarget.cpp">
       <Filter>Source Files\D3D12\Buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\CommandListBundle.cpp">
@@ -215,18 +209,6 @@
     </ClCompile>
     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer.cpp">
       <Filter>Source Files\D3D12\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Buffers\HeapArray.cpp">
-      <Filter>Source Files\Graphics\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\D3D12\Buffers\D3D12_HeapArray.cpp">
-      <Filter>Source Files\D3D12\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\D3D12\Buffers\D3D12_BufferResourceHeap.cpp">
-      <Filter>Source Files\D3D12\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Buffers\BufferResourceHeap.cpp">
-      <Filter>Source Files\Graphics\Buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\D3D12\Textures\D3D12_TextureResourceHeap.cpp">
       <Filter>Source Files\D3D12\Textures</Filter>
@@ -258,12 +240,6 @@
     <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencilResourceHeap.cpp">
       <Filter>Source Files\D3D12\Textures</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Buffers\ShaderResourceDescHeap.cpp">
-      <Filter>Source Files\Graphics\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\D3D12\Buffers\D3D12_ShaderResourceDescHeap.cpp">
-      <Filter>Source Files\D3D12\Buffers</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Buffers\VertexBuffer_Position.cpp">
       <Filter>Source Files\Graphics\Buffers</Filter>
     </ClCompile>
@@ -278,6 +254,30 @@
     </ClCompile>
     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetResourceHeap.cpp">
       <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_RenderTarget.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_BufferResourceHeap.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_HeapArray.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_ShaderResourceDescHeap.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\RenderTarget.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\BufferResourceHeap.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\HeapArray.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ShaderResourceDescHeap.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -431,13 +431,7 @@
     <ClInclude Include="public_inc\Graphics\Buffers\BackBuffer.h">
       <Filter>public_inc\Graphics\Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="public_inc\Graphics\Buffers\RenderTarget.h">
-      <Filter>public_inc\Graphics\Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_BackBuffer.h">
-      <Filter>private_inc\D3D12\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_RenderTarget.h">
       <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\D3D12_CommandListBundle.h">
@@ -462,18 +456,6 @@
       <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer.h">
-      <Filter>private_inc\D3D12\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="public_inc\Graphics\Buffers\HeapArray.h">
-      <Filter>public_inc\Graphics\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_HeapArray.h">
-      <Filter>private_inc\D3D12\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="public_inc\Graphics\Buffers\BufferResourceHeap.h">
-      <Filter>public_inc\Graphics\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_BufferResourceHeap.h">
       <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureResourceHeap.h">
@@ -509,12 +491,6 @@
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencilResourceHeap.h">
       <Filter>private_inc\D3D12\Textures</Filter>
     </ClInclude>
-    <ClInclude Include="public_inc\Graphics\Buffers\ShaderResourceDescHeap.h">
-      <Filter>public_inc\Graphics\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_ShaderResourceDescHeap.h">
-      <Filter>private_inc\D3D12\Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_Position.h">
       <Filter>public_inc\Graphics\Buffers</Filter>
     </ClInclude>
@@ -532,6 +508,33 @@
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetResourceHeap.h">
       <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTarget.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_BufferResourceHeap.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_HeapArray.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_ShaderResourceDescHeap.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\VectorOps.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\RenderTarget.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\BufferResourceHeap.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\HeapArray.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\ShaderResourceDescHeap.h">
+      <Filter>public_inc\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,10 +13,10 @@
 #include "Graphics/Buffers/IndexBuffer16.h"
 #include "Graphics/Buffers/VertexBufferArray.h"
 #include "Graphics/Viewports.h"
-#include "Graphics/Buffers/BufferResourceHeap.h"
-#include "Graphics/Buffers/ShaderResourceDescHeap.h"
+#include "Graphics/BufferResourceHeap.h"
+#include "Graphics/ShaderResourceDescHeap.h"
 #include "Graphics/Buffers/ConstantBuffer.h"
-#include "Graphics/Buffers/HeapArray.h"
+#include "Graphics/HeapArray.h"
 
 // local project header file(s)
 #include "Camera.h"

@@ -1,7 +1,7 @@
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
-#include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
+#include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
 #include "FrameworkException.h"
 
 UINT D3D12_Texture2D::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format)

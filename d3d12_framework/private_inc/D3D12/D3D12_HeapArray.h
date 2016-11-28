@@ -2,7 +2,7 @@
 #define D3D12_HEAP_ARRAY_H
 
 #include <d3d12.h>
-#include "Graphics/Buffers/HeapArray.h"
+#include "Graphics/HeapArray.h"
 
 class D3D12_HeapArray : public HeapArray
 {

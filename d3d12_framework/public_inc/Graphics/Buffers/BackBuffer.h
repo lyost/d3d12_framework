@@ -2,7 +2,7 @@
 #define BACK_BUFFER_H
 
 class RenderTarget;
-#include "Graphics/Buffers/RenderTarget.h"
+#include "Graphics/Textures/RenderTarget.h"
 
 /// <summary>
 /// Manages the back buffers

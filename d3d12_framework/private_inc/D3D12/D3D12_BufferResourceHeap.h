@@ -2,7 +2,7 @@
 #define D3D12_RESOURCE_HEAP_H
 
 #include <d3d12.h>
-#include "Graphics/Buffers/BufferResourceHeap.h"
+#include "Graphics/BufferResourceHeap.h"
 
 class D3D12_BufferResourceHeap : public BufferResourceHeap
 {

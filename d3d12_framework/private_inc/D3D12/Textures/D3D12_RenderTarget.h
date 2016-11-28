@@ -2,7 +2,7 @@
 #define D3D12_RENDER_TARGET_H
 
 #include <d3d12.h>
-#include "Graphics/Buffers/RenderTarget.h"
+#include "Graphics/Textures/RenderTarget.h"
 
 /// <summary>
 /// Wrapper for a D3D12 render target

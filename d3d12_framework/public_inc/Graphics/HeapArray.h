@@ -2,7 +2,7 @@
 #define HEAP_ARRAY_H
 
 class ShaderResourceDescHeap;
-#include "Graphics/Buffers/ShaderResourceDescHeap.h"
+#include "Graphics/ShaderResourceDescHeap.h"
 
 class HeapArray
 {

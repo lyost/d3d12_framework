@@ -1,5 +1,5 @@
-#include "private_inc/D3D12/Buffers/D3D12_HeapArray.h"
-#include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
+#include "private_inc/D3D12/D3D12_HeapArray.h"
+#include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 

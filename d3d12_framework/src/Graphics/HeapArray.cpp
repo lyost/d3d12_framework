@@ -1,5 +1,5 @@
-#include "Graphics/Buffers/HeapArray.h"
-#include "private_inc/D3D12/Buffers/D3D12_HeapArray.h"
+#include "Graphics/HeapArray.h"
+#include "private_inc/D3D12/D3D12_HeapArray.h"
 
 HeapArray* HeapArray::CreateD3D12(UINT num_entries)
 {

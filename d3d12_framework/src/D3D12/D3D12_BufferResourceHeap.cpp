@@ -1,5 +1,5 @@
 #include <sstream>
-#include "private_inc/D3D12/Buffers/D3D12_BufferResourceHeap.h"
+#include "private_inc/D3D12/D3D12_BufferResourceHeap.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "FrameworkException.h"
 using namespace std;

@@ -5,8 +5,8 @@ class BufferResourceHeap;
 class ShaderResourceDescHeap;
 
 #include "Graphics/GraphicsCore.h"
-#include "Graphics/Buffers/BufferResourceHeap.h"
-#include "Graphics/Buffers/ShaderResourceDescHeap.h"
+#include "Graphics/BufferResourceHeap.h"
+#include "Graphics/ShaderResourceDescHeap.h"
 
 /// <summary>
 /// Base class for constant buffers

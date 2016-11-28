@@ -1,8 +1,8 @@
 #include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
 #include "private_inc/D3D12/D3D12_Core.h"
-#include "private_inc/D3D12/Buffers/D3D12_BufferResourceHeap.h"
-#include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
+#include "private_inc/D3D12/D3D12_BufferResourceHeap.h"
+#include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 using namespace std;

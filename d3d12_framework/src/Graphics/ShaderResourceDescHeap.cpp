@@ -1,5 +1,5 @@
-#include "Graphics/Buffers/ShaderResourceDescHeap.h"
-#include "private_inc/D3D12/Buffers/D3D12_ShaderResourceDescHeap.h"
+#include "Graphics/ShaderResourceDescHeap.h"
+#include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
 
 ShaderResourceDescHeap* ShaderResourceDescHeap::CreateD3D12(const GraphicsCore& core, UINT num_descriptors)
 {

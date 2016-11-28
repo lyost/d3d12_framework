@@ -2,7 +2,7 @@
 #define D3D12_SHADER_BUFFER_HEAP_H
 
 #include <d3d12.h>
-#include "Graphics/Buffers/ShaderResourceDescHeap.h"
+#include "Graphics/ShaderResourceDescHeap.h"
 
 class D3D12_ShaderResourceDescHeap : public ShaderResourceDescHeap
 {

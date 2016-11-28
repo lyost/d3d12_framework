@@ -1,4 +1,4 @@
-#include "private_inc/D3D12/Buffers/D3D12_RenderTarget.h"
+#include "private_inc/D3D12/Textures/D3D12_RenderTarget.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"

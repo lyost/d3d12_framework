@@ -4,7 +4,7 @@
 #include <vector>
 #include "Graphics/CommandList.h"
 #include "Graphics/Textures/Texture.h"
-#include "Graphics/Buffers/BufferResourceHeap.h"
+#include "Graphics/BufferResourceHeap.h"
 
 class TextureUploadBuffer
 {
