@@ -56,7 +56,7 @@ void D3D12_CommandListBundle::RemoveCommandList(UINT index)
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_lists.size())
   {
-    throw new FrameworkException("index beyond number of command lists");
+    throw FrameworkException("index beyond number of command lists");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

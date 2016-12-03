@@ -18,7 +18,7 @@ D3D12_BackBuffers* D3D12_BackBuffers::Create(ID3D12Device* device, IDXGISwapChai
   {
     ostringstream out;
     out << "Failed to create render target view heap.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   UINT rtv_desc_size = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
@@ -34,7 +34,7 @@ D3D12_BackBuffers* D3D12_BackBuffers::Create(ID3D12Device* device, IDXGISwapChai
     {
       ostringstream out;
       out << "Failed to get back buffer " << i << ".  HRESULT = " << rc;
-      throw new FrameworkException(out.str());
+      throw FrameworkException(out.str());
     }
     device->CreateRenderTargetView(back_tmp, NULL, rtv_handle);
     back_buffer->AddRenderTarget(i, back_tmp, rtv_handle);
@@ -75,7 +75,7 @@ void D3D12_BackBuffers::AddRenderTarget(UINT index, ID3D12Resource* target, D3D1
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_num)
   {
-    throw new FrameworkException("index beyond number of render targets");
+    throw FrameworkException("index beyond number of render targets");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

@@ -34,7 +34,7 @@ void D3D12_IndexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, DXGI_F
   {
     ostringstream out;
     out << "Failed to create committed resource for index buffer.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   void* buffer_data;
@@ -45,7 +45,7 @@ void D3D12_IndexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, DXGI_F
 
     ostringstream out;
     out << "Failed to map buffer for index buffer.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
   memcpy(buffer_data, data, num * stride);
   buffer->Unmap(0, NULL);

@@ -22,7 +22,7 @@ D3D12_DepthStencilResourceHeap* D3D12_DepthStencilResourceHeap::Create(ID3D12Dev
   {
     ostringstream out;
     out << "Failed to create depth stencil resource heap.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_DepthStencilResourceHeap(num_bytes, heap);
@@ -48,7 +48,7 @@ ID3D12Resource* D3D12_DepthStencilResourceHeap::CreateResource(ID3D12Device* dev
   {
     ostringstream out;
     out << "Failed to create placed texture.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   D3D12_RESOURCE_ALLOCATION_INFO mem_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);

@@ -39,7 +39,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   }
   else
   {
-    throw new FrameworkException("Failed to get debug controller");
+    throw FrameworkException("Failed to get debug controller");
   }
 #endif
 
@@ -47,7 +47,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   rc = CreateDXGIFactory1(__uuidof(IDXGIFactory4), (void**)&factory);
   if (FAILED(rc))
   {
-    throw new FrameworkException("Failed to create DXGI factory");
+    throw FrameworkException("Failed to create DXGI factory");
     return false;
   }
 
@@ -69,7 +69,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   }
   if (device == NULL)
   {
-    throw new FrameworkException("Failed to create device");
+    throw FrameworkException("Failed to create device");
   }
 
   D3D12_COMMAND_QUEUE_DESC queue_desc = {};
@@ -78,7 +78,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   rc = device->CreateCommandQueue(&queue_desc, __uuidof(ID3D12CommandQueue), (void**)&command_queue);
   if (FAILED(rc))
   {
-    throw new FrameworkException("Failed to create command queue");
+    throw FrameworkException("Failed to create command queue");
   }
 
   DXGI_SWAP_CHAIN_DESC sd = {};
@@ -94,12 +94,12 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   rc = factory->CreateSwapChain(command_queue, &sd, &swap_chain);
   if (FAILED(rc))
   {
-    throw new FrameworkException("Failed to create the swap chain");
+    throw FrameworkException("Failed to create the swap chain");
   }
   rc = swap_chain->QueryInterface(__uuidof(IDXGISwapChain3), (void**)&swap_chain3);
   if (FAILED(rc))
   {
-    throw new FrameworkException("Failed to convert swap chain");
+    throw FrameworkException("Failed to convert swap chain");
   }
 
   factory->Release();
@@ -109,7 +109,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   rc = device->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)&fence);
   if (FAILED(rc))
   {
-    throw new FrameworkException("Failed to create fence");
+    throw FrameworkException("Failed to create fence");
   }
 
   fence_event = CreateEventEx(NULL, NULL, FALSE, EVENT_ALL_ACCESS);
@@ -117,7 +117,7 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
   {
     ostringstream out;
     out << "Failed to create fence event. Error code: " << GetLastError();
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   // todo: Setup the viewport
@@ -177,7 +177,7 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
   {
     ostringstream out;
     out << "Failed to get swap chain description.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
   desc_swap.BufferDesc.Width  = width;
   desc_swap.BufferDesc.Height = height;
@@ -189,7 +189,7 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
   {
     ostringstream out;
     out << "Failed to get swap chain output.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
   DXGI_MODE_DESC match;
   rc = monitor->FindClosestMatchingMode(&desc_swap.BufferDesc,&match,m_device);
@@ -198,7 +198,7 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
   {
     ostringstream out;
     out << "Failed to find closest matching mode.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
   
   // inform the swap chain of the change in resolution
@@ -207,7 +207,7 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
   {
     ostringstream out;
     out << "Failed to resize target.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
   
   // go full screen
@@ -216,7 +216,7 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
   {
     ostringstream out;
     out << "Failed to set the full screen state.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
   
   // take care of refresh rate issues
@@ -227,7 +227,7 @@ void D3D12_Core::Fullscreen(UINT width,UINT height,bool enable)
   {
     ostringstream out;
     out << "Failed to take care of refresh rate issue.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   m_fullscreen = enable;
@@ -246,7 +246,7 @@ void D3D12_Core::OnResize(UINT width,UINT height)
   {
     ostringstream out;
     out << "Error resizing swap chain.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   m_back_buffer = D3D12_BackBuffers::Create(m_device, m_swap_chain);
@@ -264,7 +264,7 @@ void D3D12_Core::WaitOnFence()
   {
     ostringstream out;
     out << "Failed signaling command queue for fence.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
   ++m_fence_value;
 
@@ -275,7 +275,7 @@ void D3D12_Core::WaitOnFence()
     {
       ostringstream out;
       out << "Failed waiting on fence event.  HRESULT: " << rc;
-      throw new FrameworkException(out.str());
+      throw FrameworkException(out.str());
     }
     WaitForSingleObject(m_fence_event, INFINITE);
   }

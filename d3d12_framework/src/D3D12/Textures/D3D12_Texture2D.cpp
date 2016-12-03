@@ -15,7 +15,7 @@ UINT D3D12_Texture2D::GetAlignedSize(const GraphicsCore& graphics, UINT width, U
   D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
   if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
   {
-    throw new FrameworkException("computed size is too large");
+    throw FrameworkException("computed size is too large");
   }
   else
   {
@@ -42,7 +42,7 @@ Texture* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResourceHe
   ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
   if (buffer == NULL)
   {
-    throw new FrameworkException("Unable to create buffer resource");
+    throw FrameworkException("Unable to create buffer resource");
   }
 
   D3D12_SHADER_RESOURCE_VIEW_DESC src_desc;

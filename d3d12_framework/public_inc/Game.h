@@ -96,11 +96,8 @@ class Game
     /// ensure that base class members are properly updated.
     /// </remarks>
     /// <remarks>
-    /// It is strongly recommended for subclasses to override this function at
-    /// least to update the projection matrix of any cameras, and handle
-    /// resizing of the viewport(s).  The next Draw call will also be against
-    /// a pipeline in the same state (pipeline state, viewports, etc) as the
-    /// first Draw call (aside from things being resized).
+    /// It is strongly recommended for subclasses to override this function at least to update the projection matrix of any cameras, handle resizing of the viewport(s), and catching possible
+    /// FrameworkException instances.
     /// </remarks>
     /// <param name="width">
     /// width of the new client area, in pixels 
@@ -108,6 +105,9 @@ class Game
     /// <param name="height">
     /// height of the new client area, in pixels
     /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     virtual void OnResize(UINT width,UINT height);
     
     /// <summary>

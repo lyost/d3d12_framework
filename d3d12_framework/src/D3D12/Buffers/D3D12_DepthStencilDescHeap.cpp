@@ -21,7 +21,7 @@ D3D12_DepthStencilDescHeap* D3D12_DepthStencilDescHeap::Create(ID3D12Device* dev
   {
     ostringstream out;
     out << "Failed to create descriptor heap for depth stencils.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   UINT increment_size = device->GetDescriptorHandleIncrementSize(desc.Type);
@@ -49,7 +49,7 @@ void D3D12_DepthStencilDescHeap::GetNextDescriptor(D3D12_CPU_DESCRIPTOR_HANDLE& 
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (m_next_descriptor_index >= m_num_descriptors)
   {
-    throw new FrameworkException("No more descriptors available");
+    throw FrameworkException("No more descriptors available");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
   

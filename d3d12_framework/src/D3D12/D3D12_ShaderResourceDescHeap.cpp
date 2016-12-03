@@ -24,7 +24,7 @@ D3D12_ShaderResourceDescHeap* D3D12_ShaderResourceDescHeap::Create(const Graphic
   {
     ostringstream out;
     out << "Failed to create descriptor heap for shader buffers.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   UINT increment_size = device->GetDescriptorHandleIncrementSize(desc.Type);
@@ -52,7 +52,7 @@ void D3D12_ShaderResourceDescHeap::GetNextDescriptor(D3D12_CPU_DESCRIPTOR_HANDLE
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (m_next_descriptor_index >= m_num_descriptors)
   {
-    throw new FrameworkException("No descriptors available");
+    throw FrameworkException("No descriptors available");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

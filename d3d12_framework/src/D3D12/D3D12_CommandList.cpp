@@ -29,7 +29,7 @@ D3D12_CommandList* D3D12_CommandList::Create(const GraphicsCore& graphics, Pipel
   {
     ostringstream out;
     out << "Unable to create command allocator.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   rc = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, command_alloc, d3d12_pipeline, __uuidof(ID3D12GraphicsCommandList), (void**)&commandList);
@@ -37,7 +37,7 @@ D3D12_CommandList* D3D12_CommandList::Create(const GraphicsCore& graphics, Pipel
   {
     ostringstream out;
     out << "Unable to create command list.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_CommandList(commandList, command_alloc);
@@ -64,14 +64,14 @@ void D3D12_CommandList::Reset(Pipeline* pipeline)
   {
     ostringstream out;
     out << "Unable to reset command allocator.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
   rc = m_command_list->Reset(m_allocated_from, d3d12_pipeline);
   if (FAILED(rc))
   {
     ostringstream out;
     out << "Unable to reset command list.  HRESULT: " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 }
 
@@ -83,7 +83,7 @@ void D3D12_CommandList::Close()
   {
     ostringstream out;
     out << "Failed to close command list.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 }
 
@@ -144,7 +144,7 @@ void D3D12_CommandList::RSSetViewports(const Viewports& viewports, UINT start, U
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if ((start + num) >= Viewports::GetMaxViewports())
   {
-    throw new FrameworkException("Requested start index and number of viewports is beyond the length of the array stored in a Viewports instance");
+    throw FrameworkException("Requested start index and number of viewports is beyond the length of the array stored in a Viewports instance");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -167,7 +167,7 @@ void D3D12_CommandList::RSSetScissorRects(const vector<RECT>& rects, UINT start,
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if ((start + num) >= rects.size())
   {
-    throw new FrameworkException("Requested start index and number of elements is beyond the length of the array");
+    throw FrameworkException("Requested start index and number of elements is beyond the length of the array");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

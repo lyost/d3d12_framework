@@ -72,11 +72,11 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -91,7 +91,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   {
     ostringstream out;
     out << "Failed to create pipeline state (HRESULT = " << rc << ')';
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_Pipeline(pipeline);
@@ -111,11 +111,11 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -136,7 +136,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   {
     ostringstream out;
     out << "Failed to create pipeline state (HRESULT = " << rc << ')';
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_Pipeline(pipeline);
@@ -158,24 +158,24 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a hull shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a hull shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a domain shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a domain shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
   }
 
   if (topology != TOPOLOGY_PATCH)
   {
-    throw new FrameworkException("Hull and domain shaders being used requires the topology to be set to TOPOLOGY_PATCH");
+    throw FrameworkException("Hull and domain shaders being used requires the topology to be set to TOPOLOGY_PATCH");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -198,7 +198,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   {
     ostringstream out;
     out << "Failed to create pipeline state (HRESULT = " << rc << ')';
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_Pipeline(pipeline);
@@ -219,15 +219,15 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a geometry shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a geometry shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -249,7 +249,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   {
     ostringstream out;
     out << "Failed to create pipeline state (HRESULT = " << rc << ')';
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_Pipeline(pipeline);
@@ -272,28 +272,28 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a hull shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a hull shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a domain shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a domain shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a geometry shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a geometry shader but the root signature doesn\'t allow it");
   }
   if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
   {
-    throw new FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+    throw FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
   }
 
   if (topology != TOPOLOGY_PATCH)
   {
-    throw new FrameworkException("Hull and domain shaders being used requires the topology to be set to TOPOLOGY_PATCH");
+    throw FrameworkException("Hull and domain shaders being used requires the topology to be set to TOPOLOGY_PATCH");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
   
@@ -317,7 +317,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   {
     ostringstream out;
     out << "Failed to create pipeline state (HRESULT = " << rc << ')';
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_Pipeline(pipeline);
@@ -344,7 +344,7 @@ void D3D12_Pipeline::CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DES
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (layout.GetNextIndex() != layout.GetNum())
   {
-    throw new FrameworkException("Not all input layout entries have been set");
+    throw FrameworkException("Not all input layout entries have been set");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

@@ -33,7 +33,7 @@ void D3D12_HeapArray::SetHeap(UINT index, const ShaderResourceDescHeap& heap)
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_len)
   {
-    throw new FrameworkException("index beyond number of heap entries");
+    throw FrameworkException("index beyond number of heap entries");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

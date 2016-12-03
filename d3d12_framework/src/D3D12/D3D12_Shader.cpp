@@ -12,7 +12,7 @@ D3D12_Shader* D3D12_Shader::Load(const char* path)
   {
     ostringstream out;
     out << "Unable to open \"" << path << '\"';
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   // get the file length, in bytes
@@ -25,7 +25,7 @@ D3D12_Shader* D3D12_Shader::Load(const char* path)
 
     ostringstream out;
     out << "\"" << path << "\" is too large";
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   // load the file

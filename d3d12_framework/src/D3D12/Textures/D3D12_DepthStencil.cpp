@@ -35,7 +35,7 @@ void D3D12_DepthStencil::Create(const GraphicsCore& graphics, const vector<Confi
     ID3D12Resource* buffer = resource_heap->CreateResource(device, resource_desc, config_it->default_depth_clear);
     if (buffer == NULL)
     {
-      throw new FrameworkException("Unable to create buffer resource");
+      throw FrameworkException("Unable to create buffer resource");
     }
 
     D3D12_DEPTH_STENCIL_VIEW_DESC view_desc;
@@ -107,7 +107,7 @@ UINT D3D12_DepthStencil::GetAlignedSize(ID3D12Device* device, const Config& conf
   D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
   if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
   {
-    throw new FrameworkException("computed size is too large");
+    throw FrameworkException("computed size is too large");
   }
   else
   {

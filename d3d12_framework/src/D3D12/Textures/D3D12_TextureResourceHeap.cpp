@@ -22,7 +22,7 @@ D3D12_TextureResourceHeap* D3D12_TextureResourceHeap::Create(const GraphicsCore&
   HRESULT rc = device->CreateHeap(&desc, __uuidof(ID3D12Heap), (void**)&heap);
   if (FAILED(rc))
   {
-    throw new FrameworkException("Failed to create texture upload heap");
+    throw FrameworkException("Failed to create texture upload heap");
   }
 
   return new D3D12_TextureResourceHeap(num_bytes, heap);
@@ -44,7 +44,7 @@ ID3D12Resource* D3D12_TextureResourceHeap::CreateResource(const GraphicsCore& gr
   HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
   if (FAILED(rc))
   {
-    throw new FrameworkException("Failed to create placed texture");
+    throw FrameworkException("Failed to create placed texture");
   }
 
   D3D12_RESOURCE_ALLOCATION_INFO mem_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);

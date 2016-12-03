@@ -18,7 +18,7 @@ UINT D3D12_ConstantBuffer::GetAlignedSize(const GraphicsCore& graphics, UINT num
   D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
   if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
   {
-    throw new FrameworkException("computed size is too large");
+    throw FrameworkException("computed size is too large");
   }
   else
   {
@@ -44,7 +44,7 @@ D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics,
   ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
   if (buffer == NULL)
   {
-    throw new FrameworkException("Unable to create resource buffer");
+    throw FrameworkException("Unable to create resource buffer");
   }
 
   D3D12_CONSTANT_BUFFER_VIEW_DESC view_desc;
@@ -63,7 +63,7 @@ D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics,
 
     ostringstream out;
     out << "Failed to map constant buffer memory.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_ConstantBuffer(buffer, host_mem, view_desc.BufferLocation, num_bytes);
@@ -89,11 +89,11 @@ void D3D12_ConstantBuffer::Upload(void* data, UINT start, UINT len)
   UINT total = start + len;
   if (total >= m_num_bytes)
   {
-    throw new FrameworkException("attempting to send more bytes than are available in the buffer");
+    throw FrameworkException("attempting to send more bytes than are available in the buffer");
   }
   if (total < start)
   {
-    throw new FrameworkException("rollover detected");
+    throw FrameworkException("rollover detected");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

@@ -30,7 +30,7 @@ D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore&
   ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
   if (buffer == NULL)
   {
-    throw new FrameworkException("Unable to create buffer resource");
+    throw FrameworkException("Unable to create buffer resource");
   }
 
   return new D3D12_TextureUploadBuffer(buffer);
@@ -62,22 +62,22 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   D3D12_RESOURCE_DESC src_desc = m_buffer->GetDesc();
   if (src_desc.Width < (dst_total_bytes + dst_layout.Offset))
   {
-    throw new FrameworkException("Upload texture buffer too small for target texture");
+    throw FrameworkException("Upload texture buffer too small for target texture");
   }
   else if (dst_row_size_in_bytes != memcpy_size)
   {
-    throw new FrameworkException("Target texture row size too large for upload texture buffer");
+    throw FrameworkException("Target texture row size too large for upload texture buffer");
   }
   else if (data.size() < (memcpy_size * dst_num_rows))
   {
-    throw new FrameworkException("Insufficient number of bytes for upload texture buffer");
+    throw FrameworkException("Insufficient number of bytes for upload texture buffer");
   }
 
   UINT8* cpu_mem_start;
   HRESULT rc = m_buffer->Map(0, NULL, (void**)&cpu_mem_start);
   if (FAILED(rc))
   {
-    throw new FrameworkException("Failed to map texture upload buffer memory");
+    throw FrameworkException("Failed to map texture upload buffer memory");
   }
   cpu_mem_start += dst_layout.Offset;
   for (UINT row = 0; row < dst_num_rows; row++)

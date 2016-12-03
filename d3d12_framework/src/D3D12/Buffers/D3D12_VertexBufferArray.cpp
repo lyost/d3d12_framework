@@ -23,7 +23,7 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_Custom& buffer)
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_num)
   {
-    throw new FrameworkException("index beyond number of vertex buffers");
+    throw FrameworkException("index beyond number of vertex buffers");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -37,7 +37,7 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_Position& buffe
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_num)
   {
-    throw new FrameworkException("index beyond number of vertex buffers");
+    throw FrameworkException("index beyond number of vertex buffers");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -51,7 +51,7 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTexture
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_num)
   {
-    throw new FrameworkException("index beyond number of vertex buffers");
+    throw FrameworkException("index beyond number of vertex buffers");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -65,7 +65,7 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionColor& 
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_num)
   {
-    throw new FrameworkException("index beyond number of vertex buffers");
+    throw FrameworkException("index beyond number of vertex buffers");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -79,7 +79,7 @@ void D3D12_VertexBufferArray::Clear(UINT index)
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_num)
   {
-    throw new FrameworkException("index beyond number of vertex buffers");
+    throw FrameworkException("index beyond number of vertex buffers");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

@@ -40,9 +40,11 @@ class CommandList
     /// Optional pipleline state to use initally for the command list.  This should be NULL if no inital pipeline is to be specified for the command list.
     /// </param>
     /// <returns>
-    /// pointer to the command list on success
-    /// NULL otherwise
+    /// pointer to the command list
     /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     static CommandList* CreateD3D12Direct(const GraphicsCore& graphics, Pipeline* pipeline);
 
     virtual ~CommandList();

@@ -12,7 +12,7 @@ D3D12_RenderTargetViewConfig::D3D12_RenderTargetViewConfig(UINT num)
   {
     ostringstream out;
     out << "Requested number of render targets of " << num << " exceeds max of " << MAX_RENDER_TARGETS;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -54,7 +54,7 @@ void D3D12_RenderTargetViewConfig::SetFormat(UINT index, RenderTargetViewFormat 
   {
     ostringstream out;
     out << "Index of " << index << "exceeds created size of " << m_num;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -68,7 +68,7 @@ void D3D12_RenderTargetViewConfig::DisableBlend(UINT index)
   {
     ostringstream out;
     out << "Index of " << index << "exceeds created size of " << m_num;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -83,7 +83,7 @@ void D3D12_RenderTargetViewConfig::EnableBlend(UINT index, bool enable_logic_op,
   {
     ostringstream out;
     out << "Index of " << index << "exceeds created size of " << m_num;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

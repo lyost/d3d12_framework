@@ -20,7 +20,7 @@ void D3D12_InputLayout::SetNextElement(Semantics semantic,UINT index, GraphicsDa
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (m_next >= m_num)
   {
-    throw new FrameworkException("No more input layout slots available");
+    throw FrameworkException("No more input layout slots available");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
   

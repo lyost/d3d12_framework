@@ -85,7 +85,7 @@ D3D12_RootSignature* D3D12_RootSignature::Create(const GraphicsCore& graphics, c
   {
     ostringstream out;
     out << "Failed to serialize root signature, HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
   const void* root_data = sig->GetBufferPointer();
   UINT root_len = sig->GetBufferSize();
@@ -95,7 +95,7 @@ D3D12_RootSignature* D3D12_RootSignature::Create(const GraphicsCore& graphics, c
   {
     ostringstream out;
     out << "Failed to create root signature, HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_RootSignature(root_sig, conf.GetDesc().Flags);

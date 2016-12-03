@@ -17,7 +17,7 @@ D3D12_RenderTargetDescHeap* D3D12_RenderTargetDescHeap::Create(ID3D12Device* dev
   {
     ostringstream out;
     out << "Failed to create render target view heap.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   UINT increment_size = device->GetDescriptorHandleIncrementSize(rtv_heap_desc.Type);
@@ -45,7 +45,7 @@ void D3D12_RenderTargetDescHeap::GetNextDescriptor(D3D12_CPU_DESCRIPTOR_HANDLE& 
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (m_next_descriptor_index >= m_num_descriptors)
   {
-    throw new FrameworkException("No descriptors available");
+    throw FrameworkException("No descriptors available");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 

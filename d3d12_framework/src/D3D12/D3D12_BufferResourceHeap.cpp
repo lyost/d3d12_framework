@@ -25,7 +25,7 @@ D3D12_BufferResourceHeap* D3D12_BufferResourceHeap::Create(const GraphicsCore& g
   {
     ostringstream out;
     out << "Failed to create resource heap.  HRESULT = " << rc;
-    throw new FrameworkException(out.str());
+    throw FrameworkException(out.str());
   }
 
   return new D3D12_BufferResourceHeap(num_bytes, heap);
@@ -47,7 +47,7 @@ ID3D12Resource* D3D12_BufferResourceHeap::CreateResource(const GraphicsCore& gra
   HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
   if (FAILED(rc))
   {
-    throw new FrameworkException("Failed to create placed resource");
+    throw FrameworkException("Failed to create placed resource");
   }
 
   D3D12_RESOURCE_ALLOCATION_INFO mem_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);

@@ -67,7 +67,7 @@ void D3D12_RootSignatureConfig::SetSampler(UINT index, TextureFilters filter, Te
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_desc.NumStaticSamplers)
   {
-    throw new FrameworkException("index beyond number of static samplers");
+    throw FrameworkException("index beyond number of static samplers");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -92,7 +92,7 @@ void D3D12_RootSignatureConfig::SetParamAsConstants(UINT param_index, UINT shade
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (param_index >= m_desc.NumParameters)
   {
-    throw new FrameworkException("param_index beyond number of parameters");
+    throw FrameworkException("param_index beyond number of parameters");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -109,7 +109,7 @@ void D3D12_RootSignatureConfig::SetParamAsConstantBufferView(UINT param_index, U
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (param_index >= m_desc.NumParameters)
   {
-    throw new FrameworkException("param_index beyond number of parameters");
+    throw FrameworkException("param_index beyond number of parameters");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -125,7 +125,7 @@ void D3D12_RootSignatureConfig::SetParamAsShaderResourceView(UINT param_index, U
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (param_index >= m_desc.NumParameters)
   {
-    throw new FrameworkException("param_index beyond number of parameters");
+    throw FrameworkException("param_index beyond number of parameters");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -141,7 +141,7 @@ void D3D12_RootSignatureConfig::SetParamAsUnorderedAccessView(UINT param_index, 
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (param_index >= m_desc.NumParameters)
   {
-    throw new FrameworkException("param_index beyond number of parameters");
+    throw FrameworkException("param_index beyond number of parameters");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -157,7 +157,7 @@ void D3D12_RootSignatureConfig::SetParamAsDescriptorTable(UINT param_index, UINT
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (param_index >= m_desc.NumParameters)
   {
-    throw new FrameworkException("param_index beyond number of parameters");
+    throw FrameworkException("param_index beyond number of parameters");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -173,15 +173,15 @@ void D3D12_RootSignatureConfig::SetRangeAsConstantBufferView(UINT param_index, U
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (param_index >= m_desc.NumParameters)
   {
-    throw new FrameworkException("param_index beyond number of parameters");
+    throw FrameworkException("param_index beyond number of parameters");
   }
   if (m_params[param_index].ParameterType != D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
   {
-    throw new FrameworkException("parameter type is not a descriptor table");
+    throw FrameworkException("parameter type is not a descriptor table");
   }
   if (range_index >= m_params[param_index].DescriptorTable.NumDescriptorRanges)
   {
-    throw new FrameworkException("range_index beyond number of ranges");
+    throw FrameworkException("range_index beyond number of ranges");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -198,15 +198,15 @@ void D3D12_RootSignatureConfig::SetRangeAsShaderResourceView(UINT param_index, U
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (param_index >= m_desc.NumParameters)
   {
-    throw new FrameworkException("param_index beyond number of parameters");
+    throw FrameworkException("param_index beyond number of parameters");
   }
   if (m_params[param_index].ParameterType != D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
   {
-    throw new FrameworkException("parameter type is not a descriptor table");
+    throw FrameworkException("parameter type is not a descriptor table");
   }
   if (range_index >= m_params[param_index].DescriptorTable.NumDescriptorRanges)
   {
-    throw new FrameworkException("range_index beyond number of ranges");
+    throw FrameworkException("range_index beyond number of ranges");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -223,15 +223,15 @@ void D3D12_RootSignatureConfig::SetRangeAsUnorderedAccessView(UINT param_index, 
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (param_index >= m_desc.NumParameters)
   {
-    throw new FrameworkException("param_index beyond number of parameters");
+    throw FrameworkException("param_index beyond number of parameters");
   }
   if (m_params[param_index].ParameterType != D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
   {
-    throw new FrameworkException("parameter type is not a descriptor table");
+    throw FrameworkException("parameter type is not a descriptor table");
   }
   if (range_index >= m_params[param_index].DescriptorTable.NumDescriptorRanges)
   {
-    throw new FrameworkException("range_index beyond number of ranges");
+    throw FrameworkException("range_index beyond number of ranges");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -248,15 +248,15 @@ void D3D12_RootSignatureConfig::SetRangeAsSampler(UINT param_index, UINT range_i
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (param_index >= m_desc.NumParameters)
   {
-    throw new FrameworkException("param_index beyond number of parameters");
+    throw FrameworkException("param_index beyond number of parameters");
   }
   if (m_params[param_index].ParameterType != D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
   {
-    throw new FrameworkException("parameter type is not a descriptor table");
+    throw FrameworkException("parameter type is not a descriptor table");
   }
   if (range_index >= m_params[param_index].DescriptorTable.NumDescriptorRanges)
   {
-    throw new FrameworkException("range_index beyond number of ranges");
+    throw FrameworkException("range_index beyond number of ranges");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
