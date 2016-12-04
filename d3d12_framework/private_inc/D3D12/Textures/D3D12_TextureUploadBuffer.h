@@ -28,7 +28,7 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static D3D12_TextureUploadBuffer* Create(const GraphicsCore& graphics, const Texture& texture, BufferResourceHeap& resource_heap);
+    static D3D12_TextureUploadBuffer* Create(const GraphicsCore& graphics, const Texture2D& texture, BufferResourceHeap& resource_heap);
 
     ~D3D12_TextureUploadBuffer();
 
@@ -50,7 +50,7 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture, const std::vector<UINT8>& data);
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const std::vector<UINT8>& data);
 
   protected:
     D3D12_TextureUploadBuffer(ID3D12Resource* buffer);

@@ -7,7 +7,7 @@ class CommandList;
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/GraphicsDataFormat.h"
 #include "Graphics/CommandList.h"
-#include "Graphics/Textures/Texture.h"
+#include "Graphics/Textures/Texture2D.h"
 
 /// <summary>
 /// Base class for a render target
@@ -70,7 +70,7 @@ class RenderTarget
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture) = 0;
+    virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture) = 0;
     
   protected:
     RenderTarget();

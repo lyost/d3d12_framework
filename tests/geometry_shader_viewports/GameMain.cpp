@@ -270,7 +270,7 @@ void GameMain::LoadContent()
   UINT texture_aligned_size = 0;
   try
   {
-    texture_aligned_size = Texture::GetAlignedSize(graphics, width, height, format);
+    texture_aligned_size = Texture2D::GetAlignedSize(graphics, width, height, format);
   }
   catch (const FrameworkException& err)
   {
@@ -346,7 +346,7 @@ void GameMain::LoadContent()
   }
   try
   {
-    m_texture = Texture::CreateD3D12_2D(graphics, *m_tex_heap, *m_shader_buffer_heap, width, height, format);
+    m_texture = Texture2D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, width, height, format);
   }
   catch (const FrameworkException& err)
   {

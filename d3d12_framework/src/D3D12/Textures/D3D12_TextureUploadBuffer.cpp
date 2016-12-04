@@ -7,7 +7,7 @@
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 
-D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture& texture, BufferResourceHeap& resource_heap)
+D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2D& texture, BufferResourceHeap& resource_heap)
 {
   const D3D12_Core& core   = (const D3D12_Core&)graphics;
   ID3D12Device*     device = core.GetDevice();
@@ -46,7 +46,7 @@ D3D12_TextureUploadBuffer::~D3D12_TextureUploadBuffer()
   m_buffer->Release();
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture, const std::vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const std::vector<UINT8>& data)
 {
   ID3D12Device*       device      = ((D3D12_Core&)graphics).GetDevice();
   ID3D12Resource*     dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();

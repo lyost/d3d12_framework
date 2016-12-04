@@ -16,7 +16,7 @@
 #include "Graphics/Buffers/ConstantBuffer.h"
 #include "Graphics/HeapArray.h"
 #include "Graphics/Textures/TextureResourceHeap.h"
-#include "Graphics/Textures/Texture.h"
+#include "Graphics/Textures/Texture2D.h"
 #include "Graphics/Textures/TextureUploadBuffer.h"
 #include "Graphics/Textures/DepthStencil.h"
 
@@ -205,7 +205,7 @@ class GameMain : public Game
     /// <summary>
     /// texture
     /// </summary>
-    Texture* m_texture;
+    Texture2D* m_texture;
 
     /// <summary>
     /// render target view of m_texture

@@ -84,7 +84,7 @@ class D3D12_CommandList : public CommandList
     /// <param name="texture">
     /// texture to use
     /// </param>
-    void SetTexture(UINT slot, const Texture& texture);
+    void SetTexture(UINT slot, const Texture2D& texture);
 
     /// <summary>
     /// Sets the topology to use for vertex data passed to the input assembler stage

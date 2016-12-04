@@ -23,7 +23,7 @@ UINT D3D12_Texture2D::GetAlignedSize(const GraphicsCore& graphics, UINT width, U
   }
 }
 
-Texture* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
+Texture2D* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
   GraphicsDataFormat format)
 {
   const D3D12_Core& core = (const D3D12_Core&)graphics;

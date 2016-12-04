@@ -105,7 +105,7 @@ void D3D12_CommandList::SetConstantBuffer(UINT slot, const ConstantBuffer& const
   m_command_list->SetGraphicsRootConstantBufferView(slot, buffer.GetGPUAddr());
 }
 
-void D3D12_CommandList::SetTexture(UINT slot, const Texture& texture)
+void D3D12_CommandList::SetTexture(UINT slot, const Texture2D& texture)
 {
   const D3D12_Texture2D& tex = (const D3D12_Texture2D&)texture;
   m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());

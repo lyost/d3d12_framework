@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "Graphics/CommandList.h"
-#include "Graphics/Textures/Texture.h"
+#include "Graphics/Textures/Texture2D.h"
 #include "Graphics/BufferResourceHeap.h"
 
 class TextureUploadBuffer
@@ -30,7 +30,7 @@ class TextureUploadBuffer
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture& texture, BufferResourceHeap& resource_heap);
+    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture2D& texture, BufferResourceHeap& resource_heap);
 
     virtual ~TextureUploadBuffer();
 
@@ -52,7 +52,7 @@ class TextureUploadBuffer
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture, const std::vector<UINT8>& data) = 0;
+    virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const std::vector<UINT8>& data) = 0;
 
   protected:
     TextureUploadBuffer();

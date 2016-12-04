@@ -61,7 +61,7 @@ class D3D12_RenderTarget : public RenderTarget
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture);
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture);
     
   private:
     D3D12_RenderTarget(ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle, ID3D12DescriptorHeap* desc_heap);

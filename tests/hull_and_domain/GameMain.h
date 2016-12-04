@@ -15,9 +15,6 @@
 #include "Graphics/ShaderResourceDescHeap.h"
 #include "Graphics/Buffers/ConstantBuffer.h"
 #include "Graphics/HeapArray.h"
-#include "Graphics/Textures/TextureResourceHeap.h"
-#include "Graphics/Textures/Texture.h"
-#include "Graphics/Textures/TextureUploadBuffer.h"
 #include "Graphics/Textures/DepthStencil.h"
 
 class GameMain : public Game

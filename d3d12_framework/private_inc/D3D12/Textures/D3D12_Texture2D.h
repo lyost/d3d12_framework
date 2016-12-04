@@ -3,9 +3,9 @@
 
 #include <d3d12.h>
 #include "Graphics/GraphicsCore.h"
-#include "Graphics/Textures/Texture.h"
+#include "Graphics/Textures/Texture2D.h"
 
-class D3D12_Texture2D : public Texture
+class D3D12_Texture2D : public Texture2D
 {
   public:
     /// <summary>
@@ -64,7 +64,7 @@ class D3D12_Texture2D : public Texture
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static Texture* Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
+    static Texture2D* Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
       GraphicsDataFormat format);
 
     ~D3D12_Texture2D();

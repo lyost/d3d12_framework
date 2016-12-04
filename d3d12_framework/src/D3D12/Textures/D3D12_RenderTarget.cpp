@@ -92,7 +92,7 @@ const D3D12_CPU_DESCRIPTOR_HANDLE& D3D12_RenderTarget::GetHandle() const
   return m_rtv_handle;
 }
 
-void D3D12_RenderTarget::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture& texture)
+void D3D12_RenderTarget::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture)
 {
   ID3D12Device*              device      = ((D3D12_Core&)graphics).GetDevice();
   ID3D12Resource*            dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();

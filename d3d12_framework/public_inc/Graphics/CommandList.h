@@ -7,7 +7,7 @@ class Pipeline;
 class VertexBufferArray;
 class HeapArray;
 class ConstantBuffer;
-class Texture;
+class Texture2D;
 class DepthStencil;
 
 #include <vector>
@@ -21,7 +21,7 @@ class DepthStencil;
 #include "Graphics/Topology.h"
 #include "Graphics/Buffers/VertexBufferArray.h"
 #include "Graphics/Buffers/IndexBuffer.h"
-#include "Graphics/Textures/Texture.h"
+#include "Graphics/Textures/Texture2D.h"
 #include "Graphics/Textures/DepthStencil.h"
 
 /// <summary>
@@ -104,7 +104,7 @@ class CommandList
     /// <param name="texture">
     /// texture to use
     /// </param>
-    virtual void SetTexture(UINT slot, const Texture& texture) = 0;
+    virtual void SetTexture(UINT slot, const Texture2D& texture) = 0;
 
     // todo: overloads for clearing just the stencil, and both depth and stencil
 
