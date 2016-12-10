@@ -29,7 +29,47 @@ class VertexBuffer_PositionTexture : public VertexBuffer
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static VertexBuffer_PositionTexture* CreateD3D12(GraphicsCore& graphics, UINT num, const Vertex_PositionTexture* data);
+    static VertexBuffer_PositionTexture* CreateD3D12(GraphicsCore& graphics, UINT num, const Vertex_PositionTextureU* data);
+
+    /// <summary>
+    /// Creates a vertex buffer
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="num">
+    /// number of entries in the buffer
+    /// </param>
+    /// <param name="data">
+    /// initial data for the vertex buffer
+    /// </param>
+    /// <returns>
+    /// pointer to the vertex buffer instance
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    static VertexBuffer_PositionTexture* CreateD3D12(GraphicsCore& graphics, UINT num, const Vertex_PositionTextureUV* data);
+
+    /// <summary>
+    /// Creates a vertex buffer
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="num">
+    /// number of entries in the buffer
+    /// </param>
+    /// <param name="data">
+    /// initial data for the vertex buffer
+    /// </param>
+    /// <returns>
+    /// pointer to the vertex buffer instance
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    static VertexBuffer_PositionTexture* CreateD3D12(GraphicsCore& graphics, UINT num, const Vertex_PositionTextureUVW* data);
     
     /// <summary>
     /// Cleans up the vertex buffer

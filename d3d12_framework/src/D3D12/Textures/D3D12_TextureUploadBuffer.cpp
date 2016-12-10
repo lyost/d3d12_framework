@@ -2,12 +2,30 @@
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_BufferResourceHeap.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
+#include "private_inc/D3D12/Textures/D3D12_Texture1D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
+#include "private_inc/D3D12/Textures/D3D12_Texture3D.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
+using namespace std;
+
+D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture1D& texture, BufferResourceHeap& resource_heap)
+{
+  return CreateInternal(graphics, texture.GetUploadBufferSize(), resource_heap);
+}
 
 D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2D& texture, BufferResourceHeap& resource_heap)
+{
+  return CreateInternal(graphics, texture.GetUploadBufferSize(), resource_heap);
+}
+
+D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture3D& texture, BufferResourceHeap& resource_heap)
+{
+  return CreateInternal(graphics, texture.GetUploadBufferSize(), resource_heap);
+}
+
+D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::CreateInternal(const GraphicsCore& graphics, UINT64 upload_buffer_size, BufferResourceHeap& resource_heap)
 {
   const D3D12_Core& core   = (const D3D12_Core&)graphics;
   ID3D12Device*     device = core.GetDevice();
@@ -17,7 +35,7 @@ D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore&
   D3D12_RESOURCE_DESC resource_desc;
   resource_desc.Dimension          = D3D12_RESOURCE_DIMENSION_BUFFER;
   resource_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
-  resource_desc.Width              = texture.GetUploadBufferSize();
+  resource_desc.Width              = upload_buffer_size;
   resource_desc.Height             = 1;
   resource_desc.DepthOrArraySize   = 1;
   resource_desc.MipLevels          = 1;
@@ -46,11 +64,28 @@ D3D12_TextureUploadBuffer::~D3D12_TextureUploadBuffer()
   m_buffer->Release();
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const std::vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1D& texture, const vector<UINT8>& data)
+{
+  ID3D12Resource* dst_texture = ((D3D12_Texture1D&)texture).GetBuffer();
+  PrepUpload(graphics, command_list, dst_texture, data);
+}
+
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const vector<UINT8>& data)
+{
+  ID3D12Resource* dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
+  PrepUpload(graphics, command_list, dst_texture, data);
+}
+
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture3D& texture, const vector<UINT8>& data)
+{
+  ID3D12Resource* dst_texture = ((D3D12_Texture3D&)texture).GetBuffer();
+  PrepUpload(graphics, command_list, dst_texture, data);
+}
+
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, ID3D12Resource* texture, const vector<UINT8>& data)
 {
   ID3D12Device*       device      = ((D3D12_Core&)graphics).GetDevice();
-  ID3D12Resource*     dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
-  D3D12_RESOURCE_DESC dst_desc    = dst_texture->GetDesc();
+  D3D12_RESOURCE_DESC dst_desc    = texture->GetDesc();
   D3D12_PLACED_SUBRESOURCE_FOOTPRINT dst_layout;
   UINT   dst_num_rows;
   UINT64 dst_row_size_in_bytes;
@@ -58,6 +93,8 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   device->GetCopyableFootprints(&dst_desc, 0, 1, 0, &dst_layout, &dst_num_rows, &dst_row_size_in_bytes, &dst_total_bytes);
 
   SIZE_T memcpy_size = (SIZE_T)dst_row_size_in_bytes;
+
+  // todo: handle 3D textures
 
   D3D12_RESOURCE_DESC src_desc = m_buffer->GetDesc();
   if (src_desc.Width < (dst_total_bytes + dst_layout.Offset))
@@ -68,7 +105,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   {
     throw FrameworkException("Target texture row size too large for upload texture buffer");
   }
-  else if (data.size() < (memcpy_size * dst_num_rows))
+  else if (data.size() < (memcpy_size * dst_num_rows * dst_layout.Footprint.Depth))
   {
     throw FrameworkException("Insufficient number of bytes for upload texture buffer");
   }
@@ -80,10 +117,15 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
     throw FrameworkException("Failed to map texture upload buffer memory");
   }
   cpu_mem_start += dst_layout.Offset;
-  for (UINT row = 0; row < dst_num_rows; row++)
+  const UINT8* src_mem_start = &(data[0]);
+  for (UINT z = 0; z < dst_layout.Footprint.Depth; z++)
   {
-    memcpy(cpu_mem_start, &(data[row * memcpy_size]), memcpy_size);
-    cpu_mem_start += dst_layout.Footprint.RowPitch;
+    for (UINT row = 0; row < dst_num_rows; row++)
+    {
+      memcpy(cpu_mem_start, src_mem_start, memcpy_size);
+      cpu_mem_start += dst_layout.Footprint.RowPitch;
+      src_mem_start += memcpy_size;
+    }
   }
   m_buffer->Unmap(0, NULL);
 
@@ -93,7 +135,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   src.PlacedFootprint  = dst_layout;
 
   D3D12_TEXTURE_COPY_LOCATION dst;
-  dst.pResource        = dst_texture;
+  dst.pResource        = texture;
   dst.Type             = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
   dst.SubresourceIndex = 0;
 
@@ -101,7 +143,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   D3D12_RESOURCE_BARRIER prep_copy;
   prep_copy.Type  = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
   prep_copy.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-  prep_copy.Transition.pResource   = dst_texture;
+  prep_copy.Transition.pResource   = texture;
   prep_copy.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
   prep_copy.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
   prep_copy.Transition.StateAfter  = D3D12_RESOURCE_STATE_COPY_DEST;
@@ -112,7 +154,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   D3D12_RESOURCE_BARRIER done_copy;
   done_copy.Type  = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
   done_copy.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-  done_copy.Transition.pResource   = dst_texture;
+  done_copy.Transition.pResource   = texture;
   done_copy.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
   done_copy.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
   done_copy.Transition.StateAfter  = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;

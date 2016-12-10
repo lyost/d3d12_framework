@@ -279,6 +279,18 @@
     <ClCompile Include="src\Graphics\Textures\Texture2D.cpp">
       <Filter>Source Files\Graphics\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_Texture1D.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_Texture3D.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\Texture1D.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\Texture3D.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -535,6 +547,18 @@
     </ClInclude>
     <ClInclude Include="public_inc\Graphics\Textures\Texture2D.h">
       <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\Texture1D.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\Texture3D.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture1D.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture3D.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

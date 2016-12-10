@@ -1,5 +1,5 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#ifndef TEXTURE2D_H
+#define TEXTURE2D_H
 
 class GraphicsCore;
 class TextureResourceHeap;
@@ -90,4 +90,4 @@ class Texture2D
     Texture2D& operator=(const Texture2D& cpy);
 };
 
-#endif /* TEXTURE_H */
+#endif /* TEXTURE2D_H */

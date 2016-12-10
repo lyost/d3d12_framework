@@ -122,7 +122,7 @@ void GameMain::LoadContent()
   // create the vertex buffer
   const Viewport& default_viewport = graphics.GetDefaultViewport();
   float aspect_ratio = default_viewport.width / default_viewport.height;
-  Vertex_PositionTexture vertices[] =
+  Vertex_PositionTextureUV vertices[] =
   {
     { XMFLOAT3(-1.0f, 1.0f,-1.0f), XMFLOAT2(0.0f, 0.0f) },
     { XMFLOAT3( 1.0f, 1.0f,-1.0f), XMFLOAT2(1.0f, 0.0f) },

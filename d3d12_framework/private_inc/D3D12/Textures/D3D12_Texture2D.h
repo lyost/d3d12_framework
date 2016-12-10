@@ -128,24 +128,24 @@ class D3D12_Texture2D : public Texture2D
     /// </summary>
     D3D12_GPU_DESCRIPTOR_HANDLE m_gpu_mem;
 
-    /// <param name="width">
+    /// <summary>
     /// width of the texture in pixels
-    /// </param>
+    /// <summary>
     UINT m_width;
 
-    /// <param name="height">
+    /// <summary>
     /// height of the texture in pixels
-    /// </param>
+    /// <summary>
     UINT m_height;
 
-    /// <param name="format">
+    /// <summary>
     /// texture format
-    /// </param>
+    /// <summary>
     GraphicsDataFormat m_format;
 
-    /// <param name="format">
+    /// <summary>
     /// number of bytes needed in an upload buffer for this texture
-    /// </param>
+    /// <summary>
     UINT64 m_upload_size;
 };
 

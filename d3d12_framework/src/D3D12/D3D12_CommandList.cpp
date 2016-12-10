@@ -9,7 +9,9 @@
 #include "private_inc/D3D12/Textures/D3D12_RenderTarget.h"
 #include "private_inc/D3D12/D3D12_HeapArray.h"
 #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
+#include "private_inc/D3D12/Textures/D3D12_Texture1D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
+#include "private_inc/D3D12/Textures/D3D12_Texture3D.h"
 #include "private_inc/D3D12/Textures/D3D12_DepthStencil.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
@@ -105,9 +107,21 @@ void D3D12_CommandList::SetConstantBuffer(UINT slot, const ConstantBuffer& const
   m_command_list->SetGraphicsRootConstantBufferView(slot, buffer.GetGPUAddr());
 }
 
+void D3D12_CommandList::SetTexture(UINT slot, const Texture1D& texture)
+{
+  const D3D12_Texture1D& tex = (const D3D12_Texture1D&)texture;
+  m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
+}
+
 void D3D12_CommandList::SetTexture(UINT slot, const Texture2D& texture)
 {
   const D3D12_Texture2D& tex = (const D3D12_Texture2D&)texture;
+  m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
+}
+
+void D3D12_CommandList::SetTexture(UINT slot, const Texture3D& texture)
+{
+  const D3D12_Texture3D& tex = (const D3D12_Texture3D&)texture;
   m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
 }
 

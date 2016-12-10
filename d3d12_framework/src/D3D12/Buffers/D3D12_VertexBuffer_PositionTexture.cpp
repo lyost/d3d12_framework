@@ -2,11 +2,27 @@
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer.h"
 #include "FrameworkException.h"
 
-D3D12_VertexBuffer_PositionTexture* D3D12_VertexBuffer_PositionTexture::Create(GraphicsCore& graphics, UINT num, const Vertex_PositionTexture* data)
+D3D12_VertexBuffer_PositionTexture* D3D12_VertexBuffer_PositionTexture::Create(GraphicsCore& graphics, UINT num, const Vertex_PositionTextureU* data)
 {
   ID3D12Resource* buffer;
   D3D12_VERTEX_BUFFER_VIEW view;
-  D3D12_VertexBuffer::CreateBuffer(graphics, sizeof(Vertex_PositionTexture), num, data, buffer, view);
+  D3D12_VertexBuffer::CreateBuffer(graphics, sizeof(Vertex_PositionTextureU), num, data, buffer, view);
+  return new D3D12_VertexBuffer_PositionTexture(num, buffer, view);
+}
+
+D3D12_VertexBuffer_PositionTexture* D3D12_VertexBuffer_PositionTexture::Create(GraphicsCore& graphics, UINT num, const Vertex_PositionTextureUV* data)
+{
+  ID3D12Resource* buffer;
+  D3D12_VERTEX_BUFFER_VIEW view;
+  D3D12_VertexBuffer::CreateBuffer(graphics, sizeof(Vertex_PositionTextureUV), num, data, buffer, view);
+  return new D3D12_VertexBuffer_PositionTexture(num, buffer, view);
+}
+
+D3D12_VertexBuffer_PositionTexture* D3D12_VertexBuffer_PositionTexture::Create(GraphicsCore& graphics, UINT num, const Vertex_PositionTextureUVW* data)
+{
+  ID3D12Resource* buffer;
+  D3D12_VERTEX_BUFFER_VIEW view;
+  D3D12_VertexBuffer::CreateBuffer(graphics, sizeof(Vertex_PositionTextureUVW), num, data, buffer, view);
   return new D3D12_VertexBuffer_PositionTexture(num, buffer, view);
 }
 

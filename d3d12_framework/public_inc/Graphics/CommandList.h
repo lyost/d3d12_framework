@@ -7,7 +7,9 @@ class Pipeline;
 class VertexBufferArray;
 class HeapArray;
 class ConstantBuffer;
+class Texture1D;
 class Texture2D;
+class Texture3D;
 class DepthStencil;
 
 #include <vector>
@@ -21,7 +23,9 @@ class DepthStencil;
 #include "Graphics/Topology.h"
 #include "Graphics/Buffers/VertexBufferArray.h"
 #include "Graphics/Buffers/IndexBuffer.h"
+#include "Graphics/Textures/Texture1D.h"
 #include "Graphics/Textures/Texture2D.h"
+#include "Graphics/Textures/Texture3D.h"
 #include "Graphics/Textures/DepthStencil.h"
 
 /// <summary>
@@ -104,7 +108,29 @@ class CommandList
     /// <param name="texture">
     /// texture to use
     /// </param>
+    virtual void SetTexture(UINT slot, const Texture1D& texture) = 0;
+
+    /// <summary>
+    /// Binds the texture to a slot
+    /// </summary>
+    /// <param name="slot">
+    /// index of the slot to bind the texture to
+    /// </param>
+    /// <param name="texture">
+    /// texture to use
+    /// </param>
     virtual void SetTexture(UINT slot, const Texture2D& texture) = 0;
+
+    /// <summary>
+    /// Binds the texture to a slot
+    /// </summary>
+    /// <param name="slot">
+    /// index of the slot to bind the texture to
+    /// </param>
+    /// <param name="texture">
+    /// texture to use
+    /// </param>
+    virtual void SetTexture(UINT slot, const Texture3D& texture) = 0;
 
     // todo: overloads for clearing just the stencil, and both depth and stencil
 
