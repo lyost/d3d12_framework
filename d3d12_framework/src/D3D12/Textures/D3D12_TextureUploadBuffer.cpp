@@ -5,6 +5,8 @@
 #include "private_inc/D3D12/Textures/D3D12_Texture1D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture3D.h"
+#include "private_inc/D3D12/Textures/D3D12_Texture1DArray.h"
+#include "private_inc/D3D12/Textures/D3D12_Texture2DArray.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
@@ -12,20 +14,32 @@ using namespace std;
 
 D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture1D& texture, BufferResourceHeap& resource_heap)
 {
-  return CreateInternal(graphics, texture.GetUploadBufferSize(), resource_heap);
+  return CreateInternal(graphics, texture.GetUploadBufferSize(), 1, resource_heap);
 }
 
 D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2D& texture, BufferResourceHeap& resource_heap)
 {
-  return CreateInternal(graphics, texture.GetUploadBufferSize(), resource_heap);
+  return CreateInternal(graphics, texture.GetUploadBufferSize(), 1, resource_heap);
 }
 
 D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture3D& texture, BufferResourceHeap& resource_heap)
 {
-  return CreateInternal(graphics, texture.GetUploadBufferSize(), resource_heap);
+  return CreateInternal(graphics, texture.GetUploadBufferSize(), 1, resource_heap);
 }
 
-D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::CreateInternal(const GraphicsCore& graphics, UINT64 upload_buffer_size, BufferResourceHeap& resource_heap)
+D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture1DArray& texture, BufferResourceHeap& resource_heap)
+{
+  const D3D12_Texture1DArray& tex_array = (const D3D12_Texture1DArray&)texture;
+  return CreateInternal(graphics, texture.GetUploadBufferSize(), tex_array.GetLength(), resource_heap);
+}
+
+D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2DArray& texture, BufferResourceHeap& resource_heap)
+{
+  const D3D12_Texture2DArray& tex_array = (const D3D12_Texture2DArray&)texture;
+  return CreateInternal(graphics, texture.GetUploadBufferSize(), tex_array.GetLength(), resource_heap);
+}
+
+D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::CreateInternal(const GraphicsCore& graphics, UINT64 upload_buffer_size, UINT16 length, BufferResourceHeap& resource_heap)
 {
   const D3D12_Core& core   = (const D3D12_Core&)graphics;
   ID3D12Device*     device = core.GetDevice();
@@ -67,22 +81,34 @@ D3D12_TextureUploadBuffer::~D3D12_TextureUploadBuffer()
 void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1D& texture, const vector<UINT8>& data)
 {
   ID3D12Resource* dst_texture = ((D3D12_Texture1D&)texture).GetBuffer();
-  PrepUpload(graphics, command_list, dst_texture, data);
+  PrepUploadInternal(graphics, command_list, dst_texture, 0, data);
 }
 
 void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const vector<UINT8>& data)
 {
   ID3D12Resource* dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
-  PrepUpload(graphics, command_list, dst_texture, data);
+  PrepUploadInternal(graphics, command_list, dst_texture, 0, data);
 }
 
 void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture3D& texture, const vector<UINT8>& data)
 {
   ID3D12Resource* dst_texture = ((D3D12_Texture3D&)texture).GetBuffer();
-  PrepUpload(graphics, command_list, dst_texture, data);
+  PrepUploadInternal(graphics, command_list, dst_texture, 0, data);
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, ID3D12Resource* texture, const vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1DArray& texture, UINT16 index, const vector<UINT8>& data)
+{
+  ID3D12Resource* dst_texture = ((D3D12_Texture1DArray&)texture).GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, index, data);
+}
+
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2DArray& texture, UINT16 index, const vector<UINT8>& data)
+{
+  ID3D12Resource* dst_texture = ((D3D12_Texture2DArray&)texture).GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, index, data);
+}
+
+void D3D12_TextureUploadBuffer::PrepUploadInternal(GraphicsCore& graphics, CommandList& command_list, ID3D12Resource* texture, UINT16 index, const vector<UINT8>& data)
 {
   ID3D12Device*       device      = ((D3D12_Core&)graphics).GetDevice();
   D3D12_RESOURCE_DESC dst_desc    = texture->GetDesc();
@@ -90,11 +116,9 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   UINT   dst_num_rows;
   UINT64 dst_row_size_in_bytes;
   UINT64 dst_total_bytes;
-  device->GetCopyableFootprints(&dst_desc, 0, 1, 0, &dst_layout, &dst_num_rows, &dst_row_size_in_bytes, &dst_total_bytes);
+  device->GetCopyableFootprints(&dst_desc, index, 1, 0, &dst_layout, &dst_num_rows, &dst_row_size_in_bytes, &dst_total_bytes);
 
   SIZE_T memcpy_size = (SIZE_T)dst_row_size_in_bytes;
-
-  // todo: handle 3D textures
 
   D3D12_RESOURCE_DESC src_desc = m_buffer->GetDesc();
   if (src_desc.Width < (dst_total_bytes + dst_layout.Offset))
@@ -137,7 +161,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   D3D12_TEXTURE_COPY_LOCATION dst;
   dst.pResource        = texture;
   dst.Type             = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
-  dst.SubresourceIndex = 0;
+  dst.SubresourceIndex = index;
 
   ID3D12GraphicsCommandList* cmd_list = ((D3D12_CommandList&)command_list).GetCommandList();
   D3D12_RESOURCE_BARRIER prep_copy;

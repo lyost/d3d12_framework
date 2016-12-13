@@ -16,6 +16,16 @@ TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphi
   return D3D12_TextureUploadBuffer::Create(graphics, texture, resource_heap);
 }
 
+TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphics, const Texture1DArray& texture, BufferResourceHeap& resource_heap)
+{
+  return D3D12_TextureUploadBuffer::Create(graphics, texture, resource_heap);
+}
+
+TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphics, const Texture2DArray& texture, BufferResourceHeap& resource_heap)
+{
+  return D3D12_TextureUploadBuffer::Create(graphics, texture, resource_heap);
+}
+
 TextureUploadBuffer::TextureUploadBuffer()
 {
 }

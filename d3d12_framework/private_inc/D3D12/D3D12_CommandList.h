@@ -109,6 +109,28 @@ class D3D12_CommandList : public CommandList
     void SetTexture(UINT slot, const Texture3D& texture);
 
     /// <summary>
+    /// Binds the texture to a slot
+    /// </summary>
+    /// <param name="slot">
+    /// index of the slot to bind the texture to
+    /// </param>
+    /// <param name="texture">
+    /// texture to use
+    /// </param>
+    void SetTexture(UINT slot, const Texture1DArray& texture);
+
+    /// <summary>
+    /// Binds the texture to a slot
+    /// </summary>
+    /// <param name="slot">
+    /// index of the slot to bind the texture to
+    /// </param>
+    /// <param name="texture">
+    /// texture to use
+    /// </param>
+    void SetTexture(UINT slot, const Texture2DArray& texture);
+
+    /// <summary>
     /// Sets the topology to use for vertex data passed to the input assembler stage
     /// </summary>
     /// <param name="topology">

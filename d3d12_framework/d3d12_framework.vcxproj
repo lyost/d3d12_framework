@@ -160,6 +160,8 @@
     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetDescHeap.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetResourceHeap.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture1D.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_Texture1DArray.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_Texture2DArray.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture3D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_TextureResourceHeap.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp" />
@@ -192,6 +194,8 @@
     <ClCompile Include="src\Graphics\Textures\DepthStencil.cpp" />
     <ClCompile Include="src\Graphics\Textures\RenderTarget.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture1D.cpp" />
+    <ClCompile Include="src\Graphics\Textures\Texture1DArray.cpp" />
+    <ClCompile Include="src\Graphics\Textures\Texture2DArray.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture3D.cpp" />
     <ClCompile Include="src\Graphics\Textures\TextureResourceHeap.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture2D.cpp" />
@@ -237,6 +241,8 @@
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetDescHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetResourceHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture1D.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture1DArray.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2DArray.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture3D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureResourceHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h" />
@@ -278,6 +284,8 @@
     <ClInclude Include="public_inc\Graphics\Textures\DepthStencil.h" />
     <ClInclude Include="public_inc\Graphics\Textures\RenderTarget.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture1D.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\Texture1DArray.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\Texture2DArray.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture3D.h" />
     <ClInclude Include="public_inc\Graphics\Textures\TextureResourceHeap.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture2D.h" />
