@@ -146,8 +146,21 @@ void D3D12_CommandList::IASetTopology(IATopology topology)
 
 void D3D12_CommandList::IASetVertexBuffers(const VertexBufferArray& buffers)
 {
-  const D3D12_VertexBufferArray& buffer_array = (const D3D12_VertexBufferArray&)buffers;
-  m_command_list->IASetVertexBuffers(0, buffer_array.GetNumBuffers(), buffer_array.GetArray());
+  const D3D12_VertexBufferArray&  buffer_array = (const D3D12_VertexBufferArray&)buffers;
+  const D3D12_VERTEX_BUFFER_VIEW* raw_array    = buffer_array.GetArray();
+  UINT num_buffers = buffer_array.GetNumBuffers();
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  for (UINT i = 0; i < num_buffers; i++)
+  {
+    if (raw_array[i].BufferLocation == 0 && raw_array[i].SizeInBytes == 0)
+    {
+      throw FrameworkException("Entry in vertex array unset");
+    }
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  m_command_list->IASetVertexBuffers(0, num_buffers, raw_array);
 }
 
 void D3D12_CommandList::IASetIndexBuffer(const IndexBuffer& buffer)
