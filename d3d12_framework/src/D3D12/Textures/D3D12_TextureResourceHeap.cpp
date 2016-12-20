@@ -40,6 +40,14 @@ ID3D12Resource* D3D12_TextureResourceHeap::CreateResource(const GraphicsCore& gr
   const D3D12_Core& core   = (const D3D12_Core&)graphics;
   ID3D12Device*     device = core.GetDevice();
 
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+  if ((m_heap_used_size + alloc_info.SizeInBytes) > m_heap_total_size)
+  {
+    throw FrameworkException("Insufficent room in the texture resource heap for the new resource");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
   ID3D12Resource* buffer;
   HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
   if (FAILED(rc))

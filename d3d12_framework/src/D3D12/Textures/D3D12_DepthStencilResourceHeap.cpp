@@ -13,7 +13,7 @@ D3D12_DepthStencilResourceHeap* D3D12_DepthStencilResourceHeap::Create(ID3D12Dev
   desc.Properties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
   desc.Properties.CreationNodeMask     = 0;
   desc.Properties.VisibleNodeMask      = 0;
-  desc.Alignment                       = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT; // todo: allow D3D12_DEFAULT_MSAA_RESOURCE_PLACEMENT_ALIGNMENT to be used when requested
+  desc.Alignment                       = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
   desc.Flags                           = D3D12_HEAP_FLAG_ALLOW_ONLY_RT_DS_TEXTURES;
 
   ID3D12Heap* heap = NULL;
