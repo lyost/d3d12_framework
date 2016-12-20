@@ -193,6 +193,7 @@
     <ClCompile Include="src\Graphics\ShaderResourceDescHeap.cpp" />
     <ClCompile Include="src\Graphics\Textures\DepthStencil.cpp" />
     <ClCompile Include="src\Graphics\Textures\RenderTarget.cpp" />
+    <ClCompile Include="src\Graphics\Textures\Texture.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture1D.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture1DArray.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture2DArray.cpp" />
@@ -283,6 +284,7 @@
     <ClInclude Include="public_inc\Graphics\TextureEnums.h" />
     <ClInclude Include="public_inc\Graphics\Textures\DepthStencil.h" />
     <ClInclude Include="public_inc\Graphics\Textures\RenderTarget.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\Texture.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture1D.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture1DArray.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture2DArray.h" />

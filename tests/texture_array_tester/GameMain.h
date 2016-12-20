@@ -224,11 +224,6 @@ class GameMain : public Game
     TextureResourceHeap* m_tex_heap;
 
     /// <summary>
-    /// heap for texture upload buffers
-    /// </summary>
-    BufferResourceHeap* m_upload_heap;
-
-    /// <summary>
     /// texture
     /// </summary>
     Texture1DArray* m_texture1d;

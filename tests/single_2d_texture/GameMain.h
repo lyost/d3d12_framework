@@ -133,11 +133,6 @@ class GameMain : public Game
     Texture2D* m_texture;
 
     /// <summary>
-    /// heap for texture upload buffers
-    /// </summary>
-    BufferResourceHeap* m_upload_heap;
-
-    /// <summary>
     /// buffer for uploading the texture's data
     /// </summary>
     TextureUploadBuffer* m_upload_texture;

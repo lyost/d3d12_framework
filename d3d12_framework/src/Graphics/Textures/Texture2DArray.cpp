@@ -19,3 +19,8 @@ Texture2DArray::Texture2DArray()
 Texture2DArray::~Texture2DArray()
 {
 }
+
+Texture::TextureType Texture2DArray::GetType() const
+{
+  return TEXTURE_2D_ARRAY;
+}

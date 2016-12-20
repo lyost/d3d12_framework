@@ -18,3 +18,8 @@ Texture1D::Texture1D()
 Texture1D::~Texture1D()
 {
 }
+
+Texture::TextureType Texture1D::GetType() const
+{
+  return TEXTURE_1D;
+}

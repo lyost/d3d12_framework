@@ -8,8 +8,9 @@ class ShaderResourceDescHeap;
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/Textures/TextureResourceHeap.h"
 #include "Graphics/GraphicsDataFormat.h"
+#include "Graphics/Textures/Texture.h"
 
-class Texture3D
+class Texture3D : public Texture
 {
   public:
     /// <summary>
@@ -78,6 +79,14 @@ class Texture3D
       GraphicsDataFormat format);
 
     virtual ~Texture3D();
+
+    /// <summary>
+    /// Retrieves which type of texture the instance is
+    /// </summary>
+    /// <returns>
+    /// id of the texture type
+    /// </returns>
+    TextureType GetType() const;
 
     /// <summary>
     /// Retrieves the required size for a texture upload buffer that matches this texture

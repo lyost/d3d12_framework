@@ -303,6 +303,9 @@
     <ClCompile Include="src\Graphics\Textures\Texture2DArray.cpp">
       <Filter>Source Files\Graphics\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\Texture.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -583,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2DArray.h">
       <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\Texture.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

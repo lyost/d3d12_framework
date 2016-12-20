@@ -19,3 +19,8 @@ Texture3D::Texture3D()
 Texture3D::~Texture3D()
 {
 }
+
+Texture::TextureType Texture3D::GetType() const
+{
+  return TEXTURE_3D;
+}

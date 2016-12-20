@@ -198,19 +198,11 @@ void GameMain::LoadContent()
   }
   try
   {
-    const UINT64 upload_buffer_size = m_texture->GetUploadBufferSize();
-    m_upload_heap = BufferResourceHeap::CreateD3D12(graphics, upload_buffer_size);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create buffer resource heap:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-  try
-  {
-    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture, *m_upload_heap);
+    vector<Texture*> textures;
+    vector<TextureUploadBuffer*> buffers;
+    textures.push_back(m_texture);
+    TextureUploadBuffer::CreateD3D12(graphics, textures, buffers);
+    m_upload_texture = buffers[0];
   }
   catch (const FrameworkException& err)
   {
@@ -268,7 +260,6 @@ void GameMain::UnloadContent()
   delete m_heap_array;
   delete m_upload_texture;
   delete m_texture;
-  delete m_upload_heap;
   delete m_tex_heap;
   delete m_shader_buffer_heap;
   delete m_vert_array;

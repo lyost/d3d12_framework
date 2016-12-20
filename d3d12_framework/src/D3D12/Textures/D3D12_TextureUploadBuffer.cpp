@@ -12,60 +12,85 @@
 #include "FrameworkException.h"
 using namespace std;
 
-D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture1D& texture, BufferResourceHeap& resource_heap)
+void D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const std::vector<Texture*>& textures, std::vector<TextureUploadBuffer*>& out)
 {
-  return CreateInternal(graphics, texture.GetUploadBufferSize(), 1, resource_heap);
-}
-
-D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2D& texture, BufferResourceHeap& resource_heap)
-{
-  return CreateInternal(graphics, texture.GetUploadBufferSize(), 1, resource_heap);
-}
-
-D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture3D& texture, BufferResourceHeap& resource_heap)
-{
-  return CreateInternal(graphics, texture.GetUploadBufferSize(), 1, resource_heap);
-}
-
-D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture1DArray& texture, BufferResourceHeap& resource_heap)
-{
-  const D3D12_Texture1DArray& tex_array = (const D3D12_Texture1DArray&)texture;
-  return CreateInternal(graphics, texture.GetUploadBufferSize(), tex_array.GetLength(), resource_heap);
-}
-
-D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2DArray& texture, BufferResourceHeap& resource_heap)
-{
-  const D3D12_Texture2DArray& tex_array = (const D3D12_Texture2DArray&)texture;
-  return CreateInternal(graphics, texture.GetUploadBufferSize(), tex_array.GetLength(), resource_heap);
-}
-
-D3D12_TextureUploadBuffer* D3D12_TextureUploadBuffer::CreateInternal(const GraphicsCore& graphics, UINT64 upload_buffer_size, UINT16 length, BufferResourceHeap& resource_heap)
-{
-  const D3D12_Core& core   = (const D3D12_Core&)graphics;
+  const D3D12_Core& core = (const D3D12_Core&)graphics;
   ID3D12Device*     device = core.GetDevice();
 
-  D3D12_BufferResourceHeap& buffer_heap = (D3D12_BufferResourceHeap&)resource_heap;
-
-  D3D12_RESOURCE_DESC resource_desc;
-  resource_desc.Dimension          = D3D12_RESOURCE_DIMENSION_BUFFER;
-  resource_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
-  resource_desc.Width              = upload_buffer_size;
-  resource_desc.Height             = 1;
-  resource_desc.DepthOrArraySize   = 1;
-  resource_desc.MipLevels          = 1;
-  resource_desc.Format             = DXGI_FORMAT_UNKNOWN;
-  resource_desc.SampleDesc.Count   = 1;
-  resource_desc.SampleDesc.Quality = 0;
-  resource_desc.Layout             = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-  resource_desc.Flags              = D3D12_RESOURCE_FLAG_NONE;
-
-  ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
-  if (buffer == NULL)
+  UINT64 total_heap_bytes = 0;
+  vector<Texture*>::const_iterator texture_it = textures.begin();
+  vector<UINT64> upload_buffer_sizes;
+  upload_buffer_sizes.reserve(textures.size());
+  while (texture_it != textures.end())
   {
-    throw FrameworkException("Unable to create buffer resource");
+    Texture* texture = *texture_it;
+    ID3D12Resource* resource;
+    switch (texture->GetType())
+    {
+      case Texture::TEXTURE_1D:
+        resource = ((D3D12_Texture1D*)texture)->GetBuffer();
+        break;
+
+      case Texture::TEXTURE_2D:
+        resource = ((D3D12_Texture2D*)texture)->GetBuffer();
+        break;
+
+      case Texture::TEXTURE_3D:
+        resource = ((D3D12_Texture3D*)texture)->GetBuffer();
+        break;
+
+      case Texture::TEXTURE_1D_ARRAY:
+        resource = ((D3D12_Texture1DArray*)texture)->GetBuffer();
+        break;
+
+      case Texture::TEXTURE_2D_ARRAY:
+        resource = ((D3D12_Texture2DArray*)texture)->GetBuffer();
+        break;
+
+      default:
+        throw FrameworkException("Invalid texture type");
+        break;
+    }
+
+    D3D12_RESOURCE_DESC resource_desc = resource->GetDesc();
+    D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+
+    total_heap_bytes += alloc_info.SizeInBytes;
+    upload_buffer_sizes.push_back(alloc_info.SizeInBytes);
+
+    ++texture_it;
   }
 
-  return new D3D12_TextureUploadBuffer(buffer);
+  D3D12_BufferResourceHeap* buffer_heap = D3D12_BufferResourceHeap::Create(graphics, total_heap_bytes);
+  texture_it = textures.begin();
+  vector<UINT64>::const_iterator size_it = upload_buffer_sizes.begin();
+  while (texture_it != textures.end())
+  {
+    D3D12_RESOURCE_DESC resource_desc;
+    resource_desc.Dimension          = D3D12_RESOURCE_DIMENSION_BUFFER;
+    resource_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
+    resource_desc.Width              = *size_it;
+    resource_desc.Height             = 1;
+    resource_desc.DepthOrArraySize   = 1;
+    resource_desc.MipLevels          = 1;
+    resource_desc.Format             = DXGI_FORMAT_UNKNOWN;
+    resource_desc.SampleDesc.Count   = 1;
+    resource_desc.SampleDesc.Quality = 0;
+    resource_desc.Layout             = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+    resource_desc.Flags              = D3D12_RESOURCE_FLAG_NONE;
+
+    ID3D12Resource* buffer = buffer_heap->CreateResource(graphics, resource_desc);
+    if (buffer == NULL)
+    {
+      throw FrameworkException("Unable to create buffer resource");
+    }
+
+    out.push_back(new D3D12_TextureUploadBuffer(buffer));
+
+    ++texture_it;
+    ++size_it;
+  }
+  delete buffer_heap;
 }
 
 D3D12_TextureUploadBuffer::D3D12_TextureUploadBuffer(ID3D12Resource* buffer)

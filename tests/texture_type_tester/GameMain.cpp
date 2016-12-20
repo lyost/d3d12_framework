@@ -307,21 +307,13 @@ void GameMain::LoadContent()
   }
 
   // create the buffer for uploading the textures (will reuse the same buffer, so pick the largest texture)
-  const UINT64 upload_buffer_size = m_texture3d->GetUploadBufferSize();
   try
   {
-    m_upload_heap = BufferResourceHeap::CreateD3D12(graphics, upload_buffer_size);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create texture upload heap:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-  try
-  {
-    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture3d, *m_upload_heap);
+    vector<Texture*> textures;
+    vector<TextureUploadBuffer*> buffers;
+    textures.push_back(m_texture3d);
+    TextureUploadBuffer::CreateD3D12(graphics, textures, buffers);
+    m_upload_texture = buffers[0];
   }
   catch (const FrameworkException& err)
   {
@@ -404,7 +396,6 @@ void GameMain::UnloadContent()
 {
   delete m_depth_stencil;
   delete m_tex_heap;
-  delete m_upload_heap;
   delete m_texture1d;
   delete m_texture2d;
   delete m_texture3d;

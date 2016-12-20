@@ -3,130 +3,31 @@
 
 #include <vector>
 #include "Graphics/CommandList.h"
-#include "Graphics/Textures/Texture1D.h"
-#include "Graphics/Textures/Texture2D.h"
-#include "Graphics/Textures/Texture3D.h"
-#include "Graphics/Textures/Texture1DArray.h"
-#include "Graphics/Textures/Texture2DArray.h"
-#include "Graphics/BufferResourceHeap.h"
+#include "Graphics/Textures/Texture.h"
 
 class TextureUploadBuffer
 {
   public:
     /// <summary>
-    /// Creates a D3D12 buffer for uploading textures
+    /// Creates D3D12 buffers for uploading textures
+    /// <remarks>
+    /// In order to preserve upload buffers being added to "out" in the same order as the textures are in "textures", only 1 upload buffer will be created per texture array.  If you want multiple upload
+    /// buffers for a texture array, then it should be repeated in "textures".
+    /// </remarks>
     /// </summary>
     /// <param name="graphics">
-    /// core graphics interface
+    /// Core graphics interface
     /// </param>
-    /// <param name="texture">
-    /// texture to create the upload buffer for
+    /// <param name="textures">
+    /// Textures to create the upload buffer for
     /// </param>
-    /// <param name="resource_heap">
-    /// resource heap to put the upload buffer's memory into
-    /// <remarks>
-    /// It is the caller's responsibility to make sure there is enough room in the heap for the new buffer
-    /// </remarks>
+    /// <param name="out">
+    /// Where to put the created upload buffers.  They will be added to the end of the array.
     /// </param>
-    /// <returns>
-    /// D3D12 texture upload buffer
-    /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture1D& texture, BufferResourceHeap& resource_heap);
-
-    /// <summary>
-    /// Creates a D3D12 buffer for uploading textures
-    /// </summary>
-    /// <param name="graphics">
-    /// core graphics interface
-    /// </param>
-    /// <param name="texture">
-    /// texture to create the upload buffer for
-    /// </param>
-    /// <param name="resource_heap">
-    /// resource heap to put the upload buffer's memory into
-    /// <remarks>
-    /// It is the caller's responsibility to make sure there is enough room in the heap for the new buffer
-    /// </remarks>
-    /// </param>
-    /// <returns>
-    /// D3D12 texture upload buffer
-    /// </returns>
-    /// <exception cref="FrameworkException">
-    /// Thrown when an error is encountered
-    /// </exception>
-    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture2D& texture, BufferResourceHeap& resource_heap);
-
-    /// <summary>
-    /// Creates a D3D12 buffer for uploading textures
-    /// </summary>
-    /// <param name="graphics">
-    /// core graphics interface
-    /// </param>
-    /// <param name="texture">
-    /// texture to create the upload buffer for
-    /// </param>
-    /// <param name="resource_heap">
-    /// resource heap to put the upload buffer's memory into
-    /// <remarks>
-    /// It is the caller's responsibility to make sure there is enough room in the heap for the new buffer
-    /// </remarks>
-    /// </param>
-    /// <returns>
-    /// D3D12 texture upload buffer
-    /// </returns>
-    /// <exception cref="FrameworkException">
-    /// Thrown when an error is encountered
-    /// </exception>
-    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture3D& texture, BufferResourceHeap& resource_heap);
-
-    /// <summary>
-    /// Creates a D3D12 buffer for uploading a texture in the array
-    /// </summary>
-    /// <param name="graphics">
-    /// core graphics interface
-    /// </param>
-    /// <param name="texture">
-    /// texture to create the upload buffer for
-    /// </param>
-    /// <param name="resource_heap">
-    /// resource heap to put the upload buffer's memory into
-    /// <remarks>
-    /// It is the caller's responsibility to make sure there is enough room in the heap for the new buffer
-    /// </remarks>
-    /// </param>
-    /// <returns>
-    /// D3D12 texture upload buffer
-    /// </returns>
-    /// <exception cref="FrameworkException">
-    /// Thrown when an error is encountered
-    /// </exception>
-    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture1DArray& texture, BufferResourceHeap& resource_heap);
-
-    /// <summary>
-    /// Creates a D3D12 buffer for uploading a texture in the array
-    /// </summary>
-    /// <param name="graphics">
-    /// core graphics interface
-    /// </param>
-    /// <param name="texture">
-    /// texture to create the upload buffer for
-    /// </param>
-    /// <param name="resource_heap">
-    /// resource heap to put the upload buffer's memory into
-    /// <remarks>
-    /// It is the caller's responsibility to make sure there is enough room in the heap for the new buffer
-    /// </remarks>
-    /// </param>
-    /// <returns>
-    /// D3D12 texture upload buffer
-    /// </returns>
-    /// <exception cref="FrameworkException">
-    /// Thrown when an error is encountered
-    /// </exception>
-    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture2DArray& texture, BufferResourceHeap& resource_heap);
+    static void CreateD3D12(const GraphicsCore& graphics, const std::vector<Texture*>& textures, std::vector<TextureUploadBuffer*>& out);
 
     virtual ~TextureUploadBuffer();
 

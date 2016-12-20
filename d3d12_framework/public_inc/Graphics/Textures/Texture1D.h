@@ -8,8 +8,9 @@ class ShaderResourceDescHeap;
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/Textures/TextureResourceHeap.h"
 #include "Graphics/GraphicsDataFormat.h"
+#include "Graphics/Textures/Texture.h"
 
-class Texture1D
+class Texture1D : public Texture
 {
   public:
     /// <summary>
@@ -65,6 +66,14 @@ class Texture1D
     static Texture1D* CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, GraphicsDataFormat format);
 
     virtual ~Texture1D();
+
+    /// <summary>
+    /// Retrieves which type of texture the instance is
+    /// </summary>
+    /// <returns>
+    /// id of the texture type
+    /// </returns>
+    TextureType GetType() const;
 
     /// <summary>
     /// Retrieves the required size for a texture upload buffer that matches this texture
