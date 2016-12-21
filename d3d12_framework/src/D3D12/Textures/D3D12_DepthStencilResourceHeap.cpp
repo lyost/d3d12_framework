@@ -43,7 +43,7 @@ ID3D12Resource* D3D12_DepthStencilResourceHeap::CreateResource(ID3D12Device* dev
   clear.DepthStencil.Stencil = 0;
 
   ID3D12Resource* buffer;
-  HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, &clear, __uuidof(ID3D12Resource), (void**)&buffer);
+  HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &clear, __uuidof(ID3D12Resource), (void**)&buffer);
   if (FAILED(rc))
   {
     ostringstream out;

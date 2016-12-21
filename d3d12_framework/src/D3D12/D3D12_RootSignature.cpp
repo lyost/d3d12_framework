@@ -79,11 +79,12 @@ D3D12_RootSignature* D3D12_RootSignature::Create(const GraphicsCore& graphics, c
 {
   const D3D12_Core& core = (const D3D12_Core&)graphics;
   const D3D12_RootSignatureConfig& conf = (const D3D12_RootSignatureConfig&)config;
+  const D3D12_ROOT_SIGNATURE_DESC& desc = conf.GetDesc();
 
   ID3DBlob* sig;
   ID3DBlob* err;
   //dump_root_sig_config(conf.GetDesc());
-  HRESULT rc = D3D12SerializeRootSignature(&conf.GetDesc(), D3D_ROOT_SIGNATURE_VERSION_1, &sig, &err);
+  HRESULT rc = D3D12SerializeRootSignature(&desc, D3D_ROOT_SIGNATURE_VERSION_1, &sig, &err);
   if (FAILED(rc))
   {
     ostringstream out;

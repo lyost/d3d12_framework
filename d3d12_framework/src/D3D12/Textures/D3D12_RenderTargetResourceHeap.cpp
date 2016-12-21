@@ -41,7 +41,7 @@ ID3D12Resource* D3D12_RenderTargetResourceHeap::CreateResource(ID3D12Device* dev
   clear_value.Color[1] = 0;
   clear_value.Color[2] = 0;
   clear_value.Color[3] = 1;
-  HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, &clear_value, __uuidof(ID3D12Resource), (void**)&buffer);
+  HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_PRESENT, &clear_value, __uuidof(ID3D12Resource), (void**)&buffer);
   if (FAILED(rc))
   {
     throw FrameworkException("Failed to create placed render target");
