@@ -78,7 +78,6 @@ D3D12_DepthStencil::D3D12_DepthStencil(ID3D12Resource* buffer, D3D12_GPU_DESCRIP
  m_cpu_handle(cpu_mem),
  m_width(width),
  m_height(height),
- m_upload_size(upload_size),
  m_desc_heap(desc_heap)
 {
   m_desc_heap->AddRef();
@@ -88,11 +87,6 @@ D3D12_DepthStencil::~D3D12_DepthStencil()
 {
   m_buffer->Release();
   m_desc_heap->Release();
-}
-
-UINT64 D3D12_DepthStencil::GetUploadBufferSize() const
-{
-  return m_upload_size;
 }
 
 ID3D12Resource* D3D12_DepthStencil::GetBuffer() const

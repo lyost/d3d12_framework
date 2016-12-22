@@ -72,19 +72,13 @@ D3D12_Texture2DArray::D3D12_Texture2DArray(ID3D12Resource* buffer, D3D12_GPU_DES
  m_width(width),
  m_height(height),
  m_length(length),
- m_format(format),
- m_upload_size(upload_size)
+ m_format(format)
 {
 }
 
 D3D12_Texture2DArray::~D3D12_Texture2DArray()
 {
   m_buffer->Release();
-}
-
-UINT64 D3D12_Texture2DArray::GetUploadBufferSize() const
-{
-  return m_upload_size;
 }
 
 UINT16 D3D12_Texture2DArray::GetLength() const

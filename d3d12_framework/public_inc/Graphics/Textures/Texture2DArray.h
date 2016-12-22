@@ -87,14 +87,6 @@ class Texture2DArray : public Texture
     /// id of the texture type
     /// </returns>
     TextureType GetType() const;
-
-    /// <summary>
-    /// Retrieves the required size for a texture upload buffer that matches this texture
-    /// </summary>
-    /// <returns>
-    /// required number of bytes in the upload buffer
-    /// </returns>
-    virtual UINT64 GetUploadBufferSize() const = 0;
     
   protected:
     Texture2DArray();

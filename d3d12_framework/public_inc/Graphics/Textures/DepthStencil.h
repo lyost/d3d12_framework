@@ -46,14 +46,6 @@ class DepthStencil
     static void CreateD3D12(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<DepthStencil*>& out);
 
     virtual ~DepthStencil();
-
-    /// <summary>
-    /// Retrieves the required size for a depth stencil upload buffer that matches this depth stencil
-    /// </summary>
-    /// <returns>
-    /// required number of bytes in the upload buffer
-    /// </returns>
-    virtual UINT64 GetUploadBufferSize() const = 0;
     
   protected:
     DepthStencil();

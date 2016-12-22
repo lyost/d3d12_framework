@@ -66,19 +66,13 @@ D3D12_Texture1D::D3D12_Texture1D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HA
 :m_buffer(buffer),
  m_gpu_mem(gpu_mem),
  m_width(width),
- m_format(format),
- m_upload_size(upload_size)
+ m_format(format)
 {
 }
 
 D3D12_Texture1D::~D3D12_Texture1D()
 {
   m_buffer->Release();
-}
-
-UINT64 D3D12_Texture1D::GetUploadBufferSize() const
-{
-  return m_upload_size;
 }
 
 ID3D12Resource* D3D12_Texture1D::GetBuffer() const

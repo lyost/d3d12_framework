@@ -76,14 +76,6 @@ class D3D12_Texture2DArray : public Texture2DArray
     ~D3D12_Texture2DArray();
 
     /// <summary>
-    /// Retrieves the required size for a texture upload buffer that matches this texture
-    /// </summary>
-    /// <returns>
-    /// required number of bytes in the upload buffer
-    /// </returns>
-    UINT64 GetUploadBufferSize() const;
-
-    /// <summary>
     /// Retrieves the number of textures in the array
     /// </summary>
     /// <returns>
@@ -164,11 +156,6 @@ class D3D12_Texture2DArray : public Texture2DArray
     /// texture format
     /// <summary>
     GraphicsDataFormat m_format;
-
-    /// <summary>
-    /// number of bytes needed in an upload buffer for this texture
-    /// <summary>
-    UINT64 m_upload_size;
 };
 
 #endif /* D3D12_TEXTURE2D_ARRAY_H */

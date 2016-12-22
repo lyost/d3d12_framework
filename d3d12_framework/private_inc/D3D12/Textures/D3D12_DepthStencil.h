@@ -28,14 +28,6 @@ class D3D12_DepthStencil : public DepthStencil
     ~D3D12_DepthStencil();
 
     /// <summary>
-    /// Retrieves the required size for a depth stencil upload buffer that matches this depth stencil
-    /// </summary>
-    /// <returns>
-    /// required number of bytes in the upload buffer
-    /// </returns>
-    UINT64 GetUploadBufferSize() const;
-
-    /// <summary>
     /// Retrieves the D3D12 resource
     /// </summary>
     /// <returns>
@@ -120,11 +112,6 @@ class D3D12_DepthStencil : public DepthStencil
     /// height of the depth stencil in pixels
     /// </param>
     UINT m_height;
-
-    /// <param name="format">
-    /// number of bytes needed in an upload buffer for this depth stencil
-    /// </param>
-    UINT64 m_upload_size;
 
     /// <summary>
     /// D3D12 descriptor heap that the depth stencil was created from
