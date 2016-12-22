@@ -1,3 +1,4 @@
+#include <sstream>
 #include "private_inc/D3D12/Textures/D3D12_RenderTarget.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
@@ -10,6 +11,15 @@ using namespace std;
 
 void D3D12_RenderTarget::Create(const GraphicsCore& graphics, const vector<Config>& configs, vector<RenderTarget*>& out)
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (configs.size() > UINT_MAX)
+  {
+    ostringstream out;
+    out << "Trying to create too many render targets at once.  Max " << UINT_MAX;
+    throw FrameworkException(out.str());
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
   const D3D12_Core& core   = (const D3D12_Core&)graphics;
   ID3D12Device*     device = core.GetDevice();
 
@@ -23,7 +33,7 @@ void D3D12_RenderTarget::Create(const GraphicsCore& graphics, const vector<Confi
   }
 
   D3D12_RenderTargetResourceHeap* resource_heap = D3D12_RenderTargetResourceHeap::Create(device, total_heap_bytes);
-  D3D12_RenderTargetDescHeap*     desc_heap     = D3D12_RenderTargetDescHeap::Create(device, configs.size());
+  D3D12_RenderTargetDescHeap*     desc_heap     = D3D12_RenderTargetDescHeap::Create(device, (UINT)configs.size());
 
   config_it = configs.begin();
   while (config_it != configs.end())

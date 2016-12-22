@@ -235,11 +235,11 @@ LRESULT CALLBACK Window::WndProc(HWND wnd,UINT message,WPARAM wparam,
       break;
       
     case WM_KEYDOWN:
-      wnd_it->second->m_keyboard.SetKeyDown(wparam,IsExtendedKey(lparam));
+      wnd_it->second->m_keyboard.SetKeyDown((int)wparam,IsExtendedKey(lparam));
       break;
       
     case WM_KEYUP:
-      wnd_it->second->m_keyboard.SetKeyUp(wparam,IsExtendedKey(lparam));
+      wnd_it->second->m_keyboard.SetKeyUp((int)wparam,IsExtendedKey(lparam));
       break;
       
     case WM_MOUSEMOVE:

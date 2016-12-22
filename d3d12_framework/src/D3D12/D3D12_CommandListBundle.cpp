@@ -1,3 +1,4 @@
+#include <sstream>
 #include "private_inc/D3D12/D3D12_CommandListBundle.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
 #include "private_inc/BuildSettings.h"
@@ -30,6 +31,15 @@ void D3D12_CommandListBundle::AddCommandList(const CommandList& list)
   ID3D12GraphicsCommandList* command_list = ((const D3D12_CommandList&)list).GetCommandList();
   command_list->AddRef();
   m_lists.push_back(command_list);
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (m_lists.size() > UINT_MAX)
+  {
+    ostringstream out;
+    out << "Too many command lists now present in bundle.  Max " << UINT_MAX;
+    throw FrameworkException(out.str());
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
 }
 
 void D3D12_CommandListBundle::RemoveCommandList(const CommandList& list)
@@ -67,7 +77,7 @@ void D3D12_CommandListBundle::RemoveCommandList(UINT index)
 
 UINT D3D12_CommandListBundle::GetNumCommandLists() const
 {
-  return m_lists.size();
+  return (UINT)m_lists.size();
 }
 
 ID3D12GraphicsCommandList*const* D3D12_CommandListBundle::GetCommandLists() const

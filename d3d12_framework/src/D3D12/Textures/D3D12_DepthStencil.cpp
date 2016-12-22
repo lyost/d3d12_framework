@@ -1,12 +1,23 @@
+#include <sstream>
 #include "private_inc/D3D12/Textures/D3D12_DepthStencil.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/Textures/D3D12_DepthStencilResourceHeap.h"
 #include "private_inc/D3D12/Buffers/D3D12_DepthStencilDescHeap.h"
 #include "FrameworkException.h"
+#include "private_inc/BuildSettings.h"
 using namespace std;
 
 void D3D12_DepthStencil::Create(const GraphicsCore& graphics, const vector<Config>& configs, vector<DepthStencil*>& out)
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (configs.size() > UINT_MAX)
+  {
+    ostringstream out;
+    out << "Trying to create too many depth stencils at once.  Max " << UINT_MAX;
+    throw FrameworkException(out.str());
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
   const D3D12_Core& core = (const D3D12_Core&)graphics;
   ID3D12Device* device = core.GetDevice();
 
@@ -20,7 +31,7 @@ void D3D12_DepthStencil::Create(const GraphicsCore& graphics, const vector<Confi
   }
 
   D3D12_DepthStencilResourceHeap* resource_heap = D3D12_DepthStencilResourceHeap::Create(device, total_heap_bytes);
-  D3D12_DepthStencilDescHeap*     desc_heap     = D3D12_DepthStencilDescHeap::Create(device, configs.size());
+  D3D12_DepthStencilDescHeap*     desc_heap     = D3D12_DepthStencilDescHeap::Create(device, (UINT)configs.size());
 
   config_it = configs.begin();
   while (config_it != configs.end())

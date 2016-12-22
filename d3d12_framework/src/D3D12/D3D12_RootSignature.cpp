@@ -91,8 +91,6 @@ D3D12_RootSignature* D3D12_RootSignature::Create(const GraphicsCore& graphics, c
     out << "Failed to serialize root signature, HRESULT = " << rc;
     throw FrameworkException(out.str());
   }
-  const void* root_data = sig->GetBufferPointer();
-  UINT root_len = sig->GetBufferSize();
   ID3D12RootSignature* root_sig;
   rc = core.GetDevice()->CreateRootSignature(0, sig->GetBufferPointer(), sig->GetBufferSize(), IID_PPV_ARGS(&root_sig));
   if (FAILED(rc))

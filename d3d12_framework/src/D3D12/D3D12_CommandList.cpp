@@ -200,7 +200,14 @@ void D3D12_CommandList::RSSetScissorRect(const RECT& rect)
 
 void D3D12_CommandList::RSSetScissorRects(const vector<RECT>& rects)
 {
-  m_command_list->RSSetScissorRects(rects.size(), &rects[0]);
+  UINT num_rects = (UINT)rects.size();
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (num_rects != rects.size())
+  {
+    throw FrameworkException("Trying to set too many scissor rects");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+  m_command_list->RSSetScissorRects(num_rects, &rects[0]);
 }
 
 void D3D12_CommandList::RSSetScissorRects(const vector<RECT>& rects, UINT start, UINT num)
