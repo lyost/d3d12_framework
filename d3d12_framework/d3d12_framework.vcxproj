@@ -77,7 +77,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)log_library\public_inc;$(SolutionDir)d3d12_framework\public_inc;$(SolutionDir)d3d12_framework;$(SolutionDir)\external_tools\D3D12_DDSTextureLoader\public_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)log_library\public_inc;$(SolutionDir)d3d12_framework\public_inc;$(SolutionDir)d3d12_framework</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -96,7 +96,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)log_library\public_inc;$(SolutionDir)d3d12_framework\public_inc;$(SolutionDir)d3d12_framework;$(SolutionDir)\external_tools\D3D12_DDSTextureLoader\public_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)log_library\public_inc;$(SolutionDir)d3d12_framework\public_inc;$(SolutionDir)d3d12_framework</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -110,7 +110,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)log_library\public_inc;$(SolutionDir)d3d12_framework\public_inc;$(SolutionDir)d3d12_framework;$(SolutionDir)\external_tools\D3D12_DDSTextureLoader\public_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)log_library\public_inc;$(SolutionDir)d3d12_framework\public_inc;$(SolutionDir)d3d12_framework</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -126,7 +126,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)log_library\public_inc;$(SolutionDir)d3d12_framework\public_inc;$(SolutionDir)d3d12_framework;$(SolutionDir)\external_tools\D3D12_DDSTextureLoader\public_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)log_library\public_inc;$(SolutionDir)d3d12_framework\public_inc;$(SolutionDir)d3d12_framework</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
