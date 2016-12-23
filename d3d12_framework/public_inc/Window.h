@@ -74,7 +74,7 @@ class Window
     /// </param>
     /// <returns>
     /// true if the mouse is constrained
-    // false otherwise
+    /// false otherwise
     /// </returns>
     bool ConstrainMousePointer(bool constraint);
     
@@ -139,7 +139,6 @@ class Window
     // used by static Create functions
     Window();
     
-#ifndef PUBLIC_HEADER
     /// <summary>
     /// handles various messages sent to the window
     /// </summary>
@@ -151,7 +150,6 @@ class Window
     /// </remarks>
     static LRESULT CALLBACK WndProc(HWND wnd,UINT message,WPARAM wparam,
       LPARAM lparam);
-#endif /* PUBLIC_HEADER */
     
     /// <summary>
     /// map of handles to window pointers so that WndProc can access individual

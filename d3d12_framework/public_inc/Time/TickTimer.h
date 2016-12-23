@@ -1,5 +1,3 @@
-#ifndef PUBLIC_HEADER
-
 #ifndef TICK_TIMER_H
 #define TICK_TIMER_H
 
@@ -35,5 +33,3 @@ class TickTimer : public Timer
 };
 
 #endif /* TICK_TIMER_H */
-
-#endif /* PUBLIC_HEADER */

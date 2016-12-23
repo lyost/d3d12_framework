@@ -136,7 +136,6 @@ void GameMain::LoadContent()
     exit(1);
   }
 
-  // combine the vertex and instance buffer
   try
   {
     m_vert_array = VertexBufferArray::CreateD3D12(1);

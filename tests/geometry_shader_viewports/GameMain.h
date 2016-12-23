@@ -30,17 +30,11 @@ class GameMain : public Game
     /// <summary>
     /// Loads the content for the game
     /// </summary>
-    /// <param name="content">
-    /// content manager to use for loading resources
-    /// </param>
     void LoadContent();
     
     /// <summary>
     /// Unloads the content for the game before the dealloction of the instance
     /// </summary>
-    /// <param name="content">
-    /// content manager to use for unloading resources
-    /// </param>
     void UnloadContent();
     
     /// <summary>
@@ -165,12 +159,12 @@ class GameMain : public Game
     Viewports m_viewports;
 
     /// <summary>
-    /// corresponding scissor rect for m_viewports's first viewport
+    /// corresponding scissor rects for m_viewports
     /// </summary>
     std::vector<RECT> m_scissor_rects;
 
     /// <summary>
-    /// camera for the test viewport
+    /// cameras for the test viewports
     /// </summary>
     Camera* m_camera[NUM_VIEWPORTS];
 

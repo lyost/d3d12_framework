@@ -146,7 +146,7 @@ class D3D12_Core : public GraphicsCore
     /// <summary>
     /// swap chain that m_swap_chain is created from (needed only for cleanup)
     /// </summary>
-    IDXGISwapChain*        m_swap_chain_base;
+    IDXGISwapChain*         m_swap_chain_base;
     
     /// <summary>
     /// swap chain

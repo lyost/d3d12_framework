@@ -39,15 +39,9 @@ class ConstantBuffer
     /// </param>
     /// <param name="resource_heap">
     /// resource heap to put the constant buffer's memory into
-    /// <remarks>
-    /// It is the caller's responsibility to make sure there is enough room in the heap for the new buffer
-    /// </remarks>
     /// </param>
     /// <param name="shader_buffer_heap">
     /// shader resources descriptor heap that the constant buffer will be accessed from
-    /// <remarks>
-    /// It is the caller's responsibility to make sure there is enough room in the heap for the new buffer
-    /// </remarks>
     /// </param>
     /// <param name="num_bytes">
     /// size of the buffer to allocate in bytes

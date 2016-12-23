@@ -11,16 +11,16 @@ class D3D12_RenderTarget : public RenderTarget
 {
   public:
     /// <summary>
-    /// Creates a render target from a 2D texture
+    /// Creates render targets for the specified configurations
     /// <summary>
     /// <param name="graphics">
     /// core graphics interface
     /// </param>
-    /// <param name="configs
+    /// <param name="configs">
     /// Configurations for render targets to create
     /// </param>
     /// <param name="out">
-    /// Where to put the created depth stencils.  They will be added to the end of the array.
+    /// Where to put the created render targets.  They will be added to the end of the array.
     /// </param>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered

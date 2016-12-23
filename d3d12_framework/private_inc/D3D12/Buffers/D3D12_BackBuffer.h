@@ -97,7 +97,7 @@ class D3D12_BackBuffers : public BackBuffers
     UINT m_curr_render_target;
 
     /// <summary>
-    /// index of current render target for the back buffer
+    /// swap chain the back buffer was created for
     /// </summary>
     IDXGISwapChain3* m_swap_chain;
 };

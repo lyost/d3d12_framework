@@ -42,15 +42,9 @@ class D3D12_Texture2DArray : public Texture2DArray
     /// </param>
     /// <param name="resource_heap">
     /// texture upload resource heap to put the texture into
-    /// <remarks>
-    /// It is the caller's responsibility to make sure there is enough room in the heap for the new buffer
-    /// </remarks>
     /// </param>
     /// <param name="shader_buffer_heap">
     /// shader resources descriptor heap that the texture will be accessed from
-    /// <remarks>
-    /// It is the caller's responsibility to make sure there is enough room in the heap for the new buffer
-    /// </remarks>
     /// </param>
     /// <param name="width">
     /// width of the texture in pixels

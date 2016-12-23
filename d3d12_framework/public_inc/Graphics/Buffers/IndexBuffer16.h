@@ -5,7 +5,7 @@
 #include "Graphics/Buffers/IndexBuffer.h"
 
 /// <summary>
-/// Index buffer for 16bit long entries
+/// Index buffer with 16bit entries
 /// </summary>
 class IndexBuffer16 : public IndexBuffer
 {

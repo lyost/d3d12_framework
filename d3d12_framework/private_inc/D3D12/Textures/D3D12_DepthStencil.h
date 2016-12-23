@@ -103,14 +103,14 @@ class D3D12_DepthStencil : public DepthStencil
     /// </summary>
     D3D12_CPU_DESCRIPTOR_HANDLE m_cpu_handle;
 
-    /// <param name="width">
+    /// <summary>
     /// width of the depth stencil in pixels
-    /// </param>
+    /// </summary>
     UINT m_width;
 
-    /// <param name="height">
+    /// <summary>
     /// height of the depth stencil in pixels
-    /// </param>
+    /// </summary>
     UINT m_height;
 
     /// <summary>

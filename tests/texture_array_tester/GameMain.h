@@ -31,17 +31,11 @@ class GameMain : public Game
     /// <summary>
     /// Loads the content for the game
     /// </summary>
-    /// <param name="content">
-    /// content manager to use for loading resources
-    /// </param>
     void LoadContent();
     
     /// <summary>
     /// Unloads the content for the game before the dealloction of the instance
     /// </summary>
-    /// <param name="content">
-    /// content manager to use for unloading resources
-    /// </param>
     void UnloadContent();
     
     /// <summary>

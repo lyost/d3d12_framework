@@ -17,10 +17,6 @@ class D3D12_InputLayout : public InputLayout
     /// <param name="num">
     /// number of elements that make up the layout
     /// </param>
-    /// <remarks>
-    /// Each element must be set via SetNextElement before passing the instance
-    /// to a ContentManager
-    /// </remarks>
     D3D12_InputLayout(UINT num);
     
     ~D3D12_InputLayout();
@@ -44,11 +40,6 @@ class D3D12_InputLayout : public InputLayout
     /// </param>
     /// <param name="format">
     /// format of the entry
-    /// <remarks>
-    /// Looked into alternatives to taking a DXGI_FORMAT here, but the enum has
-    /// so many different types that can be used as input to a vertex shader
-    /// that it is impractical to do anything besides take it directly for now
-    /// </remarks>
     /// </param>
     /// <param name="input_slot">
     /// input slot to use

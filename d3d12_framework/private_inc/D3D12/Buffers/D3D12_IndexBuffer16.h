@@ -5,7 +5,7 @@
 #include "Graphics/Buffers/IndexBuffer16.h"
 
 /// <summary>
-/// Index buffer for 16bit long entries
+/// Index buffer with 16bit entries
 /// </summary>
 class D3D12_IndexBuffer16 : public IndexBuffer16
 {

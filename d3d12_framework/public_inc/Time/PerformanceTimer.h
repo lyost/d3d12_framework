@@ -1,5 +1,3 @@
-#ifndef PUBLIC_HEADER
-
 #ifndef PERFORMANCE_TIMER_H
 #define PERFORMANCE_TIMER_H
 
@@ -50,5 +48,3 @@ class PerformanceTimer : public Timer
 };
 
 #endif /* PERFORMANCE_TIMER_H */
-
-#endif /* PUBLIC_HEADER */
