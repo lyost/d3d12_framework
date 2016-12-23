@@ -8,7 +8,7 @@
 /// While all of these operations are available with XMVECTOR, there are times
 /// it's convient not to have to convert a DirectX::XMFLOAT* into a XMVECTOR to get
 /// access to them.
-/// <remarks>
+/// </remarks>
 
 #include <windows.h>
 #include <directxmath.h>

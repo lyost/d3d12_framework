@@ -29,9 +29,6 @@ class D3D12_VertexBufferArray : public VertexBufferArray
     /// </remarks>
     /// <param name="index">
     /// where in the array to set the buffer
-    /// <remarks>
-    /// This does not perform bounds checking
-    /// </remarks>
     /// </param>
     /// <param name="buffer">
     /// buffer to set the element to

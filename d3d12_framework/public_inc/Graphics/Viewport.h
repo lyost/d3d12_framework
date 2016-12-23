@@ -21,9 +21,6 @@ struct Viewport
 
 /// <summary>
 /// Helper function to convert viewports to scissor rects
-/// <remarks>
-/// todo: move this to the framework library
-/// </remarks>
 /// </summary>
 /// <param name="viewport">
 /// viewport to convert

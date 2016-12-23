@@ -297,7 +297,7 @@ class D3D12_RootSignatureConfig : public RootSignatureConfig
     /// </summary>
     /// <remarks>
     /// since pParameters in m_desc is declared const, keeping a pointer to a mutable version of the same memory
-    /// <remarks>
+    /// </remarks>
     D3D12_ROOT_PARAMETER* m_params;
 
     /// <summary>
@@ -305,7 +305,7 @@ class D3D12_RootSignatureConfig : public RootSignatureConfig
     /// </summary>
     /// <remarks>
     /// since pStaticSamplers in m_desc is declared const, keeping a pointer to a mutable version of the same memory
-    /// <remarks>
+    /// </remarks>
     D3D12_STATIC_SAMPLER_DESC* m_samplers;
 };
 
