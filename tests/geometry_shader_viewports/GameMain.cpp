@@ -534,7 +534,7 @@ void GameMain::Draw(UINT ms)
     }
 
     m_command_list->SetHeapArray(*m_heap_array);
-    m_command_list->SetTexture(0, *m_texture);
+    m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_texture);
     m_command_list->SetConstantBuffer(1, *m_constant_buffer);
 
     float clear_color[4] = { .3f, .3f, .3f, 1 };

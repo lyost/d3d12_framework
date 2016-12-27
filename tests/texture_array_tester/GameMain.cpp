@@ -517,7 +517,7 @@ void GameMain::Draw(UINT ms)
     m_constant_buffer_vs->Upload(&wvp, 0, sizeof(wvp));
 
     m_command_list->SetHeapArray(*m_heap_array);
-    m_command_list->SetTexture(0, *m_texture1d); // note: only binding the first texture in its descriptor heap to the slot since the others need to be contiguous after it
+    m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_texture1d); // note: only binding the first texture in its descriptor heap to the slot since the others need to be contiguous after it
     m_command_list->SetConstantBuffer(1, *m_constant_buffer_vs);
     m_command_list->SetConstantBuffer(2, *m_constant_buffer_ps);
 

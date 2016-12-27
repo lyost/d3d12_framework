@@ -93,7 +93,7 @@ class CommandList
     virtual void SetHeapArray(const HeapArray& heap_array) = 0;
 
     /// <summary>
-    /// Binds the constant buffer to a slot
+    /// Sets the root signature slot to the specified constant buffer
     /// </summary>
     /// <param name="slot">
     /// index of the slot to bind the constant buffer to
@@ -104,7 +104,10 @@ class CommandList
     virtual void SetConstantBuffer(UINT slot, const ConstantBuffer& constant_buffer) = 0;
 
     /// <summary>
-    /// Binds the texture to a slot
+    /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
+    /// <remarks>
+    /// The rest of the root signature descriptor table entries are inferred from the number of table entries and using the subsequent entries in the texture's descriptor heap
+    /// </remarks>
     /// </summary>
     /// <param name="slot">
     /// index of the slot to bind the texture to
@@ -112,10 +115,13 @@ class CommandList
     /// <param name="texture">
     /// texture to use
     /// </param>
-    virtual void SetTexture(UINT slot, const Texture1D& texture) = 0;
+    virtual void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture1D& texture) = 0;
 
     /// <summary>
-    /// Binds the texture to a slot
+    /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
+    /// <remarks>
+    /// The rest of the root signature descriptor table entries are inferred from the number of table entries and using the subsequent entries in the texture's descriptor heap
+    /// </remarks>
     /// </summary>
     /// <param name="slot">
     /// index of the slot to bind the texture to
@@ -123,10 +129,13 @@ class CommandList
     /// <param name="texture">
     /// texture to use
     /// </param>
-    virtual void SetTexture(UINT slot, const Texture2D& texture) = 0;
+    virtual void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2D& texture) = 0;
 
     /// <summary>
-    /// Binds the texture to a slot
+    /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
+    /// <remarks>
+    /// The rest of the root signature descriptor table entries are inferred from the number of table entries and using the subsequent entries in the texture's descriptor heap
+    /// </remarks>
     /// </summary>
     /// <param name="slot">
     /// index of the slot to bind the texture to
@@ -134,10 +143,13 @@ class CommandList
     /// <param name="texture">
     /// texture to use
     /// </param>
-    virtual void SetTexture(UINT slot, const Texture3D& texture) = 0;
+    virtual void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture3D& texture) = 0;
 
     /// <summary>
-    /// Binds the texture to a slot
+    /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
+    /// <remarks>
+    /// The rest of the root signature descriptor table entries are inferred from the number of table entries and using the subsequent entries in the texture's descriptor heap
+    /// </remarks>
     /// </summary>
     /// <param name="slot">
     /// index of the slot to bind the texture to
@@ -145,10 +157,13 @@ class CommandList
     /// <param name="texture">
     /// texture to use
     /// </param>
-    virtual void SetTexture(UINT slot, const Texture1DArray& texture) = 0;
+    virtual void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture1DArray& texture) = 0;
 
     /// <summary>
-    /// Binds the texture to a slot
+    /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
+    /// <remarks>
+    /// The rest of the root signature descriptor table entries are inferred from the number of table entries and using the subsequent entries in the texture's descriptor heap
+    /// </remarks>
     /// </summary>
     /// <param name="slot">
     /// index of the slot to bind the texture to
@@ -156,7 +171,7 @@ class CommandList
     /// <param name="texture">
     /// texture to use
     /// </param>
-    virtual void SetTexture(UINT slot, const Texture2DArray& texture) = 0;
+    virtual void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2DArray& texture) = 0;
 
     // todo: overloads for clearing just the stencil, and both depth and stencil
 

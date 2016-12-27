@@ -109,31 +109,31 @@ void D3D12_CommandList::SetConstantBuffer(UINT slot, const ConstantBuffer& const
   m_command_list->SetGraphicsRootConstantBufferView(slot, buffer.GetGPUAddr());
 }
 
-void D3D12_CommandList::SetTexture(UINT slot, const Texture1D& texture)
+void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Texture1D& texture)
 {
   const D3D12_Texture1D& tex = (const D3D12_Texture1D&)texture;
   m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
 }
 
-void D3D12_CommandList::SetTexture(UINT slot, const Texture2D& texture)
+void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2D& texture)
 {
   const D3D12_Texture2D& tex = (const D3D12_Texture2D&)texture;
   m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
 }
 
-void D3D12_CommandList::SetTexture(UINT slot, const Texture3D& texture)
+void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Texture3D& texture)
 {
   const D3D12_Texture3D& tex = (const D3D12_Texture3D&)texture;
   m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
 }
 
-void D3D12_CommandList::SetTexture(UINT slot, const Texture1DArray& texture)
+void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Texture1DArray& texture)
 {
   const D3D12_Texture1DArray& tex = (const D3D12_Texture1DArray&)texture;
   m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
 }
 
-void D3D12_CommandList::SetTexture(UINT slot, const Texture2DArray& texture)
+void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2DArray& texture)
 {
   const D3D12_Texture2DArray& tex = (const D3D12_Texture2DArray&)texture;
   m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());

@@ -336,7 +336,7 @@ void GameMain::Draw(UINT ms)
     m_command_list->Reset(m_pipeline);
     m_command_list->SetRootSignature(*m_root_sig);
     m_command_list->SetHeapArray(*m_heap_array);
-    m_command_list->SetTexture(0, *m_texture);
+    m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_texture);
     m_command_list->RSSetViewport(graphics.GetDefaultViewport());
     m_command_list->RSSetScissorRect(m_scissor_rect);
 
