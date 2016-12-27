@@ -1,7 +1,7 @@
 #ifndef PERFORMANCE_TIMER_H
 #define PERFORMANCE_TIMER_H
 
-#include "Timer.h"
+#include "Time/Timer.h"
 
 /// <summary>
 /// High resolution performance counter based timer, requires hardware support

@@ -67,6 +67,9 @@
     <Filter Include="private_inc\D3D12\Textures">
       <UniqueIdentifier>{85dba891-1923-4320-9574-439afab59468}</UniqueIdentifier>
     </Filter>
+    <Filter Include="private_inc\Time">
+      <UniqueIdentifier>{df74c758-6d56-4269-8a05-c4b5775875fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp">
@@ -74,12 +77,6 @@
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Time\PerformanceTimer.cpp">
-      <Filter>Source Files\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Time\TickTimer.cpp">
-      <Filter>Source Files\Time</Filter>
     </ClCompile>
     <ClCompile Include="src\Time\Timer.cpp">
       <Filter>Source Files\Time</Filter>
@@ -306,6 +303,12 @@
     <ClCompile Include="src\Graphics\Textures\Texture.cpp">
       <Filter>Source Files\Graphics\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="src\Time\PerformanceTimer.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Time\TickTimer.cpp">
+      <Filter>Source Files\Time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -319,12 +322,6 @@
     </ClInclude>
     <ClInclude Include="public_inc\Input\MouseState.h">
       <Filter>public_inc\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="public_inc\Time\PerformanceTimer.h">
-      <Filter>public_inc\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="public_inc\Time\TickTimer.h">
-      <Filter>public_inc\Time</Filter>
     </ClInclude>
     <ClInclude Include="public_inc\Time\Timer.h">
       <Filter>public_inc\Time</Filter>
@@ -589,6 +586,12 @@
     </ClInclude>
     <ClInclude Include="public_inc\Graphics\Textures\Texture.h">
       <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\Time\PerformanceTimer.h">
+      <Filter>private_inc\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\Time\TickTimer.h">
+      <Filter>private_inc\Time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

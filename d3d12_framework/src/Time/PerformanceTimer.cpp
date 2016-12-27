@@ -1,4 +1,4 @@
-#include "Time/PerformanceTimer.h"
+#include "private_inc/Time/PerformanceTimer.h"
 
 PerformanceTimer* PerformanceTimer::Create()
 {

@@ -1,7 +1,7 @@
 #ifndef TICK_TIMER_H
 #define TICK_TIMER_H
 
-#include "Timer.h"
+#include "Time/Timer.h"
 
 /// <summary>
 /// Timer based on GetTickCount

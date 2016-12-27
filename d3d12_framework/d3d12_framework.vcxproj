@@ -255,6 +255,8 @@
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureUploadBuffer.h" />
     <ClInclude Include="private_inc\D3D12\VectorOps.h" />
+    <ClInclude Include="private_inc\Time\PerformanceTimer.h" />
+    <ClInclude Include="private_inc\Time\TickTimer.h" />
     <ClInclude Include="public_inc\FrameworkException.h" />
     <ClInclude Include="public_inc\Game.h" />
     <ClInclude Include="public_inc\Graphics\BlendEnums.h" />
@@ -307,8 +309,6 @@
     <ClInclude Include="public_inc\Graphics\Viewports.h" />
     <ClInclude Include="public_inc\Input\KeyboardState.h" />
     <ClInclude Include="public_inc\Input\MouseState.h" />
-    <ClInclude Include="public_inc\Time\PerformanceTimer.h" />
-    <ClInclude Include="public_inc\Time\TickTimer.h" />
     <ClInclude Include="public_inc\Time\Timer.h" />
     <ClInclude Include="public_inc\Window.h" />
   </ItemGroup>

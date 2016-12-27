@@ -1,4 +1,4 @@
-#include "Time/TickTimer.h"
+#include "private_inc/Time/TickTimer.h"
 
 TickTimer::TickTimer()
 {

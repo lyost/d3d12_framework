@@ -1,6 +1,6 @@
 #include "Time/Timer.h"
-#include "Time/PerformanceTimer.h"
-#include "Time/TickTimer.h"
+#include "private_inc/Time/PerformanceTimer.h"
+#include "private_inc/Time/TickTimer.h"
 
 Timer* Timer::GetTimer()
 {
