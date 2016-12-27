@@ -1,4 +1,6 @@
 #include "Graphics/Viewports.h"
+#include "private_inc/BuildSettings.h"
+#include "FrameworkException.h"
 
 Viewports::Viewports()
 :m_next(0)
@@ -9,43 +11,40 @@ Viewports::~Viewports()
 {
 }
 
-bool Viewports::SetNextViewport(const Viewport& viewport)
+void Viewports::SetNextViewport(const Viewport& viewport)
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (m_next >= MAX_VIEWPORTS)
   {
-    return false;
+    throw FrameworkException("No more viewports available to be set");
   }
-  else
-  {
-    m_viewports[m_next++] = viewport;
-    return true;
-  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  m_viewports[m_next++] = viewport;
 }
 
-bool Viewports::SetViewport(UINT index, const Viewport& viewport)
+void Viewports::SetViewport(UINT index, const Viewport& viewport)
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_next)
   {
-    return false;
+    throw FrameworkException("Index beyond the number of used viewports");
   }
-  else
-  {
-    m_viewports[index] = viewport;
-    return true;
-  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  m_viewports[index] = viewport;
 }
 
-bool Viewports::GetViewport(UINT index, Viewport& viewport) const
+void Viewports::GetViewport(UINT index, Viewport& viewport) const
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_next)
   {
-    return false;
+    throw FrameworkException("Index beyond the number of used viewports");
   }
-  else
-  {
-    viewport = m_viewports[index];
-    return true;
-  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  viewport = m_viewports[index];
 }
 
 UINT Viewports::GetNumInUse() const

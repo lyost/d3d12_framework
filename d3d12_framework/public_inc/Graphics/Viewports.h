@@ -23,11 +23,7 @@ class Viewports
     /// <param name="viewport">
     /// settings for the new viewport
     /// </param>
-    /// <returns>
-    /// true  if the viewport was added successfully
-    /// false otherwise (i.e. trying to add too many viewports)
-    /// </returns>
-    bool SetNextViewport(const Viewport& viewport);
+    void SetNextViewport(const Viewport& viewport);
     
     /// <summary>
     /// Sets the specified viewport to the specified value
@@ -38,11 +34,7 @@ class Viewports
     /// <param name="viewport">
     /// settings for the viewport
     /// </param>
-    /// <returns>
-    /// true  if the viewport was updated successfully
-    /// false otherwise (i.e. trying to set an unused viewport)
-    /// </returns>
-    bool SetViewport(UINT index, const Viewport& viewport);
+    void SetViewport(UINT index, const Viewport& viewport);
     
     /// <summary>
     /// Retrieves the requested viewport's data
@@ -53,11 +45,7 @@ class Viewports
     /// <param name="viewport">
     /// where to put the viewport's data
     /// </param>
-    /// <returns>
-    /// true if the viewport could be retrieved
-    /// false otherwise
-    /// </returns>
-    bool GetViewport(UINT index,Viewport& viewport) const;
+    void GetViewport(UINT index,Viewport& viewport) const;
     
     /// <summary>
     /// Retrieves the number of viewports currently in use
