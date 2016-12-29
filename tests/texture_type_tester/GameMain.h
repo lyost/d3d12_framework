@@ -11,11 +11,9 @@
 #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
 #include "Graphics/Buffers/IndexBuffer16.h"
 #include "Camera.h"
-#include "Graphics/BufferResourceHeap.h"
 #include "Graphics/ShaderResourceDescHeap.h"
 #include "Graphics/Buffers/ConstantBuffer.h"
 #include "Graphics/HeapArray.h"
-#include "Graphics/Textures/TextureResourceHeap.h"
 #include "Graphics/Textures/Texture1D.h"
 #include "Graphics/Textures/Texture2D.h"
 #include "Graphics/Textures/Texture3D.h"
@@ -187,11 +185,6 @@ class GameMain : public Game
     float m_camera_angle;
 
     /// <summary>
-    /// Resource heap for allocating the buffers from
-    /// </summary>
-    BufferResourceHeap* m_resource_heap;
-
-    /// <summary>
     /// Descriptor Heap for allocating the buffers from
     /// </summary>
     ShaderResourceDescHeap* m_shader_buffer_heap;
@@ -210,11 +203,6 @@ class GameMain : public Game
     /// Constant buffer 
     /// </summary>
     ConstantBuffer* m_constant_buffer_ps;
-
-    /// <summary>
-    /// heap for texture resources
-    /// </summary>
-    TextureResourceHeap* m_tex_heap;
 
     /// <summary>
     /// texture

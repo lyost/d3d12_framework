@@ -212,45 +212,6 @@ void GameMain::LoadContent()
     exit(1);
   }
 
-  // compute the bytes needed for the texture
-  UINT texture_aligned_size = 0;
-  try
-  {
-    texture_aligned_size = Texture2D::GetAlignedSize(graphics, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to get texture aligned size:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-  UINT constant_buffer_size = 0;
-  try
-  {
-    constant_buffer_size = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX));
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to get constant buffer aligned size:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // create the resource heap
-  try
-  {
-    m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size + texture_aligned_size);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create buffer resource heap:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
   // create the descriptor heap
   try
   {
@@ -267,7 +228,7 @@ void GameMain::LoadContent()
   // create the constant buffer
   try
   {
-    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size);
+    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX));
   }
   catch (const FrameworkException& err)
   {
@@ -301,10 +262,8 @@ void GameMain::UnloadContent()
 {
   delete m_rtv_texture;
   delete m_depth_stencil;
-  delete m_tex_heap;
   delete m_texture;
   delete m_camera;
-  delete m_resource_heap;
   delete m_shader_buffer_heap;
   delete m_heap_array;
   delete m_constant_buffer;
@@ -489,12 +448,9 @@ void GameMain::CreateDepthStencil()
   GraphicsCore& graphics = GetGraphics();
   Viewport full_viewport = graphics.GetDefaultViewport();
 
-  vector<DepthStencil::Config> configs;
-  vector<DepthStencil*> depth_stencils;
-  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
   try
   {
-    DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
+    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
   }
   catch (const FrameworkException& err)
   {
@@ -503,7 +459,6 @@ void GameMain::CreateDepthStencil()
     log_print(out.str().c_str());
     exit(1);
   }
-  m_depth_stencil = depth_stencils[0];
 }
 
 void GameMain::CreateRTV()
@@ -542,9 +497,7 @@ void GameMain::CreateRTV()
   // create the texture
   try
   {
-    UINT texture_aligned_size = Texture2D::GetAlignedSize(graphics, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
-    m_texture = Texture2D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
+    m_texture = Texture2D::CreateD3D12(graphics, *m_shader_buffer_heap, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
   }
   catch (const FrameworkException& err)
   {
@@ -555,11 +508,7 @@ void GameMain::CreateRTV()
   }
   try
   {
-    vector<RenderTarget::Config> configs;
-    configs.push_back({ RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT });
-    vector<RenderTarget*> render_targets;
-    RenderTarget::CreateD3D12(graphics, configs, render_targets);
-    m_rtv_texture = render_targets[0];
+    m_rtv_texture = RenderTarget::CreateD3D12(graphics, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
   }
   catch (const FrameworkException& err)
   {

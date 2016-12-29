@@ -1,33 +1,106 @@
 #ifndef TEXTURE_UPLOAD_BUFFER_H
 #define TEXTURE_UPLOAD_BUFFER_H
 
-#include <vector>
 #include "Graphics/CommandList.h"
-#include "Graphics/Textures/Texture.h"
+#include "Graphics/Textures/Texture1D.h"
+#include "Graphics/Textures/Texture2D.h"
+#include "Graphics/Textures/Texture3D.h"
+#include "Graphics/Textures/Texture1DArray.h"
+#include "Graphics/Textures/Texture2DArray.h"
 
 class TextureUploadBuffer
 {
   public:
     /// <summary>
-    /// Creates D3D12 buffers for uploading textures
+    /// Creates a D3D12 buffer for uploading the texture
+    /// </summary>
+    /// <param name="graphics">
+    /// Core graphics interface
+    /// </param>
+    /// <param name="texture">
+    /// Texture to create the upload buffer for
+    /// </param>
+    /// <returns>
+    /// Texture upload buffer
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture1D& texture);
+
+    /// <summary>
+    /// Creates a D3D12 buffer for uploading the texture
+    /// </summary>
+    /// <param name="graphics">
+    /// Core graphics interface
+    /// </param>
+    /// <param name="texture">
+    /// Texture to create the upload buffer for
+    /// </param>
+    /// <returns>
+    /// Texture upload buffer
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture2D& texture);
+
+    /// <summary>
+    /// Creates a D3D12 buffer for uploading the texture
+    /// </summary>
+    /// <param name="graphics">
+    /// Core graphics interface
+    /// </param>
+    /// <param name="texture">
+    /// Texture to create the upload buffer for
+    /// </param>
+    /// <returns>
+    /// Texture upload buffer
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture3D& texture);
+
+    /// <summary>
+    /// Creates a D3D12 buffer for uploading a texture in the array
     /// <remarks>
-    /// In order to preserve upload buffers being added to "out" in the same order as the textures are in "textures", only 1 upload buffer will be created per texture array.  If you want multiple upload
-    /// buffers for a texture array, then it should be repeated in "textures".
+    /// If you want to upload all to all the textures in the array without re-using the same buffer, then an upload buffer for each texture would need to be created
     /// </remarks>
     /// </summary>
     /// <param name="graphics">
     /// Core graphics interface
     /// </param>
-    /// <param name="textures">
-    /// Textures to create the upload buffer for
+    /// <param name="texture">
+    /// Texture to create the upload buffer for
     /// </param>
-    /// <param name="out">
-    /// Where to put the created upload buffers.  They will be added to the end of the array.
-    /// </param>
+    /// <returns>
+    /// Texture upload buffer
+    /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static void CreateD3D12(const GraphicsCore& graphics, const std::vector<Texture*>& textures, std::vector<TextureUploadBuffer*>& out);
+    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture1DArray& texture);
+
+    /// <summary>
+    /// Creates a D3D12 buffer for uploading a texture in the array
+    /// <remarks>
+    /// If you want to upload all to all the textures in the array without re-using the same buffer, then an upload buffer for each texture would need to be created
+    /// </remarks>
+    /// </summary>
+    /// <param name="graphics">
+    /// Core graphics interface
+    /// </param>
+    /// <param name="texture">
+    /// Texture to create the upload buffer for
+    /// </param>
+    /// <returns>
+    /// Texture upload buffer
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture2DArray& texture);
 
     virtual ~TextureUploadBuffer();
 

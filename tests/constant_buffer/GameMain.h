@@ -8,7 +8,6 @@
 #include "Graphics/Pipeline.h"
 #include "Graphics/CommandListBundle.h"
 #include "Graphics/Buffers/VertexBuffer_PositionColor.h"
-#include "Graphics/BufferResourceHeap.h"
 #include "Graphics/ShaderResourceDescHeap.h"
 #include "Graphics/Buffers/ConstantBuffer.h"
 #include "Graphics/HeapArray.h"
@@ -101,11 +100,6 @@ class GameMain : public Game
     /// vertex buffer array for supplying the vertex buffer to the rendering process
     /// </summary>
     VertexBufferArray* m_vert_array;
-
-    /// <summary>
-    /// Resource heap for allocating the buffers from
-    /// </summary>
-    BufferResourceHeap* m_resource_heap;
 
     /// <summary>
     /// Descriptor Heap for allocating the buffers from

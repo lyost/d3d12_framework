@@ -5,7 +5,6 @@ class BufferResourceHeap;
 class ShaderResourceDescHeap;
 
 #include "Graphics/GraphicsCore.h"
-#include "Graphics/BufferResourceHeap.h"
 #include "Graphics/ShaderResourceDescHeap.h"
 
 /// <summary>
@@ -15,39 +14,16 @@ class ConstantBuffer
 {
   public:
     /// <summary>
-    /// Determines the size a constant buffer will need to be to hold the requested number of bytes
-    /// </summary>
-    /// <param name="graphics">
-    /// core graphics interface
-    /// </param>
-    /// <param name="num_bytes">
-    /// desired number of bytes to have in a constant buffer
-    /// </param>
-    /// <returns>
-    /// number of bytes the constant buffer should be created with
-    /// </returns>
-    /// <exception cref="FrameworkException">
-    /// Thrown when an error is encountered
-    /// </exception>
-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes);
-
-    /// <summary>
     /// Creates a D3D12 constant buffer
     /// </summary>
     /// <param name="graphics">
     /// core graphics interface
-    /// </param>
-    /// <param name="resource_heap">
-    /// resource heap to put the constant buffer's memory into
     /// </param>
     /// <param name="shader_buffer_heap">
     /// shader resources descriptor heap that the constant buffer will be accessed from
     /// </param>
     /// <param name="num_bytes">
     /// size of the buffer to allocate in bytes
-    /// <remarks>
-    /// Must be the return value of GetAlignedSize
-    /// </remarks>
     /// </param>
     /// <returns>
     /// D3D12 constant buffer
@@ -55,7 +31,7 @@ class ConstantBuffer
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static ConstantBuffer* CreateD3D12(const GraphicsCore& graphics, BufferResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes);
+    static ConstantBuffer* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes);
 
     virtual ~ConstantBuffer();
 

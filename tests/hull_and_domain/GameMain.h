@@ -11,7 +11,6 @@
 #include "Graphics/Buffers/VertexBuffer_Position.h"
 #include "Graphics/Buffers/IndexBuffer16.h"
 #include "Camera.h"
-#include "Graphics/BufferResourceHeap.h"
 #include "Graphics/ShaderResourceDescHeap.h"
 #include "Graphics/Buffers/ConstantBuffer.h"
 #include "Graphics/HeapArray.h"
@@ -150,11 +149,6 @@ class GameMain : public Game
     /// angle (in radians) of the camera orbiting the world space's origin
     /// </summary>
     float m_camera_angle;
-
-    /// <summary>
-    /// Resource heap for allocating the buffers from
-    /// </summary>
-    BufferResourceHeap* m_resource_heap;
 
     /// <summary>
     /// Descriptor Heap for allocating the buffers from

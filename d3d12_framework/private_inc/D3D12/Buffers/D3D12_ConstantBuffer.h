@@ -11,39 +11,16 @@ class D3D12_ConstantBuffer : public ConstantBuffer
 {
   public:
     /// <summary>
-    /// Determines the size a constant buffer will need to be to hold the requested number of bytes
-    /// </summary>
-    /// <param name="graphics">
-    /// core graphics interface
-    /// </param>
-    /// <param name="num_bytes">
-    /// desired number of bytes to have in a constant buffer
-    /// </param>
-    /// <returns>
-    /// number of bytes the constant buffer should be created with
-    /// </returns>
-    /// <exception cref="FrameworkException">
-    /// Thrown when an error is encountered
-    /// </exception>
-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes);
-
-    /// <summary>
     /// Creates a D3D12 constant buffer
     /// </summary>
     /// <param name="graphics">
     /// core graphics interface
-    /// </param>
-    /// <param name="resource_heap">
-    /// resource heap to put the constant buffer's memory into
     /// </param>
     /// <param name="shader_buffer_heap">
     /// shader resources descriptor heap that the constant buffer will be accessed from
     /// </param>
     /// <param name="num_bytes">
     /// size of the buffer to allocate in bytes
-    /// <remarks>
-    /// Must be the return value of GetAlignedSize
-    /// </remarks>
     /// </param>
     /// <returns>
     /// D3D12 constant buffer
@@ -51,7 +28,7 @@ class D3D12_ConstantBuffer : public ConstantBuffer
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static D3D12_ConstantBuffer* Create(const GraphicsCore& graphics, BufferResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes);
+    static D3D12_ConstantBuffer* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes);
 
     ~D3D12_ConstantBuffer();
 
@@ -97,7 +74,7 @@ class D3D12_ConstantBuffer : public ConstantBuffer
     /// <param name="resource_desc">
     /// output paramenter of the resource description struct to fill in
     /// </param>
-    static void GetResourceDesc(UINT num_bytes, D3D12_RESOURCE_DESC& resource_desc);
+    static void GetResourceDesc(UINT& num_bytes, D3D12_RESOURCE_DESC& resource_desc);
 
     /// <summary>
     /// D3D12 constant buffer resource

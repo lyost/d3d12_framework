@@ -147,7 +147,6 @@
     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_Position.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionColor.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.cpp" />
-    <ClCompile Include="src\D3D12\D3D12_BufferResourceHeap.cpp" />
     <ClCompile Include="src\D3D12\D3D12_CommandList.cpp" />
     <ClCompile Include="src\D3D12\D3D12_CommandListBundle.cpp" />
     <ClCompile Include="src\D3D12\D3D12_Core.cpp" />
@@ -161,21 +160,17 @@
     <ClCompile Include="src\D3D12\D3D12_ShaderResourceDescHeap.cpp" />
     <ClCompile Include="src\D3D12\Semantics.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencil.cpp" />
-    <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencilResourceHeap.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTarget.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetDescHeap.cpp" />
-    <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetResourceHeap.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture1D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture1DArray.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2DArray.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture3D.cpp" />
-    <ClCompile Include="src\D3D12\Textures\D3D12_TextureResourceHeap.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_TextureUploadBuffer.cpp" />
     <ClCompile Include="src\D3D12\VectorOps.cpp" />
     <ClCompile Include="src\FrameworkException.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\Graphics\BufferResourceHeap.cpp" />
     <ClCompile Include="src\Graphics\Buffers\BackBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\ConstantBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\IndexBuffer.cpp" />
@@ -204,7 +199,6 @@
     <ClCompile Include="src\Graphics\Textures\Texture1DArray.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture2DArray.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture3D.cpp" />
-    <ClCompile Include="src\Graphics\Textures\TextureResourceHeap.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture2D.cpp" />
     <ClCompile Include="src\Graphics\Textures\TextureUploadBuffer.cpp" />
     <ClCompile Include="src\Graphics\Viewport.cpp" />
@@ -229,7 +223,6 @@
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_Position.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionColor.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.h" />
-    <ClInclude Include="private_inc\D3D12\D3D12_BufferResourceHeap.h" />
     <ClInclude Include="private_inc\D3D12\D3D12_CommandList.h" />
     <ClInclude Include="private_inc\D3D12\D3D12_CommandListBundle.h" />
     <ClInclude Include="private_inc\D3D12\D3D12_Core.h" />
@@ -243,15 +236,12 @@
     <ClInclude Include="private_inc\D3D12\D3D12_Shader.h" />
     <ClInclude Include="private_inc\D3D12\D3D12_ShaderResourceDescHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencil.h" />
-    <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencilResourceHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTarget.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetDescHeap.h" />
-    <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetResourceHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture1D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture1DArray.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2DArray.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture3D.h" />
-    <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureResourceHeap.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureUploadBuffer.h" />
     <ClInclude Include="private_inc\D3D12\VectorOps.h" />
@@ -260,7 +250,6 @@
     <ClInclude Include="public_inc\FrameworkException.h" />
     <ClInclude Include="public_inc\Game.h" />
     <ClInclude Include="public_inc\Graphics\BlendEnums.h" />
-    <ClInclude Include="public_inc\Graphics\BufferResourceHeap.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\BackBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\ConstantBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer.h" />
@@ -297,7 +286,6 @@
     <ClInclude Include="public_inc\Graphics\Textures\Texture1DArray.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture2DArray.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture3D.h" />
-    <ClInclude Include="public_inc\Graphics\Textures\TextureResourceHeap.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture2D.h" />
     <ClInclude Include="public_inc\Graphics\Textures\TextureUploadBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Topology.h" />

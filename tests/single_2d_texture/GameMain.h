@@ -9,7 +9,6 @@
 #include "Graphics/CommandListBundle.h"
 #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
 #include "Graphics/ShaderResourceDescHeap.h"
-#include "Graphics/Textures/TextureResourceHeap.h"
 #include "Graphics/Textures/Texture2D.h"
 #include "Graphics/Textures/TextureUploadBuffer.h"
 #include "Graphics/HeapArray.h"
@@ -115,11 +114,6 @@ class GameMain : public Game
     /// Descriptor Heap for allocating the buffers from
     /// </summary>
     ShaderResourceDescHeap* m_shader_buffer_heap;
-
-    /// <summary>
-    /// heap for texture resources
-    /// </summary>
-    TextureResourceHeap* m_tex_heap;
 
     /// <summary>
     /// texture

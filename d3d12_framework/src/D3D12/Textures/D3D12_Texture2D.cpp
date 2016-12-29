@@ -1,30 +1,9 @@
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
 #include "private_inc/D3D12/D3D12_Core.h"
-#include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
 #include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
 #include "FrameworkException.h"
 
-UINT D3D12_Texture2D::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format)
-{
-  const D3D12_Core& core = (const D3D12_Core&)graphics;
-  ID3D12Device* device = core.GetDevice();
-
-  D3D12_RESOURCE_DESC resource_desc;
-  GetResourceDesc(width, height, format, resource_desc);
-
-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
-  {
-    throw FrameworkException("computed size is too large");
-  }
-  else
-  {
-    return (UINT)alloc_info.SizeInBytes;
-  }
-}
-
-Texture2D* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
-  GraphicsDataFormat format)
+Texture2D* D3D12_Texture2D::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, GraphicsDataFormat format)
 {
   const D3D12_Core& core = (const D3D12_Core&)graphics;
   ID3D12Device* device = core.GetDevice();
@@ -34,13 +13,19 @@ Texture2D* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResource
   D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
   desc_heap.GetNextDescriptor(cpu_handle, gpu_handle);
 
-  D3D12_TextureResourceHeap& buffer_heap = (D3D12_TextureResourceHeap&)resource_heap;
-
   D3D12_RESOURCE_DESC resource_desc;
   GetResourceDesc(width, height, format, resource_desc);
 
-  ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
-  if (buffer == NULL)
+  D3D12_HEAP_PROPERTIES heap_prop;
+  heap_prop.Type                 = D3D12_HEAP_TYPE_DEFAULT;
+  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+  heap_prop.CreationNodeMask     = 0;
+  heap_prop.VisibleNodeMask      = 0;
+
+  ID3D12Resource* buffer;
+  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
+  if (FAILED(rc))
   {
     throw FrameworkException("Unable to create buffer resource");
   }
@@ -55,16 +40,10 @@ Texture2D* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResource
   src_desc.Texture2D.ResourceMinLODClamp = 0;
   device->CreateShaderResourceView(buffer, &src_desc, cpu_handle);
 
-  D3D12_RESOURCE_DESC res_desc = buffer->GetDesc();
-  D3D12_PLACED_SUBRESOURCE_FOOTPRINT layout;
-  UINT64 upload_size = 0;
-  device->GetCopyableFootprints(&res_desc, 0, 1, 0, &layout, NULL, NULL, &upload_size);
-  upload_size += layout.Offset;
-
-  return new D3D12_Texture2D(buffer, gpu_handle, width, height, format, upload_size);
+  return new D3D12_Texture2D(buffer, gpu_handle, width, height, format);
 }
 
-D3D12_Texture2D::D3D12_Texture2D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, GraphicsDataFormat format, UINT64 upload_size)
+D3D12_Texture2D::D3D12_Texture2D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, GraphicsDataFormat format)
 :m_buffer(buffer),
  m_gpu_mem(gpu_mem),
  m_width(width),

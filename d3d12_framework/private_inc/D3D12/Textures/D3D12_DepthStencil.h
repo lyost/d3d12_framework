@@ -4,26 +4,33 @@
 #include <d3d12.h>
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/Textures/DepthStencil.h"
+#include "private_inc/D3D12/Buffers/D3D12_DepthStencilDescHeap.h"
 
 class D3D12_DepthStencil : public DepthStencil
 {
   public:
     /// <summary>
-    /// Creates D3D12 depth stencils for each entry in configs placed into out in the same order as entries in the configs array
+    /// Creates a D3D12 depth stencil
     /// </summary>
     /// <param name="graphics">
     /// core graphics interface
     /// </param>
-    /// <param name="configs">
-    /// Configurations for depth stencils to create
+    /// <param name="width">
+    /// width in pixels
     /// </param>
-    /// <param name="out">
-    /// Where to put the created depth stencils.  They will be added to the end of the array.
+    /// <param name="height">
+    /// height in pixels
     /// </param>
+    /// <param name="default_depth_clear">
+    /// default value to use for clearing the depth stencil
+    /// </param>
+    /// <returns>
+    /// D3D12 depth stencil
+    /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static void Create(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<DepthStencil*>& out);
+    static DepthStencil* Create(const GraphicsCore& graphics, UINT width, UINT height, float default_depth_clear);
 
     ~D3D12_DepthStencil();
 
@@ -57,36 +64,22 @@ class D3D12_DepthStencil : public DepthStencil
     D3D12_DepthStencil(const D3D12_DepthStencil& cpy);
     D3D12_DepthStencil& operator=(const D3D12_DepthStencil& cpy);
 
-    D3D12_DepthStencil(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, D3D12_CPU_DESCRIPTOR_HANDLE cpu_mem, UINT width, UINT height, UINT64 upload_size, ID3D12DescriptorHeap* desc_heap);
-
-    /// <summary>
-    /// Determines the size depth stencil will need to be to hold the requested number of bytes
-    /// </summary>
-    /// <param name="device">
-    /// d3d12 device
-    /// </param>
-    /// <param name="config">
-    /// configuration to use for the depth stencil
-    /// </param>
-    /// <returns>
-    /// number of bytes the depth stencil should be created with
-    /// </returns>
-    /// <exception cref="FrameworkException">
-    /// Thrown when an error is encountered
-    /// </exception>
-    static UINT GetAlignedSize(ID3D12Device* device, const Config& config);
-
+    D3D12_DepthStencil(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, D3D12_CPU_DESCRIPTOR_HANDLE cpu_mem, UINT width, UINT height, UINT64 upload_size,
+      D3D12_DepthStencilDescHeap* desc_heap);
 
     /// <summary>
     /// Helper function to fill in a D3D12 resource description struct
     /// </summary>
-    /// <param name="config">
-    /// configuration to use for the depth stencil
+    /// <param name="width">
+    /// width in pixels
+    /// </param>
+    /// <param name="height">
+    /// height in pixels
     /// </param>
     /// <param name="resource_desc">
     /// output paramenter of the resource description struct to fill in
     /// </param>
-    static void GetResourceDesc(const Config& config, D3D12_RESOURCE_DESC& resource_desc);
+    static void GetResourceDesc(UINT width, UINT height, D3D12_RESOURCE_DESC& resource_desc);
 
     /// <summary>
     /// D3D12 depth stencil resource
@@ -116,7 +109,7 @@ class D3D12_DepthStencil : public DepthStencil
     /// <summary>
     /// D3D12 descriptor heap that the depth stencil was created from
     /// </summary>
-    ID3D12DescriptorHeap* m_desc_heap;
+    D3D12_DepthStencilDescHeap* m_desc_heap;
 };
 
 #endif /* D3D12_DEPTH_STENCIL_H */

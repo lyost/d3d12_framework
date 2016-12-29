@@ -110,21 +110,6 @@ void GameMain::LoadContent()
   Viewport full_viewport = graphics.GetDefaultViewport();
   m_scissor_rect = ViewportToScissorRect(graphics.GetDefaultViewport());
 
-  // create the resource heap
-  UINT constant_buffer_size = 0;
-  try
-  {
-    constant_buffer_size = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMFLOAT4));
-    m_resource_heap      = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create buffer resource heap:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
   // create the descriptor heap
   try
   {
@@ -190,7 +175,7 @@ void GameMain::LoadContent()
   XMFLOAT4 override_color = XMFLOAT4(0.5f, 0.0f, 1.0f, 1.0f);
   try
   {
-    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size);
+    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(override_color));
     m_constant_buffer->Upload(&override_color, 0, sizeof(override_color));
   }
   catch (const FrameworkException& err)
@@ -207,7 +192,6 @@ void GameMain::UnloadContent()
   delete m_constant_buffer;
   delete m_vert_array;
   delete m_verts;
-  delete m_resource_heap;
   delete m_shader_buffer_heap;
   delete m_heap_array;
   delete m_vertex_shader;

@@ -9,36 +9,10 @@ class D3D12_Texture1DArray : public Texture1DArray
 {
   public:
     /// <summary>
-    /// Determines the size the texture array will need to be to hold the requested number of bytes
-    /// </summary>
-    /// <param name="graphics">
-    /// core graphics interface
-    /// </param>
-    /// <param name="width">
-    /// width of the texture in pixels
-    /// </param>
-    /// <param name="length">
-    /// number of textures in the array
-    /// </param>
-    /// <param name="format">
-    /// texture format
-    /// </param>
-    /// <returns>
-    /// number of bytes the texture should be created with
-    /// </returns>
-    /// <exception cref="FrameworkException">
-    /// Thrown when an error is encountered
-    /// </exception>
-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT16 length, GraphicsDataFormat format);
-
-    /// <summary>
     /// Creates a D3D12 texture array
     /// </summary>
     /// <param name="graphics">
     /// core graphics interface
-    /// </param>
-    /// <param name="resource_heap">
-    /// texture upload resource heap to put the texture into
     /// </param>
     /// <param name="shader_buffer_heap">
     /// shader resources descriptor heap that the texture will be accessed from
@@ -58,7 +32,7 @@ class D3D12_Texture1DArray : public Texture1DArray
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static Texture1DArray* Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format);
+    static Texture1DArray* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format);
 
     ~D3D12_Texture1DArray();
 
@@ -92,7 +66,7 @@ class D3D12_Texture1DArray : public Texture1DArray
     D3D12_Texture1DArray(const D3D12_Texture1DArray& cpy);
     D3D12_Texture1DArray& operator=(const D3D12_Texture1DArray& cpy);
 
-    D3D12_Texture1DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT16 length, GraphicsDataFormat format, UINT64 upload_size);
+    D3D12_Texture1DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT16 length, GraphicsDataFormat format);
 
     /// <summary>
     /// Helper function to fill in a D3D12 resource description struct

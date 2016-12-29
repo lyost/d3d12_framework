@@ -150,18 +150,6 @@ void GameMain::LoadContent()
   }
 
   // create the texture
-  UINT texture_aligned_size = 0;
-  try
-  {
-    texture_aligned_size = Texture2D::GetAlignedSize(graphics, tex_width, tex_height, R8B8G8A8_UNORM);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to get texture aligned size:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
   try
   {
     m_shader_buffer_heap = ShaderResourceDescHeap::CreateD3D12(graphics, 1);
@@ -175,18 +163,7 @@ void GameMain::LoadContent()
   }
   try
   {
-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create texture resource heap:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-  try
-  {
-    m_texture = Texture2D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, tex_width, tex_height, R8B8G8A8_UNORM);
+    m_texture = Texture2D::CreateD3D12(graphics, *m_shader_buffer_heap, tex_width, tex_height, R8B8G8A8_UNORM);
   }
   catch (const FrameworkException& err)
   {
@@ -197,11 +174,7 @@ void GameMain::LoadContent()
   }
   try
   {
-    vector<Texture*> textures;
-    vector<TextureUploadBuffer*> buffers;
-    textures.push_back(m_texture);
-    TextureUploadBuffer::CreateD3D12(graphics, textures, buffers);
-    m_upload_texture = buffers[0];
+    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture);
   }
   catch (const FrameworkException& err)
   {
@@ -259,7 +232,6 @@ void GameMain::UnloadContent()
   delete m_heap_array;
   delete m_upload_texture;
   delete m_texture;
-  delete m_tex_heap;
   delete m_shader_buffer_heap;
   delete m_vert_array;
   delete m_verts;

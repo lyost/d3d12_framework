@@ -197,50 +197,6 @@ void GameMain::LoadContent()
     exit(1);
   }
 
-  // calculate the space needed for the textures
-  UINT texture_aligned_size = 0;
-  try
-  {
-    texture_aligned_size += Texture1DArray::GetAlignedSize(graphics, TEXTURE_WIDTH, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
-    texture_aligned_size += Texture2DArray::GetAlignedSize(graphics, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to get texture aligned size:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // calculate the space needed for the constant buffers
-  UINT constant_buffer_size_vs = 0;
-  UINT constant_buffer_size_ps = 0;
-  try
-  {
-    constant_buffer_size_vs = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX));
-    constant_buffer_size_ps = ConstantBuffer::GetAlignedSize(graphics, sizeof(m_current_mode));
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to get constant buffer aligned size:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // create the resource heap
-  try
-  {
-    m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size_vs + constant_buffer_size_ps + texture_aligned_size);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create buffer resource heap:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
   // create the descriptor heap
   try
   {
@@ -257,7 +213,7 @@ void GameMain::LoadContent()
   // create the constant buffers
   try
   {
-    m_constant_buffer_vs = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size_vs);
+    m_constant_buffer_vs = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX));
   }
   catch (const FrameworkException& err)
   {
@@ -268,7 +224,7 @@ void GameMain::LoadContent()
   }
   try
   {
-    m_constant_buffer_ps = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size_ps);
+    m_constant_buffer_ps = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(m_current_mode));
     m_current_mode = TEXTURE_MODE_1D;
     m_constant_buffer_ps->Upload(&m_current_mode, 0, sizeof(m_current_mode));
   }
@@ -283,18 +239,7 @@ void GameMain::LoadContent()
   // create the textures
   try
   {
-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create texture resource heap:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-  try
-  {
-    m_texture1d = Texture1DArray::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+    m_texture1d = Texture1DArray::CreateD3D12(graphics, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
   }
   catch (const FrameworkException& err)
   {
@@ -305,7 +250,7 @@ void GameMain::LoadContent()
   }
   try
   {
-    m_texture2d = Texture2DArray::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+    m_texture2d = Texture2DArray::CreateD3D12(graphics, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
   }
   catch (const FrameworkException& err)
   {
@@ -318,11 +263,7 @@ void GameMain::LoadContent()
   // create the buffer for uploading the textures (will reuse the same buffer, so pick the largest texture)
   try
   {
-    vector<Texture*> textures;
-    vector<TextureUploadBuffer*> buffers;
-    textures.push_back(m_texture2d);
-    TextureUploadBuffer::CreateD3D12(graphics, textures, buffers);
-    m_upload_texture = buffers[0];
+    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture2d);
   }
   catch (const FrameworkException& err)
   {
@@ -395,12 +336,10 @@ void GameMain::LoadContent()
 void GameMain::UnloadContent()
 {
   delete m_depth_stencil;
-  delete m_tex_heap;
   delete m_texture1d;
   delete m_texture2d;
   delete m_upload_texture;
   delete m_camera;
-  delete m_resource_heap;
   delete m_shader_buffer_heap;
   delete m_heap_array;
   delete m_constant_buffer_vs;
@@ -651,12 +590,9 @@ void GameMain::CreateDepthStencil()
   GraphicsCore& graphics = GetGraphics();
   Viewport full_viewport = graphics.GetDefaultViewport();
 
-  vector<DepthStencil::Config> configs;
-  vector<DepthStencil*> depth_stencils;
-  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
   try
   {
-    DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
+    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
   }
   catch (const FrameworkException& err)
   {
@@ -665,5 +601,4 @@ void GameMain::CreateDepthStencil()
     log_print(out.str().c_str());
     exit(1);
   }
-  m_depth_stencil = depth_stencils[0];
 }

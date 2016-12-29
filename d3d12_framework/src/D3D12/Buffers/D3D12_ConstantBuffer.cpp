@@ -1,50 +1,35 @@
 #include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
 #include "private_inc/D3D12/D3D12_Core.h"
-#include "private_inc/D3D12/D3D12_BufferResourceHeap.h"
 #include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 using namespace std;
 
-UINT D3D12_ConstantBuffer::GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes)
+D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes)
 {
-  const D3D12_Core& core = (const D3D12_Core&)graphics;
-  ID3D12Device* device = core.GetDevice();
-
-  D3D12_RESOURCE_DESC resource_desc;
-  GetResourceDesc(num_bytes, resource_desc);
-
-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
-  {
-    throw FrameworkException("computed size is too large");
-  }
-  else
-  {
-    return (UINT)alloc_info.SizeInBytes;
-  }
-}
-
-D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics, BufferResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes)
-{
-  const D3D12_Core& core = (const D3D12_Core&)graphics;
-  ID3D12Device* device = core.GetDevice();
+  const D3D12_Core& core   = (const D3D12_Core&)graphics;
+  ID3D12Device*     device = core.GetDevice();
 
   D3D12_ShaderResourceDescHeap& desc_heap = (D3D12_ShaderResourceDescHeap&)shader_buffer_heap;
   D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle;
   D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
   desc_heap.GetNextDescriptor(cpu_handle, gpu_handle);
 
-  D3D12_BufferResourceHeap& buffer_heap = (D3D12_BufferResourceHeap&)resource_heap;
-
   D3D12_RESOURCE_DESC resource_desc;
   GetResourceDesc(num_bytes, resource_desc);
+  D3D12_HEAP_PROPERTIES heap_prop;
+  heap_prop.Type                 = D3D12_HEAP_TYPE_UPLOAD;
+  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+  heap_prop.CreationNodeMask     = 0;
+  heap_prop.VisibleNodeMask      = 0;
 
-  ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
-  if (buffer == NULL)
+  ID3D12Resource* buffer;
+  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
+  if (FAILED(rc))
   {
-    throw FrameworkException("Unable to create resource buffer");
+    throw FrameworkException("Unable to create buffer resource");
   }
 
   D3D12_CONSTANT_BUFFER_VIEW_DESC view_desc;
@@ -56,7 +41,7 @@ D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics,
   D3D12_RANGE range;
   range.Begin = 0;
   range.End   = 0;
-  HRESULT rc = buffer->Map(0, &range, (void**)&host_mem);
+  rc = buffer->Map(0, &range, (void**)&host_mem);
   if (FAILED(rc))
   {
     buffer->Release();
@@ -87,7 +72,7 @@ void D3D12_ConstantBuffer::Upload(void* data, UINT start, UINT len)
 {
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   UINT total = start + len;
-  if (total >= m_num_bytes)
+  if (total > m_num_bytes)
   {
     throw FrameworkException("attempting to send more bytes than are available in the buffer");
   }
@@ -105,7 +90,7 @@ D3D12_GPU_VIRTUAL_ADDRESS D3D12_ConstantBuffer::GetGPUAddr() const
   return m_gpu_mem;
 }
 
-void D3D12_ConstantBuffer::GetResourceDesc(UINT num_bytes, D3D12_RESOURCE_DESC& resource_desc)
+void D3D12_ConstantBuffer::GetResourceDesc(UINT& num_bytes, D3D12_RESOURCE_DESC& resource_desc)
 {
   // constant buffer size is required to be 256-byte aligned
   num_bytes = (num_bytes + 255) & ~255;

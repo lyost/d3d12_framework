@@ -1,0 +1,4911 @@
+diff --git a/d3d12_framework.sdf b/d3d12_framework.sdf
+index 544e59e..2f0cb24 100644
+Binary files a/d3d12_framework.sdf and b/d3d12_framework.sdf differ
+diff --git a/d3d12_framework/d3d12_framework.vcxproj b/d3d12_framework/d3d12_framework.vcxproj
+index 1f3db32..a35c44f 100644
+--- a/d3d12_framework/d3d12_framework.vcxproj
++++ b/d3d12_framework/d3d12_framework.vcxproj
+@@ -147,7 +147,6 @@
+     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_Position.cpp" />
+     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionColor.cpp" />
+     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.cpp" />
+-    <ClCompile Include="src\D3D12\D3D12_BufferResourceHeap.cpp" />
+     <ClCompile Include="src\D3D12\D3D12_CommandList.cpp" />
+     <ClCompile Include="src\D3D12\D3D12_CommandListBundle.cpp" />
+     <ClCompile Include="src\D3D12\D3D12_Core.cpp" />
+@@ -161,21 +160,17 @@
+     <ClCompile Include="src\D3D12\D3D12_ShaderResourceDescHeap.cpp" />
+     <ClCompile Include="src\D3D12\Semantics.cpp" />
+     <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencil.cpp" />
+-    <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencilResourceHeap.cpp" />
+     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTarget.cpp" />
+     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetDescHeap.cpp" />
+-    <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetResourceHeap.cpp" />
+     <ClCompile Include="src\D3D12\Textures\D3D12_Texture1D.cpp" />
+     <ClCompile Include="src\D3D12\Textures\D3D12_Texture1DArray.cpp" />
+     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2DArray.cpp" />
+     <ClCompile Include="src\D3D12\Textures\D3D12_Texture3D.cpp" />
+-    <ClCompile Include="src\D3D12\Textures\D3D12_TextureResourceHeap.cpp" />
+     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp" />
+     <ClCompile Include="src\D3D12\Textures\D3D12_TextureUploadBuffer.cpp" />
+     <ClCompile Include="src\D3D12\VectorOps.cpp" />
+     <ClCompile Include="src\FrameworkException.cpp" />
+     <ClCompile Include="src\Game.cpp" />
+-    <ClCompile Include="src\Graphics\BufferResourceHeap.cpp" />
+     <ClCompile Include="src\Graphics\Buffers\BackBuffer.cpp" />
+     <ClCompile Include="src\Graphics\Buffers\ConstantBuffer.cpp" />
+     <ClCompile Include="src\Graphics\Buffers\IndexBuffer.cpp" />
+@@ -204,7 +199,6 @@
+     <ClCompile Include="src\Graphics\Textures\Texture1DArray.cpp" />
+     <ClCompile Include="src\Graphics\Textures\Texture2DArray.cpp" />
+     <ClCompile Include="src\Graphics\Textures\Texture3D.cpp" />
+-    <ClCompile Include="src\Graphics\Textures\TextureResourceHeap.cpp" />
+     <ClCompile Include="src\Graphics\Textures\Texture2D.cpp" />
+     <ClCompile Include="src\Graphics\Textures\TextureUploadBuffer.cpp" />
+     <ClCompile Include="src\Graphics\Viewport.cpp" />
+@@ -229,7 +223,6 @@
+     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_Position.h" />
+     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionColor.h" />
+     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.h" />
+-    <ClInclude Include="private_inc\D3D12\D3D12_BufferResourceHeap.h" />
+     <ClInclude Include="private_inc\D3D12\D3D12_CommandList.h" />
+     <ClInclude Include="private_inc\D3D12\D3D12_CommandListBundle.h" />
+     <ClInclude Include="private_inc\D3D12\D3D12_Core.h" />
+@@ -243,15 +236,12 @@
+     <ClInclude Include="private_inc\D3D12\D3D12_Shader.h" />
+     <ClInclude Include="private_inc\D3D12\D3D12_ShaderResourceDescHeap.h" />
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencil.h" />
+-    <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencilResourceHeap.h" />
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTarget.h" />
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetDescHeap.h" />
+-    <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetResourceHeap.h" />
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture1D.h" />
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture1DArray.h" />
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2DArray.h" />
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture3D.h" />
+-    <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureResourceHeap.h" />
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h" />
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureUploadBuffer.h" />
+     <ClInclude Include="private_inc\D3D12\VectorOps.h" />
+@@ -260,7 +250,6 @@
+     <ClInclude Include="public_inc\FrameworkException.h" />
+     <ClInclude Include="public_inc\Game.h" />
+     <ClInclude Include="public_inc\Graphics\BlendEnums.h" />
+-    <ClInclude Include="public_inc\Graphics\BufferResourceHeap.h" />
+     <ClInclude Include="public_inc\Graphics\Buffers\BackBuffer.h" />
+     <ClInclude Include="public_inc\Graphics\Buffers\ConstantBuffer.h" />
+     <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer.h" />
+@@ -297,7 +286,6 @@
+     <ClInclude Include="public_inc\Graphics\Textures\Texture1DArray.h" />
+     <ClInclude Include="public_inc\Graphics\Textures\Texture2DArray.h" />
+     <ClInclude Include="public_inc\Graphics\Textures\Texture3D.h" />
+-    <ClInclude Include="public_inc\Graphics\Textures\TextureResourceHeap.h" />
+     <ClInclude Include="public_inc\Graphics\Textures\Texture2D.h" />
+     <ClInclude Include="public_inc\Graphics\Textures\TextureUploadBuffer.h" />
+     <ClInclude Include="public_inc\Graphics\Topology.h" />
+diff --git a/d3d12_framework/d3d12_framework.vcxproj.filters b/d3d12_framework/d3d12_framework.vcxproj.filters
+index 72094d7..df93ef2 100644
+--- a/d3d12_framework/d3d12_framework.vcxproj.filters
++++ b/d3d12_framework/d3d12_framework.vcxproj.filters
+@@ -207,15 +207,9 @@
+     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer.cpp">
+       <Filter>Source Files\D3D12\Buffers</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\D3D12\Textures\D3D12_TextureResourceHeap.cpp">
+-      <Filter>Source Files\D3D12\Textures</Filter>
+-    </ClCompile>
+     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp">
+       <Filter>Source Files\D3D12\Textures</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\Graphics\Textures\TextureResourceHeap.cpp">
+-      <Filter>Source Files\Graphics\Textures</Filter>
+-    </ClCompile>
+     <ClCompile Include="src\D3D12\Textures\D3D12_TextureUploadBuffer.cpp">
+       <Filter>Source Files\D3D12\Textures</Filter>
+     </ClCompile>
+@@ -231,9 +225,6 @@
+     <ClCompile Include="src\D3D12\Buffers\D3D12_DepthStencilDescHeap.cpp">
+       <Filter>Source Files\D3D12\Buffers</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencilResourceHeap.cpp">
+-      <Filter>Source Files\D3D12\Textures</Filter>
+-    </ClCompile>
+     <ClCompile Include="src\Graphics\Buffers\VertexBuffer_Position.cpp">
+       <Filter>Source Files\Graphics\Buffers</Filter>
+     </ClCompile>
+@@ -246,15 +237,9 @@
+     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetDescHeap.cpp">
+       <Filter>Source Files\D3D12\Textures</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetResourceHeap.cpp">
+-      <Filter>Source Files\D3D12\Textures</Filter>
+-    </ClCompile>
+     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTarget.cpp">
+       <Filter>Source Files\D3D12\Textures</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\D3D12\D3D12_BufferResourceHeap.cpp">
+-      <Filter>Source Files\D3D12</Filter>
+-    </ClCompile>
+     <ClCompile Include="src\D3D12\D3D12_HeapArray.cpp">
+       <Filter>Source Files\D3D12</Filter>
+     </ClCompile>
+@@ -264,9 +249,6 @@
+     <ClCompile Include="src\Graphics\Textures\RenderTarget.cpp">
+       <Filter>Source Files\Graphics\Textures</Filter>
+     </ClCompile>
+-    <ClCompile Include="src\Graphics\BufferResourceHeap.cpp">
+-      <Filter>Source Files\Graphics</Filter>
+-    </ClCompile>
+     <ClCompile Include="src\Graphics\HeapArray.cpp">
+       <Filter>Source Files\Graphics</Filter>
+     </ClCompile>
+@@ -482,12 +464,6 @@
+     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer.h">
+       <Filter>private_inc\D3D12\Buffers</Filter>
+     </ClInclude>
+-    <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureResourceHeap.h">
+-      <Filter>private_inc\D3D12\Textures</Filter>
+-    </ClInclude>
+-    <ClInclude Include="public_inc\Graphics\Textures\TextureResourceHeap.h">
+-      <Filter>public_inc\Graphics\Textures</Filter>
+-    </ClInclude>
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h">
+       <Filter>private_inc\D3D12\Textures</Filter>
+     </ClInclude>
+@@ -509,9 +485,6 @@
+     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_DepthStencilDescHeap.h">
+       <Filter>private_inc\D3D12\Buffers</Filter>
+     </ClInclude>
+-    <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencilResourceHeap.h">
+-      <Filter>private_inc\D3D12\Textures</Filter>
+-    </ClInclude>
+     <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_Position.h">
+       <Filter>public_inc\Graphics\Buffers</Filter>
+     </ClInclude>
+@@ -527,15 +500,9 @@
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetDescHeap.h">
+       <Filter>private_inc\D3D12\Textures</Filter>
+     </ClInclude>
+-    <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetResourceHeap.h">
+-      <Filter>private_inc\D3D12\Textures</Filter>
+-    </ClInclude>
+     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTarget.h">
+       <Filter>private_inc\D3D12\Textures</Filter>
+     </ClInclude>
+-    <ClInclude Include="private_inc\D3D12\D3D12_BufferResourceHeap.h">
+-      <Filter>private_inc\D3D12</Filter>
+-    </ClInclude>
+     <ClInclude Include="private_inc\D3D12\D3D12_HeapArray.h">
+       <Filter>private_inc\D3D12</Filter>
+     </ClInclude>
+@@ -548,9 +515,6 @@
+     <ClInclude Include="public_inc\Graphics\Textures\RenderTarget.h">
+       <Filter>public_inc\Graphics\Textures</Filter>
+     </ClInclude>
+-    <ClInclude Include="public_inc\Graphics\BufferResourceHeap.h">
+-      <Filter>public_inc\Graphics</Filter>
+-    </ClInclude>
+     <ClInclude Include="public_inc\Graphics\HeapArray.h">
+       <Filter>public_inc\Graphics</Filter>
+     </ClInclude>
+diff --git a/d3d12_framework/private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h b/d3d12_framework/private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h
+index 6ca2142..a7b2b34 100644
+--- a/d3d12_framework/private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h
++++ b/d3d12_framework/private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h
+@@ -11,39 +11,16 @@ class D3D12_ConstantBuffer : public ConstantBuffer
+ {
+   public:
+     /// <summary>
+-    /// Determines the size a constant buffer will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="num_bytes">
+-    /// desired number of bytes to have in a constant buffer
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the constant buffer should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes);
+-
+-    /// <summary>
+     /// Creates a D3D12 constant buffer
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// resource heap to put the constant buffer's memory into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the constant buffer will be accessed from
+     /// </param>
+     /// <param name="num_bytes">
+     /// size of the buffer to allocate in bytes
+-    /// <remarks>
+-    /// Must be the return value of GetAlignedSize
+-    /// </remarks>
+     /// </param>
+     /// <returns>
+     /// D3D12 constant buffer
+@@ -51,7 +28,7 @@ class D3D12_ConstantBuffer : public ConstantBuffer
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static D3D12_ConstantBuffer* Create(const GraphicsCore& graphics, BufferResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes);
++    static D3D12_ConstantBuffer* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes);
+ 
+     ~D3D12_ConstantBuffer();
+ 
+@@ -97,7 +74,7 @@ class D3D12_ConstantBuffer : public ConstantBuffer
+     /// <param name="resource_desc">
+     /// output paramenter of the resource description struct to fill in
+     /// </param>
+-    static void GetResourceDesc(UINT num_bytes, D3D12_RESOURCE_DESC& resource_desc);
++    static void GetResourceDesc(UINT& num_bytes, D3D12_RESOURCE_DESC& resource_desc);
+ 
+     /// <summary>
+     /// D3D12 constant buffer resource
+diff --git a/d3d12_framework/private_inc/D3D12/D3D12_BufferResourceHeap.h b/d3d12_framework/private_inc/D3D12/D3D12_BufferResourceHeap.h
+deleted file mode 100644
+index 501b447..0000000
+--- a/d3d12_framework/private_inc/D3D12/D3D12_BufferResourceHeap.h
++++ /dev/null
+@@ -1,86 +0,0 @@
+-#ifndef D3D12_RESOURCE_HEAP_H
+-#define D3D12_RESOURCE_HEAP_H
+-
+-#include <d3d12.h>
+-#include "Graphics/BufferResourceHeap.h"
+-
+-class D3D12_BufferResourceHeap : public BufferResourceHeap
+-{
+-  public:
+-    /// <summary>
+-    /// Creates a D3D12 placed resource heap
+-    ///</summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="num_bytes">
+-    /// Number of bytes the heap is to contain
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the heap
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static D3D12_BufferResourceHeap* Create(const GraphicsCore& graphics, UINT64 num_bytes);
+-
+-    ~D3D12_BufferResourceHeap();
+-
+-    /// <summary>
+-    /// Creates a placed resource in the heap
+-    ///</summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="resource_desc">
+-    /// D3D12 description of the resource to create
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the D3D12 resource
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    ID3D12Resource* CreateResource(const GraphicsCore& graphics, const D3D12_RESOURCE_DESC& resource_desc);
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap was created to hold
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes in the heap
+-    /// </returns>
+-    UINT64 GetHeapTotalSize() const;
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap used by resources in the heap
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes used in the heap
+-    /// </returns>
+-    UINT64 GetHeapUsedSize() const;
+-
+-  private:
+-    // disabled
+-    D3D12_BufferResourceHeap();
+-    D3D12_BufferResourceHeap(const D3D12_BufferResourceHeap& cpy);
+-    D3D12_BufferResourceHeap& operator=(const D3D12_BufferResourceHeap& cpy);
+-
+-    D3D12_BufferResourceHeap(UINT64 num_bytes, ID3D12Heap* heap);
+-
+-    /// <summary>
+-    /// number of bytes the heap was created for
+-    /// </summary>
+-    UINT64 m_heap_total_size;
+-
+-    /// <summary>
+-    /// number of bytes the placed resources in the heap have used including alignment
+-    /// </summary>
+-    UINT64 m_heap_used_size;
+-
+-    /// <summary>
+-    /// D3D12 heap
+-    /// </summary>
+-    ID3D12Heap* m_heap;
+-};
+-
+-#endif /* D3D12_RESOURCE_HEAP_H */
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_DepthStencil.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_DepthStencil.h
+index cd12cb6..4f46348 100644
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_DepthStencil.h
++++ b/d3d12_framework/private_inc/D3D12/Textures/D3D12_DepthStencil.h
+@@ -4,26 +4,33 @@
+ #include <d3d12.h>
+ #include "Graphics/GraphicsCore.h"
+ #include "Graphics/Textures/DepthStencil.h"
++#include "private_inc/D3D12/Buffers/D3D12_DepthStencilDescHeap.h"
+ 
+ class D3D12_DepthStencil : public DepthStencil
+ {
+   public:
+     /// <summary>
+-    /// Creates D3D12 depth stencils for each entry in configs placed into out in the same order as entries in the configs array
++    /// Creates a D3D12 depth stencil
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="configs">
+-    /// Configurations for depth stencils to create
++    /// <param name="width">
++    /// width in pixels
+     /// </param>
+-    /// <param name="out">
+-    /// Where to put the created depth stencils.  They will be added to the end of the array.
++    /// <param name="height">
++    /// height in pixels
+     /// </param>
++    /// <param name="default_depth_clear">
++    /// default value to use for clearing the depth stencil
++    /// </param>
++    /// <returns>
++    /// D3D12 depth stencil
++    /// </returns>
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static void Create(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<DepthStencil*>& out);
++    static DepthStencil* Create(const GraphicsCore& graphics, UINT width, UINT height, float default_depth_clear);
+ 
+     ~D3D12_DepthStencil();
+ 
+@@ -57,36 +64,22 @@ class D3D12_DepthStencil : public DepthStencil
+     D3D12_DepthStencil(const D3D12_DepthStencil& cpy);
+     D3D12_DepthStencil& operator=(const D3D12_DepthStencil& cpy);
+ 
+-    D3D12_DepthStencil(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, D3D12_CPU_DESCRIPTOR_HANDLE cpu_mem, UINT width, UINT height, UINT64 upload_size, ID3D12DescriptorHeap* desc_heap);
+-
+-    /// <summary>
+-    /// Determines the size depth stencil will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="device">
+-    /// d3d12 device
+-    /// </param>
+-    /// <param name="config">
+-    /// configuration to use for the depth stencil
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the depth stencil should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(ID3D12Device* device, const Config& config);
+-
++    D3D12_DepthStencil(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, D3D12_CPU_DESCRIPTOR_HANDLE cpu_mem, UINT width, UINT height, UINT64 upload_size,
++      D3D12_DepthStencilDescHeap* desc_heap);
+ 
+     /// <summary>
+     /// Helper function to fill in a D3D12 resource description struct
+     /// </summary>
+-    /// <param name="config">
+-    /// configuration to use for the depth stencil
++    /// <param name="width">
++    /// width in pixels
++    /// </param>
++    /// <param name="height">
++    /// height in pixels
+     /// </param>
+     /// <param name="resource_desc">
+     /// output paramenter of the resource description struct to fill in
+     /// </param>
+-    static void GetResourceDesc(const Config& config, D3D12_RESOURCE_DESC& resource_desc);
++    static void GetResourceDesc(UINT width, UINT height, D3D12_RESOURCE_DESC& resource_desc);
+ 
+     /// <summary>
+     /// D3D12 depth stencil resource
+@@ -116,7 +109,7 @@ class D3D12_DepthStencil : public DepthStencil
+     /// <summary>
+     /// D3D12 descriptor heap that the depth stencil was created from
+     /// </summary>
+-    ID3D12DescriptorHeap* m_desc_heap;
++    D3D12_DepthStencilDescHeap* m_desc_heap;
+ };
+ 
+ #endif /* D3D12_DEPTH_STENCIL_H */
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_DepthStencilResourceHeap.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_DepthStencilResourceHeap.h
+deleted file mode 100644
+index 35cd6a9..0000000
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_DepthStencilResourceHeap.h
++++ /dev/null
+@@ -1,88 +0,0 @@
+-#ifndef D3D12_DEPTH_STENCIL_RESOURCE_HEAP_H
+-#define D3D12_DEPTH_STENCIL_RESOURCE_HEAP_H
+-
+-#include <d3d12.h>
+-
+-class D3D12_DepthStencilResourceHeap
+-{
+-  public:
+-    /// <summary>
+-    /// Creates a D3D12 placed resource heap for depth stencils
+-    ///</summary>
+-    /// <param name="device">
+-    /// d3d12 device
+-    /// </param>
+-    /// <param name="num_bytes">
+-    /// Number of bytes the heap is to contain
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the heap
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static D3D12_DepthStencilResourceHeap* Create(ID3D12Device* device, UINT64 num_bytes);
+-
+-    ~D3D12_DepthStencilResourceHeap();
+-
+-    /// <summary>
+-    /// Creates a placed resource in the heap
+-    ///</summary>
+-    /// <param name="device">
+-    /// d3d12 device
+-    /// </param>
+-    /// <param name="resource_desc">
+-    /// D3D12 description of the resource to create
+-    /// </param>
+-    /// <param name="default_depth_clear">
+-    /// default value to use for clearing the depth stencil
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the D3D12 resource
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    ID3D12Resource* CreateResource(ID3D12Device* device, const D3D12_RESOURCE_DESC& resource_desc, float default_depth_clear);
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap was created to hold
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes in the heap
+-    /// </returns>
+-    UINT64 GetHeapTotalSize() const;
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap used by resources in the heap
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes used in the heap
+-    /// </returns>
+-    UINT64 GetHeapUsedSize() const;
+-
+-  private:
+-    // disabled
+-    D3D12_DepthStencilResourceHeap();
+-    D3D12_DepthStencilResourceHeap(const D3D12_DepthStencilResourceHeap& cpy);
+-    D3D12_DepthStencilResourceHeap& operator=(const D3D12_DepthStencilResourceHeap& cpy);
+-
+-    D3D12_DepthStencilResourceHeap(UINT64 num_bytes, ID3D12Heap* heap);
+-
+-    /// <summary>
+-    /// number of bytes the heap was created for
+-    /// </summary>
+-    UINT64 m_heap_total_size;
+-
+-    /// <summary>
+-    /// number of bytes the placed resources in the heap have used including alignment
+-    /// </summary>
+-    UINT64 m_heap_used_size;
+-
+-    /// <summary>
+-    /// D3D12 heap
+-    /// </summary>
+-    ID3D12Heap* m_heap;
+-};
+-
+-#endif /* D3D12_DEPTH_STENCIL_RESOURCE_HEAP_H */
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_RenderTarget.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_RenderTarget.h
+index b57e9a6..73d3626 100644
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_RenderTarget.h
++++ b/d3d12_framework/private_inc/D3D12/Textures/D3D12_RenderTarget.h
+@@ -3,6 +3,7 @@
+ 
+ #include <d3d12.h>
+ #include "Graphics/Textures/RenderTarget.h"
++#include "private_inc/D3D12/Textures/D3D12_RenderTargetDescHeap.h"
+ 
+ /// <summary>
+ /// Wrapper for a D3D12 render target
+@@ -11,21 +12,30 @@ class D3D12_RenderTarget : public RenderTarget
+ {
+   public:
+     /// <summary>
+-    /// Creates render targets for the specified configurations
++    /// Creates a D3D12 render target
+     /// <summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="configs">
+-    /// Configurations for render targets to create
++    /// <param name="width">
++    /// width in pixels
++    /// </param>
++    /// <param name="height">
++    /// height in pixels
++    /// </param>
++    /// <param name="format">
++    /// render target format
+     /// </param>
+     /// <param name="out">
+     /// Where to put the created render targets.  They will be added to the end of the array.
+     /// </param>
++    /// <returns>
++    /// D3D12 render target
++    /// </returns>
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static void Create(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<RenderTarget*>& out);
++    static RenderTarget* Create(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format);
+ 
+     D3D12_RenderTarget(ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle);
+     ~D3D12_RenderTarget();
+@@ -64,7 +74,7 @@ class D3D12_RenderTarget : public RenderTarget
+     void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture);
+     
+   private:
+-    D3D12_RenderTarget(ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle, ID3D12DescriptorHeap* desc_heap);
++    D3D12_RenderTarget(ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle, D3D12_RenderTargetDescHeap* desc_heap);
+ 
+     // disabled
+     D3D12_RenderTarget();
+@@ -72,32 +82,21 @@ class D3D12_RenderTarget : public RenderTarget
+     D3D12_RenderTarget& operator=(const D3D12_RenderTarget& cpy);
+ 
+     /// <summary>
+-    /// Determines the size render target will need to be to hold the requested number of bytes
++    /// Helper function to fill in a D3D12 resource description struct
+     /// </summary>
+-    /// <param name="device">
+-    /// d3d12 device
++    /// <param name="width">
++    /// width in pixels
+     /// </param>
+-    /// <param name="config">
+-    /// configuration to use for the render target
++    /// <param name="height">
++    /// height in pixels
+     /// </param>
+-    /// <returns>
+-    /// number of bytes the render target should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(ID3D12Device* device, const Config& config);
+-
+-    /// <summary>
+-    /// Helper function to fill in a D3D12 resource description struct
+-    /// </summary>
+-    /// <param name="config">
+-    /// configuration to use for the render target
++    /// <param name="format">
++    /// render target format
+     /// </param>
+     /// <param name="resource_desc">
+     /// output paramenter of the resource description struct to fill in
+     /// </param>
+-    static void GetResourceDesc(const Config& config, D3D12_RESOURCE_DESC& resource_desc);
++    static void GetResourceDesc(UINT width, UINT height, GraphicsDataFormat format, D3D12_RESOURCE_DESC& resource_desc);
+ 
+     /// <summary>
+     /// render target
+@@ -112,7 +111,7 @@ class D3D12_RenderTarget : public RenderTarget
+     /// <summary>
+     /// D3D12 descriptor heap that the render target was created from
+     /// </summary>
+-    ID3D12DescriptorHeap* m_desc_heap;
++    D3D12_RenderTargetDescHeap* m_desc_heap;
+ };
+ 
+ #endif /* D3D12_RENDER_TARGET_H */
+\ No newline at end of file
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_RenderTargetResourceHeap.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_RenderTargetResourceHeap.h
+deleted file mode 100644
+index 43fb80a..0000000
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_RenderTargetResourceHeap.h
++++ /dev/null
+@@ -1,86 +0,0 @@
+-#ifndef D3D12_RENDER_TARGET_RESOURCE_HEAP_H
+-#define D3D12_RENDER_TARGET_RESOURCE_HEAP_H
+-
+-#include <d3d12.h>
+-#include "Graphics/Textures/TextureResourceHeap.h"
+-
+-class D3D12_RenderTargetResourceHeap
+-{
+-  public:
+-    /// <summary>
+-    /// Creates a D3D12 placed resource heap for render targets
+-    ///</summary>
+-    /// <param name="device">
+-    /// D3D12 device
+-    /// </param>
+-    /// <param name="num_bytes">
+-    /// Number of bytes the heap is to contain
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the heap
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static D3D12_RenderTargetResourceHeap* Create(ID3D12Device* device, UINT64 num_bytes);
+-
+-    ~D3D12_RenderTargetResourceHeap();
+-
+-    /// <summary>
+-    /// Creates a placed resource in the heap
+-    ///</summary>
+-    /// <param name="device">
+-    /// D3D12 device
+-    /// </param>
+-    /// <param name="resource_desc">
+-    /// D3D12 description of the resource to create
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the D3D12 resource
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    ID3D12Resource* CreateResource(ID3D12Device* device, const D3D12_RESOURCE_DESC& resource_desc);
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap was created to hold
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes in the heap
+-    /// </returns>
+-    UINT64 GetHeapTotalSize() const;
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap used by resources in the heap
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes used in the heap
+-    /// </returns>
+-    UINT64 GetHeapUsedSize() const;
+-
+-  private:
+-    // disabled
+-    D3D12_RenderTargetResourceHeap();
+-    D3D12_RenderTargetResourceHeap(const D3D12_RenderTargetResourceHeap& cpy);
+-    D3D12_RenderTargetResourceHeap& operator=(const D3D12_RenderTargetResourceHeap& cpy);
+-
+-    D3D12_RenderTargetResourceHeap(UINT64 num_bytes, ID3D12Heap* heap);
+-
+-    /// <summary>
+-    /// number of bytes the heap was created for
+-    /// </summary>
+-    UINT64 m_heap_total_size;
+-
+-    /// <summary>
+-    /// number of bytes the placed resources in the heap have used including alignment
+-    /// </summary>
+-    UINT64 m_heap_used_size;
+-
+-    /// <summary>
+-    /// D3D12 heap
+-    /// </summary>
+-    ID3D12Heap* m_heap;
+-};
+-
+-#endif /* D3D12_RENDER_TARGET_RESOURCE_HEAP_H */
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture1D.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture1D.h
+index 21bc52b..042286a 100644
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture1D.h
++++ b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture1D.h
+@@ -9,34 +9,11 @@ class D3D12_Texture1D : public Texture1D
+ {
+   public:
+     /// <summary>
+-    /// Determines the size a texture will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 texture
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -52,7 +29,7 @@ class D3D12_Texture1D : public Texture1D
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture1D* Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, GraphicsDataFormat format);
++    static Texture1D* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, GraphicsDataFormat format);
+ 
+     ~D3D12_Texture1D();
+ 
+@@ -78,7 +55,7 @@ class D3D12_Texture1D : public Texture1D
+     D3D12_Texture1D(const D3D12_Texture1D& cpy);
+     D3D12_Texture1D& operator=(const D3D12_Texture1D& cpy);
+ 
+-    D3D12_Texture1D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, GraphicsDataFormat format, UINT64 upload_size);
++    D3D12_Texture1D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, GraphicsDataFormat format);
+ 
+     /// <summary>
+     /// Helper function to fill in a D3D12 resource description struct
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture1DArray.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture1DArray.h
+index f888f23..026e9fb 100644
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture1DArray.h
++++ b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture1DArray.h
+@@ -9,37 +9,11 @@ class D3D12_Texture1DArray : public Texture1DArray
+ {
+   public:
+     /// <summary>
+-    /// Determines the size the texture array will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="length">
+-    /// number of textures in the array
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT16 length, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 texture array
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -58,7 +32,7 @@ class D3D12_Texture1DArray : public Texture1DArray
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture1DArray* Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format);
++    static Texture1DArray* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format);
+ 
+     ~D3D12_Texture1DArray();
+ 
+@@ -92,7 +66,7 @@ class D3D12_Texture1DArray : public Texture1DArray
+     D3D12_Texture1DArray(const D3D12_Texture1DArray& cpy);
+     D3D12_Texture1DArray& operator=(const D3D12_Texture1DArray& cpy);
+ 
+-    D3D12_Texture1DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT16 length, GraphicsDataFormat format, UINT64 upload_size);
++    D3D12_Texture1DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT16 length, GraphicsDataFormat format);
+ 
+     /// <summary>
+     /// Helper function to fill in a D3D12 resource description struct
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture2D.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture2D.h
+index 81a5367..de6f0da 100644
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture2D.h
++++ b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture2D.h
+@@ -9,37 +9,11 @@ class D3D12_Texture2D : public Texture2D
+ {
+   public:
+     /// <summary>
+-    /// Determines the size a texture will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="height">
+-    /// height of the texture in pixels
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 texture
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -58,8 +32,7 @@ class D3D12_Texture2D : public Texture2D
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture2D* Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
+-      GraphicsDataFormat format);
++    static Texture2D* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, GraphicsDataFormat format);
+ 
+     ~D3D12_Texture2D();
+ 
+@@ -85,7 +58,7 @@ class D3D12_Texture2D : public Texture2D
+     D3D12_Texture2D(const D3D12_Texture2D& cpy);
+     D3D12_Texture2D& operator=(const D3D12_Texture2D& cpy);
+ 
+-    D3D12_Texture2D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, GraphicsDataFormat format, UINT64 upload_size);
++    D3D12_Texture2D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, GraphicsDataFormat format);
+ 
+     /// <summary>
+     /// Helper function to fill in a D3D12 resource description struct
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture2DArray.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture2DArray.h
+index 4b96e28..22d8ac9 100644
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture2DArray.h
++++ b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture2DArray.h
+@@ -9,40 +9,11 @@ class D3D12_Texture2DArray : public Texture2DArray
+ {
+   public:
+     /// <summary>
+-    /// Determines the size the texture array will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="height">
+-    /// height of the texture in pixels
+-    /// </param>
+-    /// <param name="length">
+-    /// number of textures in the array
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, UINT16 length, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 texture array
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -64,8 +35,7 @@ class D3D12_Texture2DArray : public Texture2DArray
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture2DArray* Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length,
+-      GraphicsDataFormat format);
++    static Texture2DArray* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length, GraphicsDataFormat format);
+ 
+     ~D3D12_Texture2DArray();
+ 
+@@ -99,7 +69,7 @@ class D3D12_Texture2DArray : public Texture2DArray
+     D3D12_Texture2DArray(const D3D12_Texture2DArray& cpy);
+     D3D12_Texture2DArray& operator=(const D3D12_Texture2DArray& cpy);
+ 
+-    D3D12_Texture2DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 length, GraphicsDataFormat format, UINT64 upload_size);
++    D3D12_Texture2DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 length, GraphicsDataFormat format);
+ 
+     /// <summary>
+     /// Helper function to fill in a D3D12 resource description struct
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture3D.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture3D.h
+index 7a633e5..eaf4894 100644
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture3D.h
++++ b/d3d12_framework/private_inc/D3D12/Textures/D3D12_Texture3D.h
+@@ -9,40 +9,11 @@ class D3D12_Texture3D : public Texture3D
+ {
+   public:
+     /// <summary>
+-    /// Determines the size a texture will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="height">
+-    /// height of the texture in pixels
+-    /// </param>
+-    /// <param name="depth">
+-    /// depth of the texture in pixels
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 texture
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -64,8 +35,7 @@ class D3D12_Texture3D : public Texture3D
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture3D* Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth,
+-      GraphicsDataFormat format);
++    static Texture3D* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format);
+ 
+     ~D3D12_Texture3D();
+ 
+@@ -91,7 +61,7 @@ class D3D12_Texture3D : public Texture3D
+     D3D12_Texture3D(const D3D12_Texture3D& cpy);
+     D3D12_Texture3D& operator=(const D3D12_Texture3D& cpy);
+ 
+-    D3D12_Texture3D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format, UINT64 upload_size);
++    D3D12_Texture3D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format);
+ 
+     /// <summary>
+     /// Helper function to fill in a D3D12 resource description struct
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h
+deleted file mode 100644
+index f2bf4fb..0000000
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h
++++ /dev/null
+@@ -1,86 +0,0 @@
+-#ifndef D3D12_TEXTURE_RESOURCE_HEAP_H
+-#define D3D12_TEXTURE_RESOURCE_HEAP_H
+-
+-#include <d3d12.h>
+-#include "Graphics/Textures/TextureResourceHeap.h"
+-
+-class D3D12_TextureResourceHeap : public TextureResourceHeap
+-{
+-  public:
+-    /// <summary>
+-    /// Creates a D3D12 placed resource heap for textures
+-    ///</summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="num_bytes">
+-    /// Number of bytes the heap is to contain
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the heap
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static D3D12_TextureResourceHeap* Create(const GraphicsCore& graphics, UINT64 num_bytes);
+-
+-    ~D3D12_TextureResourceHeap();
+-
+-    /// <summary>
+-    /// Creates a placed resource in the heap
+-    ///</summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="resource_desc">
+-    /// D3D12 description of the resource to create
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the D3D12 resource
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    ID3D12Resource* CreateResource(const GraphicsCore& graphics, const D3D12_RESOURCE_DESC& resource_desc);
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap was created to hold
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes in the heap
+-    /// </returns>
+-    UINT64 GetHeapTotalSize() const;
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap used by resources in the heap
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes used in the heap
+-    /// </returns>
+-    UINT64 GetHeapUsedSize() const;
+-
+-  private:
+-    // disabled
+-    D3D12_TextureResourceHeap();
+-    D3D12_TextureResourceHeap(const D3D12_TextureResourceHeap& cpy);
+-    D3D12_TextureResourceHeap& operator=(const D3D12_TextureResourceHeap& cpy);
+-
+-    D3D12_TextureResourceHeap(UINT64 num_bytes, ID3D12Heap* heap);
+-
+-    /// <summary>
+-    /// number of bytes the heap was created for
+-    /// </summary>
+-    UINT64 m_heap_total_size;
+-
+-    /// <summary>
+-    /// number of bytes the placed resources in the heap have used including alignment
+-    /// </summary>
+-    UINT64 m_heap_used_size;
+-
+-    /// <summary>
+-    /// D3D12 heap
+-    /// </summary>
+-    ID3D12Heap* m_heap;
+-};
+-
+-#endif /* D3D12_TEXTURE_RESOURCE_HEAP_H */
+diff --git a/d3d12_framework/private_inc/D3D12/Textures/D3D12_TextureUploadBuffer.h b/d3d12_framework/private_inc/D3D12/Textures/D3D12_TextureUploadBuffer.h
+index 8e430f0..f1ef02c 100644
+--- a/d3d12_framework/private_inc/D3D12/Textures/D3D12_TextureUploadBuffer.h
++++ b/d3d12_framework/private_inc/D3D12/Textures/D3D12_TextureUploadBuffer.h
+@@ -8,21 +8,95 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
+ {
+   public:
+     /// <summary>
+-    /// Creates D3D12 buffers for uploading textures
++    /// Creates a D3D12 buffer for uploading the texture
+     /// </summary>
+     /// <param name="graphics">
+     /// Core graphics interface
+     /// </param>
+-    /// <param name="textures">
+-    /// Textures to create the upload buffer for
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
++    /// </param>
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
++    /// <exception cref="FrameworkException">
++    /// Thrown when an error is encountered
++    /// </exception>
++    static TextureUploadBuffer* Create(const GraphicsCore& graphics, const Texture1D& texture);
++
++    /// <summary>
++    /// Creates a D3D12 buffer for uploading the texture
++    /// </summary>
++    /// <param name="graphics">
++    /// Core graphics interface
++    /// </param>
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
++    /// </param>
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
++    /// <exception cref="FrameworkException">
++    /// Thrown when an error is encountered
++    /// </exception>
++    static TextureUploadBuffer* Create(const GraphicsCore& graphics, const Texture2D& texture);
++
++    /// <summary>
++    /// Creates a D3D12 buffer for uploading the texture
++    /// </summary>
++    /// <param name="graphics">
++    /// Core graphics interface
+     /// </param>
+-    /// <param name="out">
+-    /// Where to put the created upload buffers.  They will be added to the end of the array.
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
+     /// </param>
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static void Create(const GraphicsCore& graphics, const std::vector<Texture*>& textures, std::vector<TextureUploadBuffer*>& out);
++    static TextureUploadBuffer* Create(const GraphicsCore& graphics, const Texture3D& texture);
++
++    /// <summary>
++    /// Creates a D3D12 buffer for uploading a texture in the array
++    /// <remarks>
++    /// If you want to upload all to all the textures in the array without re-using the same buffer, then an upload buffer for each texture would need to be created
++    /// </remarks>
++    /// </summary>
++    /// <param name="graphics">
++    /// Core graphics interface
++    /// </param>
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
++    /// </param>
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
++    /// <exception cref="FrameworkException">
++    /// Thrown when an error is encountered
++    /// </exception>
++    static TextureUploadBuffer* Create(const GraphicsCore& graphics, const Texture1DArray& texture);
++
++    /// <summary>
++    /// Creates a D3D12 buffer for uploading a texture in the array
++    /// <remarks>
++    /// If you want to upload all to all the textures in the array without re-using the same buffer, then an upload buffer for each texture would need to be created
++    /// </remarks>
++    /// </summary>
++    /// <param name="graphics">
++    /// Core graphics interface
++    /// </param>
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
++    /// </param>
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
++    /// <exception cref="FrameworkException">
++    /// Thrown when an error is encountered
++    /// </exception>
++    static TextureUploadBuffer* Create(const GraphicsCore& graphics, const Texture2DArray& texture);
+ 
+     ~D3D12_TextureUploadBuffer();
+ 
+@@ -142,7 +216,18 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
+     D3D12_TextureUploadBuffer& operator=(const D3D12_TextureUploadBuffer& cpy);
+ 
+     /// <summary>
+-    /// Main implementation of the various public PrepUpload functions that handles 1D, 2D, and 3D textures
++    /// Main implementation of the various public Create functions that handles 1D, 2D, and 3D textures and texture arrays
++    /// </summary>
++    /// <param name="graphics">
++    /// core graphics interface
++    /// </param>
++    /// <param name="resource_desc">
++    /// resource description of the texture to create an upload buffer for
++    /// </param>
++    static TextureUploadBuffer* CreateInternal(const GraphicsCore& graphics, D3D12_RESOURCE_DESC resource_desc);
++
++    /// <summary>
++    /// Main implementation of the various public PrepUpload functions that handles 1D, 2D, and 3D textures and texture arrays
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+diff --git a/d3d12_framework/public_inc/Graphics/BufferResourceHeap.h b/d3d12_framework/public_inc/Graphics/BufferResourceHeap.h
+deleted file mode 100644
+index 6ffe43e..0000000
+--- a/d3d12_framework/public_inc/Graphics/BufferResourceHeap.h
++++ /dev/null
+@@ -1,53 +0,0 @@
+-#ifndef RESOURCE_HEAP_H
+-#define RESOURCE_HEAP_H
+-
+-#include "Graphics/GraphicsCore.h"
+-
+-class BufferResourceHeap
+-{
+-  public:
+-    /// <summary>
+-    /// Creates a D3D12 resource heap
+-    ///</summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="num_bytes">
+-    /// Number of bytes the heap is to contain
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the heap
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static BufferResourceHeap* CreateD3D12(const GraphicsCore& graphics, UINT64 num_bytes);
+-
+-    virtual ~BufferResourceHeap();
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap was created to hold
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes in the heap
+-    /// </returns>
+-    virtual UINT64 GetHeapTotalSize() const = 0;
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap used by resources in the heap
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes used in the heap
+-    /// </returns>
+-    virtual UINT64 GetHeapUsedSize() const = 0;
+-
+-  protected:
+-    BufferResourceHeap();
+-
+-  private:
+-    // disabled
+-    BufferResourceHeap(const BufferResourceHeap& cpy);
+-    BufferResourceHeap& operator=(const BufferResourceHeap& cpy);
+-};
+-
+-#endif /* RESOURCE_HEAP_H */
+diff --git a/d3d12_framework/public_inc/Graphics/Buffers/ConstantBuffer.h b/d3d12_framework/public_inc/Graphics/Buffers/ConstantBuffer.h
+index 14ada33..7cbe68a 100644
+--- a/d3d12_framework/public_inc/Graphics/Buffers/ConstantBuffer.h
++++ b/d3d12_framework/public_inc/Graphics/Buffers/ConstantBuffer.h
+@@ -5,7 +5,6 @@ class BufferResourceHeap;
+ class ShaderResourceDescHeap;
+ 
+ #include "Graphics/GraphicsCore.h"
+-#include "Graphics/BufferResourceHeap.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+ 
+ /// <summary>
+@@ -15,39 +14,16 @@ class ConstantBuffer
+ {
+   public:
+     /// <summary>
+-    /// Determines the size a constant buffer will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="num_bytes">
+-    /// desired number of bytes to have in a constant buffer
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the constant buffer should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes);
+-
+-    /// <summary>
+     /// Creates a D3D12 constant buffer
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// resource heap to put the constant buffer's memory into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the constant buffer will be accessed from
+     /// </param>
+     /// <param name="num_bytes">
+     /// size of the buffer to allocate in bytes
+-    /// <remarks>
+-    /// Must be the return value of GetAlignedSize
+-    /// </remarks>
+     /// </param>
+     /// <returns>
+     /// D3D12 constant buffer
+@@ -55,7 +31,7 @@ class ConstantBuffer
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static ConstantBuffer* CreateD3D12(const GraphicsCore& graphics, BufferResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes);
++    static ConstantBuffer* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes);
+ 
+     virtual ~ConstantBuffer();
+ 
+diff --git a/d3d12_framework/public_inc/Graphics/Textures/DepthStencil.h b/d3d12_framework/public_inc/Graphics/Textures/DepthStencil.h
+index f1720a4..adf7ea5 100644
+--- a/d3d12_framework/public_inc/Graphics/Textures/DepthStencil.h
++++ b/d3d12_framework/public_inc/Graphics/Textures/DepthStencil.h
+@@ -1,49 +1,33 @@
+ #ifndef DEPTH_STENCIL_H
+ #define DEPTH_STENCIL_H
+ 
+-#include <vector>
+ #include "Graphics/GraphicsCore.h"
+ 
+ class DepthStencil
+ {
+   public:
+     /// <summary>
+-    /// Struct describing the configuration of a depth stencil when creating them
+-    /// </summary>
+-    struct Config
+-    {
+-      /// <summary>
+-      /// width in pixels
+-      /// </summary>
+-      UINT width;
+-
+-      /// <summary>
+-      /// height in pixels
+-      /// </summary>
+-      UINT height;
+-
+-      /// <summary>
+-      /// default value to use for clearing the depth stencil
+-      /// </summary>
+-      float default_depth_clear;
+-    };
+-
+-    /// <summary>
+-    /// Creates D3D12 depth stencils for each entry in configs placed into out in the same order as entries in the configs array
++    /// Creates a D3D12 depth stencil
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="configs">
+-    /// Configurations for depth stencils to create
++    /// <param name="width">
++    /// width in pixels
++    /// </param>
++    /// <param name="height">
++    /// height in pixels
+     /// </param>
+-    /// <param name="out">
+-    /// Where to put the created depth stencils.  They will be added to the end of the array.
++    /// <param name="default_depth_clear">
++    /// default value to use for clearing the depth stencil
+     /// </param>
++    /// <returns>
++    /// D3D12 depth stencil
++    /// </returns>
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static void CreateD3D12(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<DepthStencil*>& out);
++    static DepthStencil* CreateD3D12(const GraphicsCore& graphics, UINT width, UINT height, float default_depth_clear);
+ 
+     virtual ~DepthStencil();
+     
+diff --git a/d3d12_framework/public_inc/Graphics/Textures/RenderTarget.h b/d3d12_framework/public_inc/Graphics/Textures/RenderTarget.h
+index 1023298..5ccc5d4 100644
+--- a/d3d12_framework/public_inc/Graphics/Textures/RenderTarget.h
++++ b/d3d12_framework/public_inc/Graphics/Textures/RenderTarget.h
+@@ -3,7 +3,6 @@
+ 
+ class GraphicsCore;
+ class CommandList;
+-#include <vector>
+ #include "Graphics/GraphicsCore.h"
+ #include "Graphics/GraphicsDataFormat.h"
+ #include "Graphics/CommandList.h"
+@@ -16,42 +15,30 @@ class RenderTarget
+ {
+   public:
+     /// <summary>
+-    /// Struct describing the configuration of a render target when creating them
+-    /// </summary>
+-    struct Config
+-    {
+-      /// <summary>
+-      /// width in pixels
+-      /// </summary>
+-      UINT width;
+-
+-      /// <summary>
+-      /// height in pixels
+-      /// </summary>
+-      UINT height;
+-
+-      /// <summary>
+-      /// render target format
+-      /// </summary>
+-      GraphicsDataFormat format;
+-    };
+-
+-    /// <summary>
+-    /// Creates render targets for the specified configurations
++    /// Creates a D3D12 render target
+     /// <summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="configs">
+-    /// Configurations for render targets to create
++    /// <param name="width">
++    /// width in pixels
++    /// </param>
++    /// <param name="height">
++    /// height in pixels
++    /// </param>
++    /// <param name="format">
++    /// render target format
+     /// </param>
+     /// <param name="out">
+     /// Where to put the created render targets.  They will be added to the end of the array.
+     /// </param>
++    /// <returns>
++    /// D3D12 render target
++    /// </returns>
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static void CreateD3D12(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<RenderTarget*>& out);
++    static RenderTarget* CreateD3D12(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format);
+ 
+     virtual ~RenderTarget();
+ 
+diff --git a/d3d12_framework/public_inc/Graphics/Textures/Texture1D.h b/d3d12_framework/public_inc/Graphics/Textures/Texture1D.h
+index b2d704b..29eaa7d 100644
+--- a/d3d12_framework/public_inc/Graphics/Textures/Texture1D.h
++++ b/d3d12_framework/public_inc/Graphics/Textures/Texture1D.h
+@@ -2,11 +2,9 @@
+ #define TEXTURE1D_H
+ 
+ class GraphicsCore;
+-class TextureResourceHeap;
+ class ShaderResourceDescHeap;
+ 
+ #include "Graphics/GraphicsCore.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/GraphicsDataFormat.h"
+ #include "Graphics/Textures/Texture.h"
+ 
+@@ -14,34 +12,11 @@ class Texture1D : public Texture
+ {
+   public:
+     /// <summary>
+-    /// Determines the size a texture will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 1D texture
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -57,7 +32,7 @@ class Texture1D : public Texture
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture1D* CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, GraphicsDataFormat format);
++    static Texture1D* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, GraphicsDataFormat format);
+ 
+     virtual ~Texture1D();
+ 
+diff --git a/d3d12_framework/public_inc/Graphics/Textures/Texture1DArray.h b/d3d12_framework/public_inc/Graphics/Textures/Texture1DArray.h
+index d711d4a..029882f 100644
+--- a/d3d12_framework/public_inc/Graphics/Textures/Texture1DArray.h
++++ b/d3d12_framework/public_inc/Graphics/Textures/Texture1DArray.h
+@@ -2,11 +2,9 @@
+ #define TEXTURE1D_ARRAY_H
+ 
+ class GraphicsCore;
+-class TextureResourceHeap;
+ class ShaderResourceDescHeap;
+ 
+ #include "Graphics/GraphicsCore.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/GraphicsDataFormat.h"
+ #include "Graphics/Textures/Texture.h"
+ 
+@@ -14,37 +12,11 @@ class Texture1DArray : public Texture
+ {
+   public:
+     /// <summary>
+-    /// Determines the size the texture array will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="length">
+-    /// number of textures in the array
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT16 length, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 1D texture array
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -63,7 +35,7 @@ class Texture1DArray : public Texture
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture1DArray* CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format);
++    static Texture1DArray* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format);
+ 
+     virtual ~Texture1DArray();
+ 
+diff --git a/d3d12_framework/public_inc/Graphics/Textures/Texture2D.h b/d3d12_framework/public_inc/Graphics/Textures/Texture2D.h
+index f1a3fc1..8882768 100644
+--- a/d3d12_framework/public_inc/Graphics/Textures/Texture2D.h
++++ b/d3d12_framework/public_inc/Graphics/Textures/Texture2D.h
+@@ -2,11 +2,9 @@
+ #define TEXTURE2D_H
+ 
+ class GraphicsCore;
+-class TextureResourceHeap;
+ class ShaderResourceDescHeap;
+ 
+ #include "Graphics/GraphicsCore.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/GraphicsDataFormat.h"
+ #include "Graphics/Textures/Texture.h"
+ 
+@@ -14,37 +12,11 @@ class Texture2D : public Texture
+ {
+   public:
+     /// <summary>
+-    /// Determines the size a texture will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="height">
+-    /// height of the texture in pixels
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 2D texture
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -63,8 +35,7 @@ class Texture2D : public Texture
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture2D* CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
+-      GraphicsDataFormat format);
++    static Texture2D* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, GraphicsDataFormat format);
+ 
+     virtual ~Texture2D();
+ 
+diff --git a/d3d12_framework/public_inc/Graphics/Textures/Texture2DArray.h b/d3d12_framework/public_inc/Graphics/Textures/Texture2DArray.h
+index 0ddd180..44fbdfe 100644
+--- a/d3d12_framework/public_inc/Graphics/Textures/Texture2DArray.h
++++ b/d3d12_framework/public_inc/Graphics/Textures/Texture2DArray.h
+@@ -2,11 +2,9 @@
+ #define TEXTURE2D_ARRAY_H
+ 
+ class GraphicsCore;
+-class TextureResourceHeap;
+ class ShaderResourceDescHeap;
+ 
+ #include "Graphics/GraphicsCore.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/GraphicsDataFormat.h"
+ #include "Graphics/Textures/Texture.h"
+ 
+@@ -14,40 +12,11 @@ class Texture2DArray : public Texture
+ {
+   public:
+     /// <summary>
+-    /// Determines the size the texture array will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="height">
+-    /// height of the texture in pixels
+-    /// </param>
+-    /// <param name="length">
+-    /// number of textures in the array
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture array should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, UINT16 length, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 2D texture array
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -69,8 +38,7 @@ class Texture2DArray : public Texture
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture2DArray* CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length,
+-      GraphicsDataFormat format);
++    static Texture2DArray* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length, GraphicsDataFormat format);
+ 
+     virtual ~Texture2DArray();
+ 
+diff --git a/d3d12_framework/public_inc/Graphics/Textures/Texture3D.h b/d3d12_framework/public_inc/Graphics/Textures/Texture3D.h
+index fffe8c8..b33cc84 100644
+--- a/d3d12_framework/public_inc/Graphics/Textures/Texture3D.h
++++ b/d3d12_framework/public_inc/Graphics/Textures/Texture3D.h
+@@ -2,11 +2,9 @@
+ #define TEXTURE3D_H
+ 
+ class GraphicsCore;
+-class TextureResourceHeap;
+ class ShaderResourceDescHeap;
+ 
+ #include "Graphics/GraphicsCore.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/GraphicsDataFormat.h"
+ #include "Graphics/Textures/Texture.h"
+ 
+@@ -14,40 +12,11 @@ class Texture3D : public Texture
+ {
+   public:
+     /// <summary>
+-    /// Determines the size a texture will need to be to hold the requested number of bytes
+-    /// </summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="width">
+-    /// width of the texture in pixels
+-    /// </param>
+-    /// <param name="height">
+-    /// height of the texture in pixels
+-    /// </param>
+-    /// <param name="depth">
+-    /// depth of the texture in pixels
+-    /// </param>
+-    /// <param name="format">
+-    /// texture format
+-    /// </param>
+-    /// <returns>
+-    /// number of bytes the texture should be created with
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static UINT GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format);
+-
+-    /// <summary>
+     /// Creates a D3D12 3D texture
+     /// </summary>
+     /// <param name="graphics">
+     /// core graphics interface
+     /// </param>
+-    /// <param name="resource_heap">
+-    /// texture upload resource heap to put the texture into
+-    /// </param>
+     /// <param name="shader_buffer_heap">
+     /// shader resources descriptor heap that the texture will be accessed from
+     /// </param>
+@@ -69,8 +38,7 @@ class Texture3D : public Texture
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static Texture3D* CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth,
+-      GraphicsDataFormat format);
++    static Texture3D* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format);
+ 
+     virtual ~Texture3D();
+ 
+diff --git a/d3d12_framework/public_inc/Graphics/Textures/TextureResourceHeap.h b/d3d12_framework/public_inc/Graphics/Textures/TextureResourceHeap.h
+deleted file mode 100644
+index 7950ce3..0000000
+--- a/d3d12_framework/public_inc/Graphics/Textures/TextureResourceHeap.h
++++ /dev/null
+@@ -1,53 +0,0 @@
+-#ifndef TEXTURE_RESOURCE_HEAP_H
+-#define TEXTURE_RESOURCE_HEAP_H
+-
+-#include "Graphics/GraphicsCore.h"
+-
+-class TextureResourceHeap
+-{
+-  public:
+-    /// <summary>
+-    /// Creates a D3D12 resource heap for textures
+-    ///</summary>
+-    /// <param name="graphics">
+-    /// core graphics interface
+-    /// </param>
+-    /// <param name="num_bytes">
+-    /// Number of bytes the heap is to contain
+-    /// </param>
+-    /// <returns>
+-    /// pointer to the heap
+-    /// </returns>
+-    /// <exception cref="FrameworkException">
+-    /// Thrown when an error is encountered
+-    /// </exception>
+-    static TextureResourceHeap* CreateD3D12(const GraphicsCore& graphics, UINT64 num_bytes);
+-
+-    virtual ~TextureResourceHeap();
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap was created to hold
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes in the heap
+-    /// </returns>
+-    virtual UINT64 GetHeapTotalSize() const = 0;
+-
+-    /// <summary>
+-    /// Retrieves the number of bytes the heap used by resources in the heap
+-    ///</summary>
+-    /// <returns>
+-    /// number of bytes used in the heap
+-    /// </returns>
+-    virtual UINT64 GetHeapUsedSize() const = 0;
+-
+-  protected:
+-    TextureResourceHeap();
+-
+-  private:
+-    // disabled
+-    TextureResourceHeap(const TextureResourceHeap& cpy);
+-    TextureResourceHeap& operator=(const TextureResourceHeap& cpy);
+-};
+-
+-#endif /* TEXTURE_RESOURCE_HEAP_H */
+diff --git a/d3d12_framework/public_inc/Graphics/Textures/TextureUploadBuffer.h b/d3d12_framework/public_inc/Graphics/Textures/TextureUploadBuffer.h
+index a426329..8a48574 100644
+--- a/d3d12_framework/public_inc/Graphics/Textures/TextureUploadBuffer.h
++++ b/d3d12_framework/public_inc/Graphics/Textures/TextureUploadBuffer.h
+@@ -1,33 +1,106 @@
+ #ifndef TEXTURE_UPLOAD_BUFFER_H
+ #define TEXTURE_UPLOAD_BUFFER_H
+ 
+-#include <vector>
+ #include "Graphics/CommandList.h"
+-#include "Graphics/Textures/Texture.h"
++#include "Graphics/Textures/Texture1D.h"
++#include "Graphics/Textures/Texture2D.h"
++#include "Graphics/Textures/Texture3D.h"
++#include "Graphics/Textures/Texture1DArray.h"
++#include "Graphics/Textures/Texture2DArray.h"
+ 
+ class TextureUploadBuffer
+ {
+   public:
+     /// <summary>
+-    /// Creates D3D12 buffers for uploading textures
++    /// Creates a D3D12 buffer for uploading the texture
++    /// </summary>
++    /// <param name="graphics">
++    /// Core graphics interface
++    /// </param>
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
++    /// </param>
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
++    /// <exception cref="FrameworkException">
++    /// Thrown when an error is encountered
++    /// </exception>
++    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture1D& texture);
++
++    /// <summary>
++    /// Creates a D3D12 buffer for uploading the texture
++    /// </summary>
++    /// <param name="graphics">
++    /// Core graphics interface
++    /// </param>
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
++    /// </param>
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
++    /// <exception cref="FrameworkException">
++    /// Thrown when an error is encountered
++    /// </exception>
++    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture2D& texture);
++
++    /// <summary>
++    /// Creates a D3D12 buffer for uploading the texture
++    /// </summary>
++    /// <param name="graphics">
++    /// Core graphics interface
++    /// </param>
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
++    /// </param>
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
++    /// <exception cref="FrameworkException">
++    /// Thrown when an error is encountered
++    /// </exception>
++    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture3D& texture);
++
++    /// <summary>
++    /// Creates a D3D12 buffer for uploading a texture in the array
+     /// <remarks>
+-    /// In order to preserve upload buffers being added to "out" in the same order as the textures are in "textures", only 1 upload buffer will be created per texture array.  If you want multiple upload
+-    /// buffers for a texture array, then it should be repeated in "textures".
++    /// If you want to upload all to all the textures in the array without re-using the same buffer, then an upload buffer for each texture would need to be created
+     /// </remarks>
+     /// </summary>
+     /// <param name="graphics">
+     /// Core graphics interface
+     /// </param>
+-    /// <param name="textures">
+-    /// Textures to create the upload buffer for
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
+     /// </param>
+-    /// <param name="out">
+-    /// Where to put the created upload buffers.  They will be added to the end of the array.
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
++    /// <exception cref="FrameworkException">
++    /// Thrown when an error is encountered
++    /// </exception>
++    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture1DArray& texture);
++
++    /// <summary>
++    /// Creates a D3D12 buffer for uploading a texture in the array
++    /// <remarks>
++    /// If you want to upload all to all the textures in the array without re-using the same buffer, then an upload buffer for each texture would need to be created
++    /// </remarks>
++    /// </summary>
++    /// <param name="graphics">
++    /// Core graphics interface
++    /// </param>
++    /// <param name="texture">
++    /// Texture to create the upload buffer for
+     /// </param>
++    /// <returns>
++    /// Texture upload buffer
++    /// </returns>
+     /// <exception cref="FrameworkException">
+     /// Thrown when an error is encountered
+     /// </exception>
+-    static void CreateD3D12(const GraphicsCore& graphics, const std::vector<Texture*>& textures, std::vector<TextureUploadBuffer*>& out);
++    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const Texture2DArray& texture);
+ 
+     virtual ~TextureUploadBuffer();
+ 
+diff --git a/d3d12_framework/src/D3D12/Buffers/D3D12_ConstantBuffer.cpp b/d3d12_framework/src/D3D12/Buffers/D3D12_ConstantBuffer.cpp
+index 94456e9..b38af07 100644
+--- a/d3d12_framework/src/D3D12/Buffers/D3D12_ConstantBuffer.cpp
++++ b/d3d12_framework/src/D3D12/Buffers/D3D12_ConstantBuffer.cpp
+@@ -1,50 +1,35 @@
+ #include <sstream>
+ #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
+ #include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/D3D12/D3D12_BufferResourceHeap.h"
+ #include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
+ #include "private_inc/BuildSettings.h"
+ #include "FrameworkException.h"
+ using namespace std;
+ 
+-UINT D3D12_ConstantBuffer::GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes)
++D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes)
+ {
+-  const D3D12_Core& core = (const D3D12_Core&)graphics;
+-  ID3D12Device* device = core.GetDevice();
+-
+-  D3D12_RESOURCE_DESC resource_desc;
+-  GetResourceDesc(num_bytes, resource_desc);
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
+-  {
+-    throw FrameworkException("computed size is too large");
+-  }
+-  else
+-  {
+-    return (UINT)alloc_info.SizeInBytes;
+-  }
+-}
+-
+-D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics, BufferResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes)
+-{
+-  const D3D12_Core& core = (const D3D12_Core&)graphics;
+-  ID3D12Device* device = core.GetDevice();
++  const D3D12_Core& core   = (const D3D12_Core&)graphics;
++  ID3D12Device*     device = core.GetDevice();
+ 
+   D3D12_ShaderResourceDescHeap& desc_heap = (D3D12_ShaderResourceDescHeap&)shader_buffer_heap;
+   D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle;
+   D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
+   desc_heap.GetNextDescriptor(cpu_handle, gpu_handle);
+ 
+-  D3D12_BufferResourceHeap& buffer_heap = (D3D12_BufferResourceHeap&)resource_heap;
+-
+   D3D12_RESOURCE_DESC resource_desc;
+   GetResourceDesc(num_bytes, resource_desc);
+-
+-  ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
+-  if (buffer == NULL)
++  D3D12_HEAP_PROPERTIES heap_prop;
++  heap_prop.Type                 = D3D12_HEAP_TYPE_UPLOAD;
++  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
++  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
++  heap_prop.CreationNodeMask     = 0;
++  heap_prop.VisibleNodeMask      = 0;
++
++  ID3D12Resource* buffer;
++  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
++  if (FAILED(rc))
+   {
+-    throw FrameworkException("Unable to create resource buffer");
++    throw FrameworkException("Unable to create buffer resource");
+   }
+ 
+   D3D12_CONSTANT_BUFFER_VIEW_DESC view_desc;
+@@ -56,7 +41,7 @@ D3D12_ConstantBuffer* D3D12_ConstantBuffer::Create(const GraphicsCore& graphics,
+   D3D12_RANGE range;
+   range.Begin = 0;
+   range.End   = 0;
+-  HRESULT rc = buffer->Map(0, &range, (void**)&host_mem);
++  rc = buffer->Map(0, &range, (void**)&host_mem);
+   if (FAILED(rc))
+   {
+     buffer->Release();
+@@ -87,7 +72,7 @@ void D3D12_ConstantBuffer::Upload(void* data, UINT start, UINT len)
+ {
+ #ifdef VALIDATE_FUNCTION_ARGUMENTS
+   UINT total = start + len;
+-  if (total >= m_num_bytes)
++  if (total > m_num_bytes)
+   {
+     throw FrameworkException("attempting to send more bytes than are available in the buffer");
+   }
+@@ -105,7 +90,7 @@ D3D12_GPU_VIRTUAL_ADDRESS D3D12_ConstantBuffer::GetGPUAddr() const
+   return m_gpu_mem;
+ }
+ 
+-void D3D12_ConstantBuffer::GetResourceDesc(UINT num_bytes, D3D12_RESOURCE_DESC& resource_desc)
++void D3D12_ConstantBuffer::GetResourceDesc(UINT& num_bytes, D3D12_RESOURCE_DESC& resource_desc)
+ {
+   // constant buffer size is required to be 256-byte aligned
+   num_bytes = (num_bytes + 255) & ~255;
+diff --git a/d3d12_framework/src/D3D12/D3D12_BufferResourceHeap.cpp b/d3d12_framework/src/D3D12/D3D12_BufferResourceHeap.cpp
+deleted file mode 100644
+index 2cdce6c..0000000
+--- a/d3d12_framework/src/D3D12/D3D12_BufferResourceHeap.cpp
++++ /dev/null
+@@ -1,73 +0,0 @@
+-#include <sstream>
+-#include "private_inc/D3D12/D3D12_BufferResourceHeap.h"
+-#include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/BuildSettings.h"
+-#include "FrameworkException.h"
+-using namespace std;
+-
+-D3D12_BufferResourceHeap* D3D12_BufferResourceHeap::Create(const GraphicsCore& graphics, UINT64 num_bytes)
+-{
+-  const D3D12_Core& core   = (const D3D12_Core&)graphics;
+-  ID3D12Device*     device = core.GetDevice();
+-
+-  D3D12_HEAP_DESC desc;
+-  desc.SizeInBytes                     = num_bytes;
+-  desc.Properties.Type                 = D3D12_HEAP_TYPE_UPLOAD;
+-  desc.Properties.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+-  desc.Properties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+-  desc.Properties.CreationNodeMask     = 0;
+-  desc.Properties.VisibleNodeMask      = 0;
+-  desc.Alignment                       = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT; // todo: allow D3D12_DEFAULT_MSAA_RESOURCE_PLACEMENT_ALIGNMENT to be used when requested
+-  desc.Flags                           = D3D12_HEAP_FLAG_ALLOW_ONLY_BUFFERS;
+-
+-  ID3D12Heap* heap = NULL;
+-  HRESULT rc = device->CreateHeap(&desc, __uuidof(ID3D12Heap), (void**)&heap);
+-  if (FAILED(rc))
+-  {
+-    ostringstream out;
+-    out << "Failed to create resource heap.  HRESULT = " << rc;
+-    throw FrameworkException(out.str());
+-  }
+-
+-  return new D3D12_BufferResourceHeap(num_bytes, heap);
+-}
+-
+-D3D12_BufferResourceHeap::D3D12_BufferResourceHeap(UINT64 num_bytes, ID3D12Heap* heap)
+-:m_heap_total_size(num_bytes),
+- m_heap_used_size(0),
+- m_heap(heap)
+-{
+-}
+-
+-ID3D12Resource* D3D12_BufferResourceHeap::CreateResource(const GraphicsCore& graphics, const D3D12_RESOURCE_DESC& resource_desc)
+-{
+-  const D3D12_Core& core   = (const D3D12_Core&)graphics;
+-  ID3D12Device*     device = core.GetDevice();
+-
+-  ID3D12Resource* buffer;
+-  HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
+-  if (FAILED(rc))
+-  {
+-    throw FrameworkException("Failed to create placed resource");
+-  }
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO mem_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  m_heap_used_size += mem_info.SizeInBytes;
+-
+-  return buffer;
+-}
+-
+-D3D12_BufferResourceHeap::~D3D12_BufferResourceHeap()
+-{
+-  m_heap->Release();
+-}
+-
+-UINT64 D3D12_BufferResourceHeap::GetHeapTotalSize() const
+-{
+-  return m_heap_total_size;
+-}
+-
+-UINT64 D3D12_BufferResourceHeap::GetHeapUsedSize() const
+-{
+-  return m_heap_used_size;
+-}
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_DepthStencil.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_DepthStencil.cpp
+index e432e48..2745bff 100644
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_DepthStencil.cpp
++++ b/d3d12_framework/src/D3D12/Textures/D3D12_DepthStencil.cpp
+@@ -1,78 +1,60 @@
+ #include <sstream>
+ #include "private_inc/D3D12/Textures/D3D12_DepthStencil.h"
+ #include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/D3D12/Textures/D3D12_DepthStencilResourceHeap.h"
+-#include "private_inc/D3D12/Buffers/D3D12_DepthStencilDescHeap.h"
+ #include "FrameworkException.h"
+ #include "private_inc/BuildSettings.h"
+ using namespace std;
+ 
+-void D3D12_DepthStencil::Create(const GraphicsCore& graphics, const vector<Config>& configs, vector<DepthStencil*>& out)
++DepthStencil* D3D12_DepthStencil::Create(const GraphicsCore& graphics, UINT width, UINT height, float default_depth_clear)
+ {
+-#ifdef VALIDATE_FUNCTION_ARGUMENTS
+-  if (configs.size() > UINT_MAX)
+-  {
+-    ostringstream out;
+-    out << "Trying to create too many depth stencils at once.  Max " << UINT_MAX;
+-    throw FrameworkException(out.str());
+-  }
+-#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+-
+-  const D3D12_Core& core = (const D3D12_Core&)graphics;
+-  ID3D12Device* device = core.GetDevice();
++  const D3D12_Core& core   = (const D3D12_Core&)graphics;
++  ID3D12Device*     device = core.GetDevice();
+ 
+-  UINT64 total_heap_bytes = 0;
+-  vector<Config>::const_iterator config_it = configs.begin();
+-  while (config_it != configs.end())
+-  {
+-    total_heap_bytes += GetAlignedSize(device, *config_it);
+-
+-    ++config_it;
+-  }
++  D3D12_DepthStencilDescHeap* desc_heap = D3D12_DepthStencilDescHeap::Create(device, 1);
+ 
+-  D3D12_DepthStencilResourceHeap* resource_heap = D3D12_DepthStencilResourceHeap::Create(device, total_heap_bytes);
+-  D3D12_DepthStencilDescHeap*     desc_heap     = D3D12_DepthStencilDescHeap::Create(device, (UINT)configs.size());
++  D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle;
++  D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
++  desc_heap->GetNextDescriptor(cpu_handle, gpu_handle);
+ 
+-  config_it = configs.begin();
+-  while (config_it != configs.end())
++  D3D12_RESOURCE_DESC resource_desc;
++  GetResourceDesc(width, height, resource_desc);
++  D3D12_HEAP_PROPERTIES heap_prop;
++  heap_prop.Type                 = D3D12_HEAP_TYPE_DEFAULT;
++  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
++  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
++  heap_prop.CreationNodeMask     = 0;
++  heap_prop.VisibleNodeMask      = 0;
++
++  D3D12_CLEAR_VALUE clear;
++  clear.Format               = DXGI_FORMAT_D32_FLOAT;
++  clear.DepthStencil.Depth   = default_depth_clear;
++  clear.DepthStencil.Stencil = 0;
++
++  ID3D12Resource* buffer;
++  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &clear, __uuidof(ID3D12Resource), (void**)&buffer);
++  if (FAILED(rc))
+   {
+-    D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle;
+-    D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
+-    desc_heap->GetNextDescriptor(cpu_handle, gpu_handle);
+-
+-    D3D12_RESOURCE_DESC resource_desc;
+-    GetResourceDesc(*config_it, resource_desc);
+-
+-    ID3D12Resource* buffer = resource_heap->CreateResource(device, resource_desc, config_it->default_depth_clear);
+-    if (buffer == NULL)
+-    {
+-      throw FrameworkException("Unable to create buffer resource");
+-    }
+-
+-    D3D12_DEPTH_STENCIL_VIEW_DESC view_desc;
+-    view_desc.Format             = DXGI_FORMAT_D32_FLOAT;
+-    view_desc.ViewDimension      = D3D12_DSV_DIMENSION_TEXTURE2D;
+-    view_desc.Flags              = D3D12_DSV_FLAG_NONE;
+-    view_desc.Texture2D.MipSlice = 0;
+-    device->CreateDepthStencilView(buffer, &view_desc, cpu_handle);
+-
+-    D3D12_RESOURCE_DESC res_desc = buffer->GetDesc();
+-    D3D12_PLACED_SUBRESOURCE_FOOTPRINT layout;
+-    UINT64 upload_size = 0;
+-    device->GetCopyableFootprints(&res_desc, 0, 1, 0, &layout, NULL, NULL, &upload_size);
+-    upload_size += layout.Offset;
++    throw FrameworkException("Unable to create buffer resource");
++  }
+ 
+-    out.push_back(new D3D12_DepthStencil(buffer, gpu_handle, cpu_handle, config_it->width, config_it->height, upload_size, desc_heap->GetHeap()));
++  D3D12_DEPTH_STENCIL_VIEW_DESC view_desc;
++  view_desc.Format             = DXGI_FORMAT_D32_FLOAT;
++  view_desc.ViewDimension      = D3D12_DSV_DIMENSION_TEXTURE2D;
++  view_desc.Flags              = D3D12_DSV_FLAG_NONE;
++  view_desc.Texture2D.MipSlice = 0;
++  device->CreateDepthStencilView(buffer, &view_desc, cpu_handle);
+ 
+-    ++config_it;
+-  }
++  D3D12_RESOURCE_DESC res_desc = buffer->GetDesc();
++  D3D12_PLACED_SUBRESOURCE_FOOTPRINT layout;
++  UINT64 upload_size = 0;
++  device->GetCopyableFootprints(&res_desc, 0, 1, 0, &layout, NULL, NULL, &upload_size);
++  upload_size += layout.Offset;
+ 
+-  delete desc_heap;
+-  delete resource_heap;
++  return new D3D12_DepthStencil(buffer, gpu_handle, cpu_handle, width, height, upload_size, desc_heap);
+ }
+ 
+ D3D12_DepthStencil::D3D12_DepthStencil(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, D3D12_CPU_DESCRIPTOR_HANDLE cpu_mem, UINT width, UINT height, UINT64 upload_size,
+-  ID3D12DescriptorHeap* desc_heap)
++  D3D12_DepthStencilDescHeap* desc_heap)
+ :m_buffer(buffer),
+  m_gpu_mem(gpu_mem),
+  m_cpu_handle(cpu_mem),
+@@ -80,13 +62,12 @@ D3D12_DepthStencil::D3D12_DepthStencil(ID3D12Resource* buffer, D3D12_GPU_DESCRIP
+  m_height(height),
+  m_desc_heap(desc_heap)
+ {
+-  m_desc_heap->AddRef();
+ }
+ 
+ D3D12_DepthStencil::~D3D12_DepthStencil()
+ {
+   m_buffer->Release();
+-  m_desc_heap->Release();
++  delete m_desc_heap;
+ }
+ 
+ ID3D12Resource* D3D12_DepthStencil::GetBuffer() const
+@@ -104,28 +85,12 @@ const D3D12_CPU_DESCRIPTOR_HANDLE& D3D12_DepthStencil::GetHandle() const
+   return m_cpu_handle;
+ }
+ 
+-UINT D3D12_DepthStencil::GetAlignedSize(ID3D12Device* device, const Config& config)
+-{
+-  D3D12_RESOURCE_DESC resource_desc;
+-  GetResourceDesc(config, resource_desc);
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
+-  {
+-    throw FrameworkException("computed size is too large");
+-  }
+-  else
+-  {
+-    return (UINT)alloc_info.SizeInBytes;
+-  }
+-}
+-
+-void D3D12_DepthStencil::GetResourceDesc(const Config& config, D3D12_RESOURCE_DESC& resource_desc)
++void D3D12_DepthStencil::GetResourceDesc(UINT width, UINT height, D3D12_RESOURCE_DESC& resource_desc)
+ {
+   resource_desc.Dimension          = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+   resource_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
+-  resource_desc.Width              = config.width;
+-  resource_desc.Height             = config.height;
++  resource_desc.Width              = width;
++  resource_desc.Height             = height;
+   resource_desc.DepthOrArraySize   = 1;
+   resource_desc.MipLevels          = 1;
+   resource_desc.Format             = DXGI_FORMAT_D32_FLOAT;
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_DepthStencilResourceHeap.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_DepthStencilResourceHeap.cpp
+deleted file mode 100644
+index fd5badd..0000000
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_DepthStencilResourceHeap.cpp
++++ /dev/null
+@@ -1,73 +0,0 @@
+-#include <sstream>
+-#include "private_inc/D3D12/Textures/D3D12_DepthStencilResourceHeap.h"
+-#include "private_inc/D3D12/D3D12_Core.h"
+-#include "FrameworkException.h"
+-using namespace std;
+-
+-D3D12_DepthStencilResourceHeap* D3D12_DepthStencilResourceHeap::Create(ID3D12Device* device, UINT64 num_bytes)
+-{
+-  D3D12_HEAP_DESC desc;
+-  desc.SizeInBytes                     = num_bytes;
+-  desc.Properties.Type                 = D3D12_HEAP_TYPE_DEFAULT;
+-  desc.Properties.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+-  desc.Properties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+-  desc.Properties.CreationNodeMask     = 0;
+-  desc.Properties.VisibleNodeMask      = 0;
+-  desc.Alignment                       = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
+-  desc.Flags                           = D3D12_HEAP_FLAG_ALLOW_ONLY_RT_DS_TEXTURES;
+-
+-  ID3D12Heap* heap = NULL;
+-  HRESULT rc = device->CreateHeap(&desc, __uuidof(ID3D12Heap), (void**)&heap);
+-  if (FAILED(rc))
+-  {
+-    ostringstream out;
+-    out << "Failed to create depth stencil resource heap.  HRESULT = " << rc;
+-    throw FrameworkException(out.str());
+-  }
+-
+-  return new D3D12_DepthStencilResourceHeap(num_bytes, heap);
+-}
+-
+-D3D12_DepthStencilResourceHeap::D3D12_DepthStencilResourceHeap(UINT64 num_bytes, ID3D12Heap* heap)
+-:m_heap_total_size(num_bytes),
+- m_heap_used_size(0),
+- m_heap(heap)
+-{
+-}
+-
+-ID3D12Resource* D3D12_DepthStencilResourceHeap::CreateResource(ID3D12Device* device, const D3D12_RESOURCE_DESC& resource_desc, float default_depth_clear)
+-{
+-  D3D12_CLEAR_VALUE clear;
+-  clear.Format               = DXGI_FORMAT_D32_FLOAT;
+-  clear.DepthStencil.Depth   = default_depth_clear;
+-  clear.DepthStencil.Stencil = 0;
+-
+-  ID3D12Resource* buffer;
+-  HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &clear, __uuidof(ID3D12Resource), (void**)&buffer);
+-  if (FAILED(rc))
+-  {
+-    ostringstream out;
+-    out << "Failed to create placed texture.  HRESULT = " << rc;
+-    throw FrameworkException(out.str());
+-  }
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO mem_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  m_heap_used_size += mem_info.SizeInBytes;
+-
+-  return buffer;
+-}
+-
+-D3D12_DepthStencilResourceHeap::~D3D12_DepthStencilResourceHeap()
+-{
+-  m_heap->Release();
+-}
+-
+-UINT64 D3D12_DepthStencilResourceHeap::GetHeapTotalSize() const
+-{
+-  return m_heap_total_size;
+-}
+-
+-UINT64 D3D12_DepthStencilResourceHeap::GetHeapUsedSize() const
+-{
+-  return m_heap_used_size;
+-}
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_RenderTarget.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_RenderTarget.cpp
+index 3edb55a..93901d7 100644
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_RenderTarget.cpp
++++ b/d3d12_framework/src/D3D12/Textures/D3D12_RenderTarget.cpp
+@@ -3,84 +3,68 @@
+ #include "private_inc/D3D12/D3D12_Core.h"
+ #include "private_inc/D3D12/D3D12_CommandList.h"
+ #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
+-#include "private_inc/D3D12/Textures/D3D12_RenderTargetResourceHeap.h"
+-#include "private_inc/D3D12/Textures/D3D12_RenderTargetDescHeap.h"
+ #include "FrameworkException.h"
+ #include "private_inc/BuildSettings.h"
+ using namespace std;
+ 
+-void D3D12_RenderTarget::Create(const GraphicsCore& graphics, const vector<Config>& configs, vector<RenderTarget*>& out)
++RenderTarget* D3D12_RenderTarget::Create(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format)
+ {
+-#ifdef VALIDATE_FUNCTION_ARGUMENTS
+-  if (configs.size() > UINT_MAX)
+-  {
+-    ostringstream out;
+-    out << "Trying to create too many render targets at once.  Max " << UINT_MAX;
+-    throw FrameworkException(out.str());
+-  }
+-#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+-
+   const D3D12_Core& core   = (const D3D12_Core&)graphics;
+   ID3D12Device*     device = core.GetDevice();
+ 
+-  UINT64 total_heap_bytes = 0;
+-  vector<Config>::const_iterator config_it = configs.begin();
+-  while (config_it != configs.end())
+-  {
+-    total_heap_bytes += GetAlignedSize(device, *config_it);
++  D3D12_RenderTargetDescHeap* desc_heap = D3D12_RenderTargetDescHeap::Create(device, 1);
+ 
+-    ++config_it;
+-  }
++  D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle;
++  D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
++  desc_heap->GetNextDescriptor(cpu_handle, gpu_handle);
+ 
+-  D3D12_RenderTargetResourceHeap* resource_heap = D3D12_RenderTargetResourceHeap::Create(device, total_heap_bytes);
+-  D3D12_RenderTargetDescHeap*     desc_heap     = D3D12_RenderTargetDescHeap::Create(device, (UINT)configs.size());
+-
+-  config_it = configs.begin();
+-  while (config_it != configs.end())
++  D3D12_RESOURCE_DESC resource_desc;
++  GetResourceDesc(width, height, format, resource_desc);
++
++  D3D12_HEAP_PROPERTIES heap_prop;
++  heap_prop.Type                 = D3D12_HEAP_TYPE_DEFAULT;
++  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
++  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
++  heap_prop.CreationNodeMask     = 0;
++  heap_prop.VisibleNodeMask      = 0;
++
++  D3D12_CLEAR_VALUE clear_value;
++  clear_value.Format   = resource_desc.Format;
++  clear_value.Color[0] = 0;
++  clear_value.Color[1] = 0;
++  clear_value.Color[2] = 0;
++  clear_value.Color[3] = 1;
++
++  ID3D12Resource* buffer;
++  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_PRESENT, &clear_value, __uuidof(ID3D12Resource), (void**)&buffer);
++  if (FAILED(rc))
+   {
+-    D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle;
+-    D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
+-    desc_heap->GetNextDescriptor(cpu_handle, gpu_handle);
+-
+-    D3D12_RESOURCE_DESC resource_desc;
+-    GetResourceDesc(*config_it, resource_desc);
+-
+-    ID3D12Resource* buffer = resource_heap->CreateResource(device, resource_desc);
+-    if (buffer == NULL)
+-    {
+-      throw FrameworkException("Unable to create render target resource");
+-    }
+-
+-    D3D12_RENDER_TARGET_VIEW_DESC view_desc;
+-    view_desc.Format               = (DXGI_FORMAT)config_it->format;
+-    view_desc.ViewDimension        = D3D12_RTV_DIMENSION_TEXTURE2D;
+-    view_desc.Texture2D.MipSlice   = 0;
+-    view_desc.Texture2D.PlaneSlice = 0;
+-    device->CreateRenderTargetView(buffer, &view_desc, cpu_handle);
+-
+-    out.push_back(new D3D12_RenderTarget(buffer, cpu_handle, desc_heap->GetHeap()));
+-
+-    ++config_it;
++    throw FrameworkException("Unable to create buffer resource");
+   }
+ 
+-  delete desc_heap;
+-  delete resource_heap;
++  D3D12_RENDER_TARGET_VIEW_DESC view_desc;
++  view_desc.Format               = (DXGI_FORMAT)format;
++  view_desc.ViewDimension        = D3D12_RTV_DIMENSION_TEXTURE2D;
++  view_desc.Texture2D.MipSlice   = 0;
++  view_desc.Texture2D.PlaneSlice = 0;
++  device->CreateRenderTargetView(buffer, &view_desc, cpu_handle);
++
++  return new D3D12_RenderTarget(buffer, cpu_handle, desc_heap);
+ }
+ 
+ D3D12_RenderTarget::D3D12_RenderTarget(ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle)
+-  :m_render_target(target),
+-  m_rtv_handle(handle),
+-  m_desc_heap(NULL)
++:m_render_target(target),
++ m_rtv_handle(handle),
++ m_desc_heap(NULL)
+ {
+   m_render_target->AddRef();
+ }
+ 
+-D3D12_RenderTarget::D3D12_RenderTarget(ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle, ID3D12DescriptorHeap* desc_heap)
++D3D12_RenderTarget::D3D12_RenderTarget(ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle, D3D12_RenderTargetDescHeap* desc_heap)
+ :m_render_target(target),
+  m_rtv_handle(handle),
+  m_desc_heap(desc_heap)
+ {
+-  m_desc_heap->AddRef();
+ }
+ 
+ D3D12_RenderTarget::~D3D12_RenderTarget()
+@@ -88,7 +72,7 @@ D3D12_RenderTarget::~D3D12_RenderTarget()
+   m_render_target->Release();
+   if (m_desc_heap)
+   {
+-    m_desc_heap->Release();
++    delete m_desc_heap;
+   }
+ }
+ 
+@@ -139,31 +123,15 @@ void D3D12_RenderTarget::PrepUpload(GraphicsCore& graphics, CommandList& command
+   cmd_list->ResourceBarrier(1, &done_copy);
+ }
+ 
+-UINT D3D12_RenderTarget::GetAlignedSize(ID3D12Device* device, const Config& config)
+-{
+-  D3D12_RESOURCE_DESC resource_desc;
+-  GetResourceDesc(config, resource_desc);
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
+-  {
+-    throw FrameworkException("computed size is too large");
+-  }
+-  else
+-  {
+-    return (UINT)alloc_info.SizeInBytes;
+-  }
+-}
+-
+-void D3D12_RenderTarget::GetResourceDesc(const Config& config, D3D12_RESOURCE_DESC& resource_desc)
++void D3D12_RenderTarget::GetResourceDesc(UINT width, UINT height, GraphicsDataFormat format, D3D12_RESOURCE_DESC& resource_desc)
+ {
+   resource_desc.Dimension          = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+   resource_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
+-  resource_desc.Width              = config.width;
+-  resource_desc.Height             = config.height;
++  resource_desc.Width              = width;
++  resource_desc.Height             = height;
+   resource_desc.DepthOrArraySize   = 1;
+   resource_desc.MipLevels          = 1;
+-  resource_desc.Format             = (DXGI_FORMAT)config.format;
++  resource_desc.Format             = (DXGI_FORMAT)format;
+   resource_desc.SampleDesc.Count   = 1;
+   resource_desc.SampleDesc.Quality = 0;
+   resource_desc.Layout             = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_RenderTargetResourceHeap.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_RenderTargetResourceHeap.cpp
+deleted file mode 100644
+index f7ae8fe..0000000
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_RenderTargetResourceHeap.cpp
++++ /dev/null
+@@ -1,69 +0,0 @@
+-#include "private_inc/D3D12/Textures/D3D12_RenderTargetResourceHeap.h"
+-#include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/BuildSettings.h"
+-#include "FrameworkException.h"
+-
+-D3D12_RenderTargetResourceHeap* D3D12_RenderTargetResourceHeap::Create(ID3D12Device* device, UINT64 num_bytes)
+-{
+-  D3D12_HEAP_DESC desc;
+-  desc.SizeInBytes                     = num_bytes;
+-  desc.Properties.Type                 = D3D12_HEAP_TYPE_DEFAULT;
+-  desc.Properties.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+-  desc.Properties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+-  desc.Properties.CreationNodeMask     = 0;
+-  desc.Properties.VisibleNodeMask      = 0;
+-  desc.Alignment                       = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT; // todo: allow D3D12_DEFAULT_MSAA_RESOURCE_PLACEMENT_ALIGNMENT to be used when requested
+-  desc.Flags                           = D3D12_HEAP_FLAG_ALLOW_ONLY_RT_DS_TEXTURES;
+-
+-  ID3D12Heap* heap = NULL;
+-  HRESULT rc = device->CreateHeap(&desc, __uuidof(ID3D12Heap), (void**)&heap);
+-  if (FAILED(rc))
+-  {
+-    throw FrameworkException("Failed to create render target heap");
+-  }
+-
+-  return new D3D12_RenderTargetResourceHeap(num_bytes, heap);
+-}
+-
+-D3D12_RenderTargetResourceHeap::D3D12_RenderTargetResourceHeap(UINT64 num_bytes, ID3D12Heap* heap)
+-:m_heap_total_size(num_bytes),
+- m_heap_used_size(0),
+- m_heap(heap)
+-{
+-}
+-
+-ID3D12Resource* D3D12_RenderTargetResourceHeap::CreateResource(ID3D12Device* device, const D3D12_RESOURCE_DESC& resource_desc)
+-{
+-  ID3D12Resource* buffer;
+-  D3D12_CLEAR_VALUE clear_value;
+-  clear_value.Format   = resource_desc.Format;
+-  clear_value.Color[0] = 0;
+-  clear_value.Color[1] = 0;
+-  clear_value.Color[2] = 0;
+-  clear_value.Color[3] = 1;
+-  HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_PRESENT, &clear_value, __uuidof(ID3D12Resource), (void**)&buffer);
+-  if (FAILED(rc))
+-  {
+-    throw FrameworkException("Failed to create placed render target");
+-  }
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO mem_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  m_heap_used_size += mem_info.SizeInBytes;
+-
+-  return buffer;
+-}
+-
+-D3D12_RenderTargetResourceHeap::~D3D12_RenderTargetResourceHeap()
+-{
+-  m_heap->Release();
+-}
+-
+-UINT64 D3D12_RenderTargetResourceHeap::GetHeapTotalSize() const
+-{
+-  return m_heap_total_size;
+-}
+-
+-UINT64 D3D12_RenderTargetResourceHeap::GetHeapUsedSize() const
+-{
+-  return m_heap_used_size;
+-}
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_Texture1D.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_Texture1D.cpp
+index ec2265d..d2fee0e 100644
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_Texture1D.cpp
++++ b/d3d12_framework/src/D3D12/Textures/D3D12_Texture1D.cpp
+@@ -1,29 +1,9 @@
+ #include "private_inc/D3D12/Textures/D3D12_Texture1D.h"
+ #include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
+ #include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
+ #include "FrameworkException.h"
+ 
+-UINT D3D12_Texture1D::GetAlignedSize(const GraphicsCore& graphics, UINT width, GraphicsDataFormat format)
+-{
+-  const D3D12_Core& core = (const D3D12_Core&)graphics;
+-  ID3D12Device* device = core.GetDevice();
+-
+-  D3D12_RESOURCE_DESC resource_desc;
+-  GetResourceDesc(width, format, resource_desc);
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
+-  {
+-    throw FrameworkException("computed size is too large");
+-  }
+-  else
+-  {
+-    return (UINT)alloc_info.SizeInBytes;
+-  }
+-}
+-
+-Texture1D* D3D12_Texture1D::Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, GraphicsDataFormat format)
++Texture1D* D3D12_Texture1D::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, GraphicsDataFormat format)
+ {
+   const D3D12_Core& core = (const D3D12_Core&)graphics;
+   ID3D12Device* device = core.GetDevice();
+@@ -33,13 +13,19 @@ Texture1D* D3D12_Texture1D::Create(const GraphicsCore& graphics, TextureResource
+   D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
+   desc_heap.GetNextDescriptor(cpu_handle, gpu_handle);
+ 
+-  D3D12_TextureResourceHeap& buffer_heap = (D3D12_TextureResourceHeap&)resource_heap;
+-
+   D3D12_RESOURCE_DESC resource_desc;
+   GetResourceDesc(width, format, resource_desc);
+ 
+-  ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
+-  if (buffer == NULL)
++  D3D12_HEAP_PROPERTIES heap_prop;
++  heap_prop.Type                 = D3D12_HEAP_TYPE_DEFAULT;
++  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
++  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
++  heap_prop.CreationNodeMask     = 0;
++  heap_prop.VisibleNodeMask      = 0;
++
++  ID3D12Resource* buffer;
++  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
++  if (FAILED(rc))
+   {
+     throw FrameworkException("Unable to create buffer resource");
+   }
+@@ -53,16 +39,10 @@ Texture1D* D3D12_Texture1D::Create(const GraphicsCore& graphics, TextureResource
+   src_desc.Texture1D.ResourceMinLODClamp = 0;
+   device->CreateShaderResourceView(buffer, &src_desc, cpu_handle);
+ 
+-  D3D12_RESOURCE_DESC res_desc = buffer->GetDesc();
+-  D3D12_PLACED_SUBRESOURCE_FOOTPRINT layout;
+-  UINT64 upload_size = 0;
+-  device->GetCopyableFootprints(&res_desc, 0, 1, 0, &layout, NULL, NULL, &upload_size);
+-  upload_size += layout.Offset;
+-
+-  return new D3D12_Texture1D(buffer, gpu_handle, width, format, upload_size);
++  return new D3D12_Texture1D(buffer, gpu_handle, width, format);
+ }
+ 
+-D3D12_Texture1D::D3D12_Texture1D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, GraphicsDataFormat format, UINT64 upload_size)
++D3D12_Texture1D::D3D12_Texture1D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, GraphicsDataFormat format)
+ :m_buffer(buffer),
+  m_gpu_mem(gpu_mem),
+  m_width(width),
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_Texture1DArray.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_Texture1DArray.cpp
+index 69d0c94..01a3a3d 100644
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_Texture1DArray.cpp
++++ b/d3d12_framework/src/D3D12/Textures/D3D12_Texture1DArray.cpp
+@@ -1,30 +1,9 @@
+ #include "private_inc/D3D12/Textures/D3D12_Texture1DArray.h"
+ #include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
+ #include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
+ #include "FrameworkException.h"
+ 
+-UINT D3D12_Texture1DArray::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT16 length, GraphicsDataFormat format)
+-{
+-  const D3D12_Core& core = (const D3D12_Core&)graphics;
+-  ID3D12Device* device = core.GetDevice();
+-
+-  D3D12_RESOURCE_DESC resource_desc;
+-  GetResourceDesc(width, length, format, resource_desc);
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
+-  {
+-    throw FrameworkException("computed size is too large");
+-  }
+-  else
+-  {
+-    return (UINT)alloc_info.SizeInBytes;
+-  }
+-}
+-
+-Texture1DArray* D3D12_Texture1DArray::Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length,
+-  GraphicsDataFormat format)
++Texture1DArray* D3D12_Texture1DArray::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format)
+ {
+   const D3D12_Core& core = (const D3D12_Core&)graphics;
+   ID3D12Device* device = core.GetDevice();
+@@ -34,21 +13,27 @@ Texture1DArray* D3D12_Texture1DArray::Create(const GraphicsCore& graphics, Textu
+   D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
+   desc_heap.GetNextDescriptor(cpu_handle, gpu_handle);
+ 
+-  D3D12_TextureResourceHeap& buffer_heap = (D3D12_TextureResourceHeap&)resource_heap;
+-
+   D3D12_RESOURCE_DESC resource_desc;
+   GetResourceDesc(width, length, format, resource_desc);
+ 
+-  ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
+-  if (buffer == NULL)
++  D3D12_HEAP_PROPERTIES heap_prop;
++  heap_prop.Type                 = D3D12_HEAP_TYPE_DEFAULT;
++  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
++  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
++  heap_prop.CreationNodeMask     = 0;
++  heap_prop.VisibleNodeMask      = 0;
++
++  ID3D12Resource* buffer;
++  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
++  if (FAILED(rc))
+   {
+     throw FrameworkException("Unable to create buffer resource");
+   }
+ 
+   D3D12_SHADER_RESOURCE_VIEW_DESC src_desc;
+-  src_desc.Format                        = (DXGI_FORMAT)format;
+-  src_desc.ViewDimension                 = D3D12_SRV_DIMENSION_TEXTURE1DARRAY;
+-  src_desc.Shader4ComponentMapping       = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
++  src_desc.Format                             = (DXGI_FORMAT)format;
++  src_desc.ViewDimension                      = D3D12_SRV_DIMENSION_TEXTURE1DARRAY;
++  src_desc.Shader4ComponentMapping            = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+   src_desc.Texture1DArray.MostDetailedMip     = 0;
+   src_desc.Texture1DArray.MipLevels           = 1;
+   src_desc.Texture1DArray.FirstArraySlice     = 0;
+@@ -56,16 +41,10 @@ Texture1DArray* D3D12_Texture1DArray::Create(const GraphicsCore& graphics, Textu
+   src_desc.Texture1DArray.ResourceMinLODClamp = 0;
+   device->CreateShaderResourceView(buffer, &src_desc, cpu_handle);
+ 
+-  D3D12_RESOURCE_DESC res_desc = buffer->GetDesc();
+-  D3D12_PLACED_SUBRESOURCE_FOOTPRINT layout;
+-  UINT64 upload_size = 0;
+-  device->GetCopyableFootprints(&res_desc, 0, 1, 0, &layout, NULL, NULL, &upload_size);
+-  upload_size += layout.Offset;
+-
+-  return new D3D12_Texture1DArray(buffer, gpu_handle, width, length, format, upload_size);
++  return new D3D12_Texture1DArray(buffer, gpu_handle, width, length, format);
+ }
+ 
+-D3D12_Texture1DArray::D3D12_Texture1DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT16 length, GraphicsDataFormat format, UINT64 upload_size)
++D3D12_Texture1DArray::D3D12_Texture1DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT16 length, GraphicsDataFormat format)
+ :m_buffer(buffer),
+  m_gpu_mem(gpu_mem),
+  m_width(width),
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_Texture2D.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_Texture2D.cpp
+index 6959e3f..5831603 100644
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_Texture2D.cpp
++++ b/d3d12_framework/src/D3D12/Textures/D3D12_Texture2D.cpp
+@@ -1,30 +1,9 @@
+ #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
+ #include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
+ #include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
+ #include "FrameworkException.h"
+ 
+-UINT D3D12_Texture2D::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format)
+-{
+-  const D3D12_Core& core = (const D3D12_Core&)graphics;
+-  ID3D12Device* device = core.GetDevice();
+-
+-  D3D12_RESOURCE_DESC resource_desc;
+-  GetResourceDesc(width, height, format, resource_desc);
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
+-  {
+-    throw FrameworkException("computed size is too large");
+-  }
+-  else
+-  {
+-    return (UINT)alloc_info.SizeInBytes;
+-  }
+-}
+-
+-Texture2D* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
+-  GraphicsDataFormat format)
++Texture2D* D3D12_Texture2D::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, GraphicsDataFormat format)
+ {
+   const D3D12_Core& core = (const D3D12_Core&)graphics;
+   ID3D12Device* device = core.GetDevice();
+@@ -34,13 +13,19 @@ Texture2D* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResource
+   D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
+   desc_heap.GetNextDescriptor(cpu_handle, gpu_handle);
+ 
+-  D3D12_TextureResourceHeap& buffer_heap = (D3D12_TextureResourceHeap&)resource_heap;
+-
+   D3D12_RESOURCE_DESC resource_desc;
+   GetResourceDesc(width, height, format, resource_desc);
+ 
+-  ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
+-  if (buffer == NULL)
++  D3D12_HEAP_PROPERTIES heap_prop;
++  heap_prop.Type                 = D3D12_HEAP_TYPE_DEFAULT;
++  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
++  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
++  heap_prop.CreationNodeMask     = 0;
++  heap_prop.VisibleNodeMask      = 0;
++
++  ID3D12Resource* buffer;
++  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
++  if (FAILED(rc))
+   {
+     throw FrameworkException("Unable to create buffer resource");
+   }
+@@ -55,16 +40,10 @@ Texture2D* D3D12_Texture2D::Create(const GraphicsCore& graphics, TextureResource
+   src_desc.Texture2D.ResourceMinLODClamp = 0;
+   device->CreateShaderResourceView(buffer, &src_desc, cpu_handle);
+ 
+-  D3D12_RESOURCE_DESC res_desc = buffer->GetDesc();
+-  D3D12_PLACED_SUBRESOURCE_FOOTPRINT layout;
+-  UINT64 upload_size = 0;
+-  device->GetCopyableFootprints(&res_desc, 0, 1, 0, &layout, NULL, NULL, &upload_size);
+-  upload_size += layout.Offset;
+-
+-  return new D3D12_Texture2D(buffer, gpu_handle, width, height, format, upload_size);
++  return new D3D12_Texture2D(buffer, gpu_handle, width, height, format);
+ }
+ 
+-D3D12_Texture2D::D3D12_Texture2D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, GraphicsDataFormat format, UINT64 upload_size)
++D3D12_Texture2D::D3D12_Texture2D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, GraphicsDataFormat format)
+ :m_buffer(buffer),
+  m_gpu_mem(gpu_mem),
+  m_width(width),
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_Texture2DArray.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_Texture2DArray.cpp
+index db17644..4e937af 100644
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_Texture2DArray.cpp
++++ b/d3d12_framework/src/D3D12/Textures/D3D12_Texture2DArray.cpp
+@@ -1,30 +1,9 @@
+ #include "private_inc/D3D12/Textures/D3D12_Texture2DArray.h"
+ #include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
+ #include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
+ #include "FrameworkException.h"
+ 
+-UINT D3D12_Texture2DArray::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, UINT16 length, GraphicsDataFormat format)
+-{
+-  const D3D12_Core& core = (const D3D12_Core&)graphics;
+-  ID3D12Device* device = core.GetDevice();
+-
+-  D3D12_RESOURCE_DESC resource_desc;
+-  GetResourceDesc(width, height, length, format, resource_desc);
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
+-  {
+-    throw FrameworkException("computed size is too large");
+-  }
+-  else
+-  {
+-    return (UINT)alloc_info.SizeInBytes;
+-  }
+-}
+-
+-Texture2DArray* D3D12_Texture2DArray::Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length,
+-  GraphicsDataFormat format)
++Texture2DArray* D3D12_Texture2DArray::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length, GraphicsDataFormat format)
+ {
+   const D3D12_Core& core = (const D3D12_Core&)graphics;
+   ID3D12Device* device = core.GetDevice();
+@@ -34,21 +13,27 @@ Texture2DArray* D3D12_Texture2DArray::Create(const GraphicsCore& graphics, Textu
+   D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
+   desc_heap.GetNextDescriptor(cpu_handle, gpu_handle);
+ 
+-  D3D12_TextureResourceHeap& buffer_heap = (D3D12_TextureResourceHeap&)resource_heap;
+-
+   D3D12_RESOURCE_DESC resource_desc;
+   GetResourceDesc(width, height, length, format, resource_desc);
+ 
+-  ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
+-  if (buffer == NULL)
++  D3D12_HEAP_PROPERTIES heap_prop;
++  heap_prop.Type                 = D3D12_HEAP_TYPE_DEFAULT;
++  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
++  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
++  heap_prop.CreationNodeMask     = 0;
++  heap_prop.VisibleNodeMask      = 0;
++
++  ID3D12Resource* buffer;
++  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
++  if (FAILED(rc))
+   {
+     throw FrameworkException("Unable to create buffer resource");
+   }
+ 
+   D3D12_SHADER_RESOURCE_VIEW_DESC src_desc;
+-  src_desc.Format                        = (DXGI_FORMAT)format;
+-  src_desc.ViewDimension                 = D3D12_SRV_DIMENSION_TEXTURE2DARRAY;
+-  src_desc.Shader4ComponentMapping       = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
++  src_desc.Format                             = (DXGI_FORMAT)format;
++  src_desc.ViewDimension                      = D3D12_SRV_DIMENSION_TEXTURE2DARRAY;
++  src_desc.Shader4ComponentMapping            = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+   src_desc.Texture2DArray.MostDetailedMip     = 0;
+   src_desc.Texture2DArray.MipLevels           = 1;
+   src_desc.Texture2DArray.FirstArraySlice     = 0;
+@@ -57,16 +42,10 @@ Texture2DArray* D3D12_Texture2DArray::Create(const GraphicsCore& graphics, Textu
+   src_desc.Texture2DArray.ResourceMinLODClamp = 0;
+   device->CreateShaderResourceView(buffer, &src_desc, cpu_handle);
+ 
+-  D3D12_RESOURCE_DESC res_desc = buffer->GetDesc();
+-  D3D12_PLACED_SUBRESOURCE_FOOTPRINT layout;
+-  UINT64 upload_size = 0;
+-  device->GetCopyableFootprints(&res_desc, 0, 1, 0, &layout, NULL, NULL, &upload_size);
+-  upload_size += layout.Offset;
+-
+-  return new D3D12_Texture2DArray(buffer, gpu_handle, width, height, length, format, upload_size);
++  return new D3D12_Texture2DArray(buffer, gpu_handle, width, height, length, format);
+ }
+ 
+-D3D12_Texture2DArray::D3D12_Texture2DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 length, GraphicsDataFormat format, UINT64 upload_size)
++D3D12_Texture2DArray::D3D12_Texture2DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 length, GraphicsDataFormat format)
+ :m_buffer(buffer),
+  m_gpu_mem(gpu_mem),
+  m_width(width),
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_Texture3D.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_Texture3D.cpp
+index 1cf9028..44a220b 100644
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_Texture3D.cpp
++++ b/d3d12_framework/src/D3D12/Textures/D3D12_Texture3D.cpp
+@@ -1,30 +1,9 @@
+ #include "private_inc/D3D12/Textures/D3D12_Texture3D.h"
+ #include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
+ #include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
+ #include "FrameworkException.h"
+ 
+-UINT D3D12_Texture3D::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format)
+-{
+-  const D3D12_Core& core = (const D3D12_Core&)graphics;
+-  ID3D12Device* device = core.GetDevice();
+-
+-  D3D12_RESOURCE_DESC resource_desc;
+-  GetResourceDesc(width, height, depth, format, resource_desc);
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  if (alloc_info.SizeInBytes > (UINT)alloc_info.SizeInBytes)
+-  {
+-    throw FrameworkException("computed size is too large");
+-  }
+-  else
+-  {
+-    return (UINT)alloc_info.SizeInBytes;
+-  }
+-}
+-
+-Texture3D* D3D12_Texture3D::Create(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth,
+-  GraphicsDataFormat format)
++Texture3D* D3D12_Texture3D::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format)
+ {
+   const D3D12_Core& core = (const D3D12_Core&)graphics;
+   ID3D12Device* device = core.GetDevice();
+@@ -34,13 +13,19 @@ Texture3D* D3D12_Texture3D::Create(const GraphicsCore& graphics, TextureResource
+   D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
+   desc_heap.GetNextDescriptor(cpu_handle, gpu_handle);
+ 
+-  D3D12_TextureResourceHeap& buffer_heap = (D3D12_TextureResourceHeap&)resource_heap;
+-
+   D3D12_RESOURCE_DESC resource_desc;
+   GetResourceDesc(width, height, depth, format, resource_desc);
+ 
+-  ID3D12Resource* buffer = buffer_heap.CreateResource(graphics, resource_desc);
+-  if (buffer == NULL)
++  D3D12_HEAP_PROPERTIES heap_prop;
++  heap_prop.Type                 = D3D12_HEAP_TYPE_DEFAULT;
++  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
++  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
++  heap_prop.CreationNodeMask     = 0;
++  heap_prop.VisibleNodeMask      = 0;
++
++  ID3D12Resource* buffer;
++  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
++  if (FAILED(rc))
+   {
+     throw FrameworkException("Unable to create buffer resource");
+   }
+@@ -54,16 +39,10 @@ Texture3D* D3D12_Texture3D::Create(const GraphicsCore& graphics, TextureResource
+   src_desc.Texture3D.ResourceMinLODClamp = 0;
+   device->CreateShaderResourceView(buffer, &src_desc, cpu_handle);
+ 
+-  D3D12_RESOURCE_DESC res_desc = buffer->GetDesc();
+-  D3D12_PLACED_SUBRESOURCE_FOOTPRINT layout;
+-  UINT64 upload_size = 0;
+-  device->GetCopyableFootprints(&res_desc, 0, 1, 0, &layout, NULL, NULL, &upload_size);
+-  upload_size += layout.Offset;
+-
+-  return new D3D12_Texture3D(buffer, gpu_handle, width, height, depth, format, upload_size);
++  return new D3D12_Texture3D(buffer, gpu_handle, width, height, depth, format);
+ }
+ 
+-D3D12_Texture3D::D3D12_Texture3D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format, UINT64 upload_size)
++D3D12_Texture3D::D3D12_Texture3D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format)
+ :m_buffer(buffer),
+  m_gpu_mem(gpu_mem),
+  m_width(width),
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_TextureResourceHeap.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_TextureResourceHeap.cpp
+deleted file mode 100644
+index f0fdb99..0000000
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_TextureResourceHeap.cpp
++++ /dev/null
+@@ -1,77 +0,0 @@
+-#include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
+-#include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/BuildSettings.h"
+-#include "FrameworkException.h"
+-
+-D3D12_TextureResourceHeap* D3D12_TextureResourceHeap::Create(const GraphicsCore& graphics, UINT64 num_bytes)
+-{
+-  const D3D12_Core& core   = (const D3D12_Core&)graphics;
+-  ID3D12Device*     device = core.GetDevice();
+-
+-  D3D12_HEAP_DESC desc;
+-  desc.SizeInBytes                     = num_bytes;
+-  desc.Properties.Type                 = D3D12_HEAP_TYPE_DEFAULT;
+-  desc.Properties.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+-  desc.Properties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+-  desc.Properties.CreationNodeMask     = 0;
+-  desc.Properties.VisibleNodeMask      = 0;
+-  desc.Alignment                       = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT; // todo: allow D3D12_DEFAULT_MSAA_RESOURCE_PLACEMENT_ALIGNMENT to be used when requested
+-  desc.Flags                           = D3D12_HEAP_FLAG_ALLOW_ONLY_NON_RT_DS_TEXTURES;
+-
+-  ID3D12Heap* heap = NULL;
+-  HRESULT rc = device->CreateHeap(&desc, __uuidof(ID3D12Heap), (void**)&heap);
+-  if (FAILED(rc))
+-  {
+-    throw FrameworkException("Failed to create texture upload heap");
+-  }
+-
+-  return new D3D12_TextureResourceHeap(num_bytes, heap);
+-}
+-
+-D3D12_TextureResourceHeap::D3D12_TextureResourceHeap(UINT64 num_bytes, ID3D12Heap* heap)
+-:m_heap_total_size(num_bytes),
+- m_heap_used_size(0),
+- m_heap(heap)
+-{
+-}
+-
+-ID3D12Resource* D3D12_TextureResourceHeap::CreateResource(const GraphicsCore& graphics, const D3D12_RESOURCE_DESC& resource_desc)
+-{
+-  const D3D12_Core& core   = (const D3D12_Core&)graphics;
+-  ID3D12Device*     device = core.GetDevice();
+-
+-#ifdef VALIDATE_FUNCTION_ARGUMENTS
+-  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  if ((m_heap_used_size + alloc_info.SizeInBytes) > m_heap_total_size)
+-  {
+-    throw FrameworkException("Insufficent room in the texture resource heap for the new resource");
+-  }
+-#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+-
+-  ID3D12Resource* buffer;
+-  HRESULT rc = device->CreatePlacedResource(m_heap, m_heap_used_size, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
+-  if (FAILED(rc))
+-  {
+-    throw FrameworkException("Failed to create placed texture");
+-  }
+-
+-  D3D12_RESOURCE_ALLOCATION_INFO mem_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-  m_heap_used_size += mem_info.SizeInBytes;
+-
+-  return buffer;
+-}
+-
+-D3D12_TextureResourceHeap::~D3D12_TextureResourceHeap()
+-{
+-  m_heap->Release();
+-}
+-
+-UINT64 D3D12_TextureResourceHeap::GetHeapTotalSize() const
+-{
+-  return m_heap_total_size;
+-}
+-
+-UINT64 D3D12_TextureResourceHeap::GetHeapUsedSize() const
+-{
+-  return m_heap_used_size;
+-}
+diff --git a/d3d12_framework/src/D3D12/Textures/D3D12_TextureUploadBuffer.cpp b/d3d12_framework/src/D3D12/Textures/D3D12_TextureUploadBuffer.cpp
+index 5c00007..968d654 100644
+--- a/d3d12_framework/src/D3D12/Textures/D3D12_TextureUploadBuffer.cpp
++++ b/d3d12_framework/src/D3D12/Textures/D3D12_TextureUploadBuffer.cpp
+@@ -1,6 +1,5 @@
+ #include "private_inc/D3D12/Textures/D3D12_TextureUploadBuffer.h"
+ #include "private_inc/D3D12/D3D12_Core.h"
+-#include "private_inc/D3D12/D3D12_BufferResourceHeap.h"
+ #include "private_inc/D3D12/D3D12_CommandList.h"
+ #include "private_inc/D3D12/Textures/D3D12_Texture1D.h"
+ #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
+@@ -12,85 +11,33 @@
+ #include "FrameworkException.h"
+ using namespace std;
+ 
+-void D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const std::vector<Texture*>& textures, std::vector<TextureUploadBuffer*>& out)
++TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture1D& texture)
+ {
+-  const D3D12_Core& core = (const D3D12_Core&)graphics;
+-  ID3D12Device*     device = core.GetDevice();
+-
+-  UINT64 total_heap_bytes = 0;
+-  vector<Texture*>::const_iterator texture_it = textures.begin();
+-  vector<UINT64> upload_buffer_sizes;
+-  upload_buffer_sizes.reserve(textures.size());
+-  while (texture_it != textures.end())
+-  {
+-    Texture* texture = *texture_it;
+-    ID3D12Resource* resource;
+-    switch (texture->GetType())
+-    {
+-      case Texture::TEXTURE_1D:
+-        resource = ((D3D12_Texture1D*)texture)->GetBuffer();
+-        break;
+-
+-      case Texture::TEXTURE_2D:
+-        resource = ((D3D12_Texture2D*)texture)->GetBuffer();
+-        break;
+-
+-      case Texture::TEXTURE_3D:
+-        resource = ((D3D12_Texture3D*)texture)->GetBuffer();
+-        break;
+-
+-      case Texture::TEXTURE_1D_ARRAY:
+-        resource = ((D3D12_Texture1DArray*)texture)->GetBuffer();
+-        break;
+-
+-      case Texture::TEXTURE_2D_ARRAY:
+-        resource = ((D3D12_Texture2DArray*)texture)->GetBuffer();
+-        break;
+-
+-      default:
+-        throw FrameworkException("Invalid texture type");
+-        break;
+-    }
+-
+-    D3D12_RESOURCE_DESC resource_desc = resource->GetDesc();
+-    D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
+-
+-    total_heap_bytes += alloc_info.SizeInBytes;
+-    upload_buffer_sizes.push_back(alloc_info.SizeInBytes);
++  return D3D12_TextureUploadBuffer::CreateInternal(graphics, ((const D3D12_Texture1D&)texture).GetBuffer()->GetDesc());
++}
+ 
+-    ++texture_it;
+-  }
++TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2D& texture)
++{
++  return D3D12_TextureUploadBuffer::CreateInternal(graphics, ((const D3D12_Texture2D&)texture).GetBuffer()->GetDesc());
++}
+ 
+-  D3D12_BufferResourceHeap* buffer_heap = D3D12_BufferResourceHeap::Create(graphics, total_heap_bytes);
+-  texture_it = textures.begin();
+-  vector<UINT64>::const_iterator size_it = upload_buffer_sizes.begin();
+-  while (texture_it != textures.end())
+-  {
+-    D3D12_RESOURCE_DESC resource_desc;
+-    resource_desc.Dimension          = D3D12_RESOURCE_DIMENSION_BUFFER;
+-    resource_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
+-    resource_desc.Width              = *size_it;
+-    resource_desc.Height             = 1;
+-    resource_desc.DepthOrArraySize   = 1;
+-    resource_desc.MipLevels          = 1;
+-    resource_desc.Format             = DXGI_FORMAT_UNKNOWN;
+-    resource_desc.SampleDesc.Count   = 1;
+-    resource_desc.SampleDesc.Quality = 0;
+-    resource_desc.Layout             = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+-    resource_desc.Flags              = D3D12_RESOURCE_FLAG_NONE;
+-
+-    ID3D12Resource* buffer = buffer_heap->CreateResource(graphics, resource_desc);
+-    if (buffer == NULL)
+-    {
+-      throw FrameworkException("Unable to create buffer resource");
+-    }
++TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture3D& texture)
++{
++  return D3D12_TextureUploadBuffer::CreateInternal(graphics, ((const D3D12_Texture3D&)texture).GetBuffer()->GetDesc());
++}
+ 
+-    out.push_back(new D3D12_TextureUploadBuffer(buffer));
++TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture1DArray& texture)
++{
++  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_Texture1DArray&)texture).GetBuffer()->GetDesc();
++  resource_desc.DepthOrArraySize = 1;
++  return D3D12_TextureUploadBuffer::CreateInternal(graphics, resource_desc);
++}
+ 
+-    ++texture_it;
+-    ++size_it;
+-  }
+-  delete buffer_heap;
++TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2DArray& texture)
++{
++  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_Texture2DArray&)texture).GetBuffer()->GetDesc();
++  resource_desc.DepthOrArraySize = 1;
++  return D3D12_TextureUploadBuffer::CreateInternal(graphics, resource_desc);
+ }
+ 
+ D3D12_TextureUploadBuffer::D3D12_TextureUploadBuffer(ID3D12Resource* buffer)
+@@ -133,6 +80,42 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList&
+   PrepUploadInternal(graphics, command_list, dst_texture, index, data);
+ }
+ 
++TextureUploadBuffer* D3D12_TextureUploadBuffer::CreateInternal(const GraphicsCore& graphics, D3D12_RESOURCE_DESC resource_desc)
++{
++  const D3D12_Core& core   = (const D3D12_Core&)graphics;
++  ID3D12Device*     device = core.GetDevice();
++
++  D3D12_RESOURCE_ALLOCATION_INFO alloc_info = device->GetResourceAllocationInfo(0, 1, &resource_desc);
++
++  resource_desc.Dimension          = D3D12_RESOURCE_DIMENSION_BUFFER;
++  resource_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
++  resource_desc.Width              = alloc_info.SizeInBytes;
++  resource_desc.Height             = 1;
++  resource_desc.DepthOrArraySize   = 1;
++  resource_desc.MipLevels          = 1;
++  resource_desc.Format             = DXGI_FORMAT_UNKNOWN;
++  resource_desc.SampleDesc.Count   = 1;
++  resource_desc.SampleDesc.Quality = 0;
++  resource_desc.Layout             = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
++  resource_desc.Flags              = D3D12_RESOURCE_FLAG_NONE;
++
++  D3D12_HEAP_PROPERTIES heap_prop;
++  heap_prop.Type                 = D3D12_HEAP_TYPE_UPLOAD;
++  heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
++  heap_prop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
++  heap_prop.CreationNodeMask     = 0;
++  heap_prop.VisibleNodeMask      = 0;
++
++  ID3D12Resource* buffer;
++  HRESULT rc = device->CreateCommittedResource(&heap_prop, D3D12_HEAP_FLAG_NONE, &resource_desc, D3D12_RESOURCE_STATE_GENERIC_READ, NULL, __uuidof(ID3D12Resource), (void**)&buffer);
++  if (FAILED(rc))
++  {
++    throw FrameworkException("Unable to create buffer resource");
++  }
++
++  return new D3D12_TextureUploadBuffer(buffer);
++}
++
+ void D3D12_TextureUploadBuffer::PrepUploadInternal(GraphicsCore& graphics, CommandList& command_list, ID3D12Resource* texture, UINT16 index, const vector<UINT8>& data)
+ {
+   ID3D12Device*       device      = ((D3D12_Core&)graphics).GetDevice();
+diff --git a/d3d12_framework/src/Graphics/BufferResourceHeap.cpp b/d3d12_framework/src/Graphics/BufferResourceHeap.cpp
+deleted file mode 100644
+index 3676e5d..0000000
+--- a/d3d12_framework/src/Graphics/BufferResourceHeap.cpp
++++ /dev/null
+@@ -1,15 +0,0 @@
+-#include "Graphics/BufferResourceHeap.h"
+-#include "private_inc/D3D12/D3D12_BufferResourceHeap.h"
+-
+-BufferResourceHeap* BufferResourceHeap::CreateD3D12(const GraphicsCore& core, UINT64 num_bytes)
+-{
+-  return D3D12_BufferResourceHeap::Create(core, num_bytes);
+-}
+-
+-BufferResourceHeap::BufferResourceHeap()
+-{
+-}
+-
+-BufferResourceHeap::~BufferResourceHeap()
+-{
+-}
+diff --git a/d3d12_framework/src/Graphics/Buffers/ConstantBuffer.cpp b/d3d12_framework/src/Graphics/Buffers/ConstantBuffer.cpp
+index 858bb39..e855e1a 100644
+--- a/d3d12_framework/src/Graphics/Buffers/ConstantBuffer.cpp
++++ b/d3d12_framework/src/Graphics/Buffers/ConstantBuffer.cpp
+@@ -1,15 +1,11 @@
+ #include "Graphics/Buffers/ConstantBuffer.h"
+ #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
+ 
+-UINT ConstantBuffer::GetAlignedSize(const GraphicsCore& graphics, UINT num_bytes)
++ConstantBuffer* ConstantBuffer::CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes)
+ {
+-  return D3D12_ConstantBuffer::GetAlignedSize(graphics, num_bytes);
++  return D3D12_ConstantBuffer::Create(graphics, shader_buffer_heap, num_bytes);
+ }
+ 
+-ConstantBuffer* ConstantBuffer::CreateD3D12(const GraphicsCore& graphics, BufferResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT num_bytes)
+-{
+-  return D3D12_ConstantBuffer::Create(graphics, resource_heap, shader_buffer_heap, num_bytes);
+-}
+ 
+ ConstantBuffer::ConstantBuffer()
+ {
+diff --git a/d3d12_framework/src/Graphics/Textures/DepthStencil.cpp b/d3d12_framework/src/Graphics/Textures/DepthStencil.cpp
+index 16e1b6b..d06c5a8 100644
+--- a/d3d12_framework/src/Graphics/Textures/DepthStencil.cpp
++++ b/d3d12_framework/src/Graphics/Textures/DepthStencil.cpp
+@@ -1,9 +1,9 @@
+ #include "Graphics/Textures/DepthStencil.h"
+ #include "private_inc/D3D12/Textures/D3D12_DepthStencil.h"
+ 
+-void DepthStencil::CreateD3D12(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<DepthStencil*>& out)
++DepthStencil* DepthStencil::CreateD3D12(const GraphicsCore& graphics, UINT width, UINT height, float default_depth_clear)
+ {
+-  D3D12_DepthStencil::Create(graphics, configs, out);
++  return D3D12_DepthStencil::Create(graphics, width, height, default_depth_clear);
+ }
+ 
+ DepthStencil::DepthStencil()
+diff --git a/d3d12_framework/src/Graphics/Textures/RenderTarget.cpp b/d3d12_framework/src/Graphics/Textures/RenderTarget.cpp
+index 73b918e..3a0112f 100644
+--- a/d3d12_framework/src/Graphics/Textures/RenderTarget.cpp
++++ b/d3d12_framework/src/Graphics/Textures/RenderTarget.cpp
+@@ -1,9 +1,9 @@
+ #include "Graphics/Textures/RenderTarget.h"
+ #include "private_inc/D3D12/Textures/D3D12_RenderTarget.h"
+ 
+-void RenderTarget::CreateD3D12(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<RenderTarget*>& out)
++RenderTarget* RenderTarget::CreateD3D12(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format)
+ {
+-  D3D12_RenderTarget::Create(graphics, configs, out);
++  return D3D12_RenderTarget::Create(graphics, width, height, format);
+ }
+ 
+ RenderTarget::RenderTarget()
+diff --git a/d3d12_framework/src/Graphics/Textures/Texture1D.cpp b/d3d12_framework/src/Graphics/Textures/Texture1D.cpp
+index e5e2be2..7d520ef 100644
+--- a/d3d12_framework/src/Graphics/Textures/Texture1D.cpp
++++ b/d3d12_framework/src/Graphics/Textures/Texture1D.cpp
+@@ -1,14 +1,9 @@
+ #include "Graphics/Textures/Texture1D.h"
+ #include "private_inc/D3D12/Textures/D3D12_Texture1D.h"
+ 
+-UINT Texture1D::GetAlignedSize(const GraphicsCore& graphics, UINT width, GraphicsDataFormat format)
++Texture1D* Texture1D::CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, GraphicsDataFormat format)
+ {
+-  return D3D12_Texture1D::GetAlignedSize(graphics, width, format);
+-}
+-
+-Texture1D* Texture1D::CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, GraphicsDataFormat format)
+-{
+-  return D3D12_Texture1D::Create(graphics, resource_heap, shader_buffer_heap, width, format);
++  return D3D12_Texture1D::Create(graphics, shader_buffer_heap, width, format);
+ }
+ 
+ Texture1D::Texture1D()
+diff --git a/d3d12_framework/src/Graphics/Textures/Texture1DArray.cpp b/d3d12_framework/src/Graphics/Textures/Texture1DArray.cpp
+index 4df5bb0..be22d33 100644
+--- a/d3d12_framework/src/Graphics/Textures/Texture1DArray.cpp
++++ b/d3d12_framework/src/Graphics/Textures/Texture1DArray.cpp
+@@ -1,15 +1,9 @@
+ #include "Graphics/Textures/Texture1DArray.h"
+ #include "private_inc/D3D12/Textures/D3D12_Texture1DArray.h"
+ 
+-UINT Texture1DArray::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT16 length, GraphicsDataFormat format)
++Texture1DArray* Texture1DArray::CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format)
+ {
+-  return D3D12_Texture1DArray::GetAlignedSize(graphics, width, length, format);
+-}
+-
+-Texture1DArray* Texture1DArray::CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length,
+-  GraphicsDataFormat format)
+-{
+-  return D3D12_Texture1DArray::Create(graphics, resource_heap, shader_buffer_heap, width, length, format);
++  return D3D12_Texture1DArray::Create(graphics, shader_buffer_heap, width, length, format);
+ }
+ 
+ Texture1DArray::Texture1DArray()
+diff --git a/d3d12_framework/src/Graphics/Textures/Texture2D.cpp b/d3d12_framework/src/Graphics/Textures/Texture2D.cpp
+index 960ffc6..28f3758 100644
+--- a/d3d12_framework/src/Graphics/Textures/Texture2D.cpp
++++ b/d3d12_framework/src/Graphics/Textures/Texture2D.cpp
+@@ -1,15 +1,9 @@
+ #include "Graphics/Textures/Texture2D.h"
+ #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
+ 
+-UINT Texture2D::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format)
++Texture2D* Texture2D::CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, GraphicsDataFormat format)
+ {
+-  return D3D12_Texture2D::GetAlignedSize(graphics, width, height, format);
+-}
+-
+-Texture2D* Texture2D::CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height,
+-  GraphicsDataFormat format)
+-{
+-  return D3D12_Texture2D::Create(graphics, resource_heap, shader_buffer_heap, width, height, format);
++  return D3D12_Texture2D::Create(graphics, shader_buffer_heap, width, height, format);
+ }
+ 
+ Texture2D::Texture2D()
+diff --git a/d3d12_framework/src/Graphics/Textures/Texture2DArray.cpp b/d3d12_framework/src/Graphics/Textures/Texture2DArray.cpp
+index a239a10..50e9522 100644
+--- a/d3d12_framework/src/Graphics/Textures/Texture2DArray.cpp
++++ b/d3d12_framework/src/Graphics/Textures/Texture2DArray.cpp
+@@ -1,15 +1,9 @@
+ #include "Graphics/Textures/Texture2DArray.h"
+ #include "private_inc/D3D12/Textures/D3D12_Texture2DArray.h"
+ 
+-UINT Texture2DArray::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, UINT16 length, GraphicsDataFormat format)
++Texture2DArray* Texture2DArray::CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length, GraphicsDataFormat format)
+ {
+-  return D3D12_Texture2DArray::GetAlignedSize(graphics, width, height, length, format);
+-}
+-
+-Texture2DArray* Texture2DArray::CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length,
+-  GraphicsDataFormat format)
+-{
+-  return D3D12_Texture2DArray::Create(graphics, resource_heap, shader_buffer_heap, width, height, length, format);
++  return D3D12_Texture2DArray::Create(graphics, shader_buffer_heap, width, height, length, format);
+ }
+ 
+ Texture2DArray::Texture2DArray()
+diff --git a/d3d12_framework/src/Graphics/Textures/Texture3D.cpp b/d3d12_framework/src/Graphics/Textures/Texture3D.cpp
+index 96f1b63..69ec32a 100644
+--- a/d3d12_framework/src/Graphics/Textures/Texture3D.cpp
++++ b/d3d12_framework/src/Graphics/Textures/Texture3D.cpp
+@@ -1,15 +1,9 @@
+ #include "Graphics/Textures/Texture3D.h"
+ #include "private_inc/D3D12/Textures/D3D12_Texture3D.h"
+ 
+-UINT Texture3D::GetAlignedSize(const GraphicsCore& graphics, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format)
++Texture3D* Texture3D::CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format)
+ {
+-  return D3D12_Texture3D::GetAlignedSize(graphics, width, height, depth, format);
+-}
+-
+-Texture3D* Texture3D::CreateD3D12(const GraphicsCore& graphics, TextureResourceHeap& resource_heap, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth,
+-  GraphicsDataFormat format)
+-{
+-  return D3D12_Texture3D::Create(graphics, resource_heap, shader_buffer_heap, width, height, depth, format);
++  return D3D12_Texture3D::Create(graphics, shader_buffer_heap, width, height, depth, format);
+ }
+ 
+ Texture3D::Texture3D()
+diff --git a/d3d12_framework/src/Graphics/Textures/TextureResourceHeap.cpp b/d3d12_framework/src/Graphics/Textures/TextureResourceHeap.cpp
+deleted file mode 100644
+index aea5368..0000000
+--- a/d3d12_framework/src/Graphics/Textures/TextureResourceHeap.cpp
++++ /dev/null
+@@ -1,15 +0,0 @@
+-#include "Graphics/Textures/TextureResourceHeap.h"
+-#include "private_inc/D3D12/Textures/D3D12_TextureResourceHeap.h"
+-
+-TextureResourceHeap* TextureResourceHeap::CreateD3D12(const GraphicsCore& core, UINT64 num_bytes)
+-{
+-  return D3D12_TextureResourceHeap::Create(core, num_bytes);
+-}
+-
+-TextureResourceHeap::TextureResourceHeap()
+-{
+-}
+-
+-TextureResourceHeap::~TextureResourceHeap()
+-{
+-}
+diff --git a/d3d12_framework/src/Graphics/Textures/TextureUploadBuffer.cpp b/d3d12_framework/src/Graphics/Textures/TextureUploadBuffer.cpp
+index d2295bb..41a2ea6 100644
+--- a/d3d12_framework/src/Graphics/Textures/TextureUploadBuffer.cpp
++++ b/d3d12_framework/src/Graphics/Textures/TextureUploadBuffer.cpp
+@@ -1,9 +1,29 @@
+ #include "Graphics/Textures/TextureUploadBuffer.h"
+ #include "private_inc/D3D12/Textures/D3D12_TextureUploadBuffer.h"
+ 
+-void TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphics, const std::vector<Texture*>& textures, std::vector<TextureUploadBuffer*>& out)
++TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphics, const Texture1D& texture)
+ {
+-  D3D12_TextureUploadBuffer::Create(graphics, textures, out);
++  return D3D12_TextureUploadBuffer::Create(graphics, texture);
++}
++
++TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphics, const Texture2D& texture)
++{
++  return D3D12_TextureUploadBuffer::Create(graphics, texture);
++}
++
++TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphics, const Texture3D& texture)
++{
++  return D3D12_TextureUploadBuffer::Create(graphics, texture);
++}
++
++TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphics, const Texture1DArray& texture)
++{
++  return D3D12_TextureUploadBuffer::Create(graphics, texture);
++}
++
++TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphics, const Texture2DArray& texture)
++{
++  return D3D12_TextureUploadBuffer::Create(graphics, texture);
+ }
+ 
+ TextureUploadBuffer::TextureUploadBuffer()
+diff --git a/tests/constant_buffer/GameMain.cpp b/tests/constant_buffer/GameMain.cpp
+index 591ef62..cd3a425 100644
+--- a/tests/constant_buffer/GameMain.cpp
++++ b/tests/constant_buffer/GameMain.cpp
+@@ -110,21 +110,6 @@ void GameMain::LoadContent()
+   Viewport full_viewport = graphics.GetDefaultViewport();
+   m_scissor_rect = ViewportToScissorRect(graphics.GetDefaultViewport());
+ 
+-  // create the resource heap
+-  UINT constant_buffer_size = 0;
+-  try
+-  {
+-    constant_buffer_size = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMFLOAT4));
+-    m_resource_heap      = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create buffer resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+   // create the descriptor heap
+   try
+   {
+@@ -190,7 +175,7 @@ void GameMain::LoadContent()
+   XMFLOAT4 override_color = XMFLOAT4(0.5f, 0.0f, 1.0f, 1.0f);
+   try
+   {
+-    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size);
++    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(override_color));
+     m_constant_buffer->Upload(&override_color, 0, sizeof(override_color));
+   }
+   catch (const FrameworkException& err)
+@@ -207,7 +192,6 @@ void GameMain::UnloadContent()
+   delete m_constant_buffer;
+   delete m_vert_array;
+   delete m_verts;
+-  delete m_resource_heap;
+   delete m_shader_buffer_heap;
+   delete m_heap_array;
+   delete m_vertex_shader;
+diff --git a/tests/constant_buffer/GameMain.h b/tests/constant_buffer/GameMain.h
+index b8142f5..ffe611f 100644
+--- a/tests/constant_buffer/GameMain.h
++++ b/tests/constant_buffer/GameMain.h
+@@ -8,7 +8,6 @@
+ #include "Graphics/Pipeline.h"
+ #include "Graphics/CommandListBundle.h"
+ #include "Graphics/Buffers/VertexBuffer_PositionColor.h"
+-#include "Graphics/BufferResourceHeap.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+ #include "Graphics/Buffers/ConstantBuffer.h"
+ #include "Graphics/HeapArray.h"
+@@ -103,11 +102,6 @@ class GameMain : public Game
+     VertexBufferArray* m_vert_array;
+ 
+     /// <summary>
+-    /// Resource heap for allocating the buffers from
+-    /// </summary>
+-    BufferResourceHeap* m_resource_heap;
+-
+-    /// <summary>
+     /// Descriptor Heap for allocating the buffers from
+     /// </summary>
+     ShaderResourceDescHeap* m_shader_buffer_heap;
+diff --git a/tests/geometry_shader_viewports/GameMain.cpp b/tests/geometry_shader_viewports/GameMain.cpp
+index 42c849f..d91dd8b 100644
+--- a/tests/geometry_shader_viewports/GameMain.cpp
++++ b/tests/geometry_shader_viewports/GameMain.cpp
+@@ -267,44 +267,6 @@ void GameMain::LoadContent()
+   GraphicsDataFormat format;
+   vector<UINT8> tex_bytes;
+   CreateTexture(width, height, format, tex_bytes);
+-  UINT texture_aligned_size = 0;
+-  try
+-  {
+-    texture_aligned_size = Texture2D::GetAlignedSize(graphics, width, height, format);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get texture aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  UINT constant_buffer_size = 0;
+-  try
+-  {
+-    constant_buffer_size = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX) * NUM_VIEWPORTS);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get constant buffer aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // create the resource heap
+-  try
+-  {
+-    m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size + texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create buffer resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+ 
+   // create the descriptor heap
+   try
+@@ -322,7 +284,7 @@ void GameMain::LoadContent()
+   // create the constant buffer
+   try
+   {
+-    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size);
++    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX) * NUM_VIEWPORTS);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -335,18 +297,7 @@ void GameMain::LoadContent()
+   // create the texture
+   try
+   {
+-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create texture resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-  try
+-  {
+-    m_texture = Texture2D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, width, height, format);
++    m_texture = Texture2D::CreateD3D12(graphics, *m_shader_buffer_heap, width, height, format);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -357,11 +308,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    vector<Texture*> textures;
+-    vector<TextureUploadBuffer*> buffers;
+-    textures.push_back(m_texture);
+-    TextureUploadBuffer::CreateD3D12(graphics, textures, buffers);
+-    m_upload_texture = buffers[0];
++    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -419,14 +366,12 @@ void GameMain::LoadContent()
+ void GameMain::UnloadContent()
+ {
+   delete m_depth_stencil;
+-  delete m_tex_heap;
+   delete m_texture;
+   delete m_upload_texture;
+   for (int i = 0; i < NUM_VIEWPORTS; i++)
+   {
+     delete m_camera[i];
+   }
+-  delete m_resource_heap;
+   delete m_shader_buffer_heap;
+   delete m_heap_array;
+   delete m_constant_buffer;
+@@ -690,12 +635,9 @@ void GameMain::CreateDepthStencil()
+   GraphicsCore& graphics = GetGraphics();
+   Viewport full_viewport = graphics.GetDefaultViewport();
+ 
+-  vector<DepthStencil::Config> configs;
+-  vector<DepthStencil*> depth_stencils;
+-  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
+   try
+   {
+-    DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
++    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -704,5 +646,4 @@ void GameMain::CreateDepthStencil()
+     log_print(out.str().c_str());
+     exit(1);
+   }
+-  m_depth_stencil = depth_stencils[0];
+ }
+diff --git a/tests/geometry_shader_viewports/GameMain.h b/tests/geometry_shader_viewports/GameMain.h
+index ff878c4..6122f64 100644
+--- a/tests/geometry_shader_viewports/GameMain.h
++++ b/tests/geometry_shader_viewports/GameMain.h
+@@ -11,11 +11,9 @@
+ #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
+ #include "Graphics/Buffers/IndexBuffer16.h"
+ #include "Camera.h"
+-#include "Graphics/BufferResourceHeap.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+ #include "Graphics/Buffers/ConstantBuffer.h"
+ #include "Graphics/HeapArray.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/Textures/Texture2D.h"
+ #include "Graphics/Textures/TextureUploadBuffer.h"
+ #include "Graphics/Textures/DepthStencil.h"
+@@ -174,11 +172,6 @@ class GameMain : public Game
+     float m_camera_angle;
+ 
+     /// <summary>
+-    /// Resource heap for allocating the buffers from
+-    /// </summary>
+-    BufferResourceHeap* m_resource_heap;
+-
+-    /// <summary>
+     /// Descriptor Heap for allocating the buffers from
+     /// </summary>
+     ShaderResourceDescHeap* m_shader_buffer_heap;
+@@ -194,11 +187,6 @@ class GameMain : public Game
+     ConstantBuffer* m_constant_buffer;
+ 
+     /// <summary>
+-    /// heap for texture resources
+-    /// </summary>
+-    TextureResourceHeap* m_tex_heap;
+-
+-    /// <summary>
+     /// texture
+     /// </summary>
+     Texture2D* m_texture;
+diff --git a/tests/hull_and_domain/GameMain.cpp b/tests/hull_and_domain/GameMain.cpp
+index f667050..00ef111 100644
+--- a/tests/hull_and_domain/GameMain.cpp
++++ b/tests/hull_and_domain/GameMain.cpp
+@@ -189,32 +189,6 @@ void GameMain::LoadContent()
+     exit(1);
+   }
+ 
+-  UINT constant_buffer_size = 0;
+-  try
+-  {
+-    constant_buffer_size = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX));
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get constant buffer aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // create the resource heap
+-  try
+-  {
+-    m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create buffer resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+   // create the descriptor heap
+   try
+   {
+@@ -231,7 +205,7 @@ void GameMain::LoadContent()
+   // create the constant buffer
+   try
+   {
+-    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size);
++    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX));
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -277,7 +251,6 @@ void GameMain::UnloadContent()
+ {
+   delete m_depth_stencil;
+   delete m_camera;
+-  delete m_resource_heap;
+   delete m_shader_buffer_heap;
+   delete m_heap_array;
+   delete m_constant_buffer;
+@@ -461,12 +434,9 @@ void GameMain::CreateDepthStencil()
+   GraphicsCore& graphics = GetGraphics();
+   Viewport full_viewport = graphics.GetDefaultViewport();
+ 
+-  vector<DepthStencil::Config> configs;
+-  vector<DepthStencil*> depth_stencils;
+-  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
+   try
+   {
+-    DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
++    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -475,5 +445,4 @@ void GameMain::CreateDepthStencil()
+     log_print(out.str().c_str());
+     exit(1);
+   }
+-  m_depth_stencil = depth_stencils[0];
+ }
+diff --git a/tests/hull_and_domain/GameMain.h b/tests/hull_and_domain/GameMain.h
+index 06ed61f..2b2c950 100644
+--- a/tests/hull_and_domain/GameMain.h
++++ b/tests/hull_and_domain/GameMain.h
+@@ -11,7 +11,6 @@
+ #include "Graphics/Buffers/VertexBuffer_Position.h"
+ #include "Graphics/Buffers/IndexBuffer16.h"
+ #include "Camera.h"
+-#include "Graphics/BufferResourceHeap.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+ #include "Graphics/Buffers/ConstantBuffer.h"
+ #include "Graphics/HeapArray.h"
+@@ -152,11 +151,6 @@ class GameMain : public Game
+     float m_camera_angle;
+ 
+     /// <summary>
+-    /// Resource heap for allocating the buffers from
+-    /// </summary>
+-    BufferResourceHeap* m_resource_heap;
+-
+-    /// <summary>
+     /// Descriptor Heap for allocating the buffers from
+     /// </summary>
+     ShaderResourceDescHeap* m_shader_buffer_heap;
+diff --git a/tests/render_target_to_texture/GameMain.cpp b/tests/render_target_to_texture/GameMain.cpp
+index cedaa2e..5389e32 100644
+--- a/tests/render_target_to_texture/GameMain.cpp
++++ b/tests/render_target_to_texture/GameMain.cpp
+@@ -212,45 +212,6 @@ void GameMain::LoadContent()
+     exit(1);
+   }
+ 
+-  // compute the bytes needed for the texture
+-  UINT texture_aligned_size = 0;
+-  try
+-  {
+-    texture_aligned_size = Texture2D::GetAlignedSize(graphics, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get texture aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-  UINT constant_buffer_size = 0;
+-  try
+-  {
+-    constant_buffer_size = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX));
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get constant buffer aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // create the resource heap
+-  try
+-  {
+-    m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size + texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create buffer resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+   // create the descriptor heap
+   try
+   {
+@@ -267,7 +228,7 @@ void GameMain::LoadContent()
+   // create the constant buffer
+   try
+   {
+-    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size);
++    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX));
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -301,10 +262,8 @@ void GameMain::UnloadContent()
+ {
+   delete m_rtv_texture;
+   delete m_depth_stencil;
+-  delete m_tex_heap;
+   delete m_texture;
+   delete m_camera;
+-  delete m_resource_heap;
+   delete m_shader_buffer_heap;
+   delete m_heap_array;
+   delete m_constant_buffer;
+@@ -489,12 +448,9 @@ void GameMain::CreateDepthStencil()
+   GraphicsCore& graphics = GetGraphics();
+   Viewport full_viewport = graphics.GetDefaultViewport();
+ 
+-  vector<DepthStencil::Config> configs;
+-  vector<DepthStencil*> depth_stencils;
+-  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
+   try
+   {
+-    DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
++    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -503,7 +459,6 @@ void GameMain::CreateDepthStencil()
+     log_print(out.str().c_str());
+     exit(1);
+   }
+-  m_depth_stencil = depth_stencils[0];
+ }
+ 
+ void GameMain::CreateRTV()
+@@ -542,9 +497,7 @@ void GameMain::CreateRTV()
+   // create the texture
+   try
+   {
+-    UINT texture_aligned_size = Texture2D::GetAlignedSize(graphics, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
+-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
+-    m_texture = Texture2D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
++    m_texture = Texture2D::CreateD3D12(graphics, *m_shader_buffer_heap, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -555,11 +508,7 @@ void GameMain::CreateRTV()
+   }
+   try
+   {
+-    vector<RenderTarget::Config> configs;
+-    configs.push_back({ RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT });
+-    vector<RenderTarget*> render_targets;
+-    RenderTarget::CreateD3D12(graphics, configs, render_targets);
+-    m_rtv_texture = render_targets[0];
++    m_rtv_texture = RenderTarget::CreateD3D12(graphics, RTV_TEX_WIDTH, RTV_TEX_HEIGHT, (GraphicsDataFormat)RTV_TEX_FORMAT);
+   }
+   catch (const FrameworkException& err)
+   {
+diff --git a/tests/render_target_to_texture/GameMain.h b/tests/render_target_to_texture/GameMain.h
+index c81c107..71ab629 100644
+--- a/tests/render_target_to_texture/GameMain.h
++++ b/tests/render_target_to_texture/GameMain.h
+@@ -11,11 +11,9 @@
+ #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
+ #include "Graphics/Buffers/IndexBuffer16.h"
+ #include "Camera.h"
+-#include "Graphics/BufferResourceHeap.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+ #include "Graphics/Buffers/ConstantBuffer.h"
+ #include "Graphics/HeapArray.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/Textures/Texture2D.h"
+ #include "Graphics/Textures/TextureUploadBuffer.h"
+ #include "Graphics/Textures/DepthStencil.h"
+@@ -172,11 +170,6 @@ class GameMain : public Game
+     float m_camera_angle;
+ 
+     /// <summary>
+-    /// Resource heap for allocating the buffers from
+-    /// </summary>
+-    BufferResourceHeap* m_resource_heap;
+-
+-    /// <summary>
+     /// Descriptor Heap for allocating the buffers from
+     /// </summary>
+     ShaderResourceDescHeap* m_shader_buffer_heap;
+@@ -192,11 +185,6 @@ class GameMain : public Game
+     ConstantBuffer* m_constant_buffer;
+ 
+     /// <summary>
+-    /// heap for texture resources
+-    /// </summary>
+-    TextureResourceHeap* m_tex_heap;
+-
+-    /// <summary>
+     /// texture
+     /// </summary>
+     Texture2D* m_texture;
+diff --git a/tests/single_2d_texture/GameMain.cpp b/tests/single_2d_texture/GameMain.cpp
+index 7e19fb4..17942d1 100644
+--- a/tests/single_2d_texture/GameMain.cpp
++++ b/tests/single_2d_texture/GameMain.cpp
+@@ -150,18 +150,6 @@ void GameMain::LoadContent()
+   }
+ 
+   // create the texture
+-  UINT texture_aligned_size = 0;
+-  try
+-  {
+-    texture_aligned_size = Texture2D::GetAlignedSize(graphics, tex_width, tex_height, R8B8G8A8_UNORM);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get texture aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+   try
+   {
+     m_shader_buffer_heap = ShaderResourceDescHeap::CreateD3D12(graphics, 1);
+@@ -175,18 +163,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create texture resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-  try
+-  {
+-    m_texture = Texture2D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, tex_width, tex_height, R8B8G8A8_UNORM);
++    m_texture = Texture2D::CreateD3D12(graphics, *m_shader_buffer_heap, tex_width, tex_height, R8B8G8A8_UNORM);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -197,11 +174,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    vector<Texture*> textures;
+-    vector<TextureUploadBuffer*> buffers;
+-    textures.push_back(m_texture);
+-    TextureUploadBuffer::CreateD3D12(graphics, textures, buffers);
+-    m_upload_texture = buffers[0];
++    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -259,7 +232,6 @@ void GameMain::UnloadContent()
+   delete m_heap_array;
+   delete m_upload_texture;
+   delete m_texture;
+-  delete m_tex_heap;
+   delete m_shader_buffer_heap;
+   delete m_vert_array;
+   delete m_verts;
+diff --git a/tests/single_2d_texture/GameMain.h b/tests/single_2d_texture/GameMain.h
+index 36c5a49..bdf6775 100644
+--- a/tests/single_2d_texture/GameMain.h
++++ b/tests/single_2d_texture/GameMain.h
+@@ -9,7 +9,6 @@
+ #include "Graphics/CommandListBundle.h"
+ #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/Textures/Texture2D.h"
+ #include "Graphics/Textures/TextureUploadBuffer.h"
+ #include "Graphics/HeapArray.h"
+@@ -117,11 +116,6 @@ class GameMain : public Game
+     ShaderResourceDescHeap* m_shader_buffer_heap;
+ 
+     /// <summary>
+-    /// heap for texture resources
+-    /// </summary>
+-    TextureResourceHeap* m_tex_heap;
+-
+-    /// <summary>
+     /// texture
+     /// </summary>
+     Texture2D* m_texture;
+diff --git a/tests/texture_array_tester/GameMain.cpp b/tests/texture_array_tester/GameMain.cpp
+index ae139e4..12d6115 100644
+--- a/tests/texture_array_tester/GameMain.cpp
++++ b/tests/texture_array_tester/GameMain.cpp
+@@ -197,50 +197,6 @@ void GameMain::LoadContent()
+     exit(1);
+   }
+ 
+-  // calculate the space needed for the textures
+-  UINT texture_aligned_size = 0;
+-  try
+-  {
+-    texture_aligned_size += Texture1DArray::GetAlignedSize(graphics, TEXTURE_WIDTH, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+-    texture_aligned_size += Texture2DArray::GetAlignedSize(graphics, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get texture aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // calculate the space needed for the constant buffers
+-  UINT constant_buffer_size_vs = 0;
+-  UINT constant_buffer_size_ps = 0;
+-  try
+-  {
+-    constant_buffer_size_vs = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX));
+-    constant_buffer_size_ps = ConstantBuffer::GetAlignedSize(graphics, sizeof(m_current_mode));
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get constant buffer aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // create the resource heap
+-  try
+-  {
+-    m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size_vs + constant_buffer_size_ps + texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create buffer resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+   // create the descriptor heap
+   try
+   {
+@@ -257,7 +213,7 @@ void GameMain::LoadContent()
+   // create the constant buffers
+   try
+   {
+-    m_constant_buffer_vs = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size_vs);
++    m_constant_buffer_vs = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX));
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -268,7 +224,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    m_constant_buffer_ps = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size_ps);
++    m_constant_buffer_ps = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(m_current_mode));
+     m_current_mode = TEXTURE_MODE_1D;
+     m_constant_buffer_ps->Upload(&m_current_mode, 0, sizeof(m_current_mode));
+   }
+@@ -283,18 +239,7 @@ void GameMain::LoadContent()
+   // create the textures
+   try
+   {
+-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create texture resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-  try
+-  {
+-    m_texture1d = Texture1DArray::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
++    m_texture1d = Texture1DArray::CreateD3D12(graphics, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -305,7 +250,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    m_texture2d = Texture2DArray::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
++    m_texture2d = Texture2DArray::CreateD3D12(graphics, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -318,11 +263,7 @@ void GameMain::LoadContent()
+   // create the buffer for uploading the textures (will reuse the same buffer, so pick the largest texture)
+   try
+   {
+-    vector<Texture*> textures;
+-    vector<TextureUploadBuffer*> buffers;
+-    textures.push_back(m_texture2d);
+-    TextureUploadBuffer::CreateD3D12(graphics, textures, buffers);
+-    m_upload_texture = buffers[0];
++    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture2d);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -395,12 +336,10 @@ void GameMain::LoadContent()
+ void GameMain::UnloadContent()
+ {
+   delete m_depth_stencil;
+-  delete m_tex_heap;
+   delete m_texture1d;
+   delete m_texture2d;
+   delete m_upload_texture;
+   delete m_camera;
+-  delete m_resource_heap;
+   delete m_shader_buffer_heap;
+   delete m_heap_array;
+   delete m_constant_buffer_vs;
+@@ -651,12 +590,9 @@ void GameMain::CreateDepthStencil()
+   GraphicsCore& graphics = GetGraphics();
+   Viewport full_viewport = graphics.GetDefaultViewport();
+ 
+-  vector<DepthStencil::Config> configs;
+-  vector<DepthStencil*> depth_stencils;
+-  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
+   try
+   {
+-    DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
++    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -665,5 +601,4 @@ void GameMain::CreateDepthStencil()
+     log_print(out.str().c_str());
+     exit(1);
+   }
+-  m_depth_stencil = depth_stencils[0];
+ }
+diff --git a/tests/texture_array_tester/GameMain.h b/tests/texture_array_tester/GameMain.h
+index aa807c8..a547f6b 100644
+--- a/tests/texture_array_tester/GameMain.h
++++ b/tests/texture_array_tester/GameMain.h
+@@ -11,11 +11,9 @@
+ #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
+ #include "Graphics/Buffers/IndexBuffer16.h"
+ #include "Camera.h"
+-#include "Graphics/BufferResourceHeap.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+ #include "Graphics/Buffers/ConstantBuffer.h"
+ #include "Graphics/HeapArray.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/Textures/Texture1DArray.h"
+ #include "Graphics/Textures/Texture2DArray.h"
+ #include "Graphics/Textures/TextureUploadBuffer.h"
+@@ -188,11 +186,6 @@ class GameMain : public Game
+     float m_camera_angle;
+ 
+     /// <summary>
+-    /// Resource heap for allocating the buffers from
+-    /// </summary>
+-    BufferResourceHeap* m_resource_heap;
+-
+-    /// <summary>
+     /// Descriptor Heap for allocating the buffers from
+     /// </summary>
+     ShaderResourceDescHeap* m_shader_buffer_heap;
+@@ -213,11 +206,6 @@ class GameMain : public Game
+     ConstantBuffer* m_constant_buffer_ps;
+ 
+     /// <summary>
+-    /// heap for texture resources
+-    /// </summary>
+-    TextureResourceHeap* m_tex_heap;
+-
+-    /// <summary>
+     /// texture
+     /// </summary>
+     Texture1DArray* m_texture1d;
+diff --git a/tests/texture_multiple_uploads/GameMain.cpp b/tests/texture_multiple_uploads/GameMain.cpp
+index eba6973..6c6553a 100644
+--- a/tests/texture_multiple_uploads/GameMain.cpp
++++ b/tests/texture_multiple_uploads/GameMain.cpp
+@@ -197,50 +197,6 @@ void GameMain::LoadContent()
+     exit(1);
+   }
+ 
+-  // calculate the space needed for the textures
+-  UINT texture_aligned_size = 0;
+-  try
+-  {
+-    texture_aligned_size += Texture1DArray::GetAlignedSize(graphics, TEXTURE_WIDTH, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+-    texture_aligned_size += Texture2DArray::GetAlignedSize(graphics, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get texture aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // calculate the space needed for the constant buffers
+-  UINT constant_buffer_size_vs = 0;
+-  UINT constant_buffer_size_ps = 0;
+-  try
+-  {
+-    constant_buffer_size_vs = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX));
+-    constant_buffer_size_ps = ConstantBuffer::GetAlignedSize(graphics, sizeof(m_current_mode));
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get constant buffer aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // create the resource heap
+-  try
+-  {
+-    m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size_vs + constant_buffer_size_ps + texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create buffer resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+   // create the descriptor heap
+   try
+   {
+@@ -257,7 +213,7 @@ void GameMain::LoadContent()
+   // create the constant buffers
+   try
+   {
+-    m_constant_buffer_vs = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size_vs);
++    m_constant_buffer_vs = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX));
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -268,7 +224,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    m_constant_buffer_ps = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size_ps);
++    m_constant_buffer_ps = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(m_current_mode));
+     m_current_mode = TEXTURE_MODE_1D;
+     m_constant_buffer_ps->Upload(&m_current_mode, 0, sizeof(m_current_mode));
+   }
+@@ -283,18 +239,7 @@ void GameMain::LoadContent()
+   // create the textures
+   try
+   {
+-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create texture resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-  try
+-  {
+-    m_texture1d = Texture1DArray::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
++    m_texture1d = Texture1DArray::CreateD3D12(graphics, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -305,7 +250,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    m_texture2d = Texture2DArray::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
++    m_texture2d = Texture2DArray::CreateD3D12(graphics, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_LENGTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -318,18 +263,15 @@ void GameMain::LoadContent()
+   // create the buffers for uploading the textures
+   try
+   {
+-    vector<Texture*> textures;
+-    textures.reserve(TEXTURE_MODE_MAX * TEXTURE_LENGTH);
+     m_upload_texture.reserve(TEXTURE_MODE_MAX * TEXTURE_LENGTH);
+     for (UINT i = 0; i < TEXTURE_LENGTH; i++)
+     {
+-      textures.push_back(m_texture1d);
++      m_upload_texture.push_back(TextureUploadBuffer::CreateD3D12(graphics, *m_texture1d));
+     }
+     for (UINT i = 0; i < TEXTURE_LENGTH; i++)
+     {
+-      textures.push_back(m_texture2d);
++      m_upload_texture.push_back(TextureUploadBuffer::CreateD3D12(graphics, *m_texture2d));
+     }
+-    TextureUploadBuffer::CreateD3D12(graphics, textures, m_upload_texture);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -406,7 +348,6 @@ void GameMain::LoadContent()
+ void GameMain::UnloadContent()
+ {
+   delete m_depth_stencil;
+-  delete m_tex_heap;
+   delete m_texture1d;
+   delete m_texture2d;
+   vector<TextureUploadBuffer*>::const_iterator upload_it = m_upload_texture.begin();
+@@ -416,7 +357,6 @@ void GameMain::UnloadContent()
+     ++upload_it;
+   }
+   delete m_camera;
+-  delete m_resource_heap;
+   delete m_shader_buffer_heap;
+   delete m_heap_array;
+   delete m_constant_buffer_vs;
+@@ -667,12 +607,9 @@ void GameMain::CreateDepthStencil()
+   GraphicsCore& graphics = GetGraphics();
+   Viewport full_viewport = graphics.GetDefaultViewport();
+ 
+-  vector<DepthStencil::Config> configs;
+-  vector<DepthStencil*> depth_stencils;
+-  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
+   try
+   {
+-    DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
++    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -681,5 +618,4 @@ void GameMain::CreateDepthStencil()
+     log_print(out.str().c_str());
+     exit(1);
+   }
+-  m_depth_stencil = depth_stencils[0];
+ }
+diff --git a/tests/texture_multiple_uploads/GameMain.h b/tests/texture_multiple_uploads/GameMain.h
+index f27b975..cc73cb4 100644
+--- a/tests/texture_multiple_uploads/GameMain.h
++++ b/tests/texture_multiple_uploads/GameMain.h
+@@ -11,11 +11,9 @@
+ #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
+ #include "Graphics/Buffers/IndexBuffer16.h"
+ #include "Camera.h"
+-#include "Graphics/BufferResourceHeap.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+ #include "Graphics/Buffers/ConstantBuffer.h"
+ #include "Graphics/HeapArray.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/Textures/Texture1DArray.h"
+ #include "Graphics/Textures/Texture2DArray.h"
+ #include "Graphics/Textures/TextureUploadBuffer.h"
+@@ -188,11 +186,6 @@ class GameMain : public Game
+     float m_camera_angle;
+ 
+     /// <summary>
+-    /// Resource heap for allocating the buffers from
+-    /// </summary>
+-    BufferResourceHeap* m_resource_heap;
+-
+-    /// <summary>
+     /// Descriptor Heap for allocating the buffers from
+     /// </summary>
+     ShaderResourceDescHeap* m_shader_buffer_heap;
+@@ -213,11 +206,6 @@ class GameMain : public Game
+     ConstantBuffer* m_constant_buffer_ps;
+ 
+     /// <summary>
+-    /// heap for texture resources
+-    /// </summary>
+-    TextureResourceHeap* m_tex_heap;
+-
+-    /// <summary>
+     /// texture
+     /// </summary>
+     Texture1DArray* m_texture1d;
+diff --git a/tests/texture_type_tester/GameMain.cpp b/tests/texture_type_tester/GameMain.cpp
+index fce5906..7c2c21b 100644
+--- a/tests/texture_type_tester/GameMain.cpp
++++ b/tests/texture_type_tester/GameMain.cpp
+@@ -175,51 +175,6 @@ void GameMain::LoadContent()
+     exit(1);
+   }
+ 
+-  // calculate the space needed for the textures
+-  UINT texture_aligned_size = 0;
+-  try
+-  {
+-    texture_aligned_size += Texture1D::GetAlignedSize(graphics, TEXTURE_WIDTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+-    texture_aligned_size += Texture2D::GetAlignedSize(graphics, TEXTURE_WIDTH, TEXTURE_HEIGHT, (GraphicsDataFormat)TEXTURE_FORMAT);
+-    texture_aligned_size += Texture3D::GetAlignedSize(graphics, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_DEPTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get texture aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // calculate the space needed for the constant buffers
+-  UINT constant_buffer_size_vs = 0;
+-  UINT constant_buffer_size_ps = 0;
+-  try
+-  {
+-    constant_buffer_size_vs = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX));
+-    constant_buffer_size_ps = ConstantBuffer::GetAlignedSize(graphics, sizeof(m_current_mode));
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get constant buffer aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // create the resource heap
+-  try
+-  {
+-    m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size_vs + constant_buffer_size_ps + texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create buffer resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+   // create the descriptor heap
+   try
+   {
+@@ -236,7 +191,7 @@ void GameMain::LoadContent()
+   // create the constant buffers
+   try
+   {
+-    m_constant_buffer_vs = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size_vs);
++    m_constant_buffer_vs = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX));
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -247,7 +202,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    m_constant_buffer_ps = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size_ps);
++    m_constant_buffer_ps = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(m_current_mode));
+     m_current_mode = TEXTURE_MODE_1D;
+     m_constant_buffer_ps->Upload(&m_current_mode, 0, sizeof(m_current_mode));
+   }
+@@ -262,18 +217,7 @@ void GameMain::LoadContent()
+   // create the textures
+   try
+   {
+-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create texture resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-  try
+-  {
+-    m_texture1d = Texture1D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, TEXTURE_WIDTH, (GraphicsDataFormat)TEXTURE_FORMAT);
++    m_texture1d = Texture1D::CreateD3D12(graphics, *m_shader_buffer_heap, TEXTURE_WIDTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -284,7 +228,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    m_texture2d = Texture2D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, (GraphicsDataFormat)TEXTURE_FORMAT);
++    m_texture2d = Texture2D::CreateD3D12(graphics, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, (GraphicsDataFormat)TEXTURE_FORMAT);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -295,7 +239,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    m_texture3d = Texture3D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_DEPTH, (GraphicsDataFormat)TEXTURE_FORMAT);
++    m_texture3d = Texture3D::CreateD3D12(graphics, *m_shader_buffer_heap, TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_DEPTH, (GraphicsDataFormat)TEXTURE_FORMAT);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -308,11 +252,7 @@ void GameMain::LoadContent()
+   // create the buffer for uploading the textures (will reuse the same buffer, so pick the largest texture)
+   try
+   {
+-    vector<Texture*> textures;
+-    vector<TextureUploadBuffer*> buffers;
+-    textures.push_back(m_texture3d);
+-    TextureUploadBuffer::CreateD3D12(graphics, textures, buffers);
+-    m_upload_texture = buffers[0];
++    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture3d);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -394,13 +334,11 @@ void GameMain::LoadContent()
+ void GameMain::UnloadContent()
+ {
+   delete m_depth_stencil;
+-  delete m_tex_heap;
+   delete m_texture1d;
+   delete m_texture2d;
+   delete m_texture3d;
+   delete m_upload_texture;
+   delete m_camera;
+-  delete m_resource_heap;
+   delete m_shader_buffer_heap;
+   delete m_heap_array;
+   delete m_constant_buffer_vs;
+@@ -703,12 +641,9 @@ void GameMain::CreateDepthStencil()
+   GraphicsCore& graphics = GetGraphics();
+   Viewport full_viewport = graphics.GetDefaultViewport();
+ 
+-  vector<DepthStencil::Config> configs;
+-  vector<DepthStencil*> depth_stencils;
+-  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
+   try
+   {
+-    DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
++    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -717,5 +652,4 @@ void GameMain::CreateDepthStencil()
+     log_print(out.str().c_str());
+     exit(1);
+   }
+-  m_depth_stencil = depth_stencils[0];
+ }
+diff --git a/tests/texture_type_tester/GameMain.h b/tests/texture_type_tester/GameMain.h
+index b80ce1b..d9fd9b5 100644
+--- a/tests/texture_type_tester/GameMain.h
++++ b/tests/texture_type_tester/GameMain.h
+@@ -11,11 +11,9 @@
+ #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
+ #include "Graphics/Buffers/IndexBuffer16.h"
+ #include "Camera.h"
+-#include "Graphics/BufferResourceHeap.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+ #include "Graphics/Buffers/ConstantBuffer.h"
+ #include "Graphics/HeapArray.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/Textures/Texture1D.h"
+ #include "Graphics/Textures/Texture2D.h"
+ #include "Graphics/Textures/Texture3D.h"
+@@ -187,11 +185,6 @@ class GameMain : public Game
+     float m_camera_angle;
+ 
+     /// <summary>
+-    /// Resource heap for allocating the buffers from
+-    /// </summary>
+-    BufferResourceHeap* m_resource_heap;
+-
+-    /// <summary>
+     /// Descriptor Heap for allocating the buffers from
+     /// </summary>
+     ShaderResourceDescHeap* m_shader_buffer_heap;
+@@ -212,11 +205,6 @@ class GameMain : public Game
+     ConstantBuffer* m_constant_buffer_ps;
+ 
+     /// <summary>
+-    /// heap for texture resources
+-    /// </summary>
+-    TextureResourceHeap* m_tex_heap;
+-
+-    /// <summary>
+     /// texture
+     /// </summary>
+     Texture1D* m_texture1d;
+diff --git a/tests/two_textured_instance_cubes/GameMain.cpp b/tests/two_textured_instance_cubes/GameMain.cpp
+index e56e1e8..e109dde 100644
+--- a/tests/two_textured_instance_cubes/GameMain.cpp
++++ b/tests/two_textured_instance_cubes/GameMain.cpp
+@@ -239,44 +239,6 @@ void GameMain::LoadContent()
+   GraphicsDataFormat format;
+   vector<UINT8> tex_bytes;
+   CreateTexture(width, height, format, tex_bytes);
+-  UINT texture_aligned_size = 0;
+-  try
+-  {
+-    texture_aligned_size = Texture2D::GetAlignedSize(graphics, width, height, format);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get texture aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  UINT constant_buffer_size = 0;
+-  try
+-  {
+-    constant_buffer_size = ConstantBuffer::GetAlignedSize(graphics, sizeof(XMMATRIX));
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to get constant buffer aligned size:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-
+-  // create the resource heap
+-  try
+-  {
+-    m_resource_heap = BufferResourceHeap::CreateD3D12(graphics, constant_buffer_size + texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create buffer resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+ 
+   // create the descriptor heap
+   try
+@@ -294,7 +256,7 @@ void GameMain::LoadContent()
+   // create the constant buffer
+   try
+   {
+-    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_resource_heap, *m_shader_buffer_heap, constant_buffer_size);
++    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX));
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -307,18 +269,7 @@ void GameMain::LoadContent()
+   // create the texture
+   try
+   {
+-    m_tex_heap = TextureResourceHeap::CreateD3D12(graphics, texture_aligned_size);
+-  }
+-  catch (const FrameworkException& err)
+-  {
+-    ostringstream out;
+-    out << "Unable to create texture resource heap:\n" << err.what();
+-    log_print(out.str().c_str());
+-    exit(1);
+-  }
+-  try
+-  {
+-    m_texture = Texture2D::CreateD3D12(graphics, *m_tex_heap, *m_shader_buffer_heap, width, height, format);
++    m_texture = Texture2D::CreateD3D12(graphics, *m_shader_buffer_heap, width, height, format);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -329,11 +280,7 @@ void GameMain::LoadContent()
+   }
+   try
+   {
+-    vector<Texture*> textures;
+-    vector<TextureUploadBuffer*> buffers;
+-    textures.push_back(m_texture);
+-    TextureUploadBuffer::CreateD3D12(graphics, textures, buffers);
+-    m_upload_texture = buffers[0];
++    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -391,11 +338,9 @@ void GameMain::LoadContent()
+ void GameMain::UnloadContent()
+ {
+   delete m_depth_stencil;
+-  delete m_tex_heap;
+   delete m_texture;
+   delete m_upload_texture;
+   delete m_camera;
+-  delete m_resource_heap;
+   delete m_shader_buffer_heap;
+   delete m_heap_array;
+   delete m_constant_buffer;
+@@ -632,13 +577,9 @@ void GameMain::CreateDepthStencil()
+ {
+   GraphicsCore& graphics = GetGraphics();
+   Viewport full_viewport = graphics.GetDefaultViewport();
+-
+-  vector<DepthStencil::Config> configs;
+-  vector<DepthStencil*> depth_stencils;
+-  configs.push_back({ (UINT)full_viewport.width, (UINT)full_viewport.height, 1 });
+   try
+   {
+-    DepthStencil::CreateD3D12(graphics, configs, depth_stencils);
++    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
+   }
+   catch (const FrameworkException& err)
+   {
+@@ -647,5 +588,4 @@ void GameMain::CreateDepthStencil()
+     log_print(out.str().c_str());
+     exit(1);
+   }
+-  m_depth_stencil = depth_stencils[0];
+ }
+diff --git a/tests/two_textured_instance_cubes/GameMain.h b/tests/two_textured_instance_cubes/GameMain.h
+index 33c9907..730f9a9 100644
+--- a/tests/two_textured_instance_cubes/GameMain.h
++++ b/tests/two_textured_instance_cubes/GameMain.h
+@@ -11,11 +11,9 @@
+ #include "Graphics/Buffers/VertexBuffer_PositionTexture.h"
+ #include "Graphics/Buffers/IndexBuffer16.h"
+ #include "Camera.h"
+-#include "Graphics/BufferResourceHeap.h"
+ #include "Graphics/ShaderResourceDescHeap.h"
+ #include "Graphics/Buffers/ConstantBuffer.h"
+ #include "Graphics/HeapArray.h"
+-#include "Graphics/Textures/TextureResourceHeap.h"
+ #include "Graphics/Textures/Texture2D.h"
+ #include "Graphics/Textures/TextureUploadBuffer.h"
+ #include "Graphics/Textures/DepthStencil.h"
+@@ -167,11 +165,6 @@ class GameMain : public Game
+     float m_camera_angle;
+ 
+     /// <summary>
+-    /// Resource heap for allocating the buffers from
+-    /// </summary>
+-    BufferResourceHeap* m_resource_heap;
+-
+-    /// <summary>
+     /// Descriptor Heap for allocating the buffers from
+     /// </summary>
+     ShaderResourceDescHeap* m_shader_buffer_heap;
+@@ -187,11 +180,6 @@ class GameMain : public Game
+     ConstantBuffer* m_constant_buffer;
+ 
+     /// <summary>
+-    /// heap for texture resources
+-    /// </summary>
+-    TextureResourceHeap* m_tex_heap;
+-
+-    /// <summary>
+     /// texture
+     /// </summary>
+     Texture2D* m_texture;

@@ -3,7 +3,6 @@
 
 class GraphicsCore;
 class CommandList;
-#include <vector>
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/GraphicsDataFormat.h"
 #include "Graphics/CommandList.h"
@@ -16,42 +15,30 @@ class RenderTarget
 {
   public:
     /// <summary>
-    /// Struct describing the configuration of a render target when creating them
-    /// </summary>
-    struct Config
-    {
-      /// <summary>
-      /// width in pixels
-      /// </summary>
-      UINT width;
-
-      /// <summary>
-      /// height in pixels
-      /// </summary>
-      UINT height;
-
-      /// <summary>
-      /// render target format
-      /// </summary>
-      GraphicsDataFormat format;
-    };
-
-    /// <summary>
-    /// Creates render targets for the specified configurations
+    /// Creates a D3D12 render target
     /// <summary>
     /// <param name="graphics">
     /// core graphics interface
     /// </param>
-    /// <param name="configs">
-    /// Configurations for render targets to create
+    /// <param name="width">
+    /// width in pixels
+    /// </param>
+    /// <param name="height">
+    /// height in pixels
+    /// </param>
+    /// <param name="format">
+    /// render target format
     /// </param>
     /// <param name="out">
     /// Where to put the created render targets.  They will be added to the end of the array.
     /// </param>
+    /// <returns>
+    /// D3D12 render target
+    /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static void CreateD3D12(const GraphicsCore& graphics, const std::vector<Config>& configs, std::vector<RenderTarget*>& out);
+    static RenderTarget* CreateD3D12(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format);
 
     virtual ~RenderTarget();
 
