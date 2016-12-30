@@ -61,7 +61,6 @@ RenderTarget* D3D12_RenderTarget::CreateFromTexture(const GraphicsCore& graphics
   const D3D12_Texture2DRenderTarget& tex           = (const D3D12_Texture2DRenderTarget&)texture;
   ID3D12Resource*                    buffer        = tex.GetBuffer();
   D3D12_RESOURCE_DESC                resource_desc = buffer->GetDesc();
-  buffer->AddRef();
 
   D3D12_RenderTargetDescHeap* desc_heap = D3D12_RenderTargetDescHeap::Create(device, 1);
   D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle;
