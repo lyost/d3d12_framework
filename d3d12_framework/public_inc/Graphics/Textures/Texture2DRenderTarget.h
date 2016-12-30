@@ -6,7 +6,6 @@ class ShaderResourceDescHeap;
 
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/GraphicsDataFormat.h"
-#include "Graphics/Textures/Texture.h"
 
 /// <summary>
 /// Base class for 2D textures that can also be render targets
@@ -16,7 +15,7 @@ class ShaderResourceDescHeap;
 /// See the render_target_to_texture_same_resource test program's GameMain::DrawRTV for an example of this.
 /// </remarks>
 /// </summary>
-class Texture2DRenderTarget : public Texture
+class Texture2DRenderTarget
 {
   public:
     /// <summary>
@@ -46,14 +45,6 @@ class Texture2DRenderTarget : public Texture
     static Texture2DRenderTarget* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, GraphicsDataFormat format);
 
     virtual ~Texture2DRenderTarget();
-
-    /// <summary>
-    /// Retrieves which type of texture the instance is
-    /// </summary>
-    /// <returns>
-    /// id of the texture type
-    /// </returns>
-    TextureType GetType() const;
     
   protected:
     Texture2DRenderTarget();

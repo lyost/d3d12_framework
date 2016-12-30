@@ -13,8 +13,3 @@ Texture1DArray::Texture1DArray()
 Texture1DArray::~Texture1DArray()
 {
 }
-
-Texture::TextureType Texture1DArray::GetType() const
-{
-  return TEXTURE_1D_ARRAY;
-}

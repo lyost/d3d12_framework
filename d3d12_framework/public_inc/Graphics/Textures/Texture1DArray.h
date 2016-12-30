@@ -6,9 +6,8 @@ class ShaderResourceDescHeap;
 
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/GraphicsDataFormat.h"
-#include "Graphics/Textures/Texture.h"
 
-class Texture1DArray : public Texture
+class Texture1DArray
 {
   public:
     /// <summary>
@@ -38,14 +37,6 @@ class Texture1DArray : public Texture
     static Texture1DArray* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format);
 
     virtual ~Texture1DArray();
-
-    /// <summary>
-    /// Retrieves which type of texture the instance is
-    /// </summary>
-    /// <returns>
-    /// id of the texture type
-    /// </returns>
-    TextureType GetType() const;
     
   protected:
     Texture1DArray();

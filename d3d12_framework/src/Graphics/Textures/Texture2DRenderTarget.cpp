@@ -13,8 +13,3 @@ Texture2DRenderTarget::Texture2DRenderTarget()
 Texture2DRenderTarget::~Texture2DRenderTarget()
 {
 }
-
-Texture::TextureType Texture2DRenderTarget::GetType() const
-{
-  return TEXTURE_2D_RENDER_TARGET;
-}

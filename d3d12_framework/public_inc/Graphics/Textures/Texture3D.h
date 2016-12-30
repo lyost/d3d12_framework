@@ -6,9 +6,8 @@ class ShaderResourceDescHeap;
 
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/GraphicsDataFormat.h"
-#include "Graphics/Textures/Texture.h"
 
-class Texture3D : public Texture
+class Texture3D
 {
   public:
     /// <summary>
@@ -41,14 +40,6 @@ class Texture3D : public Texture
     static Texture3D* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format);
 
     virtual ~Texture3D();
-
-    /// <summary>
-    /// Retrieves which type of texture the instance is
-    /// </summary>
-    /// <returns>
-    /// id of the texture type
-    /// </returns>
-    TextureType GetType() const;
     
   protected:
     Texture3D();

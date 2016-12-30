@@ -13,8 +13,3 @@ Texture2D::Texture2D()
 Texture2D::~Texture2D()
 {
 }
-
-Texture::TextureType Texture2D::GetType() const
-{
-  return TEXTURE_2D;
-}
