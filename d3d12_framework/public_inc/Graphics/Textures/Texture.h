@@ -13,7 +13,8 @@ class Texture
       TEXTURE_2D,
       TEXTURE_3D,
       TEXTURE_1D_ARRAY,
-      TEXTURE_2D_ARRAY
+      TEXTURE_2D_ARRAY,
+      TEXTURE_2D_RENDER_TARGET
     };
 
     virtual ~Texture();

@@ -3,10 +3,11 @@
 
 class GraphicsCore;
 class CommandList;
+class Texture2DRenderTarget;
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/GraphicsDataFormat.h"
 #include "Graphics/CommandList.h"
-#include "Graphics/Textures/Texture2D.h"
+#include "Graphics/Textures/Texture2DRenderTarget.h"
 
 /// <summary>
 /// Base class for a render target
@@ -29,9 +30,6 @@ class RenderTarget
     /// <param name="format">
     /// render target format
     /// </param>
-    /// <param name="out">
-    /// Where to put the created render targets.  They will be added to the end of the array.
-    /// </param>
     /// <returns>
     /// D3D12 render target
     /// </returns>
@@ -39,6 +37,23 @@ class RenderTarget
     /// Thrown when an error is encountered
     /// </exception>
     static RenderTarget* CreateD3D12(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format);
+
+    /// <summary>
+    /// Creates a D3D12 render target using the same resource as the specified texture
+    /// <summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="texture">
+    /// texture create a render target view for
+    /// </param>
+    /// <returns>
+    /// D3D12 render target
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    static RenderTarget* CreateD3D12FromTexture(const GraphicsCore& graphics, const Texture2DRenderTarget& texture);
 
     virtual ~RenderTarget();
 

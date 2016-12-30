@@ -78,6 +78,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "texture_multiple_uploads", 
 		{B897D6E0-84C5-47DA-8597-A1F5834DE784} = {B897D6E0-84C5-47DA-8597-A1F5834DE784}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "render_target_to_texture_same_resource", "tests\render_target_to_texture_same_resource\render_target_to_texture_same_resource.vcxproj", "{C662935F-A7A8-46FB-BA81-65FEEF11AFB1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B0C22B79-D33D-443A-AE91-BB8DBF16ADCB} = {B0C22B79-D33D-443A-AE91-BB8DBF16ADCB}
+		{B897D6E0-84C5-47DA-8597-A1F5834DE784} = {B897D6E0-84C5-47DA-8597-A1F5834DE784}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -190,6 +196,14 @@ Global
 		{FD990007-E1AA-4A8C-93AA-94B6AF112775}.Release|x64.Build.0 = Release|x64
 		{FD990007-E1AA-4A8C-93AA-94B6AF112775}.Release|x86.ActiveCfg = Release|Win32
 		{FD990007-E1AA-4A8C-93AA-94B6AF112775}.Release|x86.Build.0 = Release|Win32
+		{C662935F-A7A8-46FB-BA81-65FEEF11AFB1}.Debug|x64.ActiveCfg = Debug|x64
+		{C662935F-A7A8-46FB-BA81-65FEEF11AFB1}.Debug|x64.Build.0 = Debug|x64
+		{C662935F-A7A8-46FB-BA81-65FEEF11AFB1}.Debug|x86.ActiveCfg = Debug|Win32
+		{C662935F-A7A8-46FB-BA81-65FEEF11AFB1}.Debug|x86.Build.0 = Debug|Win32
+		{C662935F-A7A8-46FB-BA81-65FEEF11AFB1}.Release|x64.ActiveCfg = Release|x64
+		{C662935F-A7A8-46FB-BA81-65FEEF11AFB1}.Release|x64.Build.0 = Release|x64
+		{C662935F-A7A8-46FB-BA81-65FEEF11AFB1}.Release|x86.ActiveCfg = Release|Win32
+		{C662935F-A7A8-46FB-BA81-65FEEF11AFB1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -206,5 +220,6 @@ Global
 		{54A8F3C7-59CA-4165-8D3E-C6A77993C28F} = {6C6E8920-A9EA-4F9C-B962-C277C60CD1E1}
 		{31B41F4F-3458-4C3E-8187-525120152BBF} = {6C6E8920-A9EA-4F9C-B962-C277C60CD1E1}
 		{FD990007-E1AA-4A8C-93AA-94B6AF112775} = {6C6E8920-A9EA-4F9C-B962-C277C60CD1E1}
+		{C662935F-A7A8-46FB-BA81-65FEEF11AFB1} = {6C6E8920-A9EA-4F9C-B962-C277C60CD1E1}
 	EndGlobalSection
 EndGlobal

@@ -26,9 +26,6 @@ class D3D12_RenderTarget : public RenderTarget
     /// <param name="format">
     /// render target format
     /// </param>
-    /// <param name="out">
-    /// Where to put the created render targets.  They will be added to the end of the array.
-    /// </param>
     /// <returns>
     /// D3D12 render target
     /// </returns>
@@ -36,6 +33,23 @@ class D3D12_RenderTarget : public RenderTarget
     /// Thrown when an error is encountered
     /// </exception>
     static RenderTarget* Create(const GraphicsCore& graphics, UINT width, UINT height, GraphicsDataFormat format);
+
+    /// <summary>
+    /// Creates a D3D12 render target using the same resource as the specified texture
+    /// <summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="texture">
+    /// texture create a render target view for
+    /// </param>
+    /// <returns>
+    /// D3D12 render target
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    static RenderTarget* CreateFromTexture(const GraphicsCore& graphics, const Texture2DRenderTarget& texture);
 
     D3D12_RenderTarget(ID3D12Resource* target, D3D12_CPU_DESCRIPTOR_HANDLE handle);
     ~D3D12_RenderTarget();

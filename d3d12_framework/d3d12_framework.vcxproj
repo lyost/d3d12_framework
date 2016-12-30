@@ -165,6 +165,7 @@
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture1D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture1DArray.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2DArray.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_Texture2DRenderTarget.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture3D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_TextureUploadBuffer.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="src\Graphics\Textures\Texture1D.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture1DArray.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture2DArray.cpp" />
+    <ClCompile Include="src\Graphics\Textures\Texture2DRenderTarget.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture3D.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture2D.cpp" />
     <ClCompile Include="src\Graphics\Textures\TextureUploadBuffer.cpp" />
@@ -241,6 +243,7 @@
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture1D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture1DArray.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2DArray.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2DRenderTarget.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture3D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureUploadBuffer.h" />
@@ -285,6 +288,7 @@
     <ClInclude Include="public_inc\Graphics\Textures\Texture1D.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture1DArray.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture2DArray.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\Texture2DRenderTarget.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture3D.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture2D.h" />
     <ClInclude Include="public_inc\Graphics\Textures\TextureUploadBuffer.h" />

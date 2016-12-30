@@ -3,6 +3,7 @@
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
+#include "private_inc/D3D12/Textures/D3D12_Texture2DRenderTarget.h"
 #include "FrameworkException.h"
 #include "private_inc/BuildSettings.h"
 using namespace std;
@@ -44,6 +45,31 @@ RenderTarget* D3D12_RenderTarget::Create(const GraphicsCore& graphics, UINT widt
 
   D3D12_RENDER_TARGET_VIEW_DESC view_desc;
   view_desc.Format               = (DXGI_FORMAT)format;
+  view_desc.ViewDimension        = D3D12_RTV_DIMENSION_TEXTURE2D;
+  view_desc.Texture2D.MipSlice   = 0;
+  view_desc.Texture2D.PlaneSlice = 0;
+  device->CreateRenderTargetView(buffer, &view_desc, cpu_handle);
+
+  return new D3D12_RenderTarget(buffer, cpu_handle, desc_heap);
+}
+
+RenderTarget* D3D12_RenderTarget::CreateFromTexture(const GraphicsCore& graphics, const Texture2DRenderTarget& texture)
+{
+  const D3D12_Core& core   = (const D3D12_Core&)graphics;
+  ID3D12Device*     device = core.GetDevice();
+
+  const D3D12_Texture2DRenderTarget& tex           = (const D3D12_Texture2DRenderTarget&)texture;
+  ID3D12Resource*                    buffer        = tex.GetBuffer();
+  D3D12_RESOURCE_DESC                resource_desc = buffer->GetDesc();
+  buffer->AddRef();
+
+  D3D12_RenderTargetDescHeap* desc_heap = D3D12_RenderTargetDescHeap::Create(device, 1);
+  D3D12_CPU_DESCRIPTOR_HANDLE cpu_handle;
+  D3D12_GPU_DESCRIPTOR_HANDLE gpu_handle;
+  desc_heap->GetNextDescriptor(cpu_handle, gpu_handle);
+
+  D3D12_RENDER_TARGET_VIEW_DESC view_desc;
+  view_desc.Format               = resource_desc.Format;
   view_desc.ViewDimension        = D3D12_RTV_DIMENSION_TEXTURE2D;
   view_desc.Texture2D.MipSlice   = 0;
   view_desc.Texture2D.PlaneSlice = 0;

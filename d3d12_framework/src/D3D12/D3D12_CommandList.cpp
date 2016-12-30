@@ -11,6 +11,7 @@
 #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture1D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
+#include "private_inc/D3D12/Textures/D3D12_Texture2DRenderTarget.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture3D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture1DArray.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2DArray.h"
@@ -118,6 +119,12 @@ void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Text
 void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2D& texture)
 {
   const D3D12_Texture2D& tex = (const D3D12_Texture2D&)texture;
+  m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
+}
+
+void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2DRenderTarget& texture)
+{
+  const D3D12_Texture2DRenderTarget& tex = (const D3D12_Texture2DRenderTarget&)texture;
   m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
 }
 
@@ -243,6 +250,30 @@ void D3D12_CommandList::RenderTargetToPresent(const RenderTarget& target)
   barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
   barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
   barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_PRESENT;
+  m_command_list->ResourceBarrier(1, &barrier);
+}
+
+void D3D12_CommandList::TextureToRenderTarget(const Texture2DRenderTarget& texture)
+{
+  D3D12_RESOURCE_BARRIER barrier;
+  barrier.Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  barrier.Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+  barrier.Transition.pResource   = ((const D3D12_Texture2DRenderTarget&)texture).GetBuffer();
+  barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
+  barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_RENDER_TARGET;
+  m_command_list->ResourceBarrier(1, &barrier);
+}
+
+void D3D12_CommandList::RenderTargetToTexture(const RenderTarget& target)
+{
+  D3D12_RESOURCE_BARRIER barrier;
+  barrier.Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  barrier.Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+  barrier.Transition.pResource   = ((const D3D12_RenderTarget&)target).GetResource();
+  barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+  barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_GENERIC_READ;
   m_command_list->ResourceBarrier(1, &barrier);
 }
 

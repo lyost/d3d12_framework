@@ -291,6 +291,12 @@
     <ClCompile Include="src\Time\TickTimer.cpp">
       <Filter>Source Files\Time</Filter>
     </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_Texture2DRenderTarget.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\Texture2DRenderTarget.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -556,6 +562,12 @@
     </ClInclude>
     <ClInclude Include="private_inc\Time\TickTimer.h">
       <Filter>private_inc\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\Texture2DRenderTarget.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2DRenderTarget.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

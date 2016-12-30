@@ -6,6 +6,11 @@ RenderTarget* RenderTarget::CreateD3D12(const GraphicsCore& graphics, UINT width
   return D3D12_RenderTarget::Create(graphics, width, height, format);
 }
 
+RenderTarget* RenderTarget::CreateD3D12FromTexture(const GraphicsCore& graphics, const Texture2DRenderTarget& texture)
+{
+  return D3D12_RenderTarget::CreateFromTexture(graphics, texture);
+}
+
 RenderTarget::RenderTarget()
 {
 }

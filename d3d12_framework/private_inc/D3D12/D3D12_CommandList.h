@@ -115,6 +115,20 @@ class D3D12_CommandList : public CommandList
     /// <param name="texture">
     /// texture to use
     /// </param>
+    void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2DRenderTarget& texture);
+
+    /// <summary>
+    /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
+    /// <remarks>
+    /// The rest of the root signature descriptor table entries are inferred from the number of table entries and using the subsequent entries in the texture's descriptor heap
+    /// </remarks>
+    /// </summary>
+    /// <param name="slot">
+    /// index of the slot to bind the texture to
+    /// </param>
+    /// <param name="texture">
+    /// texture to use
+    /// </param>
     void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture3D& texture);
 
     /// <summary>
@@ -244,6 +258,22 @@ class D3D12_CommandList : public CommandList
     /// Render target to prepare for being presented
     /// </param>
     void RenderTargetToPresent(const RenderTarget& target);
+
+    /// <summary>
+    /// Prepares a texture to be used as a render target by the corresponding RenderTarget instance
+    /// </summary>
+    /// <param name="texture">
+    /// texture to be used as a render target
+    /// </param>
+    void TextureToRenderTarget(const Texture2DRenderTarget& texture);
+
+    /// <summary>
+    /// Allows the render target to be used as a texture by the corresponding Texture2DRenderTarget instance
+    /// </summary>
+    /// <param name="target">
+    /// Render target to allow to be used as a texture
+    /// </param>
+    void RenderTargetToTexture(const RenderTarget& target);
 
     /// <summary>
     /// Clears a render target with the specified color

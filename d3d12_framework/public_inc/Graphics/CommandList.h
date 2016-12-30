@@ -9,6 +9,7 @@ class HeapArray;
 class ConstantBuffer;
 class Texture1D;
 class Texture2D;
+class Texture2DRenderTarget;
 class Texture3D;
 class Texture1DArray;
 class Texture2DArray;
@@ -27,6 +28,7 @@ class DepthStencil;
 #include "Graphics/Buffers/IndexBuffer.h"
 #include "Graphics/Textures/Texture1D.h"
 #include "Graphics/Textures/Texture2D.h"
+#include "Graphics/Textures/Texture2DRenderTarget.h"
 #include "Graphics/Textures/Texture3D.h"
 #include "Graphics/Textures/Texture1DArray.h"
 #include "Graphics/Textures/Texture2DArray.h"
@@ -130,6 +132,20 @@ class CommandList
     /// texture to use
     /// </param>
     virtual void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2D& texture) = 0;
+
+    /// <summary>
+    /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
+    /// <remarks>
+    /// The rest of the root signature descriptor table entries are inferred from the number of table entries and using the subsequent entries in the texture's descriptor heap
+    /// </remarks>
+    /// </summary>
+    /// <param name="slot">
+    /// index of the slot to bind the texture to
+    /// </param>
+    /// <param name="texture">
+    /// texture to use
+    /// </param>
+    virtual void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2DRenderTarget& texture) = 0;
 
     /// <summary>
     /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
@@ -287,6 +303,22 @@ class CommandList
       /// Render target to prepare for being presented
       /// </param>
       virtual void RenderTargetToPresent(const RenderTarget& target) = 0;
+
+      /// <summary>
+      /// Prepares a texture to be used as a render target by the corresponding RenderTarget instance
+      /// </summary>
+      /// <param name="texture">
+      /// texture to be used as a render target
+      /// </param>
+      virtual void TextureToRenderTarget(const Texture2DRenderTarget& texture) = 0;
+
+      /// <summary>
+      /// Allows the render target to be used as a texture by the corresponding Texture2D instance
+      /// </summary>
+      /// <param name="target">
+      /// Render target to allow to be used as a texture
+      /// </param>
+      virtual void RenderTargetToTexture(const RenderTarget& target) = 0;
 
       /// <summary>
       /// Clears a render target with the specified color
