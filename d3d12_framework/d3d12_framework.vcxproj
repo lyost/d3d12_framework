@@ -162,6 +162,7 @@
     <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencil.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTarget.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetDescHeap.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_Texture.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture1D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture1DArray.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2DArray.cpp" />

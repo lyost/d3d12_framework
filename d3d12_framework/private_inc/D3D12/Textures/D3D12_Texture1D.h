@@ -58,20 +58,6 @@ class D3D12_Texture1D : public Texture1D
     D3D12_Texture1D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, GraphicsDataFormat format);
 
     /// <summary>
-    /// Helper function to fill in a D3D12 resource description struct
-    /// </summary>
-    /// <param name="width">
-    /// width of the texture in pixels
-    /// </param>
-    /// <param name="format">
-    /// texture format
-    /// </param>
-    /// <param name="resource_desc">
-    /// output paramenter of the resource description struct to fill in
-    /// </param>
-    static void GetResourceDesc(UINT width, GraphicsDataFormat format, D3D12_RESOURCE_DESC& resource_desc);
-
-    /// <summary>
     /// D3D12 texture resource
     /// </summary>
     ID3D12Resource* m_buffer;

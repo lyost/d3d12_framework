@@ -72,26 +72,6 @@ class D3D12_Texture2DArray : public Texture2DArray
     D3D12_Texture2DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 length, GraphicsDataFormat format);
 
     /// <summary>
-    /// Helper function to fill in a D3D12 resource description struct
-    /// </summary>
-    /// <param name="width">
-    /// width of the texture in pixels
-    /// </param>
-    /// <param name="height">
-    /// height of the texture in pixels
-    /// </param>
-    /// <param name="format">
-    /// texture format
-    /// </param>
-    /// <param name="length">
-    /// number of textures in the array
-    /// </param>
-    /// <param name="resource_desc">
-    /// output paramenter of the resource description struct to fill in
-    /// </param>
-    static void GetResourceDesc(UINT width, UINT height, UINT16 length, GraphicsDataFormat format, D3D12_RESOURCE_DESC& resource_desc);
-
-    /// <summary>
     /// D3D12 texture resource
     /// </summary>
     ID3D12Resource* m_buffer;
