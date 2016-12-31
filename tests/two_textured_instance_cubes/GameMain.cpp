@@ -204,7 +204,7 @@ void GameMain::LoadContent()
   XMFLOAT3 instance_pos[] =
   {
     XMFLOAT3(-2, 0, 0),
-    XMFLOAT3(2, 0, 0),
+    XMFLOAT3( 2, 0, 0),
   };
   try
   {

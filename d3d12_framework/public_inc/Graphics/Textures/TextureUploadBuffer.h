@@ -8,6 +8,7 @@
 #include "Graphics/Textures/Texture1DArray.h"
 #include "Graphics/Textures/Texture2DArray.h"
 #include "Graphics/Textures/TextureCube.h"
+#include "Graphics/Textures/TextureCubeArray.h"
 
 class TextureUploadBuffer
 {
@@ -122,6 +123,26 @@ class TextureUploadBuffer
     /// Thrown when an error is encountered
     /// </exception>
     static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const TextureCube& texture);
+
+    /// <summary>
+    /// Creates a D3D12 buffer for uploading the texture for a side of a cube
+    /// <remarks>
+    /// If you want to upload all to all the textures for all the cubes without re-using the same buffer, then an upload buffer per cube and per side would need to be created
+    /// </remarks>
+    /// </summary>
+    /// <param name="graphics">
+    /// Core graphics interface
+    /// </param>
+    /// <param name="texture">
+    /// Texture to create the upload buffer for
+    /// </param>
+    /// <returns>
+    /// Texture upload buffer
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    static TextureUploadBuffer* CreateD3D12(const GraphicsCore& graphics, const TextureCubeArray& texture);
 
     virtual ~TextureUploadBuffer();
 
@@ -253,6 +274,32 @@ class TextureUploadBuffer
     /// Thrown when an error is encountered
     /// </exception>
     virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCube& texture, UINT16 index, const std::vector<UINT8>& data) = 0;
+
+    /// <summary>
+    /// Preps the command list for uploading the specified data to the specified texture.  The command list must execute followed by a fence for the transfer to be completed.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="command_list">
+    /// command list to use for uploading
+    /// </param>
+    /// <param name="texture">
+    /// texture to upload to
+    /// </param>
+    /// <param name="cube_index">
+    /// index of which cube to upload to
+    /// </param>
+    /// <param name="side_index">
+    /// index of which side of the cube to upload to
+    /// </param>
+    /// <param name="data">
+    /// bytes to write to the texture
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCubeArray& texture, UINT16 cube_index, UINT16 side_index, const std::vector<UINT8>& data) = 0;
 
   protected:
     TextureUploadBuffer();
