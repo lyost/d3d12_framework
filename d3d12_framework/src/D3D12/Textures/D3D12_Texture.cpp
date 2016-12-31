@@ -19,7 +19,8 @@ D3D12_Texture::CreatedTexture D3D12_Texture::Create(const GraphicsCore& graphics
   {
     resource_desc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE1D;
   }
-  else if (dimension == D3D12_SRV_DIMENSION_TEXTURE2D || dimension == D3D12_SRV_DIMENSION_TEXTURE2DARRAY)
+  else if (dimension == D3D12_SRV_DIMENSION_TEXTURE2D || dimension == D3D12_SRV_DIMENSION_TEXTURE2DARRAY
+    || dimension == D3D12_SRV_DIMENSION_TEXTURECUBE || dimension == D3D12_SRV_DIMENSION_TEXTURECUBEARRAY)
   {
     resource_desc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
   }
@@ -108,6 +109,20 @@ D3D12_Texture::CreatedTexture D3D12_Texture::Create(const GraphicsCore& graphics
     src_desc.Texture3D.MostDetailedMip     = 0;
     src_desc.Texture3D.MipLevels           = 1;
     src_desc.Texture3D.ResourceMinLODClamp = 0;
+  }
+  else if (dimension == D3D12_SRV_DIMENSION_TEXTURECUBE)
+  {
+    src_desc.TextureCube.MostDetailedMip     = 0;
+    src_desc.TextureCube.MipLevels           = 1;
+    src_desc.TextureCube.ResourceMinLODClamp = 0;
+  }
+  else if (dimension == D3D12_SRV_DIMENSION_TEXTURECUBEARRAY)
+  {
+    src_desc.TextureCubeArray.MostDetailedMip     = 0;
+    src_desc.TextureCubeArray.MipLevels           = 1;
+    src_desc.TextureCubeArray.First2DArrayFace    = 0;
+    src_desc.TextureCubeArray.NumCubes            = depth / 6;
+    src_desc.TextureCubeArray.ResourceMinLODClamp = 0;
   }
   device->CreateShaderResourceView(buffer, &src_desc, cpu_handle);
 

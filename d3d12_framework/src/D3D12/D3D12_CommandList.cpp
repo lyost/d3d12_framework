@@ -15,6 +15,7 @@
 #include "private_inc/D3D12/Textures/D3D12_Texture3D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture1DArray.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2DArray.h"
+#include "private_inc/D3D12/Textures/D3D12_TextureCube.h"
 #include "private_inc/D3D12/Textures/D3D12_DepthStencil.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
@@ -143,6 +144,12 @@ void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Text
 void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2DArray& texture)
 {
   const D3D12_Texture2DArray& tex = (const D3D12_Texture2DArray&)texture;
+  m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
+}
+
+void D3D12_CommandList::SetTextureAsStartOfDescriptorTable(UINT slot, const TextureCube& texture)
+{
+  const D3D12_TextureCube& tex = (const D3D12_TextureCube&)texture;
   m_command_list->SetGraphicsRootDescriptorTable(slot, tex.GetGPUAddr());
 }
 

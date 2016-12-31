@@ -13,6 +13,7 @@ class Texture2DRenderTarget;
 class Texture3D;
 class Texture1DArray;
 class Texture2DArray;
+class TextureCube;
 class DepthStencil;
 
 #include <vector>
@@ -32,6 +33,7 @@ class DepthStencil;
 #include "Graphics/Textures/Texture3D.h"
 #include "Graphics/Textures/Texture1DArray.h"
 #include "Graphics/Textures/Texture2DArray.h"
+#include "Graphics/Textures/TextureCube.h"
 #include "Graphics/Textures/DepthStencil.h"
 
 /// <summary>
@@ -188,6 +190,20 @@ class CommandList
     /// texture to use
     /// </param>
     virtual void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2DArray& texture) = 0;
+
+    /// <summary>
+    /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
+    /// <remarks>
+    /// The rest of the root signature descriptor table entries are inferred from the number of table entries and using the subsequent entries in the texture's descriptor heap
+    /// </remarks>
+    /// </summary>
+    /// <param name="slot">
+    /// index of the slot to bind the texture to
+    /// </param>
+    /// <param name="texture">
+    /// texture to use
+    /// </param>
+    virtual void SetTextureAsStartOfDescriptorTable(UINT slot, const TextureCube& texture) = 0;
 
     // todo: overloads for clearing just the stencil, and both depth and stencil
 

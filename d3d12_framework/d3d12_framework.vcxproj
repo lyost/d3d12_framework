@@ -169,6 +169,7 @@
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2DRenderTarget.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture3D.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture2D.cpp" />
+    <ClCompile Include="src\D3D12\Textures\D3D12_TextureCube.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_TextureUploadBuffer.cpp" />
     <ClCompile Include="src\D3D12\VectorOps.cpp" />
     <ClCompile Include="src\FrameworkException.cpp" />
@@ -202,6 +203,7 @@
     <ClCompile Include="src\Graphics\Textures\Texture2DRenderTarget.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture3D.cpp" />
     <ClCompile Include="src\Graphics\Textures\Texture2D.cpp" />
+    <ClCompile Include="src\Graphics\Textures\TextureCube.cpp" />
     <ClCompile Include="src\Graphics\Textures\TextureUploadBuffer.cpp" />
     <ClCompile Include="src\Graphics\Viewport.cpp" />
     <ClCompile Include="src\Graphics\Viewports.cpp" />
@@ -246,6 +248,7 @@
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2DRenderTarget.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture3D.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2D.h" />
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureCube.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureUploadBuffer.h" />
     <ClInclude Include="private_inc\D3D12\VectorOps.h" />
     <ClInclude Include="private_inc\Time\PerformanceTimer.h" />
@@ -290,6 +293,7 @@
     <ClInclude Include="public_inc\Graphics\Textures\Texture2DRenderTarget.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture3D.h" />
     <ClInclude Include="public_inc\Graphics\Textures\Texture2D.h" />
+    <ClInclude Include="public_inc\Graphics\Textures\TextureCube.h" />
     <ClInclude Include="public_inc\Graphics\Textures\TextureUploadBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Topology.h" />
     <ClInclude Include="public_inc\Graphics\VectorOps.h" />

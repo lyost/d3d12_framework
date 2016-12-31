@@ -160,6 +160,20 @@ class D3D12_CommandList : public CommandList
     void SetTextureAsStartOfDescriptorTable(UINT slot, const Texture2DArray& texture);
 
     /// <summary>
+    /// Sets the root signature descriptor table to use the specified texture as the start of the descriptor table
+    /// <remarks>
+    /// The rest of the root signature descriptor table entries are inferred from the number of table entries and using the subsequent entries in the texture's descriptor heap
+    /// </remarks>
+    /// </summary>
+    /// <param name="slot">
+    /// index of the slot to bind the texture to
+    /// </param>
+    /// <param name="texture">
+    /// texture to use
+    /// </param>
+    void SetTextureAsStartOfDescriptorTable(UINT slot, const TextureCube& texture);
+
+    /// <summary>
     /// Sets the topology to use for vertex data passed to the input assembler stage
     /// </summary>
     /// <param name="topology">

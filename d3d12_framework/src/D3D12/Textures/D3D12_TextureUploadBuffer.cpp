@@ -6,6 +6,7 @@
 #include "private_inc/D3D12/Textures/D3D12_Texture3D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture1DArray.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2DArray.h"
+#include "private_inc/D3D12/Textures/D3D12_TextureCube.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
@@ -34,6 +35,13 @@ TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graph
 }
 
 TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2DArray& texture)
+{
+  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_Texture2DArray&)texture).GetBuffer()->GetDesc();
+  resource_desc.DepthOrArraySize = 1;
+  return D3D12_TextureUploadBuffer::CreateInternal(graphics, resource_desc);
+}
+
+TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const TextureCube& texture)
 {
   D3D12_RESOURCE_DESC resource_desc = ((const D3D12_Texture2DArray&)texture).GetBuffer()->GetDesc();
   resource_desc.DepthOrArraySize = 1;
@@ -77,6 +85,12 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
 void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2DArray& texture, UINT16 index, const vector<UINT8>& data)
 {
   ID3D12Resource* dst_texture = ((D3D12_Texture2DArray&)texture).GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, index, data);
+}
+
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCube& texture, UINT16 index, const vector<UINT8>& data)
+{
+  ID3D12Resource* dst_texture = ((D3D12_TextureCube&)texture).GetBuffer();
   PrepUploadInternal(graphics, command_list, dst_texture, index, data);
 }
 

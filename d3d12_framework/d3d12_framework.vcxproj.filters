@@ -297,6 +297,12 @@
     <ClCompile Include="src\D3D12\Textures\D3D12_Texture.cpp">
       <Filter>Source Files\D3D12\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Textures\TextureCube.cpp">
+      <Filter>Source Files\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Textures\D3D12_TextureCube.cpp">
+      <Filter>Source Files\D3D12\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -564,6 +570,12 @@
       <Filter>public_inc\Graphics\Textures</Filter>
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_Texture2DRenderTarget.h">
+      <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Textures\TextureCube.h">
+      <Filter>public_inc\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Textures\D3D12_TextureCube.h">
       <Filter>private_inc\D3D12\Textures</Filter>
     </ClInclude>
   </ItemGroup>

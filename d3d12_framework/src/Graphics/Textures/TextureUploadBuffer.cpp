@@ -26,6 +26,11 @@ TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphi
   return D3D12_TextureUploadBuffer::Create(graphics, texture);
 }
 
+TextureUploadBuffer* TextureUploadBuffer::CreateD3D12(const GraphicsCore& graphics, const TextureCube& texture)
+{
+  return D3D12_TextureUploadBuffer::Create(graphics, texture);
+}
+
 TextureUploadBuffer::TextureUploadBuffer()
 {
 }
