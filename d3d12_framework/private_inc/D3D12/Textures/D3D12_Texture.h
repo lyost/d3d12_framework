@@ -47,6 +47,9 @@ namespace D3D12_Texture
   /// <param name="dimension">
   /// which dimensions the texture should have
   /// </param>
+  /// <param name="mip_levels">
+  /// number of mipmap levels
+  /// </param>
   /// <returns>
   /// D3D12 texture data
   /// </returns>
@@ -54,7 +57,7 @@ namespace D3D12_Texture
   /// Thrown when an error is encountered
   /// </exception>
   CreatedTexture Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format, D3D12_SRV_DIMENSION dimension,
-    D3D12_RESOURCE_FLAGS flags);
+    D3D12_RESOURCE_FLAGS flags, UINT16 mip_levels);
 }
 
 #endif /* D3D12_TEXTURE_H */

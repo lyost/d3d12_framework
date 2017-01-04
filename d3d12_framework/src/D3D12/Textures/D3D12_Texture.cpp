@@ -1,11 +1,21 @@
 #include "private_inc/D3D12/Textures/D3D12_Texture.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_ShaderResourceDescHeap.h"
+#include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 
 D3D12_Texture::CreatedTexture D3D12_Texture::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format,
-  D3D12_SRV_DIMENSION dimension, D3D12_RESOURCE_FLAGS flags)
+  D3D12_SRV_DIMENSION dimension, D3D12_RESOURCE_FLAGS flags, UINT16 mip_levels)
 {
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (mip_levels == 0)
+  {
+    // D3D12 allows for the D3D12_RESOURCE_DESC to have a MipLevels of 0 (https://msdn.microsoft.com/en-us/library/windows/desktop/dn903813%28v=vs.85%29.aspx), but the framework's
+    // D3D12_TextureUploadBuffer relies on a non-zero number of mipmap levels to determine the subresource index
+    throw FrameworkException("The number of mipmap levels cannot be 0");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
   const D3D12_Core& core = (const D3D12_Core&)graphics;
   ID3D12Device* device = core.GetDevice();
 
@@ -36,7 +46,7 @@ D3D12_Texture::CreatedTexture D3D12_Texture::Create(const GraphicsCore& graphics
   resource_desc.Width              = width;
   resource_desc.Height             = height;
   resource_desc.DepthOrArraySize   = depth;
-  resource_desc.MipLevels          = 1;
+  resource_desc.MipLevels          = mip_levels;
   resource_desc.Format             = (DXGI_FORMAT)format;
   resource_desc.SampleDesc.Count   = 1;
   resource_desc.SampleDesc.Quality = 0;
@@ -76,13 +86,13 @@ D3D12_Texture::CreatedTexture D3D12_Texture::Create(const GraphicsCore& graphics
   if (dimension == D3D12_SRV_DIMENSION_TEXTURE1D)
   {
     src_desc.Texture1D.MostDetailedMip     = 0;
-    src_desc.Texture1D.MipLevels           = 1;
+    src_desc.Texture1D.MipLevels           = mip_levels;
     src_desc.Texture1D.ResourceMinLODClamp = 0;
   }
   else if (dimension == D3D12_SRV_DIMENSION_TEXTURE1DARRAY)
   {
     src_desc.Texture1DArray.MostDetailedMip     = 0;
-    src_desc.Texture1DArray.MipLevels           = 1;
+    src_desc.Texture1DArray.MipLevels           = mip_levels;
     src_desc.Texture1DArray.FirstArraySlice     = 0;
     src_desc.Texture1DArray.ArraySize           = depth;
     src_desc.Texture1DArray.ResourceMinLODClamp = 0;
@@ -90,7 +100,7 @@ D3D12_Texture::CreatedTexture D3D12_Texture::Create(const GraphicsCore& graphics
   else if (dimension == D3D12_SRV_DIMENSION_TEXTURE2D)
   {
     src_desc.Texture2D.MostDetailedMip     = 0;
-    src_desc.Texture2D.MipLevels           = 1;
+    src_desc.Texture2D.MipLevels           = mip_levels;
     src_desc.Texture2D.PlaneSlice          = 0;
     src_desc.Texture2D.ResourceMinLODClamp = 0;
 
@@ -98,7 +108,7 @@ D3D12_Texture::CreatedTexture D3D12_Texture::Create(const GraphicsCore& graphics
   else if (dimension == D3D12_SRV_DIMENSION_TEXTURE2DARRAY)
   {
     src_desc.Texture2DArray.MostDetailedMip     = 0;
-    src_desc.Texture2DArray.MipLevels           = 1;
+    src_desc.Texture2DArray.MipLevels           = mip_levels;
     src_desc.Texture2DArray.FirstArraySlice     = 0;
     src_desc.Texture2DArray.ArraySize           = depth;
     src_desc.Texture2DArray.PlaneSlice          = 0;
@@ -107,19 +117,19 @@ D3D12_Texture::CreatedTexture D3D12_Texture::Create(const GraphicsCore& graphics
   else if (dimension == D3D12_SRV_DIMENSION_TEXTURE3D)
   {
     src_desc.Texture3D.MostDetailedMip     = 0;
-    src_desc.Texture3D.MipLevels           = 1;
+    src_desc.Texture3D.MipLevels           = mip_levels;
     src_desc.Texture3D.ResourceMinLODClamp = 0;
   }
   else if (dimension == D3D12_SRV_DIMENSION_TEXTURECUBE)
   {
     src_desc.TextureCube.MostDetailedMip     = 0;
-    src_desc.TextureCube.MipLevels           = 1;
+    src_desc.TextureCube.MipLevels           = mip_levels;
     src_desc.TextureCube.ResourceMinLODClamp = 0;
   }
   else if (dimension == D3D12_SRV_DIMENSION_TEXTURECUBEARRAY)
   {
     src_desc.TextureCubeArray.MostDetailedMip     = 0;
-    src_desc.TextureCubeArray.MipLevels           = 1;
+    src_desc.TextureCubeArray.MipLevels           = mip_levels;
     src_desc.TextureCubeArray.First2DArrayFace    = 0;
     src_desc.TextureCubeArray.NumCubes            = depth / 6;
     src_desc.TextureCubeArray.ResourceMinLODClamp = 0;

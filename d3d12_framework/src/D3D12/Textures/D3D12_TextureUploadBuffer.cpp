@@ -66,60 +66,124 @@ D3D12_TextureUploadBuffer::~D3D12_TextureUploadBuffer()
   m_buffer->Release();
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1D& texture, const vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1D& texture, const vector<UINT8>& data, UINT16 mip_level)
 {
-  ID3D12Resource* dst_texture = ((D3D12_Texture1D&)texture).GetBuffer();
-  PrepUploadInternal(graphics, command_list, dst_texture, 0, data);
+  D3D12_Texture1D& tex = (D3D12_Texture1D&)texture;
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (mip_level >= tex.GetNumMipmapLevels())
+  {
+    throw FrameworkException("Requested mipmap level is beyond the number of mipmap levels available in the resource");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  ID3D12Resource* dst_texture = tex.GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, mip_level, data);
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const vector<UINT8>& data, UINT16 mip_level)
 {
-  ID3D12Resource* dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
-  PrepUploadInternal(graphics, command_list, dst_texture, 0, data);
+  D3D12_Texture2D& tex = (D3D12_Texture2D&)texture;
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (mip_level >= tex.GetNumMipmapLevels())
+  {
+    throw FrameworkException("Requested mipmap level is beyond the number of mipmap levels available in the resource");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  ID3D12Resource* dst_texture = tex.GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, mip_level, data);
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture3D& texture, const vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture3D& texture, const vector<UINT8>& data, UINT16 mip_level)
 {
-  ID3D12Resource* dst_texture = ((D3D12_Texture3D&)texture).GetBuffer();
-  PrepUploadInternal(graphics, command_list, dst_texture, 0, data);
+  D3D12_Texture3D& tex = (D3D12_Texture3D&)texture;
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (mip_level >= tex.GetNumMipmapLevels())
+  {
+    throw FrameworkException("Requested mipmap level is beyond the number of mipmap levels available in the resource");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  ID3D12Resource* dst_texture = tex.GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, mip_level, data);
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1DArray& texture, UINT16 index, const vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1DArray& texture, UINT16 index, const vector<UINT8>& data, UINT16 mip_level)
 {
-  ID3D12Resource* dst_texture = ((D3D12_Texture1DArray&)texture).GetBuffer();
-  PrepUploadInternal(graphics, command_list, dst_texture, index, data);
+  D3D12_Texture1DArray& tex = (D3D12_Texture1DArray&)texture;
+  UINT16 num_mip_levels = tex.GetNumMipmapLevels();
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (mip_level >= num_mip_levels)
+  {
+    throw FrameworkException("Requested mipmap level is beyond the number of mipmap levels available in the resource");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  ID3D12Resource* dst_texture = tex.GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, index * num_mip_levels + (UINT)mip_level, data);
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2DArray& texture, UINT16 index, const vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2DArray& texture, UINT16 index, const vector<UINT8>& data, UINT16 mip_level)
 {
-  ID3D12Resource* dst_texture = ((D3D12_Texture2DArray&)texture).GetBuffer();
-  PrepUploadInternal(graphics, command_list, dst_texture, index, data);
+  D3D12_Texture2DArray& tex = (D3D12_Texture2DArray&)texture;
+  UINT16 num_mip_levels = tex.GetNumMipmapLevels();
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (mip_level >= num_mip_levels)
+  {
+    throw FrameworkException("Requested mipmap level is beyond the number of mipmap levels available in the resource");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  ID3D12Resource* dst_texture = tex.GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, index * num_mip_levels + (UINT)mip_level, data);
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCube& texture, UINT16 index, const vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCube& texture, UINT16 index, const vector<UINT8>& data, UINT16 mip_level)
 {
+  D3D12_TextureCube& tex = (D3D12_TextureCube&)texture;
+  UINT16 num_mip_levels = tex.GetNumMipmapLevels();
+
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= 6)
   {
     throw FrameworkException("Invalid side index, must be in the range [0-5]");
   }
+
+  if (mip_level >= num_mip_levels)
+  {
+    throw FrameworkException("Requested mipmap level is beyond the number of mipmap levels available in the resource");
+  }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  ID3D12Resource* dst_texture = ((D3D12_TextureCube&)texture).GetBuffer();
-  PrepUploadInternal(graphics, command_list, dst_texture, index, data);
+  ID3D12Resource* dst_texture = tex.GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, index * num_mip_levels + (UINT)mip_level, data);
 }
 
-void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCubeArray& texture, UINT16 cube_index, UINT16 side_index, const vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCubeArray& texture, UINT16 cube_index, UINT16 side_index, const vector<UINT8>& data, UINT16 mip_level)
 {
+  D3D12_TextureCubeArray& tex = (D3D12_TextureCubeArray&)texture;
+  UINT16 num_mip_levels = tex.GetNumMipmapLevels();
+  UINT16 subresources_per_cube = 6 * num_mip_levels;
+
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (side_index >= 6)
   {
     throw FrameworkException("Invalid side index, must be in the range [0-5]");
   }
+
+  if (mip_level >= num_mip_levels)
+  {
+    throw FrameworkException("Requested mipmap level is beyond the number of mipmap levels available in the resource");
+  }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  ID3D12Resource* dst_texture = ((D3D12_TextureCubeArray&)texture).GetBuffer();
-  PrepUploadInternal(graphics, command_list, dst_texture, cube_index * 6 + side_index, data);
+  ID3D12Resource* dst_texture = tex.GetBuffer();
+  PrepUploadInternal(graphics, command_list, dst_texture, cube_index * subresources_per_cube + side_index * num_mip_levels + (UINT)mip_level, data);
 }
 
 TextureUploadBuffer* D3D12_TextureUploadBuffer::CreateInternal(const GraphicsCore& graphics, D3D12_RESOURCE_DESC resource_desc)
@@ -158,7 +222,7 @@ TextureUploadBuffer* D3D12_TextureUploadBuffer::CreateInternal(const GraphicsCor
   return new D3D12_TextureUploadBuffer(buffer);
 }
 
-void D3D12_TextureUploadBuffer::PrepUploadInternal(GraphicsCore& graphics, CommandList& command_list, ID3D12Resource* texture, UINT16 index, const vector<UINT8>& data)
+void D3D12_TextureUploadBuffer::PrepUploadInternal(GraphicsCore& graphics, CommandList& command_list, ID3D12Resource* texture, UINT index, const vector<UINT8>& data)
 {
   ID3D12Device*       device      = ((D3D12_Core&)graphics).GetDevice();
   D3D12_RESOURCE_DESC dst_desc    = texture->GetDesc();

@@ -31,13 +31,16 @@ class Texture2DArray
     /// <param name="format">
     /// texture format
     /// </param>
+    /// <param name="mip_levels">
+    /// number of mipmap levels
+    /// </param>
     /// <returns>
     /// D3D12 texture 2D array
     /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static Texture2DArray* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length, GraphicsDataFormat format);
+    static Texture2DArray* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length, GraphicsDataFormat format, UINT16 mip_levels = 1);
 
     virtual ~Texture2DArray();
     

@@ -29,13 +29,16 @@ class D3D12_Texture2DArray : public Texture2DArray
     /// <param name="format">
     /// texture format
     /// </param>
+    /// <param name="mip_levels">
+    /// number of mipmap levels
+    /// </param>
     /// <returns>
     /// D3D12 texture 2D array
     /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static Texture2DArray* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length, GraphicsDataFormat format);
+    static Texture2DArray* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 length, GraphicsDataFormat format, UINT16 mip_levels);
 
     ~D3D12_Texture2DArray();
 
@@ -63,13 +66,21 @@ class D3D12_Texture2DArray : public Texture2DArray
     /// </returns>
     D3D12_GPU_DESCRIPTOR_HANDLE GetGPUAddr() const;
 
+    /// <summary>
+    /// Retrieves the number of mipmap levels the resource was created with
+    /// </summary>
+    /// <returns>
+    /// GPU address for the texture
+    /// </returns>
+    UINT16 GetNumMipmapLevels() const;
+
   private:
     // disabled
     D3D12_Texture2DArray();
     D3D12_Texture2DArray(const D3D12_Texture2DArray& cpy);
     D3D12_Texture2DArray& operator=(const D3D12_Texture2DArray& cpy);
 
-    D3D12_Texture2DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 length, GraphicsDataFormat format);
+    D3D12_Texture2DArray(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 length, GraphicsDataFormat format, UINT16 num_mip_levels);
 
     /// <summary>
     /// D3D12 texture resource
@@ -100,6 +111,11 @@ class D3D12_Texture2DArray : public Texture2DArray
     /// texture format
     /// <summary>
     GraphicsDataFormat m_format;
+
+    /// <summary>
+    /// number of mipmap levels in the resource
+    /// </summary>
+    UINT16 m_num_mipmap_levels;
 };
 
 #endif /* D3D12_TEXTURE2D_ARRAY_H */

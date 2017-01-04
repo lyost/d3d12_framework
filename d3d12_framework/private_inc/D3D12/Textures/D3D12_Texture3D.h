@@ -29,13 +29,16 @@ class D3D12_Texture3D : public Texture3D
     /// <param name="format">
     /// texture format
     /// </param>
+    /// <param name="mip_levels">
+    /// number of mipmap levels
+    /// </param>
     /// <returns>
-    /// D3D12 texture 2D
+    /// D3D12 texture 3D
     /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static Texture3D* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format);
+    static Texture3D* Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format, UINT16 mip_levels);
 
     ~D3D12_Texture3D();
 
@@ -55,13 +58,21 @@ class D3D12_Texture3D : public Texture3D
     /// </returns>
     D3D12_GPU_DESCRIPTOR_HANDLE GetGPUAddr() const;
 
+    /// <summary>
+    /// Retrieves the number of mipmap levels the resource was created with
+    /// </summary>
+    /// <returns>
+    /// GPU address for the texture
+    /// </returns>
+    UINT16 GetNumMipmapLevels() const;
+
   private:
     // disabled
     D3D12_Texture3D();
     D3D12_Texture3D(const D3D12_Texture3D& cpy);
     D3D12_Texture3D& operator=(const D3D12_Texture3D& cpy);
 
-    D3D12_Texture3D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format);
+    D3D12_Texture3D(ID3D12Resource* buffer, D3D12_GPU_DESCRIPTOR_HANDLE gpu_mem, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format, UINT16 num_mip_levels);
 
     /// <summary>
     /// D3D12 texture resource
@@ -92,6 +103,11 @@ class D3D12_Texture3D : public Texture3D
     /// texture format
     /// </summary>
     GraphicsDataFormat m_format;
+
+    /// <summary>
+    /// number of mipmap levels in the resource
+    /// </summary>
+    UINT16 m_num_mipmap_levels;
 };
 
 #endif /* D3D12_TEXTURE_3D_H */

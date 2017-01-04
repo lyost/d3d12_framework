@@ -3,7 +3,7 @@
 
 Texture2DRenderTarget* D3D12_Texture2DRenderTarget::Create(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, GraphicsDataFormat format)
 {
-  D3D12_Texture::CreatedTexture tex = D3D12_Texture::Create(graphics, shader_buffer_heap, width, height, 1, format, D3D12_SRV_DIMENSION_TEXTURE2D, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
+  D3D12_Texture::CreatedTexture tex = D3D12_Texture::Create(graphics, shader_buffer_heap, width, height, 1, format, D3D12_SRV_DIMENSION_TEXTURE2D, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET, 1);
   return new D3D12_Texture2DRenderTarget(tex.buffer, tex.gpu_handle, width, height, format);
 }
 

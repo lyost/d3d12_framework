@@ -28,13 +28,16 @@ class Texture1DArray
     /// <param name="format">
     /// texture format
     /// </param>
+    /// <param name="mip_levels">
+    /// number of mipmap levels
+    /// </param>
     /// <returns>
     /// D3D12 texture 1D array
     /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static Texture1DArray* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format);
+    static Texture1DArray* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT16 length, GraphicsDataFormat format, UINT16 mip_levels = 1);
 
     virtual ~Texture1DArray();
     

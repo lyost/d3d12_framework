@@ -155,10 +155,13 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
     /// <param name="data">
     /// bytes to write to the texture
     /// </param>
+    /// <param name="mip_level">
+    /// mipmap level to upload to
+    /// </param>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1D& texture, const std::vector<UINT8>& data);
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1D& texture, const std::vector<UINT8>& data, UINT16 mip_level);
 
     /// <summary>
     /// Preps the command list for uploading the specified data to the specified texture.  The command list must execute followed by a fence for the transfer to be completed.
@@ -175,10 +178,13 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
     /// <param name="data">
     /// bytes to write to the texture
     /// </param>
+    /// <param name="mip_level">
+    /// mipmap level to upload to
+    /// </param>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const std::vector<UINT8>& data);
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture, const std::vector<UINT8>& data, UINT16 mip_level);
 
     /// <summary>
     /// Preps the command list for uploading the specified data to the specified texture.  The command list must execute followed by a fence for the transfer to be completed.
@@ -195,33 +201,13 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
     /// <param name="data">
     /// bytes to write to the texture
     /// </param>
-    /// <exception cref="FrameworkException">
-    /// Thrown when an error is encountered
-    /// </exception>
-    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture3D& texture, const std::vector<UINT8>& data);
-
-    /// <summary>
-    /// Preps the command list for uploading the specified data to the specified texture.  The command list must execute followed by a fence for the transfer to be completed.
-    /// </summary>
-    /// <param name="graphics">
-    /// core graphics interface
-    /// </param>
-    /// <param name="command_list">
-    /// command list to use for uploading
-    /// </param>
-    /// <param name="texture">
-    /// texture to upload to
-    /// </param>
-    /// <param name="index">
-    /// index of the texture in the array to upload to
-    /// </param>
-    /// <param name="data">
-    /// bytes to write to the texture
+    /// <param name="mip_level">
+    /// mipmap level to upload to
     /// </param>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1DArray& texture, UINT16 index, const std::vector<UINT8>& data);
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture3D& texture, const std::vector<UINT8>& data, UINT16 mip_level);
 
     /// <summary>
     /// Preps the command list for uploading the specified data to the specified texture.  The command list must execute followed by a fence for the transfer to be completed.
@@ -241,10 +227,39 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
     /// <param name="data">
     /// bytes to write to the texture
     /// </param>
+    /// <param name="mip_level">
+    /// mipmap level to upload to
+    /// </param>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2DArray& texture, UINT16 index, const std::vector<UINT8>& data);
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture1DArray& texture, UINT16 index, const std::vector<UINT8>& data, UINT16 mip_level);
+
+    /// <summary>
+    /// Preps the command list for uploading the specified data to the specified texture.  The command list must execute followed by a fence for the transfer to be completed.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="command_list">
+    /// command list to use for uploading
+    /// </param>
+    /// <param name="texture">
+    /// texture to upload to
+    /// </param>
+    /// <param name="index">
+    /// index of the texture in the array to upload to
+    /// </param>
+    /// <param name="data">
+    /// bytes to write to the texture
+    /// </param>
+    /// <param name="mip_level">
+    /// mipmap level to upload to
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2DArray& texture, UINT16 index, const std::vector<UINT8>& data, UINT16 mip_level);
 
     /// <summary>
     /// Preps the command list for uploading the specified data to the specified texture.  The command list must execute followed by a fence for the transfer to be completed.
@@ -264,10 +279,13 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
     /// <param name="data">
     /// bytes to write to the texture
     /// </param>
+    /// <param name="mip_level">
+    /// mipmap level to upload to
+    /// </param>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCube& texture, UINT16 index, const std::vector<UINT8>& data);
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCube& texture, UINT16 index, const std::vector<UINT8>& data, UINT16 mip_level);
 
     /// <summary>
     /// Preps the command list for uploading the specified data to the specified texture.  The command list must execute followed by a fence for the transfer to be completed.
@@ -290,10 +308,13 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
     /// <param name="data">
     /// bytes to write to the texture
     /// </param>
+    /// <param name="mip_level">
+    /// mipmap level to upload to
+    /// </param>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCubeArray& texture, UINT16 cube_index, UINT16 side_index, const std::vector<UINT8>& data);
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, TextureCubeArray& texture, UINT16 cube_index, UINT16 side_index, const std::vector<UINT8>& data, UINT16 mip_level);
 
   protected:
     D3D12_TextureUploadBuffer(ID3D12Resource* buffer);
@@ -328,15 +349,18 @@ class D3D12_TextureUploadBuffer : public TextureUploadBuffer
     /// texture to upload to
     /// </param>
     /// <param name="index">
-    /// index of the texture in the array to upload to
+    /// subresource index to upload to
     /// </param>
     /// <param name="data">
     /// bytes to write to the texture
     /// </param>
+    /// <param name="mip_level">
+    /// mipmap level to upload to
+    /// </param>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void PrepUploadInternal(GraphicsCore& graphics, CommandList& command_list, ID3D12Resource* texture, UINT16 index, const std::vector<UINT8>& data);
+    void PrepUploadInternal(GraphicsCore& graphics, CommandList& command_list, ID3D12Resource* texture, UINT index, const std::vector<UINT8>& data);
 
     /// <summary>
     /// D3D12 buffer resource

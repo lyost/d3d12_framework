@@ -31,13 +31,16 @@ class Texture3D
     /// <param name="format">
     /// texture format
     /// </param>
+    /// <param name="mip_levels">
+    /// number of mipmap levels
+    /// </param>
     /// <returns>
     /// D3D12 texture 3D
     /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static Texture3D* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format);
+    static Texture3D* CreateD3D12(const GraphicsCore& graphics, ShaderResourceDescHeap& shader_buffer_heap, UINT width, UINT height, UINT16 depth, GraphicsDataFormat format, UINT16 mip_levels = 1);
 
     virtual ~Texture3D();
     
