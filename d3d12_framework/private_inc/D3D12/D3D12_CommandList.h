@@ -280,12 +280,39 @@ class D3D12_CommandList : public CommandList
     void PrepRenderTarget(const RenderTarget& target);
 
     /// <summary>
+    /// Preps a MSAA render target of a back buffer for use as a render target
+    /// </summary>
+    /// <param name="target">
+    /// MSAA render target to prepare for being drawn to
+    /// </param>
+    void PrepRenderTarget(const RenderTargetMSAA& target);
+
+    /// <summary>
     /// Preps a render target of a back buffer for being presented to the screen
     /// </summary>
     /// <param name="target">
     /// Render target to prepare for being presented
     /// </param>
     void RenderTargetToPresent(const RenderTarget& target);
+
+    /// <summary>
+    /// Preps a render target of a back buffer that was used to resolve a MSAA render target for being presented to the screen
+    /// </summary>
+    /// <param name="target">
+    /// Render target to prepare for being presented
+    /// </param>
+    void RenderTargetResolvedToPresent(const RenderTarget& target);
+
+    /// <summary>
+    /// Resolves a MSAA render target into a presentable render target
+    /// </summary>
+    /// <param name="src">
+    /// MSAA render target to be resolved
+    /// </param>
+    /// <param name="dst">
+    /// Render target to resolve to
+    /// </param>
+    void RenderTargetToResolved(const RenderTargetMSAA& src, const RenderTarget& dst);
 
     /// <summary>
     /// Prepares a texture to be used as a render target by the corresponding RenderTarget instance
@@ -315,6 +342,17 @@ class D3D12_CommandList : public CommandList
     void ClearRenderTarget(const RenderTarget& target, const float clear_color[4]);
 
     /// <summary>
+    /// Clears a MSAA render target with the specified color
+    /// </summary>
+    /// <param name="target">
+    /// MSAA render target to clear
+    /// </param>
+    /// <param name="clear_color">
+    /// array of a RGBA color with each component in the [0,1] range to use as the clear color for the render target
+    /// </param>
+    void ClearRenderTarget(const RenderTargetMSAA& target, const float clear_color[4]);
+
+    /// <summary>
     /// Clears the depth portion of a depth stencil
     /// </summary>
     /// <param name="depth_stencil">
@@ -324,6 +362,17 @@ class D3D12_CommandList : public CommandList
     /// value to use for clearing the depth stencil
     /// </param>
     void ClearDepthStencil(const DepthStencil& depth_stencil, float depth_clear_value);
+
+    /// <summary>
+    /// Clears the depth portion of a depth stencil
+    /// </summary>
+    /// <param name="depth_stencil">
+    /// MSAA depth stencil to clear
+    /// </param>
+    /// <param name="depth_clear_value">
+    /// value to use for clearing the depth stencil
+    /// </param>
+    void ClearDepthStencil(const DepthStencilMSAA& depth_stencil, float depth_clear_value);
 
     /// <summary>
     /// Sets the render target to use for the output merger stage
@@ -343,6 +392,17 @@ class D3D12_CommandList : public CommandList
     /// depth stencil to use
     /// </param>
     void OMSetRenderTarget(const RenderTarget& target, const DepthStencil& depth_stencil);
+
+    /// <summary>
+    /// Sets the render target to use for the output merger stage
+    /// </summary>
+    /// <param name="target">
+    /// MSAA render target to use
+    /// </param>
+    /// <param name="depth_stencil">
+    /// MSAA depth stencil to use
+    /// </param>
+    void OMSetRenderTarget(const RenderTargetMSAA& target, const DepthStencilMSAA& depth_stencil);
 
     // todo: create OMSetRenderTargets to set multiple render targets at once
 

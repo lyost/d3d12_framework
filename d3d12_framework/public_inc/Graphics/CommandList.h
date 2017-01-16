@@ -16,6 +16,8 @@ class Texture2DArray;
 class TextureCube;
 class TextureCubeArray;
 class DepthStencil;
+class RenderTargetMSAA;
+class DepthStencilMSAA;
 
 #include <vector>
 #include "Graphics/GraphicsCore.h"
@@ -37,6 +39,8 @@ class DepthStencil;
 #include "Graphics/Textures/TextureCube.h"
 #include "Graphics/Textures/TextureCubeArray.h"
 #include "Graphics/Textures/DepthStencil.h"
+#include "Graphics/Textures/RenderTargetMSAA.h"
+#include "Graphics/Textures/DepthStencilMSAA.h"
 
 /// <summary>
 /// Interface for list of commands for the rendering process
@@ -329,12 +333,39 @@ class CommandList
       virtual void PrepRenderTarget(const RenderTarget& target) = 0;
 
       /// <summary>
+      /// Preps a MSAA render target of a back buffer for use as a render target
+      /// </summary>
+      /// <param name="target">
+      /// MSAA render target to prepare for being drawn to
+      /// </param>
+      virtual void PrepRenderTarget(const RenderTargetMSAA& target) = 0;
+
+      /// <summary>
       /// Preps a render target of a back buffer for being presented to the screen
       /// </summary>
       /// <param name="target">
       /// Render target to prepare for being presented
       /// </param>
       virtual void RenderTargetToPresent(const RenderTarget& target) = 0;
+
+      /// <summary>
+      /// Preps a render target of a back buffer that was used to resolve a MSAA render target for being presented to the screen
+      /// </summary>
+      /// <param name="target">
+      /// Render target to prepare for being presented
+      /// </param>
+      virtual void RenderTargetResolvedToPresent(const RenderTarget& target) = 0;
+
+      /// <summary>
+      /// Resolves a MSAA render target into a presentable render target
+      /// </summary>
+      /// <param name="src">
+      /// MSAA render target to be resolved
+      /// </param>
+      /// <param name="dst">
+      /// Render target to resolve to
+      /// </param>
+      virtual void RenderTargetToResolved(const RenderTargetMSAA& src, const RenderTarget& dst) = 0;
 
       /// <summary>
       /// Prepares a texture to be used as a render target by the corresponding RenderTarget instance
@@ -364,6 +395,17 @@ class CommandList
       virtual void ClearRenderTarget(const RenderTarget& target, const float clear_color[4]) = 0;
 
       /// <summary>
+      /// Clears a MSAA render target with the specified color
+      /// </summary>
+      /// <param name="target">
+      /// MSAA render target to clear
+      /// </param>
+      /// <param name="clear_color">
+      /// array of a RGBA color with each component in the [0,1] range to use as the clear color for the render target
+      /// </param>
+      virtual void ClearRenderTarget(const RenderTargetMSAA& target, const float clear_color[4]) = 0;
+
+      /// <summary>
       /// Clears the depth portion of a depth stencil
       /// </summary>
       /// <param name="depth_stencil">
@@ -373,6 +415,17 @@ class CommandList
       /// value to use for clearing the depth stencil
       /// </param>
       virtual void ClearDepthStencil(const DepthStencil& depth_stencil, float depth_clear_value) = 0;
+
+      /// <summary>
+      /// Clears the depth portion of a depth stencil
+      /// </summary>
+      /// <param name="depth_stencil">
+      /// MSAA depth stencil to clear
+      /// </param>
+      /// <param name="depth_clear_value">
+      /// value to use for clearing the depth stencil
+      /// </param>
+      virtual void ClearDepthStencil(const DepthStencilMSAA& depth_stencil, float depth_clear_value) = 0;
 
       /// <summary>
       /// Sets the render target to use for the output merger stage
@@ -392,6 +445,17 @@ class CommandList
       /// depth stencil to use
       /// </param>
       virtual void OMSetRenderTarget(const RenderTarget& target, const DepthStencil& depth_stencil) = 0;
+
+      /// <summary>
+      /// Sets the render target to use for the output merger stage
+      /// </summary>
+      /// <param name="target">
+      /// MSAA render target to use
+      /// </param>
+      /// <param name="depth_stencil">
+      /// MSAA depth stencil to use
+      /// </param>
+      virtual void OMSetRenderTarget(const RenderTargetMSAA& target, const DepthStencilMSAA& depth_stencil) = 0;
 
       // todo: create OMSetRenderTargets to set multiple render targets at once
 

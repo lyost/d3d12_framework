@@ -310,6 +310,26 @@ BackBuffers& D3D12_Core::GetBackBuffer() const
   return *m_back_buffer;
 }
 
+void D3D12_Core::CheckSupportedMultisampleLevels(GraphicsDataFormat& format, UINT& sample_count, bool& tiled, UINT& num_quality_levels) const
+{
+  D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS query;
+  query.Format           = (DXGI_FORMAT)format;
+  query.SampleCount      = sample_count;
+  query.Flags            = tiled ? D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_TILED_RESOURCE : D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
+  query.NumQualityLevels = num_quality_levels;
+
+  HRESULT rc = m_device->CheckFeatureSupport(D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS, &query, sizeof(query));
+  if (FAILED(rc))
+  {
+    throw FrameworkException("Failed to get multisample quality information");
+  }
+
+  format             = (GraphicsDataFormat)query.Format;
+  sample_count       = query.SampleCount;
+  tiled              = (query.Flags & D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_TILED_RESOURCE) != 0;
+  num_quality_levels = query.NumQualityLevels;
+}
+
 ID3D12Device* D3D12_Core::GetDevice() const
 {
   return m_device;

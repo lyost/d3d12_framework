@@ -108,6 +108,26 @@ class GraphicsCore
     /// </returns>
     virtual BackBuffers& GetBackBuffer() const = 0;
 
+    /// <summary>
+    /// Retrieves information about support for multisampling with the requested parameters
+    /// </summary>
+    /// <param name="format">
+    /// todo
+    /// </param>
+    /// <param name="sample_count">
+    /// todo
+    /// </param>
+    /// <param name="tiled">
+    /// todo
+    /// </param>
+    /// <param name="num_quality_levels">
+    /// todo
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void CheckSupportedMultisampleLevels(GraphicsDataFormat& format, UINT& sample_count, bool& tiled, UINT& num_quality_levels) const = 0;
+
   protected:
     GraphicsCore();
     

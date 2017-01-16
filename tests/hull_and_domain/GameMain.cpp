@@ -106,7 +106,7 @@ void GameMain::LoadContent()
     rtv_config->SetIndependentBlendEnable(false);
     rtv_config->SetFormat(0, RTVF_R8G8B8A8_UNORM);
     m_pipeline = Pipeline::CreateD3D12(graphics, *m_input_layout, TOPOLOGY_PATCH, *m_vertex_shader, *m_hull_shader, *m_domain_shader, *m_pixel_shader, DEPTH_FUNC_LESS_EQUAL, *rtv_config, *m_root_sig,
-      true);
+      1, 0, true);
     delete rtv_config;
   }
   catch (const FrameworkException& err)

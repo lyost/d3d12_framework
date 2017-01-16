@@ -18,6 +18,8 @@
 #include "private_inc/D3D12/Textures/D3D12_TextureCube.h"
 #include "private_inc/D3D12/Textures/D3D12_TextureCubeArray.h"
 #include "private_inc/D3D12/Textures/D3D12_DepthStencil.h"
+#include "private_inc/D3D12/Textures/D3D12_RenderTargetMSAA.h"
+#include "private_inc/D3D12/Textures/D3D12_DepthStencilMSAA.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 using namespace std;
@@ -255,6 +257,18 @@ void D3D12_CommandList::PrepRenderTarget(const RenderTarget& target)
   m_command_list->ResourceBarrier(1, &barrier);
 }
 
+void D3D12_CommandList::PrepRenderTarget(const RenderTargetMSAA& target)
+{
+  D3D12_RESOURCE_BARRIER barrier;
+  barrier.Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  barrier.Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+  barrier.Transition.pResource   = ((const D3D12_RenderTargetMSAA&)target).GetResource();
+  barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RESOLVE_SOURCE;
+  barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_RENDER_TARGET;
+  m_command_list->ResourceBarrier(1, &barrier);
+}
+
 void D3D12_CommandList::RenderTargetToPresent(const RenderTarget& target)
 {
   D3D12_RESOURCE_BARRIER barrier;
@@ -265,6 +279,42 @@ void D3D12_CommandList::RenderTargetToPresent(const RenderTarget& target)
   barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
   barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_PRESENT;
   m_command_list->ResourceBarrier(1, &barrier);
+}
+
+void D3D12_CommandList::RenderTargetResolvedToPresent(const RenderTarget& target)
+{
+  D3D12_RESOURCE_BARRIER barrier;
+  barrier.Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  barrier.Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+  barrier.Transition.pResource   = ((const D3D12_RenderTarget&)target).GetResource();
+  barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RESOLVE_DEST;
+  barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_PRESENT;
+  m_command_list->ResourceBarrier(1, &barrier);
+}
+
+void D3D12_CommandList::RenderTargetToResolved(const RenderTargetMSAA& src, const RenderTarget& dst)
+{
+  ID3D12Resource* src_resource = ((const D3D12_RenderTargetMSAA&)src).GetResource();
+  ID3D12Resource* dst_resource = ((const D3D12_RenderTarget&)dst).GetResource();
+
+  D3D12_RESOURCE_BARRIER barrier[2];
+  barrier[0].Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  barrier[0].Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+  barrier[0].Transition.pResource   = src_resource;
+  barrier[0].Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  barrier[0].Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+  barrier[0].Transition.StateAfter  = D3D12_RESOURCE_STATE_RESOLVE_SOURCE;
+
+  barrier[1].Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  barrier[1].Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+  barrier[1].Transition.pResource   = dst_resource;
+  barrier[1].Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  barrier[1].Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+  barrier[1].Transition.StateAfter  = D3D12_RESOURCE_STATE_RESOLVE_DEST;
+
+  m_command_list->ResourceBarrier(2, barrier);
+  m_command_list->ResolveSubresource(dst_resource, 0, src_resource, 0, dst_resource->GetDesc().Format);
 }
 
 void D3D12_CommandList::TextureToRenderTarget(const Texture2DRenderTarget& texture)
@@ -297,9 +347,21 @@ void D3D12_CommandList::ClearRenderTarget(const RenderTarget& target, const floa
   m_command_list->ClearRenderTargetView(render_target.GetHandle(), clear_color, 0, NULL);
 }
 
+void D3D12_CommandList::ClearRenderTarget(const RenderTargetMSAA& target, const float clear_color[4])
+{
+  const D3D12_RenderTargetMSAA& render_target = (const D3D12_RenderTargetMSAA&)target;
+  m_command_list->ClearRenderTargetView(render_target.GetHandle(), clear_color, 0, NULL);
+}
+
 void D3D12_CommandList::ClearDepthStencil(const DepthStencil& depth_stencil, float depth_clear_value)
 {
   const D3D12_DepthStencil& depth = (const D3D12_DepthStencil&)depth_stencil;
+  m_command_list->ClearDepthStencilView(depth.GetHandle(), D3D12_CLEAR_FLAG_DEPTH, depth_clear_value, 0, 0, NULL);
+}
+
+void D3D12_CommandList::ClearDepthStencil(const DepthStencilMSAA& depth_stencil, float depth_clear_value)
+{
+  const D3D12_DepthStencilMSAA& depth = (const D3D12_DepthStencilMSAA&)depth_stencil;
   m_command_list->ClearDepthStencilView(depth.GetHandle(), D3D12_CLEAR_FLAG_DEPTH, depth_clear_value, 0, 0, NULL);
 }
 
@@ -315,6 +377,15 @@ void D3D12_CommandList::OMSetRenderTarget(const RenderTarget& target, const Dept
   const D3D12_RenderTarget& render_target = (const D3D12_RenderTarget&)target;
   const D3D12_CPU_DESCRIPTOR_HANDLE& handle = render_target.GetHandle();
   const D3D12_DepthStencil& depth = (const D3D12_DepthStencil&)depth_stencil;
+  const D3D12_CPU_DESCRIPTOR_HANDLE& depth_handle = depth.GetHandle();
+  m_command_list->OMSetRenderTargets(1, &handle, false, &depth_handle);
+}
+
+void D3D12_CommandList::OMSetRenderTarget(const RenderTargetMSAA& target, const DepthStencilMSAA& depth_stencil)
+{
+  const D3D12_RenderTargetMSAA& render_target = (const D3D12_RenderTargetMSAA&)target;
+  const D3D12_CPU_DESCRIPTOR_HANDLE& handle = render_target.GetHandle();
+  const D3D12_DepthStencilMSAA& depth = (const D3D12_DepthStencilMSAA&)depth_stencil;
   const D3D12_CPU_DESCRIPTOR_HANDLE& depth_handle = depth.GetHandle();
   m_command_list->OMSetRenderTargets(1, &handle, false, &depth_handle);
 }

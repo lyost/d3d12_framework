@@ -108,6 +108,26 @@ class D3D12_Core : public GraphicsCore
     BackBuffers& GetBackBuffer() const;
 
     /// <summary>
+    /// Retrieves information about support for multisampling with the requested parameters
+    /// </summary>
+    /// <param name="format">
+    /// todo
+    /// </param>
+    /// <param name="sample_count">
+    /// todo
+    /// </param>
+    /// <param name="tiled">
+    /// todo
+    /// </param>
+    /// <param name="num_quality_levels">
+    /// todo
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    void CheckSupportedMultisampleLevels(GraphicsDataFormat& format, UINT& sample_count, bool& tiled, UINT& num_quality_levels) const;
+
+    /// <summary>
     /// Retrieves the D3D12 device
     /// </summary>
     /// <returns>

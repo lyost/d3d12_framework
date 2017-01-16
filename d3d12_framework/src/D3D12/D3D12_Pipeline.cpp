@@ -59,7 +59,7 @@ void dump_pso_desc(const D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc)
 #endif /* 0 */
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& pixel_shader,
-  const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
+  const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -81,7 +81,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, ms_count, ms_quality, wireframe);
   desc.VS = vs.GetShader();
   desc.PS = ps.GetShader();
 
@@ -98,7 +98,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 }
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& pixel_shader,
-  DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
+  DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -120,7 +120,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, ms_count, ms_quality, wireframe);
   desc.VS = vs.GetShader();
   desc.PS = ps.GetShader();
   desc.DepthStencilState.DepthEnable    = true;
@@ -143,7 +143,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 }
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
-  const Shader& domain_shader, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
+  const Shader& domain_shader, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -180,7 +180,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, ms_count, ms_quality, wireframe);
   desc.VS                               = vs.GetShader();
   desc.HS                               = hs.GetShader();
   desc.DS                               = ds.GetShader();
@@ -205,7 +205,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 }
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& geometry_shader,
-  const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
+  const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -232,7 +232,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, ms_count, ms_quality, wireframe);
   desc.VS                               = vs.GetShader();
   desc.GS                               = gs.GetShader();
   desc.PS                               = ps.GetShader();
@@ -256,7 +256,8 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 }
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
-  const Shader& domain_shader, const Shader& geometry_shader, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, bool wireframe)
+  const Shader& domain_shader, const Shader& geometry_shader, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig,
+  UINT ms_count, UINT ms_quality, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -298,7 +299,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
   
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, wireframe);
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, ms_count, ms_quality, wireframe);
   desc.VS                               = vs.GetShader();
   desc.HS                               = hs.GetShader();
   desc.DS                               = ds.GetShader();
@@ -339,12 +340,20 @@ ID3D12PipelineState* D3D12_Pipeline::GetPipeline() const
 }
 
 void D3D12_Pipeline::CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc, const D3D12_InputLayout& layout, const D3D12_RenderTargetViewConfig& rtv, const D3D12_RootSignature& root,
-  D3D12_PRIMITIVE_TOPOLOGY_TYPE topology, bool wireframe)
+  D3D12_PRIMITIVE_TOPOLOGY_TYPE topology, UINT ms_count, UINT ms_quality, bool wireframe)
 {
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (layout.GetNextIndex() != layout.GetNum())
   {
     throw FrameworkException("Not all input layout entries have been set");
+  }
+  if (ms_count < 1)
+  {
+    throw FrameworkException("Invalid multisample count");
+  }
+  else if (ms_count == 1 && ms_quality != 0)
+  {
+    throw FrameworkException("Multisampling quality must be 0 when multisampling is disabled");
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
@@ -358,7 +367,7 @@ void D3D12_Pipeline::CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DES
   desc.RasterizerState.DepthBiasClamp        = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
   desc.RasterizerState.SlopeScaledDepthBias  = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
   desc.RasterizerState.DepthClipEnable       = true;
-  desc.RasterizerState.MultisampleEnable     = false;
+  desc.RasterizerState.MultisampleEnable     = ms_count > 1;
   desc.RasterizerState.AntialiasedLineEnable = false;
   desc.RasterizerState.ForcedSampleCount     = 0;
   desc.RasterizerState.ConservativeRaster    = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
@@ -369,6 +378,6 @@ void D3D12_Pipeline::CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DES
   desc.PrimitiveTopologyType                 = topology;
   desc.NumRenderTargets                      = rtv.GetNumRenderTargets();
   memcpy(desc.RTVFormats, rtv.GetFormats(), sizeof(RenderTargetViewFormat) * desc.NumRenderTargets);
-  desc.SampleDesc.Count = 1;
-  desc.SampleDesc.Quality = 0;
+  desc.SampleDesc.Count   = ms_count;
+  desc.SampleDesc.Quality = ms_quality;
 }
