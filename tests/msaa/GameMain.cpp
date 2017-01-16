@@ -649,7 +649,7 @@ void GameMain::Draw(UINT ms)
   try
   {
     GraphicsCore& graphics = GetGraphics();
-    const RenderTarget& currentRenderTarget = graphics.GetBackBuffer().GetCurrentRenderTarget();
+    const RenderTarget& current_render_target = graphics.GetBackBuffer().GetCurrentRenderTarget();
     m_command_list->Reset(m_pipeline);
     m_command_list->SetRootSignature(*m_root_sig);
     m_command_list->RSSetViewport(graphics.GetDefaultViewport());
@@ -682,8 +682,8 @@ void GameMain::Draw(UINT ms)
 
     m_command_list->DrawIndexedInstanced(m_indices->GetNumIndices(), 2, 0);
 
-    m_command_list->RenderTargetToResolved(*m_render_target_msaa, currentRenderTarget);
-    m_command_list->RenderTargetResolvedToPresent(currentRenderTarget);
+    m_command_list->RenderTargetToResolved(*m_render_target_msaa, current_render_target);
+    m_command_list->RenderTargetResolvedToPresent(current_render_target);
     m_command_list->Close();
 
     graphics.ExecuteCommandList(*m_command_list);

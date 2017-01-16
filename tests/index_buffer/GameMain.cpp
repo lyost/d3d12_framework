@@ -237,16 +237,16 @@ void GameMain::Draw(UINT ms)
   try
   {
     GraphicsCore& graphics = GetGraphics();
-    const RenderTarget& currentRenderTarget = graphics.GetBackBuffer().GetCurrentRenderTarget();
+    const RenderTarget& current_render_target = graphics.GetBackBuffer().GetCurrentRenderTarget();
     m_command_list->Reset(m_pipeline);
     m_command_list->SetRootSignature(*m_root_sig);
     m_command_list->RSSetViewport(graphics.GetDefaultViewport());
     m_command_list->RSSetScissorRect(m_scissor_rect);
 
     float clear_color[4] = { .3f, .3f, .3f, 1 };
-    m_command_list->PrepRenderTarget(currentRenderTarget);
-    m_command_list->OMSetRenderTarget(currentRenderTarget);
-    m_command_list->ClearRenderTarget(currentRenderTarget, clear_color);
+    m_command_list->PrepRenderTarget(current_render_target);
+    m_command_list->OMSetRenderTarget(current_render_target);
+    m_command_list->ClearRenderTarget(current_render_target, clear_color);
 
     m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
     m_command_list->IASetVertexBuffers(*m_vert_array);
@@ -254,7 +254,7 @@ void GameMain::Draw(UINT ms)
 
     m_command_list->DrawIndexedInstanced(m_indices->GetNumIndices(), 1, 0);
 
-    m_command_list->RenderTargetToPresent(currentRenderTarget);
+    m_command_list->RenderTargetToPresent(current_render_target);
     m_command_list->Close();
 
     graphics.ExecuteCommandList(*m_command_list);

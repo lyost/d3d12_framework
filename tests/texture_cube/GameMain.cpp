@@ -434,7 +434,7 @@ void GameMain::Draw(UINT ms)
   try
   {
     GraphicsCore& graphics = GetGraphics();
-    const RenderTarget& currentRenderTarget = graphics.GetBackBuffer().GetCurrentRenderTarget();
+    const RenderTarget& current_render_target = graphics.GetBackBuffer().GetCurrentRenderTarget();
     m_command_list->Reset(m_pipeline);
     m_command_list->SetRootSignature(*m_root_sig);
     m_command_list->RSSetViewport(graphics.GetDefaultViewport());
@@ -455,9 +455,9 @@ void GameMain::Draw(UINT ms)
     m_command_list->SetConstantBuffer(1, *m_constant_buffer);
 
     float clear_color[4] = { .3f, .3f, .3f, 1 };
-    m_command_list->PrepRenderTarget(currentRenderTarget);
-    m_command_list->OMSetRenderTarget(currentRenderTarget, *m_depth_stencil);
-    m_command_list->ClearRenderTarget(currentRenderTarget, clear_color);
+    m_command_list->PrepRenderTarget(current_render_target);
+    m_command_list->OMSetRenderTarget(current_render_target, *m_depth_stencil);
+    m_command_list->ClearRenderTarget(current_render_target, clear_color);
     m_command_list->ClearDepthStencil(*m_depth_stencil, 1);
 
     m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
@@ -466,7 +466,7 @@ void GameMain::Draw(UINT ms)
 
     m_command_list->DrawIndexedInstanced(m_indices->GetNumIndices(), 1, 0);
 
-    m_command_list->RenderTargetToPresent(currentRenderTarget);
+    m_command_list->RenderTargetToPresent(current_render_target);
     m_command_list->Close();
 
     graphics.ExecuteCommandList(*m_command_list);
