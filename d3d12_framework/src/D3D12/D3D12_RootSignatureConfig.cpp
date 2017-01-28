@@ -28,7 +28,7 @@ D3D12_RootSignatureConfig::~D3D12_RootSignatureConfig()
   delete[]m_samplers;
 }
 
-void D3D12_RootSignatureConfig::SetStageAccess(bool ia, bool vs, bool hs, bool ds, bool gs, bool ps, bool os)
+void D3D12_RootSignatureConfig::SetStageAccess(bool ia, bool vs, bool hs, bool ds, bool gs, bool ps, bool so)
 {
   m_desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_NONE;
   if (ia)
@@ -55,7 +55,7 @@ void D3D12_RootSignatureConfig::SetStageAccess(bool ia, bool vs, bool hs, bool d
   {
     m_desc.Flags |= D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS;
   }
-  if (os)
+  if (so)
   {
     m_desc.Flags |= D3D12_ROOT_SIGNATURE_FLAG_ALLOW_STREAM_OUTPUT;
   }

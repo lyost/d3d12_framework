@@ -3,6 +3,7 @@
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Position.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTexture.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionColor.h"
+#include "private_inc/D3D12/Buffers/D3D12_StreamOutputBuffer.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 
@@ -72,6 +73,20 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionColor& 
   const D3D12_VertexBuffer_PositionColor& vertex_buffer = (const D3D12_VertexBuffer_PositionColor&)buffer;
 
   m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const StreamOutputBuffer& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_StreamOutputBuffer& so_buffer = (const D3D12_StreamOutputBuffer&)buffer;
+
+  m_vertex_buffers[index] = so_buffer.GetVertexBufferView();
 }
 
 void D3D12_VertexBufferArray::Clear(UINT index)

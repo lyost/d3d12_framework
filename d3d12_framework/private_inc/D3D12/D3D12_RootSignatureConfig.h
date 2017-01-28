@@ -54,11 +54,11 @@ class D3D12_RootSignatureConfig : public RootSignatureConfig
     /// true  if pixel shader has access
     /// false otherwise
     /// </param>>
-    /// <param name="os">
+    /// <param name="so">
     /// true  if stream output stage has access
     /// false otherwise
     /// </param>
-    void SetStageAccess(bool ia, bool vs, bool hs, bool ds, bool gs, bool ps, bool os);
+    void SetStageAccess(bool ia, bool vs, bool hs, bool ds, bool gs, bool ps, bool so);
 
     /// <summary>
     /// Sets a sampler entry to the associated values

@@ -321,6 +321,24 @@
     <ClCompile Include="src\D3D12\Textures\D3D12_RenderTargetMSAA.cpp">
       <Filter>Source Files\D3D12\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="src\D3D12\D3D12_StreamOutputConfig.cpp">
+      <Filter>Source Files\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\StreamOutputConfig.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_StreamOutputBuffer.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\StreamOutputBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\StreamOutputBufferArray.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_StreamOutputBufferArray.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -613,6 +631,24 @@
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTargetMSAA.h">
       <Filter>private_inc\D3D12\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\StreamOutputConfig.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\D3D12_StreamOutputConfig.h">
+      <Filter>private_inc\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_StreamOutputBuffer.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\StreamOutputBuffer.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\StreamOutputBufferArray.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_StreamOutputBufferArray.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

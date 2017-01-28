@@ -29,6 +29,10 @@ class D3D12_Pipeline : public Pipeline
     /// <param name="vertex_shader">
     /// shader to use in the vertex shader stage
     /// </param>
+    /// <param name="stream_output">
+    /// pointer to the configuration to use for the stream output stage
+    /// NULL if stream output should be disabled
+    /// </param>
     /// <param name="pixel_shader">
     /// shader to use in the pixel shader stage
     /// </param>
@@ -54,8 +58,8 @@ class D3D12_Pipeline : public Pipeline
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered in creating the instance
     /// </exception>
-    static D3D12_Pipeline* Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& pixel_shader,
-      const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe);
+    static D3D12_Pipeline* Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const StreamOutputConfig* stream_output,
+      const Shader& pixel_shader, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe);
 
     /// <summary>
     /// Creates a graphics pipeline with the specified configuation, and with rasterizer state set to defaults, multisampling disabled, and only the vertex and pixel shaders active
@@ -71,6 +75,10 @@ class D3D12_Pipeline : public Pipeline
     /// </param>
     /// <param name="vertex_shader">
     /// shader to use in the vertex shader stage
+    /// </param>
+    /// <param name="stream_output">
+    /// pointer to the configuration to use for the stream output stage
+    /// NULL if stream output should be disabled
     /// </param>
     /// <param name="pixel_shader">
     /// shader to use in the pixel shader stage
@@ -100,8 +108,8 @@ class D3D12_Pipeline : public Pipeline
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered in creating the instance
     /// </exception>
-    static D3D12_Pipeline* Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& pixel_shader, DepthFuncs depth_func,
-      const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe);
+    static D3D12_Pipeline* Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const StreamOutputConfig* stream_output,
+      const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe);
 
     /// <summary>
     /// Creates a graphics pipeline with the specified configuation, and with rasterizer state set to defaults, multisampling disabled, and only the vertex, hull, domain, and pixel shaders active
@@ -123,6 +131,10 @@ class D3D12_Pipeline : public Pipeline
     /// </param>
     /// <param name="domain_shader">
     /// shader to use in the domain shader stage
+    /// </param>
+    /// <param name="stream_output">
+    /// pointer to the configuration to use for the stream output stage
+    /// NULL if stream output should be disabled
     /// </param>
     /// <param name="pixel_shader">
     /// shader to use in the pixel shader stage
@@ -153,8 +165,8 @@ class D3D12_Pipeline : public Pipeline
     /// Thrown when an error is encountered in creating the instance
     /// </exception>
     static D3D12_Pipeline* Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
-      const Shader& domain_shader, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality,
-      bool wireframe);
+      const Shader& domain_shader, const StreamOutputConfig* stream_output, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig,
+      UINT ms_count, UINT ms_quality, bool wireframe);
 
     /// <summary>
     /// Creates a graphics pipeline with the specified configuation, and with rasterizer state set to defaults, multisampling disabled, and only the vertex, geometry, and pixel shaders active
@@ -173,6 +185,10 @@ class D3D12_Pipeline : public Pipeline
     /// </param>
     /// <param name="geometry_shader">
     /// shader to use in the geometry shader stage
+    /// </param>
+    /// <param name="stream_output">
+    /// pointer to the configuration to use for the stream output stage
+    /// NULL if stream output should be disabled
     /// </param>
     /// <param name="pixel_shader">
     /// shader to use in the pixel shader stage
@@ -203,7 +219,8 @@ class D3D12_Pipeline : public Pipeline
     /// Thrown when an error is encountered in creating the instance
     /// </exception>
     static D3D12_Pipeline* Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& geometry_shader,
-      const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe);
+      const StreamOutputConfig* stream_output, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality,
+      bool wireframe);
 
     /// <summary>
     /// Creates a graphics pipeline with the specified configuation, and with rasterizer state set to defaults, multisampling disabled, and only the vertex, geometry, and pixel shaders active
@@ -228,6 +245,10 @@ class D3D12_Pipeline : public Pipeline
     /// </param>
     /// <param name="geometry_shader">
     /// shader to use in the geometry shader stage
+    /// </param>
+    /// <param name="stream_output">
+    /// pointer to the configuration to use for the stream output stage
+    /// NULL if stream output should be disabled
     /// </param>
     /// <param name="pixel_shader">
     /// shader to use in the pixel shader stage
@@ -258,8 +279,8 @@ class D3D12_Pipeline : public Pipeline
     /// Thrown when an error is encountered in creating the instance
     /// </exception>
     static D3D12_Pipeline* Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
-      const Shader& domain_shader, const Shader& geometry_shader, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig,
-      UINT ms_count, UINT ms_quality, bool wireframe);
+      const Shader& domain_shader, const Shader& geometry_shader, const StreamOutputConfig* stream_output, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config,
+      const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe);
     
     ~D3D12_Pipeline();
 
@@ -301,8 +322,12 @@ class D3D12_Pipeline : public Pipeline
     /// true if the fill mode should be wireframe
     /// false for solid fill mode
     /// </param>
+    /// <param name="stream_output">
+    /// pointer to the configuration to use for the stream output stage
+    /// NULL if stream output should be disabled
+    /// </param>
     static void CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc, const D3D12_InputLayout& layout, const D3D12_RenderTargetViewConfig& rtv, const D3D12_RootSignature& root,
-      D3D12_PRIMITIVE_TOPOLOGY_TYPE topology, UINT ms_count, UINT ms_quality, bool wireframe);
+      D3D12_PRIMITIVE_TOPOLOGY_TYPE topology, UINT ms_count, UINT ms_quality, bool wireframe, const StreamOutputConfig* stream_output);
 
     /// <summary>
     /// pipeline state object that matches the configuration specified when the instance was created

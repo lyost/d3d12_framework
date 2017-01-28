@@ -212,6 +212,30 @@ class D3D12_CommandList : public CommandList
     void IASetIndexBuffer(const IndexBuffer& buffer);
 
     /// <summary>
+    /// Sets the buffers to use for the stream outputstage
+    /// </summary>
+    /// <param name="buffers">
+    /// buffers to use for stream output
+    /// </param>
+    void SOSetBuffers(const StreamOutputBufferArray& buffers);
+
+    /// <summary>
+    /// Makes a steam output buffer ready to use as a vertex buffer
+    /// </summary>
+    /// <param name="buffer">
+    /// stream output buffer
+    /// </param>
+    void SOBufferToVertexBuffer(const StreamOutputBuffer& buffer);
+
+    /// <summary>
+    /// Makes a steam output buffer that previously had SOBufferToVertexBuffer called on it ready to use as a stream output buffer again
+    /// </summary>
+    /// <param name="buffer">
+    /// stream output buffer
+    /// </param>
+    void SOVertexBufferToStreamOutputBuffer(const StreamOutputBuffer& buffer);
+
+    /// <summary>
     /// Sets the viewport to use for the rasterizer stage
     /// </summary>
     /// <param name="viewport">

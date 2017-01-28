@@ -7,6 +7,7 @@ class Pipeline;
 class VertexBufferArray;
 class HeapArray;
 class ConstantBuffer;
+class StreamOutputBufferArray;
 class Texture1D;
 class Texture2D;
 class Texture2DRenderTarget;
@@ -30,6 +31,7 @@ class DepthStencilMSAA;
 #include "Graphics/Topology.h"
 #include "Graphics/Buffers/VertexBufferArray.h"
 #include "Graphics/Buffers/IndexBuffer.h"
+#include "Graphics/Buffers/StreamOutputBufferArray.h"
 #include "Graphics/Textures/Texture1D.h"
 #include "Graphics/Textures/Texture2D.h"
 #include "Graphics/Textures/Texture2DRenderTarget.h"
@@ -255,6 +257,34 @@ class CommandList
       /// index buffer to pass to the input assembler stage
       /// </param>
       virtual void IASetIndexBuffer(const IndexBuffer& buffer) = 0;
+
+    /*
+     * Stream output functions
+     */
+
+      /// <summary>
+      /// Sets the buffers to use for the stream outputstage
+      /// </summary>
+      /// <param name="buffers">
+      /// buffers to use for stream output
+      /// </param>
+      virtual void SOSetBuffers(const StreamOutputBufferArray& buffers) = 0;
+
+      /// <summary>
+      /// Makes a steam output buffer ready to use as a vertex buffer
+      /// </summary>
+      /// <param name="buffer">
+      /// stream output buffer
+      /// </param>
+      virtual void SOBufferToVertexBuffer(const StreamOutputBuffer& buffer) = 0;
+
+      /// <summary>
+      /// Makes a steam output buffer that previously had SOBufferToVertexBuffer called on it ready to use as a stream output buffer again
+      /// </summary>
+      /// <param name="buffer">
+      /// stream output buffer
+      /// </param>
+      virtual void SOVertexBufferToStreamOutputBuffer(const StreamOutputBuffer& buffer) = 0;
 
     /*
      * Rasterizer functions

@@ -76,6 +76,20 @@ class D3D12_VertexBufferArray : public VertexBufferArray
     /// buffer to set the element to
     /// </param>
     void Set(UINT index, const VertexBuffer_PositionColor& buffer);
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If the buffer is to be destroyed, then it must be cleared from this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    void Set(UINT index, const StreamOutputBuffer& buffer);
     
     /// <summary>
     /// Removes any vertex buffer from the specified index

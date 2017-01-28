@@ -141,6 +141,8 @@
     <ClCompile Include="src\D3D12\Buffers\D3D12_DepthStencilDescHeap.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBuffer.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBuffer16.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_StreamOutputBuffer.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_StreamOutputBufferArray.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBufferArray.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_Custom.cpp" />
@@ -158,6 +160,7 @@
     <ClCompile Include="src\D3D12\D3D12_RootSignatureConfig.cpp" />
     <ClCompile Include="src\D3D12\D3D12_Shader.cpp" />
     <ClCompile Include="src\D3D12\D3D12_ShaderResourceDescHeap.cpp" />
+    <ClCompile Include="src\D3D12\D3D12_StreamOutputConfig.cpp" />
     <ClCompile Include="src\D3D12\Semantics.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencil.cpp" />
     <ClCompile Include="src\D3D12\Textures\D3D12_DepthStencilMSAA.cpp" />
@@ -181,6 +184,8 @@
     <ClCompile Include="src\Graphics\Buffers\ConstantBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\IndexBuffer16.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\StreamOutputBuffer.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\StreamOutputBufferArray.cpp" />
     <ClCompile Include="src\Graphics\Buffers\VertexBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\VertexBufferArray.cpp" />
     <ClCompile Include="src\Graphics\Buffers\VertexBuffer_Custom.cpp" />
@@ -198,6 +203,7 @@
     <ClCompile Include="src\Graphics\RootSignatureConfig.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Graphics\ShaderResourceDescHeap.cpp" />
+    <ClCompile Include="src\Graphics\StreamOutputConfig.cpp" />
     <ClCompile Include="src\Graphics\Textures\DepthStencil.cpp" />
     <ClCompile Include="src\Graphics\Textures\DepthStencilMSAA.cpp" />
     <ClCompile Include="src\Graphics\Textures\RenderTarget.cpp" />
@@ -227,6 +233,8 @@
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_DepthStencilDescHeap.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBuffer.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBuffer16.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_StreamOutputBuffer.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_StreamOutputBufferArray.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferArray.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_Custom.h" />
@@ -245,6 +253,7 @@
     <ClInclude Include="private_inc\D3D12\D3D12_RootSignatureConfig.h" />
     <ClInclude Include="private_inc\D3D12\D3D12_Shader.h" />
     <ClInclude Include="private_inc\D3D12\D3D12_ShaderResourceDescHeap.h" />
+    <ClInclude Include="private_inc\D3D12\D3D12_StreamOutputConfig.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencil.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_DepthStencilMSAA.h" />
     <ClInclude Include="private_inc\D3D12\Textures\D3D12_RenderTarget.h" />
@@ -269,6 +278,8 @@
     <ClInclude Include="public_inc\Graphics\Buffers\ConstantBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer16.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\StreamOutputBuffer.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\StreamOutputBufferArray.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\VertexBufferArray.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_Custom.h" />
@@ -293,6 +304,7 @@
     <ClInclude Include="public_inc\Graphics\Shader.h" />
     <ClInclude Include="public_inc\Graphics\ShaderResourceDescHeap.h" />
     <ClInclude Include="public_inc\Graphics\ShaderVisibility.h" />
+    <ClInclude Include="public_inc\Graphics\StreamOutputConfig.h" />
     <ClInclude Include="public_inc\Graphics\TextureEnums.h" />
     <ClInclude Include="public_inc\Graphics\Textures\DepthStencil.h" />
     <ClInclude Include="public_inc\Graphics\Textures\DepthStencilMSAA.h" />

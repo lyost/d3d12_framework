@@ -9,6 +9,8 @@
 #include "private_inc/D3D12/Textures/D3D12_RenderTarget.h"
 #include "private_inc/D3D12/D3D12_HeapArray.h"
 #include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
+#include "private_inc/D3D12/Buffers/D3D12_StreamOutputBuffer.h"
+#include "private_inc/D3D12/Buffers/D3D12_StreamOutputBufferArray.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture1D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2D.h"
 #include "private_inc/D3D12/Textures/D3D12_Texture2DRenderTarget.h"
@@ -190,6 +192,38 @@ void D3D12_CommandList::IASetIndexBuffer(const IndexBuffer& buffer)
 {
   const D3D12_INDEX_BUFFER_VIEW& index_buffer = ((const D3D12_IndexBuffer16&)buffer).GetBuffer();
   m_command_list->IASetIndexBuffer(&index_buffer);
+}
+
+void D3D12_CommandList::SOSetBuffers(const StreamOutputBufferArray& buffers)
+{
+  const D3D12_StreamOutputBufferArray& buffer_array = (const D3D12_StreamOutputBufferArray&)buffers;
+  m_command_list->SOSetTargets(0, buffer_array.GetNumBuffers(), buffer_array.GetArray());
+}
+
+void D3D12_CommandList::SOBufferToVertexBuffer(const StreamOutputBuffer& buffer)
+{
+  const D3D12_StreamOutputBuffer& so_buffer = (const D3D12_StreamOutputBuffer&)buffer;
+  D3D12_RESOURCE_BARRIER barrier;
+  barrier.Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  barrier.Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+  barrier.Transition.pResource   = so_buffer.GetResource();
+  barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_STREAM_OUT;
+  barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_GENERIC_READ;
+  m_command_list->ResourceBarrier(1, &barrier);
+}
+
+void D3D12_CommandList::SOVertexBufferToStreamOutputBuffer(const StreamOutputBuffer& buffer)
+{
+  const D3D12_StreamOutputBuffer& so_buffer = (const D3D12_StreamOutputBuffer&)buffer;
+  D3D12_RESOURCE_BARRIER barrier;
+  barrier.Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  barrier.Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+  barrier.Transition.pResource   = so_buffer.GetResource();
+  barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
+  barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_STREAM_OUT;
+  m_command_list->ResourceBarrier(1, &barrier);
 }
 
 void D3D12_CommandList::RSSetViewport(const Viewport& viewport)
