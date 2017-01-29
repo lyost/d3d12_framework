@@ -90,6 +90,11 @@ D3D12_GPU_VIRTUAL_ADDRESS D3D12_ConstantBuffer::GetGPUAddr() const
   return m_gpu_mem;
 }
 
+ID3D12Resource* D3D12_ConstantBuffer::GetResource() const
+{
+  return m_buffer;
+}
+
 void D3D12_ConstantBuffer::GetResourceDesc(UINT& num_bytes, D3D12_RESOURCE_DESC& resource_desc)
 {
   // constant buffer size is required to be 256-byte aligned

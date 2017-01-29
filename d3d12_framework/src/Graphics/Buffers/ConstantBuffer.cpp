@@ -6,7 +6,6 @@ ConstantBuffer* ConstantBuffer::CreateD3D12(const GraphicsCore& graphics, Shader
   return D3D12_ConstantBuffer::Create(graphics, shader_buffer_heap, num_bytes);
 }
 
-
 ConstantBuffer::ConstantBuffer()
 {
 }

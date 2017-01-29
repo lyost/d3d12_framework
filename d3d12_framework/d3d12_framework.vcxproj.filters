@@ -339,6 +339,12 @@
     <ClCompile Include="src\D3D12\Buffers\D3D12_StreamOutputBufferArray.cpp">
       <Filter>Source Files\D3D12\Buffers</Filter>
     </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_ReadbackBuffer.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\ReadbackBuffer.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -649,6 +655,12 @@
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_StreamOutputBufferArray.h">
       <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_ReadbackBuffer.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\ReadbackBuffer.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

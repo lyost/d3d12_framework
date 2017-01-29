@@ -56,6 +56,14 @@ class D3D12_ConstantBuffer : public ConstantBuffer
     /// GPU address for the buffer
     /// </returns>
     D3D12_GPU_VIRTUAL_ADDRESS GetGPUAddr() const;
+
+    /// <summary>
+    /// Retrieves the D3D12 resource of the buffer
+    /// </summary>
+    /// <returns>
+    /// D3D12 resource for the buffer
+    /// </returns>
+    ID3D12Resource* GetResource() const;
     
   private:
     // disabled

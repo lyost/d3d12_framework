@@ -11,6 +11,7 @@
 #include "Graphics/Buffers/VertexBuffer_Position.h"
 #include "Graphics/Buffers/IndexBuffer16.h"
 #include "Graphics/Buffers/StreamOutputBufferArray.h"
+#include "Graphics/Buffers/ReadbackBuffer.h"
 #include "Camera.h"
 #include "Graphics/ShaderResourceDescHeap.h"
 #include "Graphics/Buffers/ConstantBuffer.h"
@@ -187,9 +188,14 @@ class GameMain : public Game
     DepthStencil* m_depth_stencil;
 
     /// <summary>
-    /// stream output buffer
+    /// stream output buffer (stored as a vector due to StreamOutputBuffer::GetNumVerticesWrittenD3D12 expecting a vector for performance reasons)
     /// </summary>
-    StreamOutputBuffer* m_so_buffer;
+    std::vector<StreamOutputBuffer*> m_so_buffers;
+
+    /// <summary>
+    /// readback buffer for determining how many vertices were written to the stream output buffer
+    /// </summary>
+    ReadbackBuffer* m_readback;
     
     /// <summary>
     /// array of stream output buffers

@@ -2,6 +2,8 @@
 #include "private_inc/D3D12/Buffers/D3D12_StreamOutputBuffer.h"
 #include "private_inc/D3D12/D3D12_Core.h"
 #include "private_inc/D3D12/D3D12_StreamOutputConfig.h"
+#include "private_inc/D3D12/D3D12_CommandList.h"
+#include "private_inc/D3D12/Buffers/D3D12_ReadbackBuffer.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 using namespace std;
@@ -75,11 +77,52 @@ StreamOutputBuffer* D3D12_StreamOutputBuffer::Create(GraphicsCore& graphics, con
   return new D3D12_StreamOutputBuffer(buffer, so_view, vb_view, num_vertices);
 }
 
+void D3D12_StreamOutputBuffer::GetNumVerticesWritten(GraphicsCore& graphics, CommandList& command_list, const std::vector<StreamOutputBuffer*> so_buffers, ReadbackBuffer& readback_buffer,
+  std::vector<UINT>& num_vertices)
+{
+  D3D12_Core& core = (D3D12_Core&)graphics;
+  ID3D12GraphicsCommandList* cmd_list = ((D3D12_CommandList&)command_list).GetCommandList();
+  D3D12_ReadbackBuffer& rb_buffer = (D3D12_ReadbackBuffer&)readback_buffer;
+  ID3D12Resource* resource = rb_buffer.GetResource();
+
+  command_list.Reset(NULL);
+
+  num_vertices.reserve(num_vertices.size() + so_buffers.size());
+  vector<StreamOutputBuffer*>::const_iterator so_it = so_buffers.begin();
+  UINT64 dst_offset = 0;
+  while (so_it != so_buffers.end())
+  {
+    D3D12_StreamOutputBuffer* curr_so_buffer = (D3D12_StreamOutputBuffer*)(*so_it);
+    UINT64 src_offset = curr_so_buffer->m_so_view.BufferFilledSizeLocation - curr_so_buffer->m_so_view.BufferLocation;
+    cmd_list->CopyBufferRegion(resource, dst_offset, curr_so_buffer->m_buffer, src_offset, sizeof(UINT64));
+
+    ++so_it;
+    dst_offset += sizeof(UINT64);
+  }
+
+  command_list.Close();
+  core.ExecuteCommandList(command_list);
+  core.WaitOnFence();
+
+  rb_buffer.Map();
+  UINT64* cbuffer_value = (UINT64*)rb_buffer.GetHostMemStart();
+  so_it = so_buffers.begin();
+  while (so_it != so_buffers.end())
+  {
+    D3D12_StreamOutputBuffer* curr_so_buffer = (D3D12_StreamOutputBuffer*)(*so_it);
+    num_vertices.push_back((UINT)((*cbuffer_value) / curr_so_buffer->m_vb_view.StrideInBytes));
+
+    ++so_it;
+    ++cbuffer_value;
+  }
+  rb_buffer.Unmap();
+}
+
 D3D12_StreamOutputBuffer::D3D12_StreamOutputBuffer(ID3D12Resource* buffer, const D3D12_STREAM_OUTPUT_BUFFER_VIEW& so_view, const D3D12_VERTEX_BUFFER_VIEW& vb_view, UINT num_vertices)
 :m_buffer(buffer),
  m_so_view(so_view),
  m_vb_view(vb_view),
-  m_num_vertices(num_vertices)
+ m_num_vertices(num_vertices)
 {
 }
 

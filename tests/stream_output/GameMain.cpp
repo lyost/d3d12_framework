@@ -30,11 +30,12 @@ void GameMain::LoadContent()
 
 void GameMain::UnloadContent()
 {
+  delete m_readback;
   delete m_so_vert_array;
   delete m_so_vertex_shader;
   delete m_so_pipeline;
   delete m_so_array;
-  delete m_so_buffer;
+  delete m_so_buffers[0];
   delete m_so_root_sig;
   delete m_depth_stencil;
   delete m_camera;
@@ -161,6 +162,10 @@ void GameMain::Draw(UINT ms)
     graphics.ExecuteCommandList(*m_command_list);
     graphics.WaitOnFence();
 
+    // determine the number of vertices written to the stream output buffer
+    vector<UINT> num_verts;
+    StreamOutputBuffer::GetNumVerticesWrittenD3D12(graphics, *m_command_list, m_so_buffers, *m_readback, num_verts);
+
     // draw using the stream output buffer as input
     m_command_list->Reset(m_so_pipeline);
     m_command_list->SetRootSignature(*m_so_root_sig);
@@ -180,11 +185,11 @@ void GameMain::Draw(UINT ms)
     m_command_list->SetHeapArray(*m_heap_array);
     m_command_list->SetConstantBuffer(0, *m_constant_buffer);
 
-    m_command_list->SOBufferToVertexBuffer(*m_so_buffer);
+    m_command_list->SOBufferToVertexBuffer(*(m_so_buffers[0]));
     m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
     m_command_list->IASetVertexBuffers(*m_so_vert_array);
-    m_command_list->DrawInstanced(m_so_buffer->GetVertexCapacity(), 1, 0);
-    m_command_list->SOVertexBufferToStreamOutputBuffer(*m_so_buffer);
+    m_command_list->DrawInstanced(num_verts[0], 1, 0);
+    m_command_list->SOVertexBufferToStreamOutputBuffer(*(m_so_buffers[0]));
 
     m_command_list->RenderTargetToPresent(current_render_target);
     m_command_list->Close();
@@ -452,10 +457,11 @@ void GameMain::CreateNormalPipeline()
 
   try
   {
-    m_so_buffer = StreamOutputBuffer::CreateD3D12(graphics, *stream_output, 0, 6);
+    m_so_buffers.reserve(1);
+    m_so_buffers.push_back(StreamOutputBuffer::CreateD3D12(graphics, *stream_output, 0, 6));
 
     m_so_array = StreamOutputBufferArray::CreateD3D12(1);
-    m_so_array->Set(0, *m_so_buffer);
+    m_so_array->Set(0, *(m_so_buffers[0]));
   }
   catch (const FrameworkException& err)
   {
@@ -577,12 +583,23 @@ void GameMain::CreateStreamOutputPipeline()
   try
   {
     m_so_vert_array = VertexBufferArray::CreateD3D12(1);
-    m_so_vert_array->Set(0, *m_so_buffer);
+    m_so_vert_array->Set(0, *(m_so_buffers[0]));
   }
   catch (const FrameworkException& err)
   {
     ostringstream out;
     out << "Unable to create stream output vertex buffer array:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+  try
+  {
+    m_readback = ReadbackBuffer::CreateD3D12(graphics, (UINT)(sizeof(UINT64) * m_so_buffers.size()));
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to create readback buffer:\n" << err.what();
     log_print(out.str().c_str());
     exit(1);
   }
