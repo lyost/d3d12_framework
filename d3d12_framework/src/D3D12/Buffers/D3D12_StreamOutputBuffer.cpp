@@ -44,7 +44,7 @@ StreamOutputBuffer* D3D12_StreamOutputBuffer::Create(GraphicsCore& graphics, con
   D3D12_RESOURCE_DESC res_desc;
   res_desc.Dimension          = D3D12_RESOURCE_DIMENSION_BUFFER;
   res_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
-  res_desc.Width              = num_bytes + sizeof(UINT64); // note: +sizeof(UINT64) due to despite https://msdn.microsoft.com/en-us/library/windows/desktop/dn903944%28v=vs.85%29.aspx documenting it as a 32bit field, 64bits is required
+  res_desc.Width              = num_bytes + sizeof(UINT64); // note: +sizeof(UINT64) due to graphics card counter for how many bytes it has written to the stream output buffer
   res_desc.Height             = 1;
   res_desc.DepthOrArraySize   = 1;
   res_desc.MipLevels          = 1;
@@ -65,9 +65,9 @@ StreamOutputBuffer* D3D12_StreamOutputBuffer::Create(GraphicsCore& graphics, con
   }
 
   D3D12_STREAM_OUTPUT_BUFFER_VIEW so_view;
-  so_view.BufferLocation           = buffer->GetGPUVirtualAddress();
+  so_view.BufferFilledSizeLocation = buffer->GetGPUVirtualAddress();
+  so_view.BufferLocation           = so_view.BufferFilledSizeLocation + sizeof(UINT64);
   so_view.SizeInBytes              = num_bytes;
-  so_view.BufferFilledSizeLocation = so_view.BufferLocation + so_view.SizeInBytes;
 
   D3D12_VERTEX_BUFFER_VIEW vb_view;
   vb_view.BufferLocation = so_view.BufferLocation;
@@ -93,8 +93,7 @@ void D3D12_StreamOutputBuffer::GetNumVerticesWritten(GraphicsCore& graphics, Com
   while (so_it != so_buffers.end())
   {
     D3D12_StreamOutputBuffer* curr_so_buffer = (D3D12_StreamOutputBuffer*)(*so_it);
-    UINT64 src_offset = curr_so_buffer->m_so_view.BufferFilledSizeLocation - curr_so_buffer->m_so_view.BufferLocation;
-    cmd_list->CopyBufferRegion(resource, dst_offset, curr_so_buffer->m_buffer, src_offset, sizeof(UINT64));
+    cmd_list->CopyBufferRegion(resource, dst_offset, curr_so_buffer->m_buffer, 0, sizeof(UINT64));
 
     ++so_it;
     dst_offset += sizeof(UINT64);

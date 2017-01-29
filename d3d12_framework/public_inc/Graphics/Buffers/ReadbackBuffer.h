@@ -27,23 +27,6 @@ class ReadbackBuffer
     static ReadbackBuffer* CreateD3D12(const GraphicsCore& graphics, UINT num_bytes);
 
     virtual ~ReadbackBuffer();
-
-    /// <summary>
-    /// Updates part of the constant buffer
-    /// </summary>
-    /// <param name="data">
-    /// data to upload to the constant buffer
-    /// <remarks>
-    /// This must be at least len bytes long
-    /// </remarks>
-    /// </param>
-    /// <param name="start">
-    /// index of the first byte in the contant buffer to write to
-    /// </param>
-    /// <param name="len">
-    /// number ofbytes to write to the constant buffer
-    /// </param>
-    virtual void Upload(void* data, UINT start, UINT len) = 0; // todo: update this to something that makes sense or remove it
     
   protected:
     ReadbackBuffer();

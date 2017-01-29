@@ -120,7 +120,6 @@ D3D12_Core* D3D12_Core::Create(HWND& wnd)
     throw FrameworkException(out.str());
   }
 
-  // todo: Setup the viewport
   D3D12_VIEWPORT vp;
   vp.Width    = (FLOAT)width;
   vp.Height   = (FLOAT)height;

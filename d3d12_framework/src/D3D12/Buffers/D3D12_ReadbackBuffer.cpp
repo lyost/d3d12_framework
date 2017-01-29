@@ -46,23 +46,6 @@ D3D12_ReadbackBuffer::~D3D12_ReadbackBuffer()
   m_buffer->Release();
 }
 
-void D3D12_ReadbackBuffer::Upload(void* data, UINT start, UINT len)
-{
-#ifdef VALIDATE_FUNCTION_ARGUMENTS
-  UINT total = start + len;
-  if (total > m_num_bytes)
-  {
-    throw FrameworkException("attempting to send more bytes than are available in the buffer");
-  }
-  if (total < start)
-  {
-    throw FrameworkException("rollover detected");
-  }
-#endif /* VALIDATE_FUNCTION_ARGUMENTS */
-
-  memcpy(m_host_mem_start + start, data, len);
-}
-
 ID3D12Resource* D3D12_ReadbackBuffer::GetResource() const
 {
   return m_buffer;

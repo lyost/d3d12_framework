@@ -30,23 +30,6 @@ class D3D12_ReadbackBuffer : public ReadbackBuffer
     ~D3D12_ReadbackBuffer();
 
     /// <summary>
-    /// Updates part of the constant buffer
-    /// </summary>
-    /// <param name="data">
-    /// data to upload to the constant buffer
-    /// <remarks>
-    /// This must be at least len bytes long
-    /// </remarks>
-    /// </param>
-    /// <param name="start">
-    /// index of the first byte in the contant buffer to write to
-    /// </param>
-    /// <param name="len">
-    /// number ofbytes to write to the constant buffer
-    /// </param>
-    void Upload(void* data, UINT start, UINT len); // todo: update this to something that makes sense or remove it
-
-    /// <summary>
     /// Retrieves the D3D12 resource of the buffer
     /// </summary>
     /// <returns>

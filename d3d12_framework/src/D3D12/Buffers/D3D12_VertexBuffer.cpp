@@ -60,6 +60,6 @@ void D3D12_VertexBuffer::CreateBuffer(GraphicsCore& graphics, UINT stride, UINT 
   buffer->Unmap(0, NULL);
 
   view.BufferLocation = buffer->GetGPUVirtualAddress();
-  view.SizeInBytes    = (UINT)num_bytes; // todo: argument validation to avoid overflow
+  view.SizeInBytes    = (UINT)num_bytes;
   view.StrideInBytes  = stride;
 }
