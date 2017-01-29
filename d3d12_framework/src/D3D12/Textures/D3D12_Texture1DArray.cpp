@@ -27,7 +27,7 @@ UINT16 D3D12_Texture1DArray::GetLength() const
   return m_length;
 }
 
-ID3D12Resource* D3D12_Texture1DArray::GetBuffer() const
+ID3D12Resource* D3D12_Texture1DArray::GetResource() const
 {
   return m_buffer;
 }

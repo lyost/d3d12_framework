@@ -42,7 +42,7 @@ class D3D12_Texture2DRenderTarget : public Texture2DRenderTarget
     /// <returns>
     /// D3D12 resource for the texture
     /// </returns>
-    ID3D12Resource* GetBuffer() const;
+    ID3D12Resource* GetResource() const;
 
     /// <summary>
     /// Retrieves the GPU address for the texture

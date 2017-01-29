@@ -36,7 +36,7 @@ D3D12_TextureCubeArray::~D3D12_TextureCubeArray()
   m_buffer->Release();
 }
 
-ID3D12Resource* D3D12_TextureCubeArray::GetBuffer() const
+ID3D12Resource* D3D12_TextureCubeArray::GetResource() const
 {
   return m_buffer;
 }

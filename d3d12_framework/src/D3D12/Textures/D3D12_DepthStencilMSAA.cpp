@@ -70,7 +70,7 @@ D3D12_DepthStencilMSAA::~D3D12_DepthStencilMSAA()
   delete m_desc_heap;
 }
 
-ID3D12Resource* D3D12_DepthStencilMSAA::GetBuffer() const
+ID3D12Resource* D3D12_DepthStencilMSAA::GetResource() const
 {
   return m_buffer;
 }

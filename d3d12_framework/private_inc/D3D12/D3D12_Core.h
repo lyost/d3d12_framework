@@ -111,16 +111,17 @@ class D3D12_Core : public GraphicsCore
     /// Retrieves information about support for multisampling with the requested parameters
     /// </summary>
     /// <param name="format">
-    /// todo
+    /// render target format
     /// </param>
     /// <param name="sample_count">
-    /// todo
+    /// number of multisamples per pixel
     /// </param>
     /// <param name="tiled">
-    /// todo
+    /// true if quality levels should be checked for tiled resources
+    /// false otherwise
     /// </param>
     /// <param name="num_quality_levels">
-    /// todo
+    /// number of image quality levels
     /// </param>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered

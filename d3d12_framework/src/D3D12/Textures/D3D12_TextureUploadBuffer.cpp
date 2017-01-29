@@ -15,43 +15,43 @@ using namespace std;
 
 TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture1D& texture)
 {
-  return D3D12_TextureUploadBuffer::CreateInternal(graphics, ((const D3D12_Texture1D&)texture).GetBuffer()->GetDesc());
+  return D3D12_TextureUploadBuffer::CreateInternal(graphics, ((const D3D12_Texture1D&)texture).GetResource()->GetDesc());
 }
 
 TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2D& texture)
 {
-  return D3D12_TextureUploadBuffer::CreateInternal(graphics, ((const D3D12_Texture2D&)texture).GetBuffer()->GetDesc());
+  return D3D12_TextureUploadBuffer::CreateInternal(graphics, ((const D3D12_Texture2D&)texture).GetResource()->GetDesc());
 }
 
 TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture3D& texture)
 {
-  return D3D12_TextureUploadBuffer::CreateInternal(graphics, ((const D3D12_Texture3D&)texture).GetBuffer()->GetDesc());
+  return D3D12_TextureUploadBuffer::CreateInternal(graphics, ((const D3D12_Texture3D&)texture).GetResource()->GetDesc());
 }
 
 TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture1DArray& texture)
 {
-  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_Texture1DArray&)texture).GetBuffer()->GetDesc();
+  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_Texture1DArray&)texture).GetResource()->GetDesc();
   resource_desc.DepthOrArraySize = 1;
   return D3D12_TextureUploadBuffer::CreateInternal(graphics, resource_desc);
 }
 
 TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const Texture2DArray& texture)
 {
-  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_Texture2DArray&)texture).GetBuffer()->GetDesc();
+  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_Texture2DArray&)texture).GetResource()->GetDesc();
   resource_desc.DepthOrArraySize = 1;
   return D3D12_TextureUploadBuffer::CreateInternal(graphics, resource_desc);
 }
 
 TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const TextureCube& texture)
 {
-  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_TextureCube&)texture).GetBuffer()->GetDesc();
+  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_TextureCube&)texture).GetResource()->GetDesc();
   resource_desc.DepthOrArraySize = 1;
   return D3D12_TextureUploadBuffer::CreateInternal(graphics, resource_desc);
 }
 
 TextureUploadBuffer* D3D12_TextureUploadBuffer::Create(const GraphicsCore& graphics, const TextureCubeArray& texture)
 {
-  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_TextureCubeArray&)texture).GetBuffer()->GetDesc();
+  D3D12_RESOURCE_DESC resource_desc = ((const D3D12_TextureCubeArray&)texture).GetResource()->GetDesc();
   resource_desc.DepthOrArraySize = 1;
   return D3D12_TextureUploadBuffer::CreateInternal(graphics, resource_desc);
 }
@@ -77,7 +77,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  ID3D12Resource* dst_texture = tex.GetBuffer();
+  ID3D12Resource* dst_texture = tex.GetResource();
   PrepUploadInternal(graphics, command_list, dst_texture, mip_level, data);
 }
 
@@ -92,7 +92,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  ID3D12Resource* dst_texture = tex.GetBuffer();
+  ID3D12Resource* dst_texture = tex.GetResource();
   PrepUploadInternal(graphics, command_list, dst_texture, mip_level, data);
 }
 
@@ -107,7 +107,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  ID3D12Resource* dst_texture = tex.GetBuffer();
+  ID3D12Resource* dst_texture = tex.GetResource();
   PrepUploadInternal(graphics, command_list, dst_texture, mip_level, data);
 }
 
@@ -123,7 +123,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  ID3D12Resource* dst_texture = tex.GetBuffer();
+  ID3D12Resource* dst_texture = tex.GetResource();
   PrepUploadInternal(graphics, command_list, dst_texture, index * num_mip_levels + (UINT)mip_level, data);
 }
 
@@ -139,7 +139,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  ID3D12Resource* dst_texture = tex.GetBuffer();
+  ID3D12Resource* dst_texture = tex.GetResource();
   PrepUploadInternal(graphics, command_list, dst_texture, index * num_mip_levels + (UINT)mip_level, data);
 }
 
@@ -160,7 +160,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  ID3D12Resource* dst_texture = tex.GetBuffer();
+  ID3D12Resource* dst_texture = tex.GetResource();
   PrepUploadInternal(graphics, command_list, dst_texture, index * num_mip_levels + (UINT)mip_level, data);
 }
 
@@ -182,7 +182,7 @@ void D3D12_TextureUploadBuffer::PrepUpload(GraphicsCore& graphics, CommandList& 
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  ID3D12Resource* dst_texture = tex.GetBuffer();
+  ID3D12Resource* dst_texture = tex.GetResource();
   PrepUploadInternal(graphics, command_list, dst_texture, cube_index * subresources_per_cube + side_index * num_mip_levels + (UINT)mip_level, data);
 }
 

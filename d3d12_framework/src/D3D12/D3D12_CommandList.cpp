@@ -356,7 +356,7 @@ void D3D12_CommandList::TextureToRenderTarget(const Texture2DRenderTarget& textu
   D3D12_RESOURCE_BARRIER barrier;
   barrier.Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
   barrier.Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-  barrier.Transition.pResource   = ((const D3D12_Texture2DRenderTarget&)texture).GetBuffer();
+  barrier.Transition.pResource   = ((const D3D12_Texture2DRenderTarget&)texture).GetResource();
   barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
   barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
   barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_RENDER_TARGET;

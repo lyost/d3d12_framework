@@ -84,7 +84,7 @@ const D3D12_CPU_DESCRIPTOR_HANDLE& D3D12_RenderTargetMSAA::GetHandle() const
 void D3D12_RenderTargetMSAA::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture)
 {
   ID3D12Device*              device      = ((D3D12_Core&)graphics).GetDevice();
-  ID3D12Resource*            dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
+  ID3D12Resource*            dst_texture = ((D3D12_Texture2D&)texture).GetResource();
   ID3D12GraphicsCommandList* cmd_list    = ((D3D12_CommandList&)command_list).GetCommandList();
 
 #ifdef VALIDATE_FUNCTION_ARGUMENTS

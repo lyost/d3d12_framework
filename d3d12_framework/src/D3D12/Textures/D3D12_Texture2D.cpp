@@ -22,7 +22,7 @@ D3D12_Texture2D::~D3D12_Texture2D()
   m_buffer->Release();
 }
 
-ID3D12Resource* D3D12_Texture2D::GetBuffer() const
+ID3D12Resource* D3D12_Texture2D::GetResource() const
 {
   return m_buffer;
 }

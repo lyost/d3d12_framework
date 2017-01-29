@@ -59,7 +59,7 @@ RenderTarget* D3D12_RenderTarget::CreateFromTexture(const GraphicsCore& graphics
   ID3D12Device*     device = core.GetDevice();
 
   const D3D12_Texture2DRenderTarget& tex           = (const D3D12_Texture2DRenderTarget&)texture;
-  ID3D12Resource*                    buffer        = tex.GetBuffer();
+  ID3D12Resource*                    buffer        = tex.GetResource();
   D3D12_RESOURCE_DESC                resource_desc = buffer->GetDesc();
 
   D3D12_RenderTargetDescHeap* desc_heap = D3D12_RenderTargetDescHeap::Create(device, 1);
@@ -114,7 +114,7 @@ const D3D12_CPU_DESCRIPTOR_HANDLE& D3D12_RenderTarget::GetHandle() const
 void D3D12_RenderTarget::PrepUpload(GraphicsCore& graphics, CommandList& command_list, Texture2D& texture)
 {
   ID3D12Device*              device      = ((D3D12_Core&)graphics).GetDevice();
-  ID3D12Resource*            dst_texture = ((D3D12_Texture2D&)texture).GetBuffer();
+  ID3D12Resource*            dst_texture = ((D3D12_Texture2D&)texture).GetResource();
   ID3D12GraphicsCommandList* cmd_list    = ((D3D12_CommandList&)command_list).GetCommandList();
 
 #ifdef VALIDATE_FUNCTION_ARGUMENTS

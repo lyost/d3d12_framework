@@ -46,7 +46,7 @@ class D3D12_DepthStencilMSAA : public DepthStencilMSAA
     /// <returns>
     /// D3D12 resource for the depth stencil
     /// </returns>
-    ID3D12Resource* GetBuffer() const;
+    ID3D12Resource* GetResource() const;
 
     /// <summary>
     /// Retrieves the GPU address for the depth stencil
