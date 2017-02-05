@@ -121,13 +121,13 @@ class GraphicsCore
     /// true if quality levels should be checked for tiled resources
     /// false otherwise
     /// </param>
-    /// <param name="num_quality_levels">
+    /// <returns>
     /// number of image quality levels
-    /// </param>
+    /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    virtual void CheckSupportedMultisampleLevels(GraphicsDataFormat& format, UINT& sample_count, bool& tiled, UINT& num_quality_levels) const = 0;
+    virtual UINT CheckSupportedMultisampleLevels(GraphicsDataFormat format, UINT sample_count, bool tiled) const = 0;
 
   protected:
     GraphicsCore();

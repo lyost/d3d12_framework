@@ -120,13 +120,13 @@ class D3D12_Core : public GraphicsCore
     /// true if quality levels should be checked for tiled resources
     /// false otherwise
     /// </param>
-    /// <param name="num_quality_levels">
+    /// <returns>
     /// number of image quality levels
-    /// </param>
+    /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    void CheckSupportedMultisampleLevels(GraphicsDataFormat& format, UINT& sample_count, bool& tiled, UINT& num_quality_levels) const;
+    UINT CheckSupportedMultisampleLevels(GraphicsDataFormat format, UINT sample_count, bool tiled) const;
 
     /// <summary>
     /// Retrieves the D3D12 device

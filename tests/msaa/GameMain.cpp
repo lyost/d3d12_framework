@@ -30,9 +30,7 @@ void GameMain::LoadContent()
   UINT num_quality_levels = 0;
   try
   {
-    GraphicsDataFormat format = R32G32B32A32_FLOAT;
-    bool tiled = false;
-    graphics.CheckSupportedMultisampleLevels(format, sample_count, tiled, num_quality_levels);
+    num_quality_levels = graphics.CheckSupportedMultisampleLevels(R32G32B32A32_FLOAT, sample_count, false);
   }
   catch (const FrameworkException& err)
   {

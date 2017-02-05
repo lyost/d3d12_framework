@@ -77,8 +77,8 @@ StreamOutputBuffer* D3D12_StreamOutputBuffer::Create(GraphicsCore& graphics, con
   return new D3D12_StreamOutputBuffer(buffer, so_view, vb_view, num_vertices);
 }
 
-void D3D12_StreamOutputBuffer::GetNumVerticesWritten(GraphicsCore& graphics, CommandList& command_list, const std::vector<StreamOutputBuffer*> so_buffers, ReadbackBuffer& readback_buffer,
-  std::vector<UINT>& num_vertices)
+void D3D12_StreamOutputBuffer::GetNumVerticesWritten(GraphicsCore& graphics, CommandList& command_list, const vector<StreamOutputBuffer*> so_buffers, ReadbackBuffer& readback_buffer,
+  vector<UINT>& num_vertices)
 {
   D3D12_Core& core = (D3D12_Core&)graphics;
   ID3D12GraphicsCommandList* cmd_list = ((D3D12_CommandList&)command_list).GetCommandList();
