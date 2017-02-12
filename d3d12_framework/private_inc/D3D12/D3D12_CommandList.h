@@ -453,10 +453,27 @@ class D3D12_CommandList : public CommandList
     /// <param name="instance_cnt">
     /// number of instances
     /// </param>
-    /// <param name="start_index">
+    /// <param name="instance_start_index">
     /// index in the instance buffer to start at
     /// </param>
-    void DrawInstanced(UINT vertices_per_instance, UINT instance_cnt, UINT start_index);
+    void DrawInstanced(UINT vertices_per_instance, UINT instance_cnt, UINT instance_start_index);
+
+    /// <summary>
+    /// Draws instances of primitives
+    /// </summary>
+    /// <param name="vertices_per_instance">
+    /// number of vertices for each instance
+    /// </param>
+    /// <param name="vertex_start_index">
+    /// index in the vertex buffer to start at
+    /// </param>
+    /// <param name="instance_cnt">
+    /// number of instances
+    /// </param>
+    /// <param name="instance_start_index">
+    /// index in the instance buffer to start at
+    /// </param>
+    void DrawInstanced(UINT vertices_per_instance, UINT vertex_start_index, UINT instance_cnt, UINT instance_start_index);
 
     /// <summary>
     /// Retrieves the D3D12 command list

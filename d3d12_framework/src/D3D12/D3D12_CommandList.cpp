@@ -429,9 +429,14 @@ void D3D12_CommandList::DrawIndexedInstanced(UINT indices_per_instance, UINT ins
   m_command_list->DrawIndexedInstanced(indices_per_instance, instance_cnt, start_index, 0, 0);
 }
 
-void D3D12_CommandList::DrawInstanced(UINT vertices_per_instance, UINT instance_cnt, UINT start_index)
+void D3D12_CommandList::DrawInstanced(UINT vertices_per_instance, UINT instance_cnt, UINT instance_start_index)
 {
-  m_command_list->DrawInstanced(vertices_per_instance, instance_cnt, start_index, 0);
+  m_command_list->DrawInstanced(vertices_per_instance, instance_cnt, 0, instance_start_index);
+}
+
+void D3D12_CommandList::DrawInstanced(UINT vertices_per_instance, UINT vertex_start_index, UINT instance_cnt, UINT instance_start_index)
+{
+  m_command_list->DrawInstanced(vertices_per_instance, instance_cnt, vertex_start_index, instance_start_index);
 }
 
 ID3D12GraphicsCommandList* D3D12_CommandList::GetCommandList() const

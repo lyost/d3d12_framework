@@ -188,7 +188,7 @@ void GameMain::Draw(UINT ms)
     m_command_list->SOBufferToVertexBuffer(*(m_so_buffers[0]));
     m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
     m_command_list->IASetVertexBuffers(*m_so_vert_array);
-    m_command_list->DrawInstanced(num_verts[0], 1, 0);
+    m_command_list->DrawInstanced(num_verts[0], 0, 1, 0);
     m_command_list->SOVertexBufferToStreamOutputBuffer(*(m_so_buffers[0]));
 
     m_command_list->RenderTargetToPresent(current_render_target);
