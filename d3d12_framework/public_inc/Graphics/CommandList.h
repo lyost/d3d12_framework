@@ -502,10 +502,27 @@ class CommandList
       /// <param name="instance_cnt">
       /// number of instances
       /// </param>
-      /// <param name="start_index">
+      /// <param name="instance_start_index">
       /// index in the instance buffer to start at
       /// </param>
-      virtual void DrawIndexedInstanced(UINT indices_per_instance, UINT instance_cnt, UINT start_index) = 0;
+      virtual void DrawIndexedInstanced(UINT indices_per_instance, UINT instance_cnt, UINT instance_start_index) = 0;
+
+      /// <summary>
+      /// Draws instances of indexed primitives
+      /// </summary>
+      /// <param name="indices_per_instance">
+      /// number of indices for each instance
+      /// </param>
+      /// <param name="index_start_index">
+      /// index in the index buffer to start at
+      /// </param>
+      /// <param name="instance_cnt">
+      /// number of instances
+      /// </param>
+      /// <param name="instance_start_index">
+      /// index in the instance buffer to start at
+      /// </param>
+      virtual void DrawIndexedInstanced(UINT indices_per_instance, UINT index_start_index, UINT instance_cnt, UINT instance_start_index) = 0;
 
       /// <summary>
       /// Draws instances of primitives

@@ -424,9 +424,14 @@ void D3D12_CommandList::OMSetRenderTarget(const RenderTargetMSAA& target, const 
   m_command_list->OMSetRenderTargets(1, &handle, false, &depth_handle);
 }
 
-void D3D12_CommandList::DrawIndexedInstanced(UINT indices_per_instance, UINT instance_cnt, UINT start_index)
+void D3D12_CommandList::DrawIndexedInstanced(UINT indices_per_instance, UINT instance_cnt, UINT instance_start_index)
 {
-  m_command_list->DrawIndexedInstanced(indices_per_instance, instance_cnt, start_index, 0, 0);
+  m_command_list->DrawIndexedInstanced(indices_per_instance, instance_cnt, 0, 0, instance_start_index);
+}
+
+void D3D12_CommandList::DrawIndexedInstanced(UINT indices_per_instance, UINT index_start_index, UINT instance_cnt, UINT instance_start_index)
+{
+  m_command_list->DrawIndexedInstanced(indices_per_instance, instance_cnt, index_start_index, 0, instance_start_index);
 }
 
 void D3D12_CommandList::DrawInstanced(UINT vertices_per_instance, UINT instance_cnt, UINT instance_start_index)
