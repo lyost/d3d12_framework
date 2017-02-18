@@ -466,7 +466,7 @@ void GameMain::CreateNormalPipeline()
   try
   {
     m_so_buffers.reserve(1);
-    m_so_buffers.push_back(StreamOutputBuffer::CreateD3D12(graphics, *stream_output, 0, 65536));
+    m_so_buffers.push_back(StreamOutputBuffer::CreateD3D12(graphics, *stream_output, 0, 6));
 
     m_so_array = StreamOutputBufferArray::CreateD3D12(1);
     m_so_array->Set(0, *(m_so_buffers[0]));
