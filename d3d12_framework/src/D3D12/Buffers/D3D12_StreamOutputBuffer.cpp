@@ -156,7 +156,7 @@ void D3D12_StreamOutputBuffer::PrepReset(CommandList& command_list, ConstantBuff
   cmd_list->ResourceBarrier(1, &barrier);
 
   cmd_list->CopyBufferRegion(m_buffer, 0, resource, 0, sizeof(UINT64));
-    
+  
   barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
   barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_STREAM_OUT;
   cmd_list->ResourceBarrier(1, &barrier);
