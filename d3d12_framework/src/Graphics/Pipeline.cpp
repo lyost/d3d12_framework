@@ -34,6 +34,12 @@ Pipeline* Pipeline::CreateD3D12(const GraphicsCore& graphics_core, const InputLa
     ms_quality, wireframe);
 }
 
+Pipeline* Pipeline::CreateD3D12(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const StreamOutputConfig* stream_output,
+  const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig)
+{
+  return D3D12_Pipeline::Create(graphics_core, input_layout, topology, vertex_shader, stream_output, rtv_config, root_sig);
+}
+
 Pipeline::Pipeline()
 {
 }

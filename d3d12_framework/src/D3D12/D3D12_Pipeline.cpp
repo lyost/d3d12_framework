@@ -327,6 +327,43 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
   return new D3D12_Pipeline(pipeline);
 }
 
+Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const StreamOutputConfig* stream_output,
+  const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig)
+{
+  const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
+  const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
+  const D3D12_Shader&                 vs     = (const D3D12_Shader&)vertex_shader;
+  const D3D12_RenderTargetViewConfig& rtv    = (const D3D12_RenderTargetViewConfig&)rtv_config;
+  const D3D12_RootSignature&          root   = (const D3D12_RootSignature&)root_sig;
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  D3D12_ROOT_SIGNATURE_FLAGS stage_access = root.GetStageAccess();
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS)
+  {
+    throw FrameworkException("Pipeline to be created with a vertex shader but the root signature doesn\'t allow it");
+  }
+  if (stage_access & D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS)
+  {
+    throw FrameworkException("Pipeline to be created with a pixel shader but the root signature doesn\'t allow it");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
+  CreateDefaultPipelineDesc(desc, layout, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, 1, 0, false, stream_output);
+  desc.VS = vs.GetShader();
+
+  ID3D12PipelineState* pipeline = NULL;
+  HRESULT rc = core.GetDevice()->CreateGraphicsPipelineState(&desc, __uuidof(ID3D12PipelineState), (void**)&pipeline);
+  if (FAILED(rc))
+  {
+    ostringstream out;
+    out << "Failed to create pipeline state (HRESULT = " << rc << ')';
+    throw FrameworkException(out.str());
+  }
+
+  return new D3D12_Pipeline(pipeline);
+}
+
 D3D12_Pipeline::D3D12_Pipeline(ID3D12PipelineState* pipeline)
 :m_pipeline(pipeline)
 {

@@ -288,6 +288,40 @@ class Pipeline
       const Shader& domain_shader, const Shader& geometry_shader, const StreamOutputConfig* stream_output, const Shader& pixel_shader, DepthFuncs depth_func, const RenderTargetViewConfig& rtv_config,
       const RootSignature& root_sig, UINT ms_count = 1, UINT ms_quality = 0, bool wireframe = false);
 
+    /// <summary>
+    /// Creates a graphics pipeline without rasterization
+    /// </summary>
+    /// <param name="graphics_core">
+    /// reference to the core graphics instance
+    /// </param>
+    /// <param name="input_layout">
+    /// input layout of the data to draw
+    /// </param>
+    /// <param name="topology">
+    /// primitive topology for data to draw
+    /// </param>
+    /// <param name="vertex_shader">
+    /// shader to use in the vertex shader stage
+    /// </param>
+    /// <param name="stream_output">
+    /// pointer to the configuration to use for the stream output stage
+    /// NULL if stream output should be disabled
+    /// </param>
+    /// <param name="rtv_config">
+    /// configuration for the render target views
+    /// </param>
+    /// <param name="root_sig">
+    /// root signature
+    /// </param>
+    /// <returns>
+    /// pointer to the pipeline instance
+    /// </returns>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered in creating the instance
+    /// </exception>
+    static Pipeline* CreateD3D12(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const StreamOutputConfig* stream_output,
+      const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig);
+
     virtual ~Pipeline();
 
   protected:
