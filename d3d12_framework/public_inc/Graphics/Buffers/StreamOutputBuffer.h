@@ -8,6 +8,7 @@ class ReadbackBuffer;
 #include "Graphics/StreamOutputConfig.h"
 #include "Graphics/CommandList.h"
 #include "Graphics/Buffers/ReadbackBuffer.h"
+#include "Graphics/Buffers/ConstantBuffer.h"
 
 /// <summary>
 /// Buffer for stream output that can also be used as a vertex buffer
@@ -66,7 +67,7 @@ class StreamOutputBuffer
     /// <param name="num_vertices">
     /// where to put the number of vertices in each stream output buffer.  This will be appended to in the same order that buffers are in so_buffers
     /// </param>
-    static void GetNumVerticesWrittenD3D12(GraphicsCore& graphics, CommandList& command_list, const std::vector<StreamOutputBuffer*> so_buffers, ReadbackBuffer& readback_buffer,
+    static void GetNumVerticesWrittenD3D12(GraphicsCore& graphics, CommandList& command_list, const std::vector<StreamOutputBuffer*>& so_buffers, ReadbackBuffer& readback_buffer,
       std::vector<UINT>& num_vertices);
     
     virtual ~StreamOutputBuffer();
@@ -78,6 +79,20 @@ class StreamOutputBuffer
     /// number of vertices the buffer can hold
     /// </returns>
     virtual UINT GetVertexCapacity() const = 0;
+
+    /// <summary>
+    /// Prepares the command list for resetting the stream output buffer so that the entire vertex portion of buffer memory can be overwritten on subsequent usage
+    /// </summary>
+    /// <param name="command_list">
+    /// command list to use.
+    /// </param>
+    /// <param name="scratch_buffer">
+    /// buffer to use to reset the stream output buffer
+    /// <remarks>
+    /// Must be able to contain at least sizeof(UINT64) in bytes.  And it should not have its value changed after calling this function until the command list has executed and a fence has been waited on.
+    /// </remarks>
+    /// </param>
+    virtual void PrepReset(CommandList& command_list, ConstantBuffer& scratch_buffer) = 0;
 
   protected:
     StreamOutputBuffer();

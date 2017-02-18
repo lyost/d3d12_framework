@@ -183,6 +183,11 @@ class GameMain : public Game
     ConstantBuffer* m_constant_buffer;
 
     /// <summary>
+    /// Constant buffer for resetting the stream output buffer
+    /// </summary>
+    ConstantBuffer* m_scratch_buffer;
+
+    /// <summary>
     /// depth stencil
     /// </summary>
     DepthStencil* m_depth_stencil;

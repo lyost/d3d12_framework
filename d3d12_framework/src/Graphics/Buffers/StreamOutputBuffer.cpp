@@ -7,7 +7,7 @@ StreamOutputBuffer* StreamOutputBuffer::CreateD3D12(GraphicsCore& graphics, cons
   return D3D12_StreamOutputBuffer::Create(graphics, so_config, stream_index, num_vertices);
 }
 
-void StreamOutputBuffer::GetNumVerticesWrittenD3D12(GraphicsCore& graphics, CommandList& command_list, const vector<StreamOutputBuffer*> so_buffers, ReadbackBuffer& readback_buffer,
+void StreamOutputBuffer::GetNumVerticesWrittenD3D12(GraphicsCore& graphics, CommandList& command_list, const vector<StreamOutputBuffer*>& so_buffers, ReadbackBuffer& readback_buffer,
   vector<UINT>& num_vertices)
 {
   D3D12_StreamOutputBuffer::GetNumVerticesWritten(graphics, command_list, so_buffers, readback_buffer, num_vertices);

@@ -42,6 +42,7 @@ void GameMain::UnloadContent()
   delete m_shader_buffer_heap;
   delete m_heap_array;
   delete m_constant_buffer;
+  delete m_scratch_buffer;
   delete m_vert_array;
   delete m_indices;
   delete m_verts;
@@ -140,6 +141,9 @@ void GameMain::Draw(UINT ms)
     m_command_list->ClearRenderTarget(current_render_target, clear_color);
     m_command_list->ClearDepthStencil(*m_depth_stencil, 1);
 
+    // make sure writing to the stream output buffer starts at the beginning of its vertex memory
+    m_so_buffers[0]->PrepReset(*m_command_list, *m_scratch_buffer);
+
     XMMATRIX tmp;
     XMMATRIX wvp = XMMatrixTranslation(-2, 0, 0);
     m_camera->GetView(tmp);
@@ -165,6 +169,10 @@ void GameMain::Draw(UINT ms)
     // determine the number of vertices written to the stream output buffer
     vector<UINT> num_verts;
     StreamOutputBuffer::GetNumVerticesWrittenD3D12(graphics, *m_command_list, m_so_buffers, *m_readback, num_verts);
+
+    ostringstream debug_log;
+    debug_log << "Stream output buffer num verts: " << num_verts[0] << '\n';
+    log_print(debug_log.str().c_str());
 
     // draw using the stream output buffer as input
     m_command_list->Reset(m_so_pipeline);
@@ -409,8 +417,8 @@ void GameMain::CreateNormalPipeline()
   Vertex_Position vertices[] =
   {
     { XMFLOAT3(-1.5f, -1.5f, 0) },
-    { XMFLOAT3(1.5f, -1.5f, 0) },
-    { XMFLOAT3(1.5f,  1.5f, 0) },
+    { XMFLOAT3( 1.5f, -1.5f, 0) },
+    { XMFLOAT3( 1.5f,  1.5f, 0) },
     { XMFLOAT3(-1.5f,  1.5f, 0) },
   };
   try
@@ -458,7 +466,7 @@ void GameMain::CreateNormalPipeline()
   try
   {
     m_so_buffers.reserve(1);
-    m_so_buffers.push_back(StreamOutputBuffer::CreateD3D12(graphics, *stream_output, 0, 6));
+    m_so_buffers.push_back(StreamOutputBuffer::CreateD3D12(graphics, *stream_output, 0, 65536));
 
     m_so_array = StreamOutputBufferArray::CreateD3D12(1);
     m_so_array->Set(0, *(m_so_buffers[0]));
@@ -474,7 +482,7 @@ void GameMain::CreateNormalPipeline()
   // create the descriptor heap
   try
   {
-    m_shader_buffer_heap = ShaderResourceDescHeap::CreateD3D12(graphics, 1);
+    m_shader_buffer_heap = ShaderResourceDescHeap::CreateD3D12(graphics, 2);
   }
   catch (const FrameworkException& err)
   {
@@ -484,7 +492,7 @@ void GameMain::CreateNormalPipeline()
     exit(1);
   }
 
-  // create the constant buffer
+  // create the constant buffers
   try
   {
     m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX));
@@ -493,6 +501,17 @@ void GameMain::CreateNormalPipeline()
   {
     ostringstream out;
     out << "Unable to create constant buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+  try
+  {
+    m_scratch_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(UINT64));
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to create scratch constant buffer:\n" << err.what();
     log_print(out.str().c_str());
     exit(1);
   }

@@ -4,6 +4,7 @@
 #include "private_inc/D3D12/D3D12_StreamOutputConfig.h"
 #include "private_inc/D3D12/D3D12_CommandList.h"
 #include "private_inc/D3D12/Buffers/D3D12_ReadbackBuffer.h"
+#include "private_inc/D3D12/Buffers/D3D12_ConstantBuffer.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
 using namespace std;
@@ -77,13 +78,13 @@ StreamOutputBuffer* D3D12_StreamOutputBuffer::Create(GraphicsCore& graphics, con
   return new D3D12_StreamOutputBuffer(buffer, so_view, vb_view, num_vertices);
 }
 
-void D3D12_StreamOutputBuffer::GetNumVerticesWritten(GraphicsCore& graphics, CommandList& command_list, const vector<StreamOutputBuffer*> so_buffers, ReadbackBuffer& readback_buffer,
+void D3D12_StreamOutputBuffer::GetNumVerticesWritten(GraphicsCore& graphics, CommandList& command_list, const vector<StreamOutputBuffer*>& so_buffers, ReadbackBuffer& readback_buffer,
   vector<UINT>& num_vertices)
 {
-  D3D12_Core& core = (D3D12_Core&)graphics;
-  ID3D12GraphicsCommandList* cmd_list = ((D3D12_CommandList&)command_list).GetCommandList();
-  D3D12_ReadbackBuffer& rb_buffer = (D3D12_ReadbackBuffer&)readback_buffer;
-  ID3D12Resource* resource = rb_buffer.GetResource();
+  D3D12_Core&                core      = (D3D12_Core&)graphics;
+  ID3D12GraphicsCommandList* cmd_list  = ((D3D12_CommandList&)command_list).GetCommandList();
+  D3D12_ReadbackBuffer&      rb_buffer = (D3D12_ReadbackBuffer&)readback_buffer;
+  ID3D12Resource*            resource  = rb_buffer.GetResource();
 
   command_list.Reset(NULL);
 
@@ -117,6 +118,7 @@ void D3D12_StreamOutputBuffer::GetNumVerticesWritten(GraphicsCore& graphics, Com
   rb_buffer.Unmap();
 }
 
+
 D3D12_StreamOutputBuffer::D3D12_StreamOutputBuffer(ID3D12Resource* buffer, const D3D12_STREAM_OUTPUT_BUFFER_VIEW& so_view, const D3D12_VERTEX_BUFFER_VIEW& vb_view, UINT num_vertices)
 :m_buffer(buffer),
  m_so_view(so_view),
@@ -133,6 +135,31 @@ D3D12_StreamOutputBuffer::~D3D12_StreamOutputBuffer()
 UINT D3D12_StreamOutputBuffer::GetVertexCapacity() const
 {
   return m_num_vertices;
+}
+
+void D3D12_StreamOutputBuffer::PrepReset(CommandList& command_list, ConstantBuffer& scratch_buffer)
+{
+  ID3D12GraphicsCommandList* cmd_list     = ((D3D12_CommandList&)command_list).GetCommandList();
+  D3D12_ConstantBuffer&      const_buffer = (D3D12_ConstantBuffer&)scratch_buffer;
+  ID3D12Resource*            resource     = const_buffer.GetResource();
+
+  UINT64 zero = 0;
+  const_buffer.Upload((void*)&zero, 0, sizeof(zero));
+
+  D3D12_RESOURCE_BARRIER barrier;
+  barrier.Type                   = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+  barrier.Flags                  = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+  barrier.Transition.pResource   = m_buffer;
+  barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_STREAM_OUT;
+  barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_COPY_DEST;
+  cmd_list->ResourceBarrier(1, &barrier);
+
+  cmd_list->CopyBufferRegion(m_buffer, 0, resource, 0, sizeof(UINT64));
+    
+  barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
+  barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_STREAM_OUT;
+  cmd_list->ResourceBarrier(1, &barrier);
 }
 
 const D3D12_STREAM_OUTPUT_BUFFER_VIEW& D3D12_StreamOutputBuffer::GetStreamOutputBufferView() const

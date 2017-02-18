@@ -58,7 +58,7 @@ class D3D12_StreamOutputBuffer : public StreamOutputBuffer
     /// <param name="num_vertices">
     /// where to put the number of vertices in each stream output buffer.  This will be appended to in the same order that buffers are in so_buffers
     /// </param>
-    static void GetNumVerticesWritten(GraphicsCore& graphics, CommandList& command_list, const std::vector<StreamOutputBuffer*> so_buffers, ReadbackBuffer& readback_buffer,
+    static void GetNumVerticesWritten(GraphicsCore& graphics, CommandList& command_list, const std::vector<StreamOutputBuffer*>& so_buffers, ReadbackBuffer& readback_buffer,
       std::vector<UINT>& num_vertices);
     
     ~D3D12_StreamOutputBuffer();
@@ -70,6 +70,20 @@ class D3D12_StreamOutputBuffer : public StreamOutputBuffer
     /// number of vertices the buffer can hold
     /// </returns>
     UINT GetVertexCapacity() const;
+
+    /// <summary>
+    /// Prepares the command list for resetting the stream output buffer so that the entire vertex portion of buffer memory can be overwritten on subsequent usage
+    /// </summary>
+    /// <param name="command_list">
+    /// command list to use.
+    /// </param>
+    /// <param name="scratch_buffer">
+    /// buffer to use to reset the stream output buffer
+    /// <remarks>
+    /// Must be able to contain at least sizeof(UINT64) in bytes.  And it should not have its value changed after calling this function until the command list has executed and a fence has been waited on.
+    /// </remarks>
+    /// </param>
+    void PrepReset(CommandList& command_list, ConstantBuffer& scratch_buffer);
 
     /// <summary>
     /// Retrieves stream output buffer view of the buffer
