@@ -85,9 +85,6 @@ void D3D12_ReadbackBuffer::Unmap()
 
 void D3D12_ReadbackBuffer::GetResourceDesc(UINT& num_bytes, D3D12_RESOURCE_DESC& resource_desc)
 {
-  // constant buffer size is required to be 256-byte aligned
-  num_bytes = (num_bytes + 255) & ~255;
-
   resource_desc.Dimension          = D3D12_RESOURCE_DIMENSION_BUFFER;
   resource_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
   resource_desc.Width              = num_bytes;
