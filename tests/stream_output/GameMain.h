@@ -3,20 +3,10 @@
 
 #include <vector>
 #include "Game.h"
-#include "Graphics/RootSignature.h"
-#include "Graphics/Shader.h"
-#include "Graphics/InputLayout.h"
-#include "Graphics/Pipeline.h"
-#include "Graphics/CommandListBundle.h"
-#include "Graphics/Buffers/VertexBuffer_Position.h"
-#include "Graphics/Buffers/IndexBuffer16.h"
-#include "Graphics/Buffers/StreamOutputBufferArray.h"
-#include "Graphics/Buffers/ReadbackBuffer.h"
 #include "Camera.h"
-#include "Graphics/ShaderResourceDescHeap.h"
-#include "Graphics/Buffers/ConstantBuffer.h"
-#include "Graphics/HeapArray.h"
-#include "Graphics/Textures/DepthStencil.h"
+#include "TestGraphicsPipeline.h"
+#include "StreamOutputAsInputGraphicsPipeline.h"
+#include "TestModel.h"
 
 class GameMain : public Game
 {
@@ -73,91 +63,6 @@ class GameMain : public Game
     void UpdateCamera();
 
     /// <summary>
-    /// Helper function for creating the depth stencil on load and on resize
-    /// </summary>
-    void CreateDepthStencil();
-
-    /// <summary>
-    /// Helper function for creating the pipeline that populates the stream output buffer along with drawing a tessalated quad to the screen
-    /// </summary>
-    void CreateNormalPipeline();
-
-    /// <summary>
-    /// Helper function for creating the pipeline that uses the stream output buffer as the vertex buffer sent to the input assembler stage
-    /// </summary>
-    void CreateStreamOutputPipeline();
-    
-    /// <summary>
-    /// root signatures for the test case
-    /// </summary>
-    RootSignature* m_root_sig;
-    
-    /// <summary>
-    /// test vertex shader
-    /// </summary>
-    Shader* m_vertex_shader;
-
-    /// <summary>
-    /// test hull shader
-    /// </summary>
-    Shader* m_hull_shader;
-
-    /// <summary>
-    /// test domain shader
-    /// </summary>
-    Shader* m_domain_shader;
-
-    /// <summary>
-    /// test geometry shader
-    /// </summary>
-    Shader* m_geometry_shader;
-    
-    /// <summary>
-    /// test pixel shader
-    /// </summary>
-    Shader* m_pixel_shader;
-
-    /// <summary>
-    /// input layouts for the vertex shader
-    /// </summary>
-    InputLayout* m_input_layout;
-
-    /// <summary>
-    /// graphics pipeline
-    /// </summary>
-    Pipeline* m_pipeline;
-
-    /// <summary>
-    /// command list to draw with
-    /// </summary>
-    CommandList* m_command_list;
-
-    /// <summary>
-    /// vertex buffer for the test case
-    /// </summary>
-    VertexBuffer_Position* m_verts;
-
-    /// <summary>
-    /// index buffer for the test case
-    /// </summary>
-    IndexBuffer16* m_indices;
-
-    /// <summary>
-    /// vertex buffer array for supplying the vertex buffer to the rendering process
-    /// </summary>
-    VertexBufferArray* m_vert_array;
-    
-    /// <summary>
-    /// viewports to use
-    /// </summary>
-    Viewports m_viewports;
-
-    /// <summary>
-    /// corresponding scissor rect for m_viewports's first viewport
-    /// </summary>
-    RECT m_scissor_rect;
-
-    /// <summary>
     /// camera for the test viewport
     /// </summary>
     Camera* m_camera;
@@ -168,64 +73,19 @@ class GameMain : public Game
     float m_camera_angle;
 
     /// <summary>
-    /// Descriptor Heap for allocating the buffers from
+    /// graphics pipeline for the test case
     /// </summary>
-    ShaderResourceDescHeap* m_shader_buffer_heap;
+    TestGraphicsPipeline* m_pipeline;
 
     /// <summary>
-    /// array of descriptor heaps
+    /// graphics pipeline for using stream output as input
     /// </summary>
-    HeapArray* m_heap_array;
+    StreamOutputAsInputGraphicsPipeline* m_so_pipeline;
 
     /// <summary>
-    /// Constant buffer 
+    /// model for the test case
     /// </summary>
-    ConstantBuffer* m_constant_buffer;
-
-    /// <summary>
-    /// Constant buffer for resetting the stream output buffer
-    /// </summary>
-    ConstantBuffer* m_scratch_buffer;
-
-    /// <summary>
-    /// depth stencil
-    /// </summary>
-    DepthStencil* m_depth_stencil;
-
-    /// <summary>
-    /// stream output buffer (stored as a vector due to StreamOutputBuffer::GetNumVerticesWrittenD3D12 expecting a vector for performance reasons)
-    /// </summary>
-    std::vector<StreamOutputBuffer*> m_so_buffers;
-
-    /// <summary>
-    /// readback buffer for determining how many vertices were written to the stream output buffer
-    /// </summary>
-    ReadbackBuffer* m_readback;
-    
-    /// <summary>
-    /// array of stream output buffers
-    /// </summary>
-    StreamOutputBufferArray* m_so_array;
-
-    /// <summary>
-    /// root signatures for when the stream output buffer is used as input to the input assembler stage
-    /// </summary>
-    RootSignature* m_so_root_sig;
-
-    /// <summary>
-    /// vertex buffer array for using m_so_buffer as a vertex buffer for drawing
-    /// </summary>
-    VertexBufferArray* m_so_vert_array;
-
-    /// <summary>
-    /// vertex shader for when the stream output buffer is used as input to the input assembler stage
-    /// </summary>
-    Shader* m_so_vertex_shader;
-
-    /// <summary>
-    /// graphics pipeline for when the stream output buffer is used as input to the input assembler stage
-    /// </summary>
-    Pipeline* m_so_pipeline;
+    TestModel* m_model;
 };
 
 #endif /* GAMEMAIN_H */

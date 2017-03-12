@@ -157,10 +157,14 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestGraphicsPipeline.cpp" />
+    <ClCompile Include="TestModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameMain.h" />
+    <ClInclude Include="TestGraphicsPipeline.h" />
+    <ClInclude Include="TestModel.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="two_textured_instance_cubes_ps.hlsl">

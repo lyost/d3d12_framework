@@ -18,12 +18,24 @@
     <ClInclude Include="GameMain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestGraphicsPipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGraphicsPipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -27,12 +27,12 @@ void Camera::SetProjection(float aspect_ratio, float near_z, float far_z)
   XMStoreFloat4x4(&m_proj, XMMatrixPerspectiveFovLH(XM_PIDIV4, aspect_ratio, near_z, far_z));
 }
 
-void Camera::GetView(XMMATRIX& view)
+void Camera::GetView(XMMATRIX& view) const
 {
   view = XMLoadFloat4x4(&m_view);
 }
 
-void Camera::GetProjection(XMMATRIX& proj)
+void Camera::GetProjection(XMMATRIX& proj) const
 {
   proj = XMLoadFloat4x4(&m_proj);
 }

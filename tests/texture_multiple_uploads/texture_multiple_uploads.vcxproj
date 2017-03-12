@@ -157,10 +157,15 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestGraphicsPipeline.cpp" />
+    <ClCompile Include="TestModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameMain.h" />
+    <ClInclude Include="TestGraphicsPipeline.h" />
+    <ClInclude Include="TestModel.h" />
+    <ClInclude Include="TestTextureEnums.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="texture_multiple_uploads_ps.hlsl">

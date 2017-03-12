@@ -2,12 +2,8 @@
 #define GAMEMAIN_H
 
 #include "Game.h"
-#include "Graphics/RootSignature.h"
-#include "Graphics/Shader.h"
-#include "Graphics/InputLayout.h"
-#include "Graphics/Pipeline.h"
-#include "Graphics/CommandListBundle.h"
-#include "Graphics/Buffers/VertexBuffer_PositionColor.h"
+#include "TestGraphicsPipeline.h"
+#include "TestModel.h"
 
 class GameMain : public Game
 {
@@ -57,56 +53,16 @@ class GameMain : public Game
     // disabled
     GameMain(const GameMain& cpy);
     GameMain& operator=(const GameMain& cpy);
-    
-    /// <summary>
-    /// root signatures for the test case
-    /// </summary>
-    RootSignature* m_root_sig;
-    
-    /// <summary>
-    /// test vertex shader
-    /// </summary>
-    Shader* m_vertex_shader;
-    
-    /// <summary>
-    /// test pixel shader
-    /// </summary>
-    Shader* m_pixel_shader;
 
     /// <summary>
-    /// input layouts for the vertex shader
+    /// graphics pipeline for the test case
     /// </summary>
-    InputLayout* m_input_layout;
+    TestGraphicsPipeline* m_pipeline;
 
     /// <summary>
-    /// graphics pipeline
+    /// model for the test case
     /// </summary>
-    Pipeline* m_pipeline;
-
-    /// <summary>
-    /// command list to draw with
-    /// </summary>
-    CommandList* m_command_list;
-
-    /// <summary>
-    /// vertex buffer for the test case
-    /// </summary>
-    VertexBuffer_PositionColor* m_verts;
-
-    /// <summary>
-    /// vertex buffer array for supplying the vertex buffer to the rendering process
-    /// </summary>
-    VertexBufferArray* m_vert_array;
-    
-    /// <summary>
-    /// viewports to use
-    /// </summary>
-    Viewports m_viewports;
-
-    /// <summary>
-    /// corresponding scissor rect for m_viewports's first viewport
-    /// </summary>
-    RECT m_scissor_rect;
+    TestModel* m_model;
 };
 
 #endif /* GAMEMAIN_H */

@@ -58,18 +58,11 @@ class Game
     /// <summary>
     /// Where subclasses should load their content (graphical or otherwise)
     /// </summary>
-    /// <param name="content">
-    /// content manager to use for loading resources
-    /// </param>
     virtual void LoadContent() = 0;
     
     /// <summary>
-    /// Where subclasses should unload their content (graphical or otherwise)
-    /// just before deallocation of the instance
+    /// Where subclasses should unload their content (graphical or otherwise) just before deallocation of the game instance
     /// </summary>
-    /// <param name="content">
-    /// content manager to use for unloading resources
-    /// </param>
     virtual void UnloadContent() = 0;
     
     /// <summary>

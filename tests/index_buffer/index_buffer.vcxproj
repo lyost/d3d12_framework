@@ -132,9 +132,13 @@
   <ItemGroup>
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestGraphicsPipeline.cpp" />
+    <ClCompile Include="TestModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
+    <ClInclude Include="TestGraphicsPipeline.h" />
+    <ClInclude Include="TestModel.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="index_buffer_ps.hlsl">

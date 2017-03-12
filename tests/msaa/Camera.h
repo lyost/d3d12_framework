@@ -70,7 +70,7 @@ class Camera
     /// <param name="view">
     /// where to put the view matrix
     /// </param>
-    void GetView(DirectX::XMMATRIX& view);
+    void GetView(DirectX::XMMATRIX& view) const;
     
     /// <summary>
     /// Retrieves the projection matrix
@@ -82,7 +82,7 @@ class Camera
     /// <param name="proj">
     /// where to put the proj matrix
     /// </param>
-    void GetProjection(DirectX::XMMATRIX& proj);
+    void GetProjection(DirectX::XMMATRIX& proj) const;
     
   private:
     // disabled

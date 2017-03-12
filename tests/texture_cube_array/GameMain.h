@@ -3,20 +3,9 @@
 
 #include <vector>
 #include "Game.h"
-#include "Graphics/RootSignature.h"
-#include "Graphics/Shader.h"
-#include "Graphics/InputLayout.h"
-#include "Graphics/Pipeline.h"
-#include "Graphics/CommandListBundle.h"
-#include "Graphics/Buffers/VertexBuffer_Position.h"
-#include "Graphics/Buffers/IndexBuffer16.h"
 #include "Camera.h"
-#include "Graphics/ShaderResourceDescHeap.h"
-#include "Graphics/Buffers/ConstantBuffer.h"
-#include "Graphics/HeapArray.h"
-#include "Graphics/Textures/TextureCubeArray.h"
-#include "Graphics/Textures/TextureUploadBuffer.h"
-#include "Graphics/Textures/DepthStencil.h"
+#include "TestGraphicsPipeline.h"
+#include "TestModel.h"
 
 class GameMain : public Game
 {
@@ -67,98 +56,10 @@ class GameMain : public Game
     GameMain(const GameMain& cpy);
     GameMain& operator=(const GameMain& cpy);
 
-    enum
-    {
-      TEXTURE_WIDTH     = 64,
-      TEXTURE_HEIGHT    = 64,
-      TEXTURE_FORMAT    = R8B8G8A8_UNORM,
-      TEXTURES_PER_CUBE = 6,
-      NUM_CUBES         = 2,
-    };
-
-    /// <summary>
-    /// Creates a test texture
-    /// </summary>
-    /// <param name="cube">
-    /// index of which cube the texture is for
-    /// </param>
-    /// <param name="side">
-    /// index of which side of the cube the texture is for
-    /// </param>
-    /// <param name="bytes">
-    /// bytes of the image
-    /// </param>
-    static void CreateTexture(UINT16 cube, UINT16 side, std::vector<UINT8>& bytes);
-
     /// <summary>
     /// Updates m_camera based on m_camera_angle
     /// </summary>
     void UpdateCamera();
-
-    /// <summary>
-    /// Helper function for creating the depth stencil on load and on resize
-    /// </summary>
-    void CreateDepthStencil();
-    
-    /// <summary>
-    /// root signatures for the test case
-    /// </summary>
-    RootSignature* m_root_sig;
-    
-    /// <summary>
-    /// test vertex shader
-    /// </summary>
-    Shader* m_vertex_shader;
-    
-    /// <summary>
-    /// test pixel shader
-    /// </summary>
-    Shader* m_pixel_shader;
-
-    /// <summary>
-    /// input layouts for the vertex shader
-    /// </summary>
-    InputLayout* m_input_layout;
-
-    /// <summary>
-    /// graphics pipeline
-    /// </summary>
-    Pipeline* m_pipeline;
-
-    /// <summary>
-    /// command list to draw with
-    /// </summary>
-    CommandList* m_command_list;
-
-    /// <summary>
-    /// vertex buffer for the test case
-    /// </summary>
-    VertexBuffer_Position* m_verts;
-
-    /// <summary>
-    /// index buffer for the test case
-    /// </summary>
-    IndexBuffer16* m_indices;
-
-    /// <summary>
-    /// vertex buffer array for supplying the vertex buffer to the rendering process
-    /// </summary>
-    VertexBufferArray* m_vert_array;
-
-    /// <summary>
-    /// instance buffer for the test cube
-    /// </summary>
-    VertexBuffer_Custom* m_instance;
-    
-    /// <summary>
-    /// viewports to use
-    /// </summary>
-    Viewports m_viewports;
-
-    /// <summary>
-    /// corresponding scissor rect for m_viewports's first viewport
-    /// </summary>
-    RECT m_scissor_rect;
 
     /// <summary>
     /// camera for the test viewport
@@ -176,34 +77,14 @@ class GameMain : public Game
     float m_camera_pitch;
 
     /// <summary>
-    /// Descriptor Heap for allocating the buffers from
+    /// graphics pipeline for the test case
     /// </summary>
-    ShaderResourceDescHeap* m_shader_buffer_heap;
+    TestGraphicsPipeline* m_pipeline;
 
     /// <summary>
-    /// array of descriptor heaps
+    /// model for the test case
     /// </summary>
-    HeapArray* m_heap_array;
-
-    /// <summary>
-    /// Constant buffer 
-    /// </summary>
-    ConstantBuffer* m_constant_buffer;
-
-    /// <summary>
-    /// texture
-    /// </summary>
-    TextureCubeArray* m_texture;
-
-    /// <summary>
-    /// buffer for uploading the texture's data
-    /// </summary>
-    std::vector<TextureUploadBuffer*> m_upload_texture;
-
-    /// <summary>
-    /// depth stencil
-    /// </summary>
-    DepthStencil* m_depth_stencil;
+    TestModel* m_model;
 };
 
 #endif /* GAMEMAIN_H */

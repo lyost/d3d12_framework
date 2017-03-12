@@ -1,13 +1,8 @@
 #include <sstream>
 #include <cmath>
-#include "GameMain.h"
 #include <directxmath.h>
-#include "Graphics/RootSignatureConfig.h"
-#include "Graphics/RenderTargetViewConfig.h"
-#include "Graphics/RenderTargetViewFormats.h"
-#include "Graphics/VertexDeclarations/Vertex_PositionTexture.h"
-#include "Graphics/DepthEnums.h"
 #include "FrameworkException.h"
+#include "GameMain.h"
 #include "log.h"
 using namespace DirectX;
 using namespace std;
@@ -24,368 +19,32 @@ GameMain::~GameMain()
 void GameMain::LoadContent()
 {
   GraphicsCore& graphics = GetGraphics();
-
-  try
-  {
-    RootSignatureConfig* config = RootSignatureConfig::CreateD3D12(2, 1);
-    config->SetStageAccess(true, true, false, false, true, true, false);
-    config->SetParamAsDescriptorTable(0, 1, SHADER_VISIBILITY_PIXEL);
-    config->SetRangeAsShaderResourceView(0, 0, 1, 0, 0);
-    config->SetParamAsConstantBufferView(1, 0, 0, SHADER_VISIBILITY_GEOMETRY);
-    config->SetSampler(0, TEXTURE_FILTER_MIN_MAG_MIP_LINEAR, TEXTURE_ADDRESS_MODE_WRAP, TEXTURE_ADDRESS_MODE_WRAP, TEXTURE_ADDRESS_MODE_WRAP, 0, 1, COMPARISON_FUNC_NEVER, BORDER_COLOR_TRANSPARENT_BLACK,
-      0, 0, 0, 0, SHADER_VISIBILITY_PIXEL);
-    m_root_sig = RootSignature::CreateD3D12(graphics, *config);
-    delete config;
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create root signature:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  try
-  {
-    m_vertex_shader = Shader::LoadD3D12("geometry_shader_viewports_vs.cso");
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to load vertex shader:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-  try
-  {
-    m_geometry_shader = Shader::LoadD3D12("geometry_shader_viewports_gs.cso");
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to load geometry shader:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-  try
-  {
-    m_pixel_shader = Shader::LoadD3D12("geometry_shader_viewports_ps.cso");
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to load pixel shader:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  try
-  {
-    m_input_layout = InputLayout::CreateD3D12(3);
-    m_input_layout->SetNextElement(SEM_POSITION, 0, R32G32B32_FLOAT, 0, false);
-    m_input_layout->SetNextElement(SEM_TEXCOORD, 0, R32G32_FLOAT, 0, false);
-    m_input_layout->SetNextElement(SEM_TEXCOORD, 1, R32G32B32_FLOAT, 1, true, 1);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create input layout:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  try
-  {
-    RenderTargetViewConfig* rtv_config = RenderTargetViewConfig::CreateD3D12(1);
-    rtv_config->SetAlphaToCoverageEnable(false);
-    rtv_config->SetIndependentBlendEnable(false);
-    rtv_config->SetFormat(0, RTVF_R8G8B8A8_UNORM);
-    m_pipeline = Pipeline::CreateD3D12(graphics, *m_input_layout, TOPOLOGY_TRIANGLE, *m_vertex_shader, *m_geometry_shader, NULL, *m_pixel_shader, DEPTH_FUNC_LESS_EQUAL, *rtv_config, *m_root_sig);
-    delete rtv_config;
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create pipeline:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  try
-  {
-    m_command_list = CommandList::CreateD3D12Direct(graphics, m_pipeline);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create command list:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // create the scissor rects that matches the viewports
   Viewport full_viewport = graphics.GetDefaultViewport();
-  Viewport section_viewport = full_viewport;
-  section_viewport.width /= 2;
-  section_viewport.height /= 2;
-  m_viewports.SetNextViewport(section_viewport);
-  m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
-  section_viewport.top_left_x = section_viewport.width;
-  m_viewports.SetNextViewport(section_viewport);
-  m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
-  section_viewport.top_left_x = 0;
-  section_viewport.top_left_y = section_viewport.height;
-  m_viewports.SetNextViewport(section_viewport);
-  m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
-  section_viewport.top_left_x = section_viewport.width;
-  m_viewports.SetNextViewport(section_viewport);
-  m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
+  m_pipeline = new TestGraphicsPipeline(graphics);
+
+  m_model = new TestModel(graphics, m_pipeline->GetShaderResourceDescHeap(), m_pipeline->GetCommandList());
+  m_pipeline->SetModel(m_model);
 
   // setup the cameras for the viewport
   m_camera_angle = 3 * XM_PI / 2;
-  m_camera[0] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(0, 0, -10, 1), XMFLOAT4(0, 0, 1, 0), XMFLOAT4(0, 1, 0, 0));
-  m_camera[1] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(10, 0, 0, 1), XMFLOAT4(-1, 0, 0, 0), XMFLOAT4(0, 1, 0, 0));
-  m_camera[2] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(-10, 0, 0, 1), XMFLOAT4(1, 0, 0, 0), XMFLOAT4(0, 1, 0, 0));
-  m_camera[3] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(0, 10, 0, 1), XMFLOAT4(0, -1, 0, 0), XMFLOAT4(0, 0, -1, 0));
-
-  // create the vertex buffer
-  const Viewport& default_viewport = graphics.GetDefaultViewport();
-  float aspect_ratio = default_viewport.width / default_viewport.height;
-  Vertex_PositionTextureUV vertices[] =
+  m_camera[0] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(  0,  0, -10, 1), XMFLOAT4( 0,  0, 1, 0), XMFLOAT4(0, 1,  0, 0));
+  m_camera[1] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4( 10,  0,   0, 1), XMFLOAT4(-1,  0, 0, 0), XMFLOAT4(0, 1,  0, 0));
+  m_camera[2] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(-10,  0,   0, 1), XMFLOAT4( 1,  0, 0, 0), XMFLOAT4(0, 1,  0, 0));
+  m_camera[3] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(  0, 10,   0, 1), XMFLOAT4( 0, -1, 0, 0), XMFLOAT4(0, 0, -1, 0));
+  for (UINT i = 0; i < TestGraphicsPipeline::NUM_VIEWPORTS; i++)
   {
-    { XMFLOAT3(-1.0f, 1.0f,-1.0f), XMFLOAT2(0.0f,0.0f) },
-    { XMFLOAT3( 1.0f, 1.0f,-1.0f), XMFLOAT2(1.0f,0.0f) },
-    { XMFLOAT3( 1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f,1.0f) },
-    { XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT2(0.0f,1.0f) },
-
-    { XMFLOAT3(-1.0f,-1.0f,-1.0f), XMFLOAT2(0.0f,0.0f) },
-    { XMFLOAT3( 1.0f,-1.0f,-1.0f), XMFLOAT2(1.0f,0.0f) },
-    { XMFLOAT3( 1.0f,-1.0f, 1.0f), XMFLOAT2(1.0f,1.0f) },
-    { XMFLOAT3(-1.0f,-1.0f, 1.0f), XMFLOAT2(0.0f,1.0f) },
-
-    { XMFLOAT3(-1.0f,-1.0f, 1.0f), XMFLOAT2(0.0f,0.0f) },
-    { XMFLOAT3(-1.0f,-1.0f,-1.0f), XMFLOAT2(1.0f,0.0f) },
-    { XMFLOAT3(-1.0f, 1.0f,-1.0f), XMFLOAT2(1.0f,1.0f) },
-    { XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT2(0.0f,1.0f) },
-
-    { XMFLOAT3( 1.0f,-1.0f, 1.0f), XMFLOAT2(0.0f,0.0f) },
-    { XMFLOAT3( 1.0f,-1.0f,-1.0f), XMFLOAT2(1.0f,0.0f) },
-    { XMFLOAT3( 1.0f, 1.0f,-1.0f), XMFLOAT2(1.0f,1.0f) },
-    { XMFLOAT3( 1.0f, 1.0f, 1.0f), XMFLOAT2(0.0f,1.0f) },
-
-    { XMFLOAT3(-1.0f,-1.0f,-1.0f), XMFLOAT2(0.0f,0.0f) },
-    { XMFLOAT3( 1.0f,-1.0f,-1.0f), XMFLOAT2(1.0f,0.0f) },
-    { XMFLOAT3( 1.0f, 1.0f,-1.0f), XMFLOAT2(1.0f,1.0f) },
-    { XMFLOAT3(-1.0f, 1.0f,-1.0f), XMFLOAT2(0.0f,1.0f) },
-
-    { XMFLOAT3(-1.0f,-1.0f, 1.0f), XMFLOAT2(0.0f,0.0f) },
-    { XMFLOAT3( 1.0f,-1.0f, 1.0f), XMFLOAT2(1.0f,0.0f) },
-    { XMFLOAT3( 1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f,1.0f) },
-    { XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT2(0.0f,1.0f) },
-  };
-  try
-  {
-    m_verts = VertexBuffer_PositionTexture::CreateD3D12(graphics, ARRAYSIZE(vertices), vertices);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create vertex buffer:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // create the index buffer
-  WORD indices[] =
-  {
-    3, 1, 0,
-    2, 1, 3,
-
-    6, 4, 5,
-    7, 4, 6,
-
-    11, 9, 8,
-    10, 9, 11,
-
-    14, 12, 13,
-    15, 12, 14,
-
-    19, 17, 16,
-    18, 17, 19,
-
-    22, 20, 21,
-    23, 20, 22
-  };
-  try
-  {
-    m_indices = IndexBuffer16::CreateD3D12(graphics, ARRAYSIZE(indices), indices);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create index buffer:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // create the instance buffer
-  XMFLOAT3 instance_pos[] =
-  {
-    XMFLOAT3(-2, 0, 0),
-    XMFLOAT3( 2, 0, 0),
-  };
-  try
-  {
-    m_instance = VertexBuffer_Custom::CreateD3D12(graphics, sizeof(instance_pos) / sizeof(XMFLOAT3), sizeof(XMFLOAT3), instance_pos);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create instance buffer:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // combine the vertex and instance buffer
-  try
-  {
-    m_vert_array = VertexBufferArray::CreateD3D12(2);
-    m_vert_array->Set(0, *m_verts);
-    m_vert_array->Set(1, *m_instance);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create vertex buffer array:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // create the texture image
-  UINT width;
-  UINT height;
-  GraphicsDataFormat format;
-  vector<UINT8> tex_bytes;
-  CreateTexture(width, height, format, tex_bytes);
-
-  // create the descriptor heap
-  try
-  {
-    m_shader_buffer_heap = ShaderResourceDescHeap::CreateD3D12(graphics, 2);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create resource descriptor heap:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // create the constant buffer
-  try
-  {
-    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(XMMATRIX) * NUM_VIEWPORTS);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create constant buffer:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // create the texture
-  try
-  {
-    m_texture = Texture2D::CreateD3D12(graphics, *m_shader_buffer_heap, width, height, format);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create texture:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-  try
-  {
-    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create texture upload buffer:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // start uploading the texture
-  try
-  {
-    m_upload_texture->PrepUpload(graphics, *m_command_list, *m_texture, tex_bytes);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to upload texture:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  CreateDepthStencil();
-
-  // create the heap array
-  try
-  {
-    m_heap_array = HeapArray::CreateD3D12(1);
-    m_heap_array->SetHeap(0, *m_shader_buffer_heap);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create heap array:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
-
-  // finish uploading the textures
-  try
-  {
-    m_command_list->Close();
-    graphics.ExecuteCommandList(*m_command_list);
-    graphics.WaitOnFence();
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to finish uploading textures:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
+    m_pipeline->SetCamera(i, m_camera[i]);
   }
 }
 
 void GameMain::UnloadContent()
 {
-  delete m_depth_stencil;
-  delete m_texture;
-  delete m_upload_texture;
-  for (int i = 0; i < NUM_VIEWPORTS; i++)
+  delete m_pipeline;
+  for (int i = 0; i < TestGraphicsPipeline::NUM_VIEWPORTS; i++)
   {
     delete m_camera[i];
   }
-  delete m_shader_buffer_heap;
-  delete m_heap_array;
-  delete m_constant_buffer;
-  delete m_instance;
-  delete m_vert_array;
-  delete m_indices;
-  delete m_verts;
-  delete m_vertex_shader;
-  delete m_geometry_shader;
-  delete m_pixel_shader;
-  delete m_input_layout;
-  delete m_command_list;
-  delete m_pipeline;
-  delete m_root_sig;
+  delete m_model;
 }
 
 void GameMain::Update(UINT ms)
@@ -456,58 +115,8 @@ void GameMain::Update(UINT ms)
 
 void GameMain::Draw(UINT ms)
 {
-  try
-  {
-    GraphicsCore& graphics = GetGraphics();
-    const RenderTarget& current_render_target = graphics.GetBackBuffer().GetCurrentRenderTarget();
-    m_command_list->Reset(m_pipeline);
-    m_command_list->SetRootSignature(*m_root_sig);
-    m_command_list->RSSetViewports(m_viewports);
-    m_command_list->RSSetScissorRects(m_scissor_rects);
-
-    // upload the wvp matrix for the camera to the constant buffer
-    for (int i = 0; i < NUM_VIEWPORTS; i++)
-    {
-      XMMATRIX tmp;
-      XMMATRIX wvp = XMMatrixIdentity();
-      m_camera[i]->GetView(tmp);
-      wvp *= tmp;
-      m_camera[i]->GetProjection(tmp);
-      wvp *= tmp;
-      wvp = XMMatrixTranspose(wvp);
-      m_constant_buffer->Upload(&wvp, sizeof(wvp) * i, sizeof(wvp));
-    }
-
-    m_command_list->SetHeapArray(*m_heap_array);
-    m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_texture);
-    m_command_list->SetConstantBuffer(1, *m_constant_buffer);
-
-    float clear_color[4] = { .3f, .3f, .3f, 1 };
-    m_command_list->PrepRenderTarget(current_render_target);
-    m_command_list->OMSetRenderTarget(current_render_target, *m_depth_stencil);
-    m_command_list->ClearRenderTarget(current_render_target, clear_color);
-    m_command_list->ClearDepthStencil(*m_depth_stencil, 1);
-
-    m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
-    m_command_list->IASetVertexBuffers(*m_vert_array);
-    m_command_list->IASetIndexBuffer(*m_indices);
-
-    m_command_list->DrawIndexedInstanced(m_indices->GetNumIndices(), 2, 0);
-
-    m_command_list->RenderTargetToPresent(current_render_target);
-    m_command_list->Close();
-
-    graphics.ExecuteCommandList(*m_command_list);
-
-    graphics.Swap();
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to draw frame:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
+  GraphicsCore& graphics = GetGraphics();
+  m_pipeline->Draw(graphics);
 }
 
 void GameMain::OnResize(UINT width,UINT height)
@@ -518,36 +127,21 @@ void GameMain::OnResize(UINT width,UINT height)
 
     GraphicsCore& graphics = GetGraphics();
     Viewport full_viewport = graphics.GetDefaultViewport();
+    m_pipeline->Resize(graphics);
 
-    m_scissor_rects.clear();
-    Viewport section_viewport = full_viewport;
-    section_viewport.width /= 2;
-    section_viewport.height /= 2;
-    m_viewports.SetViewport(0, section_viewport);
-    m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
-    section_viewport.top_left_x = section_viewport.width;
-    m_viewports.SetViewport(1, section_viewport);
-    m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
-    section_viewport.top_left_x = 0;
-    section_viewport.top_left_y = section_viewport.height;
-    m_viewports.SetViewport(2, section_viewport);
-    m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
-    section_viewport.top_left_x = section_viewport.width;
-    m_viewports.SetViewport(3, section_viewport);
-    m_scissor_rects.push_back(ViewportToScissorRect(section_viewport));
-
-    for (int i = 0; i < NUM_VIEWPORTS; i++)
+    for (UINT i = 0; i < TestGraphicsPipeline::NUM_VIEWPORTS; i++)
     {
       delete m_camera[i];
     }
-    m_camera[0] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(0, 0, -10, 1), XMFLOAT4(0, 0, 1, 0), XMFLOAT4(0, 1, 0, 0));
-    m_camera[1] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(10, 0, 0, 1), XMFLOAT4(-1, 0, 0, 0), XMFLOAT4(0, 1, 0, 0));
-    m_camera[2] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(-10, 0, 0, 1), XMFLOAT4(1, 0, 0, 0), XMFLOAT4(0, 1, 0, 0));
-    m_camera[3] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(0, 10, 0, 1), XMFLOAT4(0, -1, 0, 0), XMFLOAT4(0, 0, -1, 0));
+    m_camera[0] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(  0,  0, -10, 1), XMFLOAT4( 0,  0, 1, 0), XMFLOAT4(0, 1,  0, 0));
+    m_camera[1] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4( 10,  0,   0, 1), XMFLOAT4(-1,  0, 0, 0), XMFLOAT4(0, 1,  0, 0));
+    m_camera[2] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(-10,  0,   0, 1), XMFLOAT4( 1,  0, 0, 0), XMFLOAT4(0, 1,  0, 0));
+    m_camera[3] = new Camera(full_viewport.width / full_viewport.height, 0.01f, 100.0f, XMFLOAT4(  0, 10,   0, 1), XMFLOAT4( 0, -1, 0, 0), XMFLOAT4(0, 0, -1, 0));
     UpdateCamera();
-
-    delete m_depth_stencil;
-    CreateDepthStencil();
+    for (UINT i = 0; i < TestGraphicsPipeline::NUM_VIEWPORTS; i++)
+    {
+      m_pipeline->SetCamera(i, m_camera[i]);
+    }
   }
   catch (const FrameworkException& err)
   {
@@ -555,60 +149,6 @@ void GameMain::OnResize(UINT width,UINT height)
     out << "Unable to resize:\n" << err.what();
     log_print(out.str().c_str());
     exit(1);
-  }
-}
-
-void GameMain::CreateTexture(UINT& width, UINT& height, GraphicsDataFormat& format, std::vector<UINT8>& bytes)
-{
-  width = 64;
-  height = 64;
-  format = R8B8G8A8_UNORM;
-  const UINT bytes_per_pixel = 4; // 4 due to using a RGBA texture
-
-  const UINT center_x = width / 2;
-  const UINT center_y = height / 2;
-  const UINT radius_sq = center_x * center_x;
-
-  const UINT tex_size = width * height * bytes_per_pixel;
-  bytes.resize(tex_size);
-  UINT byte_index = 0;
-  for (UINT y = 0; y < height; y++)
-  {
-    for (UINT x = 0; x < width; x++, byte_index += bytes_per_pixel)
-    {
-      const float dx = x + .5f - center_x;
-      const float dy = y + .5f - center_y;
-      const float dist_sq = dx * dx + dy * dy;
-
-      if (dist_sq > radius_sq)
-      {
-        bytes[byte_index]     = 0;
-        bytes[byte_index + 1] = 0;
-        bytes[byte_index + 2] = 0;
-        bytes[byte_index + 3] = 255;
-      }
-      else if (dy >= 0)
-      {
-        bytes[byte_index]     = 255;
-        bytes[byte_index + 1] = 0;
-        bytes[byte_index + 2] = 0;
-        bytes[byte_index + 3] = 255;
-      }
-      else if (dx < 0)
-      {
-        bytes[byte_index]     = 0;
-        bytes[byte_index + 1] = 255;
-        bytes[byte_index + 2] = 0;
-        bytes[byte_index + 3] = 255;
-      }
-      else
-      {
-        bytes[byte_index]     = 0;
-        bytes[byte_index + 1] = 0;
-        bytes[byte_index + 2] = 255;
-        bytes[byte_index + 3] = 255;
-      }
-    }
   }
 }
 
@@ -628,22 +168,4 @@ void GameMain::UpdateCamera()
   XMStoreFloat4(&dir, dir_vector);
 
   m_camera[0]->SetView(pos, dir, up);
-}
-
-void GameMain::CreateDepthStencil()
-{
-  GraphicsCore& graphics = GetGraphics();
-  Viewport full_viewport = graphics.GetDefaultViewport();
-
-  try
-  {
-    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
-  }
-  catch (const FrameworkException& err)
-  {
-    ostringstream out;
-    out << "Unable to create depth stencil:\n" << err.what();
-    log_print(out.str().c_str());
-    exit(1);
-  }
 }
