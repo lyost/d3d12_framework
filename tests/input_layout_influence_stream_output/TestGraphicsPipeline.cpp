@@ -286,7 +286,7 @@ void TestGraphicsPipeline::Draw(GraphicsCore& graphics)
     m_command_list->IASetVertexBuffers(*m_vert_array);
     m_command_list->SOSetBuffers(*m_so_array);
 
-    m_command_list->DrawInstanced(m_model->GetNumVertices(), 1, 0);
+    m_command_list->DrawInstanced(m_model->GetVertexBuffer()->GetNumVertices(), 1, 0);
     m_command_list->Close();
     graphics.ExecuteCommandList(*m_command_list);
     graphics.WaitOnFence();

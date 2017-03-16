@@ -181,11 +181,6 @@ const TextureCube* TestModel::GetTexture() const
   return m_texture;
 }
 
-UINT TestModel::GetNumVertices() const
-{
-  return m_verts->GetNumVertices();
-}
-
 void TestModel::CreateTexture(UINT16 side, vector<UINT8>& bytes)
 {
   const UINT bytes_per_pixel = 4; // 4 due to using a RGBA texture

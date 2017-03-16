@@ -39,8 +39,3 @@ const VertexBuffer_PositionColor* TestModel::GetVertexBuffer() const
 {
   return m_verts;
 }
-
-UINT TestModel::GetNumVertices() const
-{
-  return m_verts->GetNumVertices();
-}

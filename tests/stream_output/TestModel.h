@@ -11,11 +11,21 @@ class TestModel
     TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buffer_heap, CommandList* command_list);
     ~TestModel();
 
+    /// <summary>
+    /// Retrieves the vertex buffer for the model
+    /// </summary>
+    /// <returns>
+    /// vertex buffer
+    /// </returns>
     const VertexBuffer_Position* GetVertexBuffer() const;
 
+    /// <summary>
+    /// Retrieves the index buffer for the model
+    /// </summary>
+    /// <returns>
+    /// index buffer
+    /// </returns>
     const IndexBuffer16* GetIndexBuffer() const;
-
-    UINT GetNumVertices() const;
 
   private:
     // disabled

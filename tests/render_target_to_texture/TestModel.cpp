@@ -124,8 +124,3 @@ Texture2D* TestModel::GetTexture() const
 {
   return m_texture;
 }
-
-UINT TestModel::GetNumVertices() const
-{
-  return m_verts->GetNumVertices();
-}

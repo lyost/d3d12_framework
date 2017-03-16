@@ -10,11 +10,21 @@ class TestModel
     TestModel(GraphicsCore& graphics);
     ~TestModel();
 
+    /// <summary>
+    /// Retrieves the vertex buffer for the model
+    /// </summary>
+    /// <returns>
+    /// vertex buffer
+    /// </returns>
     const VertexBuffer_PositionColor* GetVertexBuffer() const;
 
+    /// <summary>
+    /// Retrieves the index buffer for the model
+    /// </summary>
+    /// <returns>
+    /// index buffer
+    /// </returns>
     const IndexBuffer16* GetIndexBuffer() const;
-
-    UINT GetNumVertices() const;
 
   private:
     // disabled

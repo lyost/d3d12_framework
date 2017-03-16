@@ -154,11 +154,6 @@ const Texture1DArray* TestModel::GetTexture() const
   return m_texture1d;
 }
 
-UINT TestModel::GetNumVertices() const
-{
-  return m_verts->GetNumVertices();
-}
-
 void TestModel::CreateTexture1D(UINT16 index, std::vector<UINT8>& bytes)
 {
   UINT               width  = 64;

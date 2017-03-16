@@ -11,9 +11,13 @@ class TestModel
     TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buffer_heap, CommandList* command_list);
     ~TestModel();
 
+    /// <summary>
+    /// Retrieves the vertex buffer for the model
+    /// </summary>
+    /// <returns>
+    /// vertex buffer
+    /// </returns>
     const VertexBuffer_Position* GetVertexBuffer() const;
-
-    UINT GetNumVertices() const;
 
   private:
     // disabled

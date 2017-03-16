@@ -292,11 +292,6 @@ const Texture1D* TestModel::GetTexture() const
   return m_texture1d;
 }
 
-UINT TestModel::GetNumVertices() const
-{
-  return m_verts->GetNumVertices();
-}
-
 void TestModel::CreateTexture1D(UINT16 mipmap, std::vector<UINT8>& bytes)
 {
   const UINT bytes_per_pixel = 4; // 4 due to using a RGBA texture

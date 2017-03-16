@@ -63,8 +63,3 @@ const IndexBuffer16* TestModel::GetIndexBuffer() const
 {
   return m_indices;
 }
-
-UINT TestModel::GetNumVertices() const
-{
-  return m_verts->GetNumVertices();
-}

@@ -171,11 +171,6 @@ const Texture2D* TestModel::GetTexture() const
   return m_texture;
 }
 
-UINT TestModel::GetNumVertices() const
-{
-  return m_verts->GetNumVertices();
-}
-
 void TestModel::CreateTexture(UINT& width, UINT& height, GraphicsDataFormat& format, std::vector<UINT8>& bytes)
 {
   width = 64;

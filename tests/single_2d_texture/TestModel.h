@@ -11,11 +11,21 @@ class TestModel
     TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buffer_heap, CommandList* command_list);
     ~TestModel();
 
+    /// <summary>
+    /// Retrieves the vertex buffer for the model
+    /// </summary>
+    /// <returns>
+    /// vertex buffer
+    /// </returns>
     const VertexBuffer_PositionTexture* GetVertexBuffer() const;
 
+    /// <summary>
+    /// Retrieves the first texture in the descriptor heap for the model
+    /// </summary>
+    /// <returns>
+    /// model's first texture in the descriptor heap
+    /// </returns>
     const Texture2D* GetTexture() const;
-
-    UINT GetNumVertices() const;
 
   private:
     // disabled

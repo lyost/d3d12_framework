@@ -160,7 +160,7 @@ void TestGraphicsPipeline::Draw(GraphicsCore& graphics)
     m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
     m_command_list->IASetVertexBuffers(*m_vert_array);
 
-    m_command_list->DrawInstanced(m_model->GetNumVertices(), 1, 0);
+    m_command_list->DrawInstanced(m_model->GetVertexBuffer()->GetNumVertices(), 1, 0);
 
     m_command_list->RenderTargetToPresent(current_render_target);
     m_command_list->Close();
