@@ -74,16 +74,17 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
   }
 
   // create the buffers for uploading the textures
+  vector<TextureUploadBuffer*> upload_texture;
+  upload_texture.reserve(TEXTURE_MODE_MAX * TEXTURE_LENGTH);
   try
   {
-    m_upload_texture.reserve(TEXTURE_MODE_MAX * TEXTURE_LENGTH);
     for (UINT i = 0; i < TEXTURE_LENGTH; i++)
     {
-      m_upload_texture.push_back(TextureUploadBuffer::CreateD3D12(graphics, *m_texture1d));
+      upload_texture.push_back(TextureUploadBuffer::CreateD3D12(graphics, *m_texture1d));
     }
     for (UINT i = 0; i < TEXTURE_LENGTH; i++)
     {
-      m_upload_texture.push_back(TextureUploadBuffer::CreateD3D12(graphics, *m_texture2d));
+      upload_texture.push_back(TextureUploadBuffer::CreateD3D12(graphics, *m_texture2d));
     }
   }
   catch (const FrameworkException& err)
@@ -101,7 +102,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
     {
       vector<UINT8> tex_bytes;
       CreateTexture1D(i, tex_bytes);
-      m_upload_texture[i]->PrepUpload(graphics, *command_list, *m_texture1d, i, tex_bytes);
+      upload_texture[i]->PrepUpload(graphics, *command_list, *m_texture1d, i, tex_bytes);
     }
   }
   catch (const FrameworkException& err)
@@ -117,7 +118,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
     {
       vector<UINT8> tex_bytes;
       CreateTexture2D(i, tex_bytes);
-      m_upload_texture[TEXTURE_LENGTH + i]->PrepUpload(graphics, *command_list, *m_texture2d, i, tex_bytes);
+      upload_texture[TEXTURE_LENGTH + i]->PrepUpload(graphics, *command_list, *m_texture2d, i, tex_bytes);
     }
   }
   catch (const FrameworkException& err)
@@ -140,18 +141,19 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
     log_print(out.str().c_str());
     exit(1);
   }
+
+  vector<TextureUploadBuffer*>::const_iterator upload_it = upload_texture.begin();
+  while (upload_it != upload_texture.end())
+  {
+    delete *upload_it;
+    ++upload_it;
+  }
 }
 
 TestModel::~TestModel()
 {
   delete m_texture1d;
   delete m_texture2d;
-  vector<TextureUploadBuffer*>::const_iterator upload_it = m_upload_texture.begin();
-  while (upload_it != m_upload_texture.end())
-  {
-    delete *upload_it;
-    ++upload_it;
-  }
   delete m_indices;
   delete m_verts;
 }

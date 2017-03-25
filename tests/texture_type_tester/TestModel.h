@@ -89,11 +89,6 @@ class TestModel
     /// texture
     /// </summary>
     Texture3D* m_texture3d;
-
-    /// <summary>
-    /// buffer for uploading the texture's data
-    /// </summary>
-    TextureUploadBuffer* m_upload_texture;
 };
 
 #endif /* TEST_MODEL_H */

@@ -114,21 +114,6 @@ class TestGraphicsPipeline
     RootSignature* m_root_sig;
 
     /// <summary>
-    /// test vertex shader
-    /// </summary>
-    Shader* m_vertex_shader;
-
-    /// <summary>
-    /// test pixel shader
-    /// </summary>
-    Shader* m_pixel_shader;
-
-    /// <summary>
-    /// input layouts for the vertex shader
-    /// </summary>
-    InputLayout* m_input_layout;
-
-    /// <summary>
     /// graphics pipeline
     /// </summary>
     Pipeline* m_pipeline;

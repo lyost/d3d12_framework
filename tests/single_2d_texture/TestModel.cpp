@@ -44,9 +44,10 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
     log_print(out.str().c_str());
     exit(1);
   }
+  TextureUploadBuffer* upload_texture;
   try
   {
-    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture);
+    upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture);
   }
   catch (const FrameworkException& err)
   {
@@ -59,7 +60,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
   CreateTextureImage(tex_bytes);
   try
   {
-    m_upload_texture->PrepUpload(graphics, *command_list, *m_texture, tex_bytes);
+    upload_texture->PrepUpload(graphics, *command_list, *m_texture, tex_bytes);
   }
   catch (const FrameworkException& err)
   {
@@ -83,11 +84,12 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
     log_print(out.str().c_str());
     exit(1);
   }
+
+  delete upload_texture;
 }
 
 TestModel::~TestModel()
 {
-  delete m_upload_texture;
   delete m_texture;
   delete m_verts;
 }

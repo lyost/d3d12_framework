@@ -169,9 +169,10 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
   }
 
   // start uploading the texture
+  vector<TextureUploadBuffer*> upload_texture;
+  upload_texture.reserve(TEXTURE_MODE_MAX * NUM_MIPMAPS);
   try
   {
-    m_upload_texture.reserve(TEXTURE_MODE_MAX * NUM_MIPMAPS);
     TextureUploadBuffer* buffer;
 
     for (UINT16 i = 0; i < NUM_MIPMAPS; i++)
@@ -180,7 +181,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
       CreateTexture1D(i, tex_bytes);
       buffer = TextureUploadBuffer::CreateD3D12(graphics, *m_texture1d);
       buffer->PrepUpload(graphics, *command_list, *m_texture1d, tex_bytes, i);
-      m_upload_texture.push_back(buffer);
+      upload_texture.push_back(buffer);
     }
     for (UINT16 i = 0; i < NUM_MIPMAPS; i++)
     {
@@ -188,7 +189,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
       CreateTexture2D(i, tex_bytes);
       buffer = TextureUploadBuffer::CreateD3D12(graphics, *m_texture2d);
       buffer->PrepUpload(graphics, *command_list, *m_texture2d, tex_bytes, i);
-      m_upload_texture.push_back(buffer);
+      upload_texture.push_back(buffer);
     }
     for (UINT16 i = 0; i < NUM_MIPMAPS; i++)
     {
@@ -196,7 +197,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
       CreateTexture3D(i, tex_bytes);
       buffer = TextureUploadBuffer::CreateD3D12(graphics, *m_texture3d);
       buffer->PrepUpload(graphics, *command_list, *m_texture3d, tex_bytes, i);
-      m_upload_texture.push_back(buffer);
+      upload_texture.push_back(buffer);
     }
     for (UINT j = 0; j < ARRAY_SIZE; j++)
     {
@@ -206,7 +207,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
         CreateTexture1DArray(j, i, tex_bytes);
         buffer = TextureUploadBuffer::CreateD3D12(graphics, *m_texture1d_array);
         buffer->PrepUpload(graphics, *command_list, *m_texture1d_array, j, tex_bytes, i);
-        m_upload_texture.push_back(buffer);
+        upload_texture.push_back(buffer);
       }
     }
     for (UINT j = 0; j < ARRAY_SIZE; j++)
@@ -217,7 +218,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
         CreateTexture2DArray(j, i, tex_bytes);
         buffer = TextureUploadBuffer::CreateD3D12(graphics, *m_texture2d_array);
         buffer->PrepUpload(graphics, *command_list, *m_texture2d_array, j, tex_bytes, i);
-        m_upload_texture.push_back(buffer);
+        upload_texture.push_back(buffer);
       }
     }
     for (UINT16 side = 0; side < TEXTURES_PER_CUBE; side++)
@@ -228,7 +229,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
         CreateTextureCube(side, i, tex_bytes);
         buffer = TextureUploadBuffer::CreateD3D12(graphics, *m_texture_cube);
         buffer->PrepUpload(graphics, *command_list, *m_texture_cube, side, tex_bytes, i);
-        m_upload_texture.push_back(buffer);
+        upload_texture.push_back(buffer);
       }
     }
     for (UINT j = 0; j < ARRAY_SIZE; j++)
@@ -241,7 +242,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
           CreateTextureCubeArray(j, side, i, tex_bytes);
           buffer = TextureUploadBuffer::CreateD3D12(graphics, *m_texture_cube_array);
           buffer->PrepUpload(graphics, *command_list, *m_texture_cube_array, j, side, tex_bytes, i);
-          m_upload_texture.push_back(buffer);
+          upload_texture.push_back(buffer);
         }
       }
     }
@@ -256,6 +257,13 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
     log_print(out.str().c_str());
     exit(1);
   }
+
+  vector<TextureUploadBuffer*>::const_iterator upload_it = upload_texture.begin();
+  while (upload_it != upload_texture.end())
+  {
+    delete *upload_it;
+    ++upload_it;
+  }
 }
 
 TestModel::~TestModel()
@@ -267,12 +275,6 @@ TestModel::~TestModel()
   delete m_texture2d_array;
   delete m_texture_cube;
   delete m_texture_cube_array;
-  vector<TextureUploadBuffer*>::const_iterator upload_it = m_upload_texture.begin();
-  while (upload_it != m_upload_texture.end())
-  {
-    delete *upload_it;
-    ++upload_it;
-  }
   delete m_indices;
   delete m_verts;
 }

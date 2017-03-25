@@ -136,6 +136,7 @@ D3D12_Core::D3D12_Core(ID3D12Device* device, ID3D12Fence* fence, HANDLE fence_ev
 :m_device(device),
  m_fence(fence),
  m_fence_event(fence_event),
+ m_fence_value(1),
  m_swap_chain_base(swap_chain_base),
  m_swap_chain(swap_chain),
  m_command_queue(command_queue),

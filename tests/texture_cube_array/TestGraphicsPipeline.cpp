@@ -30,9 +30,12 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
     exit(1);
   }
 
+  Shader* vertex_shader;
+  Shader* pixel_shader;
+  InputLayout* input_layout;
   try
   {
-    m_vertex_shader = Shader::LoadD3D12("texture_cube_array_vs.cso");
+    vertex_shader = Shader::LoadD3D12("texture_cube_array_vs.cso");
   }
   catch (const FrameworkException& err)
   {
@@ -43,7 +46,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
   }
   try
   {
-    m_pixel_shader = Shader::LoadD3D12("texture_cube_array_ps.cso");
+    pixel_shader = Shader::LoadD3D12("texture_cube_array_ps.cso");
   }
   catch (const FrameworkException& err)
   {
@@ -55,9 +58,9 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
 
   try
   {
-    m_input_layout = InputLayout::CreateD3D12(2);
-    m_input_layout->SetNextElement(SEM_POSITION, 0, R32G32B32_FLOAT, 0, false);
-    m_input_layout->SetNextElement(SEM_TEXCOORD, 1, R32G32B32_FLOAT, 1, true, 1);
+    input_layout = InputLayout::CreateD3D12(2);
+    input_layout->SetNextElement(SEM_POSITION, 0, R32G32B32_FLOAT, 0, false);
+    input_layout->SetNextElement(SEM_TEXCOORD, 1, R32G32B32_FLOAT, 1, true, 1);
   }
   catch (const FrameworkException& err)
   {
@@ -73,8 +76,11 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
     rtv_config->SetAlphaToCoverageEnable(false);
     rtv_config->SetIndependentBlendEnable(false);
     rtv_config->SetFormat(0, RTVF_R8G8B8A8_UNORM);
-    m_pipeline = Pipeline::CreateD3D12(graphics, *m_input_layout, TOPOLOGY_TRIANGLE, *m_vertex_shader, NULL, *m_pixel_shader, DEPTH_FUNC_LESS_EQUAL, *rtv_config, *m_root_sig);
+    m_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader, DEPTH_FUNC_LESS_EQUAL, *rtv_config, *m_root_sig);
     delete rtv_config;
+    delete input_layout;
+    delete pixel_shader;
+    delete vertex_shader;
   }
   catch (const FrameworkException& err)
   {
@@ -183,9 +189,6 @@ TestGraphicsPipeline::~TestGraphicsPipeline()
   delete m_constant_buffer;
   delete m_vert_array;
   delete m_instance;
-  delete m_vertex_shader;
-  delete m_pixel_shader;
-  delete m_input_layout;
   delete m_command_list;
   delete m_pipeline;
   delete m_root_sig;

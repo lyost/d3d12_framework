@@ -84,31 +84,6 @@ class TestGraphicsPipeline
     RootSignature* m_root_sig;
 
     /// <summary>
-    /// test vertex shader
-    /// </summary>
-    Shader* m_vertex_shader;
-
-    /// <summary>
-    /// test hull shader
-    /// </summary>
-    Shader* m_hull_shader;
-
-    /// <summary>
-    /// test domain shader
-    /// </summary>
-    Shader* m_domain_shader;
-
-    /// <summary>
-    /// test pixel shader
-    /// </summary>
-    Shader* m_pixel_shader;
-
-    /// <summary>
-    /// input layouts for the vertex shader
-    /// </summary>
-    InputLayout* m_input_layout;
-
-    /// <summary>
     /// graphics pipeline
     /// </summary>
     Pipeline* m_pipeline;
@@ -132,11 +107,6 @@ class TestGraphicsPipeline
     /// camera for the test viewport
     /// </summary>
     const Camera* m_camera;
-
-    /// <summary>
-    /// Descriptor Heap for allocating the buffers from
-    /// </summary>
-    ShaderResourceDescHeap* m_shader_buffer_heap;
 
     /// <summary>
     /// array of descriptor heaps

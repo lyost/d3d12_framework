@@ -26,9 +26,12 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
     exit(1);
   }
 
+  Shader* vertex_shader;
+  Shader* pixel_shader;
+  InputLayout* input_layout;
   try
   {
-    m_vertex_shader = Shader::LoadD3D12("input_layout_influence_stream_output_vs.cso");
+    vertex_shader = Shader::LoadD3D12("input_layout_influence_stream_output_vs.cso");
   }
   catch (const FrameworkException& err)
   {
@@ -39,7 +42,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
   }
   try
   {
-    m_pixel_shader = Shader::LoadD3D12("input_layout_influence_stream_output_ps.cso");
+    pixel_shader = Shader::LoadD3D12("input_layout_influence_stream_output_ps.cso");
   }
   catch (const FrameworkException& err)
   {
@@ -51,8 +54,8 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
 
   try
   {
-    m_input_layout = InputLayout::CreateD3D12(1);
-    m_input_layout->SetNextElement(SEM_POSITION, 0, R32G32B32_FLOAT, 0, false);
+    input_layout = InputLayout::CreateD3D12(1);
+    input_layout->SetNextElement(SEM_POSITION, 0, R32G32B32_FLOAT, 0, false);
   }
   catch (const FrameworkException& err)
   {
@@ -73,9 +76,12 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
     stream_output = StreamOutputConfig::CreateD3D12(1);
     stream_output->SetEntry(0, 0, SEM_SV_POSITION, 0, 0, 4, 0, sizeof(XMFLOAT4));
 
-    m_pipeline = Pipeline::CreateD3D12(graphics, *m_input_layout, TOPOLOGY_TRIANGLE, *m_vertex_shader, stream_output, *m_pixel_shader, *rtv_config, *m_root_sig, 1, 0, true);
+    m_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, stream_output, *pixel_shader, *rtv_config, *m_root_sig, 1, 0, true);
 
     delete rtv_config;
+    delete input_layout;
+    delete pixel_shader;
+    delete vertex_shader;
   }
   catch (const FrameworkException& err)
   {
@@ -209,9 +215,6 @@ TestGraphicsPipeline::~TestGraphicsPipeline()
   delete m_constant_buffer;
   delete m_scratch_buffer;
   delete m_vert_array;
-  delete m_pixel_shader;
-  delete m_vertex_shader;
-  delete m_input_layout;
   delete m_command_list;
   delete m_pipeline;
   delete m_root_sig;

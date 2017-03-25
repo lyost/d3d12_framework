@@ -66,11 +66,6 @@ class TestModel
     /// texture
     /// </summary>
     TextureCube* m_texture;
-
-    /// <summary>
-    /// buffer for uploading the texture's data
-    /// </summary>
-    std::vector<TextureUploadBuffer*> m_upload_texture;
 };
 
 #endif /* TEST_MODEL_H */

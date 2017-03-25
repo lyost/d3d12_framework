@@ -59,21 +59,6 @@ class TestGraphicsPipeline
     RootSignature* m_root_sig;
 
     /// <summary>
-    /// test vertex shader
-    /// </summary>
-    Shader* m_vertex_shader;
-
-    /// <summary>
-    /// test pixel shader
-    /// </summary>
-    Shader* m_pixel_shader;
-
-    /// <summary>
-    /// input layouts for the vertex shader
-    /// </summary>
-    InputLayout* m_input_layout;
-
-    /// <summary>
     /// graphics pipeline
     /// </summary>
     Pipeline* m_pipeline;
@@ -82,11 +67,6 @@ class TestGraphicsPipeline
     /// command list to draw with
     /// </summary>
     CommandList* m_command_list;
-
-    /// <summary>
-    /// Descriptor Heap for allocating the buffers from
-    /// </summary>
-    ShaderResourceDescHeap* m_shader_buffer_heap;
 
     /// <summary>
     /// array of descriptor heaps

@@ -85,9 +85,10 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
   }
 
   // create the buffer for uploading the textures (will reuse the same buffer, so pick the largest texture)
+  TextureUploadBuffer* upload_texture;
   try
   {
-    m_upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture3d);
+    upload_texture = TextureUploadBuffer::CreateD3D12(graphics, *m_texture3d);
   }
   catch (const FrameworkException& err)
   {
@@ -102,7 +103,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
   {
     vector<UINT8> tex_bytes;
     CreateTexture1D(tex_bytes);
-    m_upload_texture->PrepUpload(graphics, *command_list, *m_texture1d, tex_bytes);
+    upload_texture->PrepUpload(graphics, *command_list, *m_texture1d, tex_bytes);
     command_list->Close();
     graphics.ExecuteCommandList(*command_list);
     graphics.WaitOnFence();
@@ -119,7 +120,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
     vector<UINT8> tex_bytes;
     CreateTexture2D(tex_bytes);
     command_list->Reset(NULL);
-    m_upload_texture->PrepUpload(graphics, *command_list, *m_texture2d, tex_bytes);
+    upload_texture->PrepUpload(graphics, *command_list, *m_texture2d, tex_bytes);
     command_list->Close();
     graphics.ExecuteCommandList(*command_list);
     graphics.WaitOnFence();
@@ -136,7 +137,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
     vector<UINT8> tex_bytes;
     CreateTexture3D(tex_bytes);
     command_list->Reset(NULL);
-    m_upload_texture->PrepUpload(graphics, *command_list, *m_texture3d, tex_bytes);
+    upload_texture->PrepUpload(graphics, *command_list, *m_texture3d, tex_bytes);
     command_list->Close();
     graphics.ExecuteCommandList(*command_list);
     graphics.WaitOnFence();
@@ -148,6 +149,8 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
     log_print(out.str().c_str());
     exit(1);
   }
+
+  delete upload_texture;
 }
 
 TestModel::~TestModel()
@@ -155,7 +158,6 @@ TestModel::~TestModel()
   delete m_texture1d;
   delete m_texture2d;
   delete m_texture3d;
-  delete m_upload_texture;
   delete m_indices;
   delete m_verts;
 }

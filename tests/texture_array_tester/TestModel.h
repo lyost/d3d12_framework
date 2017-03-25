@@ -82,11 +82,6 @@ class TestModel
     /// texture
     /// </summary>
     Texture2DArray* m_texture2d;
-
-    /// <summary>
-    /// buffer for uploading the texture's data
-    /// </summary>
-    TextureUploadBuffer* m_upload_texture;
 };
 
 #endif /* TEST_MODEL_H */

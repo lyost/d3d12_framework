@@ -25,9 +25,12 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
     exit(1);
   }
 
+  Shader* vertex_shader;
+  Shader* pixel_shader;
+  InputLayout* input_layout;
   try
   {
-    m_vertex_shader = Shader::LoadD3D12("constant_buffer_vs.cso");
+    vertex_shader = Shader::LoadD3D12("constant_buffer_vs.cso");
   }
   catch (const FrameworkException& err)
   {
@@ -38,7 +41,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
   }
   try
   {
-    m_pixel_shader = Shader::LoadD3D12("constant_buffer_ps.cso");
+    pixel_shader = Shader::LoadD3D12("constant_buffer_ps.cso");
   }
   catch (const FrameworkException& err)
   {
@@ -50,9 +53,9 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
 
   try
   {
-    m_input_layout = InputLayout::CreateD3D12(2);
-    m_input_layout->SetNextElement(SEM_POSITION, 0, R32G32B32_FLOAT, 0, false);
-    m_input_layout->SetNextElement(SEM_COLOR, 0, R32G32B32A32_FLOAT, 0, false, 12);
+    input_layout = InputLayout::CreateD3D12(2);
+    input_layout->SetNextElement(SEM_POSITION, 0, R32G32B32_FLOAT, 0, false);
+    input_layout->SetNextElement(SEM_COLOR, 0, R32G32B32A32_FLOAT, 0, false, 12);
   }
   catch (const FrameworkException& err)
   {
@@ -68,8 +71,11 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
     rtv_config->SetAlphaToCoverageEnable(false);
     rtv_config->SetIndependentBlendEnable(false);
     rtv_config->SetFormat(0, RTVF_R8G8B8A8_UNORM);
-    m_pipeline = Pipeline::CreateD3D12(graphics, *m_input_layout, TOPOLOGY_TRIANGLE, *m_vertex_shader, NULL, *m_pixel_shader, *rtv_config, *m_root_sig);
+    m_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader, *rtv_config, *m_root_sig);
     delete rtv_config;
+    delete input_layout;
+    delete pixel_shader;
+    delete vertex_shader;
   }
   catch (const FrameworkException& err)
   {
@@ -109,9 +115,10 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
   }
 
   // create the descriptor heap
+  ShaderResourceDescHeap* shader_buffer_heap;
   try
   {
-    m_shader_buffer_heap = ShaderResourceDescHeap::CreateD3D12(graphics, 1);
+    shader_buffer_heap = ShaderResourceDescHeap::CreateD3D12(graphics, 1);
   }
   catch (const FrameworkException& err)
   {
@@ -125,7 +132,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
   try
   {
     m_heap_array = HeapArray::CreateD3D12(1);
-    m_heap_array->SetHeap(0, *m_shader_buffer_heap);
+    m_heap_array->SetHeap(0, *shader_buffer_heap);
   }
   catch (const FrameworkException& err)
   {
@@ -139,7 +146,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
   XMFLOAT4 override_color = XMFLOAT4(0.5f, 0.0f, 1.0f, 1.0f);
   try
   {
-    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *m_shader_buffer_heap, sizeof(override_color));
+    m_constant_buffer = ConstantBuffer::CreateD3D12(graphics, *shader_buffer_heap, sizeof(override_color));
     m_constant_buffer->Upload(&override_color, 0, sizeof(override_color));
   }
   catch (const FrameworkException& err)
@@ -149,17 +156,16 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
     log_print(out.str().c_str());
     exit(1);
   }
+
+  // since the heap array stores a reference to the descriptor heap for shader resources and the heap is not used directly later, no need to keep around the ShaderResourceDescHeap wrapper
+  delete shader_buffer_heap;
 }
 
 TestGraphicsPipeline::~TestGraphicsPipeline()
 {
   delete m_vert_array;
   delete m_constant_buffer;
-  delete m_shader_buffer_heap;
   delete m_heap_array;
-  delete m_vertex_shader;
-  delete m_pixel_shader;
-  delete m_input_layout;
   delete m_command_list;
   delete m_pipeline;
   delete m_root_sig;
