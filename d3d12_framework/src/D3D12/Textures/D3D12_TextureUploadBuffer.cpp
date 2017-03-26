@@ -282,7 +282,7 @@ void D3D12_TextureUploadBuffer::PrepUploadInternal(GraphicsCore& graphics, Comma
   prep_copy.Type  = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
   prep_copy.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
   prep_copy.Transition.pResource   = texture;
-  prep_copy.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  prep_copy.Transition.Subresource = index;
   prep_copy.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
   prep_copy.Transition.StateAfter  = D3D12_RESOURCE_STATE_COPY_DEST;
   cmd_list->ResourceBarrier(1, &prep_copy);
@@ -293,7 +293,7 @@ void D3D12_TextureUploadBuffer::PrepUploadInternal(GraphicsCore& graphics, Comma
   done_copy.Type  = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
   done_copy.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
   done_copy.Transition.pResource   = texture;
-  done_copy.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+  done_copy.Transition.Subresource = index;
   done_copy.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
   done_copy.Transition.StateAfter  = D3D12_RESOURCE_STATE_GENERIC_READ;
   cmd_list->ResourceBarrier(1, &done_copy);
