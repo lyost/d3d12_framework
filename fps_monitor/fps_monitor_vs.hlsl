@@ -15,7 +15,7 @@ struct VertexShaderInput
 {
   float2 pos          : POSITION;
   float2 uv           : TEXCOORD0;
-  float  lookup_index : TEXCOORD1;
+  uint   lookup_index : TEXCOORD1;
 };
 
 struct VertexShaderOutput

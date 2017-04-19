@@ -85,7 +85,7 @@ class FPSMonitor
     {
       DirectX::XMFLOAT2 pos;
       DirectX::XMFLOAT2 uv;
-      float             lookup_index;
+      UINT              lookup_index;
     };
 
     /// <summary>

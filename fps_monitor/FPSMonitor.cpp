@@ -66,7 +66,7 @@ FPSMonitor::FPSMonitor(GraphicsCore& graphics, UINT sample_size, const map<char,
     input_layout = InputLayout::CreateD3D12(3);
     input_layout->SetNextElement(SEM_POSITION, 0, R32G32_FLOAT, 0, false);
     input_layout->SetNextElement(SEM_TEXCOORD, 0, R32G32_FLOAT, 0, false);
-    input_layout->SetNextElement(SEM_TEXCOORD, 1, R32_FLOAT,    0, false);
+    input_layout->SetNextElement(SEM_TEXCOORD, 1, R32_UINT,     0, false);
   }
   catch (const FrameworkException& err)
   {
@@ -123,10 +123,10 @@ FPSMonitor::FPSMonitor(GraphicsCore& graphics, UINT sample_size, const map<char,
   {
     float x = (i % CHARS_PER_ROW) * m_char_width;
     float y = (i / CHARS_PER_ROW) * -m_char_height;
-    m_vertex_buffer_data[i * VERTS_PER_CHAR    ] = { XMFLOAT2(-1 + x,                y),                 XMFLOAT2(0.0f, 0.0f), 0.0f };
-    m_vertex_buffer_data[i * VERTS_PER_CHAR + 1] = { XMFLOAT2(-1 + x,                y - m_char_height), XMFLOAT2(0.0f, 1.0f), 0.0f };
-    m_vertex_buffer_data[i * VERTS_PER_CHAR + 2] = { XMFLOAT2(-1 + x + m_char_width, y - m_char_height), XMFLOAT2(1.0f, 1.0f), 0.0f };
-    m_vertex_buffer_data[i * VERTS_PER_CHAR + 3] = { XMFLOAT2(-1 + x + m_char_width, y),                 XMFLOAT2(1.0f, 0.0f), 0.0f };
+    m_vertex_buffer_data[i * VERTS_PER_CHAR    ] = { XMFLOAT2(-1 + x,                y),                 XMFLOAT2(0.0f, 0.0f), 0 };
+    m_vertex_buffer_data[i * VERTS_PER_CHAR + 1] = { XMFLOAT2(-1 + x,                y - m_char_height), XMFLOAT2(0.0f, 1.0f), 0 };
+    m_vertex_buffer_data[i * VERTS_PER_CHAR + 2] = { XMFLOAT2(-1 + x + m_char_width, y - m_char_height), XMFLOAT2(1.0f, 1.0f), 0 };
+    m_vertex_buffer_data[i * VERTS_PER_CHAR + 3] = { XMFLOAT2(-1 + x + m_char_width, y),                 XMFLOAT2(1.0f, 0.0f), 0 };
   }
   try
   {
@@ -375,7 +375,7 @@ void FPSMonitor::Update(UINT ms)
   const char* buffer = tmp.c_str();
   for (UINT i = 0; i < num_chars; i++)
   {
-    float index = (float)m_key_to_index.at(buffer[i]);
+    UINT index = m_key_to_index.at(buffer[i]);
     m_vertex_buffer_data[i * VERTS_PER_CHAR    ].lookup_index = index;
     m_vertex_buffer_data[i * VERTS_PER_CHAR + 1].lookup_index = index;
     m_vertex_buffer_data[i * VERTS_PER_CHAR + 2].lookup_index = index;
