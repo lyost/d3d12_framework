@@ -84,7 +84,8 @@ class FPSMonitor
     struct VertexBufferEntry
     {
       DirectX::XMFLOAT2 pos;
-      DirectX::XMFLOAT3 uv;
+      DirectX::XMFLOAT2 uv;
+      float             lookup_index;
     };
 
     /// <summary>

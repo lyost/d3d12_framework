@@ -13,8 +13,9 @@ cbuffer LOOKUP_TABLE : register(b0)
 
 struct VertexShaderInput
 {
-  float2 pos                : POSITION;
-  float3 uv                 : TEXCOORD0;
+  float2 pos          : POSITION;
+  float2 uv           : TEXCOORD0;
+  float  lookup_index : TEXCOORD1;
 };
 
 struct VertexShaderOutput
@@ -28,8 +29,8 @@ VertexShaderOutput VS(VertexShaderInput input)
   VertexShaderOutput output;
 
   output.pos  = float4(input.pos.x, input.pos.y, 0, 1);
-  output.uv.x = (1 - input.uv.x) * lookup_table[input.uv.z].left + input.uv.x * lookup_table[input.uv.z].right;
-  output.uv.y = (1 - input.uv.y) * lookup_table[input.uv.z].top  + input.uv.y * lookup_table[input.uv.z].bottom;
+  output.uv.x = (1 - input.uv.x) * lookup_table[input.lookup_index].left + input.uv.x * lookup_table[input.lookup_index].right;
+  output.uv.y = (1 - input.uv.y) * lookup_table[input.lookup_index].top  + input.uv.y * lookup_table[input.lookup_index].bottom;
 
   return output;
 }
