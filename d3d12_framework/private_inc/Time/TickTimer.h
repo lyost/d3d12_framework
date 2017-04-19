@@ -19,11 +19,14 @@ class TickTimer : public Timer
     /// <param name="ms">
     /// desired number of milliseconds to have ellapsed
     /// </param>
+    /// <param name="actual_ms">
+    /// actual number of milliseconds ellapsed when this function returns true
+    /// </param>
     /// <returns>
     /// true  if the requested amount of time has ellapsed
     /// false otherwise
     /// </returns>
-    bool CheckDelta(UINT ms);
+    bool CheckDelta(UINT ms, UINT& actual_ms);
     
   private:
     /// <summary>

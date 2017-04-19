@@ -1,6 +1,8 @@
+#include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Custom.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer.h"
 #include "FrameworkException.h"
+using namespace std;
 
 D3D12_VertexBuffer_Custom* D3D12_VertexBuffer_Custom::Create(GraphicsCore& graphics, UINT num, UINT size, const void* data)
 {
@@ -20,6 +22,20 @@ D3D12_VertexBuffer_Custom::D3D12_VertexBuffer_Custom(UINT num, ID3D12Resource* b
 D3D12_VertexBuffer_Custom::~D3D12_VertexBuffer_Custom()
 {
   m_buffer->Release();
+}
+
+void D3D12_VertexBuffer_Custom::Upload(UINT buffer_start_index, const void* data, UINT num_bytes)
+{
+  void* buffer_data;
+  HRESULT rc = m_buffer->Map(0, NULL, &buffer_data);
+  if (FAILED(rc))
+  {
+    ostringstream out;
+    out << "Failed to map buffer for vertex buffer.  HRESULT = " << rc;
+    throw FrameworkException(out.str());
+  }
+  memcpy(((UINT8*)buffer_data) + buffer_start_index, data, num_bytes);
+  m_buffer->Unmap(0, NULL);
 }
 
 UINT D3D12_VertexBuffer_Custom::GetNumVertices() const

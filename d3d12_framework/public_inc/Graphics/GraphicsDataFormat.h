@@ -13,6 +13,8 @@ enum GraphicsDataFormat
   R32G32B32_FLOAT    = 6,
   R32G32_FLOAT       = 16,
   R8B8G8A8_UNORM     = 28,
+  R32_FLOAT          = 41,
+  R32_UINT           = 42,
   // todo: fill in the rest
 };
 

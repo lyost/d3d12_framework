@@ -36,6 +36,7 @@ void Game::Run()
   
   // message loop
   MSG msg = {0};
+  UINT actual_ms = 0;
   while(m_run && msg.message != WM_QUIT)
   {
     // handle messages
@@ -45,10 +46,10 @@ void Game::Run()
       DispatchMessage(&msg);
     }
     // check if it's time for another update/render cycle
-    else if (timer->CheckDelta(m_mspf))
+    else if (timer->CheckDelta(m_mspf, actual_ms))
     {
-      Update(m_mspf);
-      Draw(m_mspf);
+      Update(m_mspf, actual_ms);
+      Draw(m_mspf, actual_ms);
     }
   }
   

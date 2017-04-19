@@ -68,18 +68,24 @@ class Game
     /// <summary>
     /// Where subclasses should update their game state
     /// </summary>
-    /// <param name="ms">
-    /// number of milliseconds since the update
+    /// <param name="step_ms">
+    /// number of milliseconds since the last frame based on the configured frame rate
     /// </param>
-    virtual void Update(UINT ms) = 0;
+    /// <param name="actual_ms">
+    /// actual number of milliseconds since the last frame
+    /// </param>
+    virtual void Update(UINT step_ms, UINT actual_ms) = 0;
     
     /// <summary>
     /// Where subclasses should draw the current frame
     /// </summary>
-    /// <param name="ms">
-    /// number of milliseconds since the last frame
+    /// <param name="step_ms">
+    /// number of milliseconds since the last frame based on the configured frame rate
     /// </param>
-    virtual void Draw(UINT ms) = 0;
+    /// <param name="actual_ms">
+    /// actual number of milliseconds since the last frame
+    /// </param>
+    virtual void Draw(UINT step_ms, UINT actual_ms) = 0;
     
     /// <summary>
     /// Handler for when the window is resized

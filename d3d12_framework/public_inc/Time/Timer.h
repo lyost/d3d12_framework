@@ -31,11 +31,14 @@ class Timer
     /// <param name="ms">
     /// desired number of milliseconds to have ellapsed
     /// </param>
+    /// <param name="actual_ms">
+    /// actual number of milliseconds ellapsed when this function returns true
+    /// </param>
     /// <returns>
     /// true  if the requested amount of time has ellapsed
     /// false otherwise
     /// </returns>
-    virtual bool CheckDelta(UINT ms) = 0;
+    virtual bool CheckDelta(UINT ms, UINT& actual_ms) = 0;
     
   private:
 };

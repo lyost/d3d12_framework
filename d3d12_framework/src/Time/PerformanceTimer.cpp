@@ -21,7 +21,7 @@ PerformanceTimer::PerformanceTimer(float freq)
   QueryPerformanceCounter(&m_ref_time);
 }
 
-bool PerformanceTimer::CheckDelta(UINT ms)
+bool PerformanceTimer::CheckDelta(UINT ms, UINT& actual_ms)
 {
   LARGE_INTEGER curr_time;
   QueryPerformanceCounter(&curr_time);
@@ -29,6 +29,7 @@ bool PerformanceTimer::CheckDelta(UINT ms)
   if (delta >= ms)
   {
     m_ref_time = curr_time;
+    actual_ms = (UINT)delta;
     
     return true;
   }
