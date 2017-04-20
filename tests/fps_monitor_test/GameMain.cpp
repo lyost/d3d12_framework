@@ -49,6 +49,9 @@ void GameMain::Update(UINT step_ms, UINT actual_ms)
 {
   static bool resized = false;
   static bool fullscreen = false;
+  static bool num_1_down = false;
+  static bool num_2_down = false;
+  static bool num_3_down = false;
 
   try
   {
@@ -100,6 +103,34 @@ void GameMain::Update(UINT step_ms, UINT actual_ms)
     else if (keyboard.IsKeyDown('0', false))
     {
       window.ConstrainMousePointer(false);
+    }
+
+    if (keyboard.IsKeyDown(VK_NUMPAD1, false))
+    {
+      num_1_down = true;
+    }
+    else if (num_1_down)
+    {
+      num_1_down = false;
+      SetMSPerFrame(1000 / 60);
+    }
+    if (keyboard.IsKeyDown(VK_NUMPAD2, false))
+    {
+      num_2_down = true;
+    }
+    else if (num_2_down)
+    {
+      num_2_down = false;
+      SetMSPerFrame(1000 / 30);
+    }
+    if (keyboard.IsKeyDown(VK_NUMPAD3, false))
+    {
+      num_3_down = true;
+    }
+    else if (num_3_down)
+    {
+      num_3_down = false;
+      SetMSPerFrame(1000 / 24);
     }
   }
   catch (const FrameworkException& err)
