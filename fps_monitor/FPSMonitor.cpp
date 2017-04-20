@@ -122,7 +122,7 @@ FPSMonitor::FPSMonitor(GraphicsCore& graphics, UINT sample_size, const map<char,
   for (UINT i = 0; i < num_chars; i++)
   {
     float x = (i % CHARS_PER_ROW) * m_char_width;
-    float y = (i / CHARS_PER_ROW) * -m_char_height;
+    float y = 1 - (i / CHARS_PER_ROW) * m_char_height;
     m_vertex_buffer_data[i * VERTS_PER_CHAR    ] = { XMFLOAT2(-1 + x,                y),                 XMFLOAT2(0.0f, 0.0f), 0 };
     m_vertex_buffer_data[i * VERTS_PER_CHAR + 1] = { XMFLOAT2(-1 + x,                y - m_char_height), XMFLOAT2(0.0f, 1.0f), 0 };
     m_vertex_buffer_data[i * VERTS_PER_CHAR + 2] = { XMFLOAT2(-1 + x + m_char_width, y - m_char_height), XMFLOAT2(1.0f, 1.0f), 0 };
@@ -440,7 +440,7 @@ void FPSMonitor::Resize(GraphicsCore& graphics)
   for (UINT i = 0; i < num_chars; i++)
   {
     float x = (i % CHARS_PER_ROW) * m_char_width;
-    float y = (i / CHARS_PER_ROW) * -m_char_height;
+    float y = 1 - (i / CHARS_PER_ROW) * m_char_height;
     m_vertex_buffer_data[i * VERTS_PER_CHAR    ].pos = XMFLOAT2(-1 + x,                y);
     m_vertex_buffer_data[i * VERTS_PER_CHAR + 1].pos = XMFLOAT2(-1 + x,                y - m_char_height);
     m_vertex_buffer_data[i * VERTS_PER_CHAR + 2].pos = XMFLOAT2(-1 + x + m_char_width, y - m_char_height);
