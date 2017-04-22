@@ -26,18 +26,24 @@ class GameMain : public Game
     /// <summary>
     /// Updates the game state
     /// </summary>
-    /// <param name="ms">
-    /// number of milliseconds since the update
+    /// <param name="step_ms">
+    /// number of milliseconds since the last frame based on the configured frame rate
     /// </param>
-    void Update(UINT ms);
+    /// <param name="actual_ms">
+    /// actual number of milliseconds since the last frame
+    /// </param>
+    void Update(UINT step_ms, UINT actual_ms);
     
     /// <summary>
     /// Draws the current frame
     /// </summary>
-    /// <param name="ms">
-    /// number of milliseconds since the last frame
+    /// <param name="step_ms">
+    /// number of milliseconds since the last frame based on the configured frame rate
     /// </param>
-    void Draw(UINT ms);
+    /// <param name="actual_ms">
+    /// actual number of milliseconds since the last frame
+    /// </param>
+    void Draw(UINT step_ms, UINT actual_ms);
     
     /// <summary>
     /// Handler for when the window is resized

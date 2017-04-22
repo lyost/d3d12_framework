@@ -40,7 +40,7 @@ void GameMain::UnloadContent()
   delete m_model;
 }
 
-void GameMain::Update(UINT ms)
+void GameMain::Update(UINT step_ms, UINT actual_ms)
 {
   static bool resized = false;
   static bool fullscreen = false;
@@ -111,17 +111,17 @@ void GameMain::Update(UINT ms)
 
     if (keyboard.IsKeyDown(VK_LEFT, true))
     {
-      m_camera_angle -= XM_PI * ms / 1000.0f; // todo: bounds
+      m_camera_angle -= XM_PI * step_ms / 1000.0f; // todo: bounds
       UpdateCamera();
     }
     if (keyboard.IsKeyDown(VK_RIGHT, true))
     {
-      m_camera_angle += XM_PI * ms / 1000.0f; // todo: bounds
+      m_camera_angle += XM_PI * step_ms / 1000.0f; // todo: bounds
       UpdateCamera();
     }
     if (keyboard.IsKeyDown(VK_UP, true))
     {
-      m_camera_pitch += XM_PI * ms / 1000.0f;
+      m_camera_pitch += XM_PI * step_ms / 1000.0f;
       if (m_camera_pitch > pitch_bounds)
       {
         m_camera_pitch = pitch_bounds;
@@ -130,7 +130,7 @@ void GameMain::Update(UINT ms)
     }
     if (keyboard.IsKeyDown(VK_DOWN, true))
     {
-      m_camera_pitch -= XM_PI * ms / 1000.0f;
+      m_camera_pitch -= XM_PI * step_ms / 1000.0f;
       if (m_camera_pitch < -pitch_bounds)
       {
         m_camera_pitch = -pitch_bounds;
@@ -147,7 +147,7 @@ void GameMain::Update(UINT ms)
   }
 }
 
-void GameMain::Draw(UINT ms)
+void GameMain::Draw(UINT step_ms, UINT actual_ms)
 {
   GraphicsCore& graphics = GetGraphics();
   m_pipeline->Draw(graphics);
