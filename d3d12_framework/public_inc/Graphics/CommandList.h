@@ -89,6 +89,14 @@ class CommandList
     virtual void Close() = 0;
 
     /// <summary>
+    /// Sets the pipeline that is applicable to the subsequent member function calls
+    /// </summary>
+    /// <param name="pipeline">
+    /// Pipeline to use
+    /// </param>
+    virtual void SetPipeline(const Pipeline& pipeline) = 0;
+
+    /// <summary>
     /// Sets the root signature that is applicable to the subsequent member function calls
     /// </summary>
     /// <param name="sig">

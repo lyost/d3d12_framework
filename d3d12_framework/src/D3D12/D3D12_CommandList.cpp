@@ -98,6 +98,12 @@ void D3D12_CommandList::Close()
   }
 }
 
+void D3D12_CommandList::SetPipeline(const Pipeline& pipeline)
+{
+  const D3D12_Pipeline& pipe = (const D3D12_Pipeline&)pipeline;
+  m_command_list->SetPipelineState(pipe.GetPipeline());
+}
+
 void D3D12_CommandList::SetRootSignature(const RootSignature& sig)
 {
   const D3D12_RootSignature& root_sig = (const D3D12_RootSignature&)sig;

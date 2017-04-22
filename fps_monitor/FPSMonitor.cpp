@@ -400,7 +400,7 @@ void FPSMonitor::Draw(GraphicsCore& graphics, CommandList* command_list) const
   try
   {
     const RenderTarget& current_render_target = graphics.GetBackBuffer().GetCurrentRenderTarget();
-    command_list->Reset(m_pipeline);
+    command_list->SetPipeline(*m_pipeline);
     command_list->SetRootSignature(*m_root_sig);
     command_list->RSSetViewport(graphics.GetDefaultViewport());
     command_list->RSSetScissorRect(m_scissor_rect);

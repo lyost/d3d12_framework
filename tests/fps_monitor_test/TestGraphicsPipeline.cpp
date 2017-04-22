@@ -272,13 +272,9 @@ void TestGraphicsPipeline::Draw(GraphicsCore& graphics)
 
     m_command_list->DrawIndexedInstanced(index_buffer->GetNumIndices(), 2, 0);
 
-    m_command_list->Close();
-    graphics.ExecuteCommandList(*m_command_list);
-    graphics.WaitOnFence();
-
     m_fps_monitor->Draw(graphics, m_command_list);
-    m_command_list->RenderTargetToPresent(current_render_target);
 
+    m_command_list->RenderTargetToPresent(current_render_target);
     m_command_list->Close();
     graphics.ExecuteCommandList(*m_command_list);
 

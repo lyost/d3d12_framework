@@ -49,6 +49,14 @@ class D3D12_CommandList : public CommandList
     void Close();
 
     /// <summary>
+    /// Sets the pipeline that is applicable to the subsequent member function calls
+    /// </summary>
+    /// <param name="pipeline">
+    /// Pipeline to use
+    /// </param>
+    void SetPipeline(const Pipeline& pipeline);
+
+    /// <summary>
     /// Sets the root signature that is applicable to the subsequent member function calls
     /// </summary>
     /// <param name="sig">
