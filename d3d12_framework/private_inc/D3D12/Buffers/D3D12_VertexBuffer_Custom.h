@@ -41,7 +41,7 @@ class D3D12_VertexBuffer_Custom : public VertexBuffer_Custom
     ~D3D12_VertexBuffer_Custom();
 
     /// <summary>
-    /// Updates the data in the entire vertex buffer
+    /// Updates the data in the vertex buffer starting at the specified byte
     /// </summary>
     /// <param name="buffer_start_index">
     /// index of the byte in the vertex buffer to start writing data to
@@ -52,6 +52,9 @@ class D3D12_VertexBuffer_Custom : public VertexBuffer_Custom
     /// <param name="num_bytes">
     /// number of bytes to write to the vertex buffer
     /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
     void Upload(UINT buffer_start_index, const void* data, UINT num_bytes);
 
     /// <summary>

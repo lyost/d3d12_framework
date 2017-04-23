@@ -55,7 +55,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
   {
     input_layout = InputLayout::CreateD3D12(2);
     input_layout->SetNextElement(SEM_POSITION, 0, R32G32B32_FLOAT, 0, false);
-    input_layout->SetNextElement(SEM_COLOR, 0, R32G32B32A32_FLOAT, 0, false, 12);
+    input_layout->SetNextElement(SEM_COLOR, 0, R32G32B32A32_FLOAT, 0, false);
   }
   catch (const FrameworkException& err)
   {

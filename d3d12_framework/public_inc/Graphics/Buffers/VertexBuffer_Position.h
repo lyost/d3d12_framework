@@ -36,6 +36,23 @@ class VertexBuffer_Position : public VertexBuffer
     /// </summary>
     virtual ~VertexBuffer_Position();
 
+    /// <summary>
+    /// Updates the data in the vertex buffer starting at the specified index
+    /// </summary>
+    /// <param name="buffer_start_index">
+    /// index of the Vertex_Position in the vertex buffer to start writing data to
+    /// </param>
+    /// <param name="data">
+    /// data to write to the vertex buffer
+    /// </param>
+    /// <param name="num_entries">
+    /// number of entries to write to the vertex buffer
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void Upload(UINT buffer_start_index, const Vertex_Position* data, UINT num_entries) = 0;
+
   protected:
     VertexBuffer_Position();
     

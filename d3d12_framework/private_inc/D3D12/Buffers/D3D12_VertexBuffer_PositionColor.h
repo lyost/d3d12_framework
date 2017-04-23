@@ -44,6 +44,23 @@ class D3D12_VertexBuffer_PositionColor : public VertexBuffer_PositionColor
     /// number of entries
     /// </returns>
     UINT GetNumVertices() const;
+
+    /// <summary>
+    /// Updates the data in the vertex buffer starting at the specified index
+    /// </summary>
+    /// <param name="buffer_start_index">
+    /// index of the Vertex_PositionColor in the vertex buffer to start writing data to
+    /// </param>
+    /// <param name="data">
+    /// data to write to the vertex buffer
+    /// </param>
+    /// <param name="num_entries">
+    /// number of entries to write to the vertex buffer
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    void Upload(UINT buffer_start_index, const Vertex_PositionColor* data, UINT num_entries);
     
   private:
     // disabled

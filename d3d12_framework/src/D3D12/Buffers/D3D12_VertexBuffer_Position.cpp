@@ -1,6 +1,9 @@
+#include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Position.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer.h"
 #include "FrameworkException.h"
+#include "private_inc/BuildSettings.h"
+using namespace std;
 
 D3D12_VertexBuffer_Position* D3D12_VertexBuffer_Position::Create(GraphicsCore& graphics, UINT num, const Vertex_Position* data)
 {
@@ -25,4 +28,27 @@ D3D12_VertexBuffer_Position::~D3D12_VertexBuffer_Position()
 UINT D3D12_VertexBuffer_Position::GetNumVertices() const
 {
   return m_num;
+}
+
+void D3D12_VertexBuffer_Position::Upload(UINT buffer_start_index, const Vertex_Position* data, UINT num_entries)
+{
+  const UINT num_bytes = num_entries * sizeof(Vertex_Position);
+
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if ((buffer_start_index + num_bytes) > m_buffer->GetDesc().Width)
+  {
+    throw FrameworkException("Attempting to upload beyond the end of the vertex buffer");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  void* buffer_data;
+  HRESULT rc = m_buffer->Map(0, NULL, &buffer_data);
+  if (FAILED(rc))
+  {
+    ostringstream out;
+    out << "Failed to map buffer for vertex buffer.  HRESULT = " << rc;
+    throw FrameworkException(out.str());
+  }
+  memcpy(((Vertex_Position*)buffer_data) + buffer_start_index, data, num_bytes);
+  m_buffer->Unmap(0, NULL);
 }

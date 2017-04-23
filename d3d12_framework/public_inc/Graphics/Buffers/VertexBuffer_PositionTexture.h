@@ -76,6 +76,57 @@ class VertexBuffer_PositionTexture : public VertexBuffer
     /// </summary>
     virtual ~VertexBuffer_PositionTexture();
 
+    /// <summary>
+    /// Updates the data in the vertex buffer starting at the specified index
+    /// </summary>
+    /// <param name="buffer_start_index">
+    /// index of the Vertex_PositionTextureU in the vertex buffer to start writing data to
+    /// </param>
+    /// <param name="data">
+    /// data to write to the vertex buffer
+    /// </param>
+    /// <param name="num_entries">
+    /// number of entries to write to the vertex buffer
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void Upload(UINT buffer_start_index, const Vertex_PositionTextureU* data, UINT num_entries) = 0;
+
+    /// <summary>
+    /// Updates the data in the vertex buffer starting at the specified index
+    /// </summary>
+    /// <param name="buffer_start_index">
+    /// index of the Vertex_PositionTextureUV in the vertex buffer to start writing data to
+    /// </param>
+    /// <param name="data">
+    /// data to write to the vertex buffer
+    /// </param>
+    /// <param name="num_entries">
+    /// number of entries to write to the vertex buffer
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void Upload(UINT buffer_start_index, const Vertex_PositionTextureUV* data, UINT num_entries) = 0;
+
+    /// <summary>
+    /// Updates the data in the vertex buffer starting at the specified index
+    /// </summary>
+    /// <param name="buffer_start_index">
+    /// index of the Vertex_PositionTextureUVW in the vertex buffer to start writing data to
+    /// </param>
+    /// <param name="data">
+    /// data to write to the vertex buffer
+    /// </param>
+    /// <param name="num_entries">
+    /// number of entries to write to the vertex buffer
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void Upload(UINT buffer_start_index, const Vertex_PositionTextureUVW* data, UINT num_entries) = 0;
+
   protected:
     VertexBuffer_PositionTexture();
     
