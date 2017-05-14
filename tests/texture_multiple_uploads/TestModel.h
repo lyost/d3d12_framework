@@ -17,7 +17,7 @@ class TestModel
     /// <returns>
     /// vertex buffer
     /// </returns>
-    const VertexBuffer_PositionTexture* GetVertexBuffer() const;
+    const VertexBuffer_PositionTextureUV* GetVertexBuffer() const;
 
     /// <summary>
     /// Retrieves the index buffer for the model
@@ -66,7 +66,7 @@ class TestModel
     /// <summary>
     /// vertex buffer for the test case
     /// </summary>
-    VertexBuffer_PositionTexture* m_verts;
+    VertexBuffer_PositionTextureUV* m_verts;
 
     /// <summary>
     /// index buffer for the test case

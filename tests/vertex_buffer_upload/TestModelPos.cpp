@@ -6,9 +6,9 @@
 using namespace DirectX;
 using namespace std;
 
-TestModelPos::TestModelPos(GraphicsCore& graphics)
+TestModelPos::TestModelPos(GraphicsCore& graphics, CommandList& command_list)
 {
-  // create the vertex buffer
+  // create the host vertex buffer
   const Viewport& default_viewport = graphics.GetDefaultViewport();
   float aspect_ratio = default_viewport.width / default_viewport.height;
   m_vert_data[0] = { XMFLOAT3(-4.0f, 2.0f, 1.0f) };
@@ -22,7 +22,33 @@ TestModelPos::TestModelPos(GraphicsCore& graphics)
   catch (const FrameworkException& err)
   {
     ostringstream out;
-    out << "Unable to create vertex buffer:\n" << err.what();
+    out << "Unable to create host vertex buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+
+  // create the gpu vertex buffer
+  try
+  {
+    m_gpu_verts = VertexBufferGPU_Position::CreateD3D12(graphics, m_verts->GetNumVertices());
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to create GPU vertex buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+
+  // upload to the GPU vertex buffer
+  try
+  {
+    m_verts->PrepUpload(graphics, command_list, *m_gpu_verts);
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to upload to GPU vertex buffer:\n" << err.what();
     log_print(out.str().c_str());
     exit(1);
   }
@@ -50,9 +76,10 @@ TestModelPos::~TestModelPos()
 {
   delete m_indices;
   delete m_verts;
+  delete m_gpu_verts;
 }
 
-void TestModelPos::UpdateVertexBuffer(bool initial)
+void TestModelPos::UpdateVertexBuffer(GraphicsCore& graphics, bool initial, CommandList& command_list)
 {
   if (initial)
   {
@@ -79,11 +106,24 @@ void TestModelPos::UpdateVertexBuffer(bool initial)
     log_print(out.str().c_str());
     exit(1);
   }
+
+  // upload to the GPU vertex buffer
+  try
+  {
+    m_verts->PrepUpload(graphics, command_list, *m_gpu_verts);
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to upload to GPU vertex buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
 }
 
-const VertexBuffer_Position* TestModelPos::GetVertexBuffer() const
+const VertexBufferGPU_Position* TestModelPos::GetVertexBuffer() const
 {
-  return m_verts;
+  return m_gpu_verts;
 }
 
 const IndexBuffer16* TestModelPos::GetIndexBuffer() const

@@ -1,5 +1,6 @@
 #include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionColor.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionColor.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer.h"
 #include "FrameworkException.h"
 #include "private_inc/BuildSettings.h"
@@ -51,4 +52,9 @@ void D3D12_VertexBuffer_PositionColor::Upload(UINT buffer_start_index, const Ver
   }
   memcpy(((Vertex_PositionColor*)buffer_data) + buffer_start_index, data, num_bytes);
   m_buffer->Unmap(0, NULL);
+}
+
+void D3D12_VertexBuffer_PositionColor::PrepUpload(GraphicsCore& graphics, CommandList& command_list, const VertexBufferGPU_PositionColor& buffer)
+{
+  D3D12_VertexBuffer::PrepUpload(graphics, command_list, m_buffer, ((const D3D12_VertexBufferGPU_PositionColor&)buffer).GetResource());
 }

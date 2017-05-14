@@ -1,6 +1,7 @@
 #include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Position.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_Position.h"
 #include "FrameworkException.h"
 #include "private_inc/BuildSettings.h"
 using namespace std;
@@ -51,4 +52,9 @@ void D3D12_VertexBuffer_Position::Upload(UINT buffer_start_index, const Vertex_P
   }
   memcpy(((Vertex_Position*)buffer_data) + buffer_start_index, data, num_bytes);
   m_buffer->Unmap(0, NULL);
+}
+
+void D3D12_VertexBuffer_Position::PrepUpload(GraphicsCore& graphics, CommandList& command_list, const VertexBufferGPU_Position& buffer)
+{
+  D3D12_VertexBuffer::PrepUpload(graphics, command_list, m_buffer, ((const D3D12_VertexBufferGPU_Position&)buffer).GetResource());
 }

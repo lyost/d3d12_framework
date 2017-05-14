@@ -138,12 +138,6 @@
     <ClCompile Include="src\Graphics\Buffers\VertexBuffer.cpp">
       <Filter>Source Files\Graphics\Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_PositionTexture.cpp">
-      <Filter>Source Files\Graphics\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.cpp">
-      <Filter>Source Files\D3D12\Buffers</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Buffers\IndexBuffer.cpp">
       <Filter>Source Files\Graphics\Buffers</Filter>
     </ClCompile>
@@ -345,6 +339,60 @@
     <ClCompile Include="src\Graphics\Buffers\ReadbackBuffer.cpp">
       <Filter>Source Files\Graphics\Buffers</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBufferGPU_Position.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBufferGPU_PositionColor.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBufferGPU_Position.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBufferGPU_PositionColor.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBufferGPU_PositionTextureU.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBufferGPU_PositionTextureU.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBufferGPU_PositionTextureUV.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBufferGPU_PositionTextureUVW.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBufferGPU_PositionTextureUV.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBufferGPU_PositionTextureUVW.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionTextureU.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_PositionTextureU.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionTextureUV.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBuffer_PositionTextureUVW.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_PositionTextureUV.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBuffer_PositionTextureUVW.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_VertexBufferGPU_Custom.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\VertexBufferGPU_Custom.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -442,12 +490,6 @@
     </ClInclude>
     <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer.h">
       <Filter>public_inc\Graphics\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_PositionTexture.h">
-      <Filter>public_inc\Graphics\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionTexture.h">
-      <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer.h">
       <Filter>public_inc\Graphics\Buffers</Filter>
@@ -661,6 +703,60 @@
     </ClInclude>
     <ClInclude Include="public_inc\Graphics\Buffers\ReadbackBuffer.h">
       <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBufferGPU_Position.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBufferGPU_PositionColor.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferGPU_PositionColor.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferGPU_Position.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferGPU_PositionTextureU.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBufferGPU_PositionTextureU.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBufferGPU_PositionTextureUV.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBufferGPU_PositionTextureUVW.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferGPU_PositionTextureUV.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferGPU_PositionTextureUVW.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionTextureU.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_PositionTextureU.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionTextureUV.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBuffer_PositionTextureUVW.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_PositionTextureUV.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBuffer_PositionTextureUVW.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\VertexBufferGPU_Custom.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferGPU_Custom.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

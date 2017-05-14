@@ -1,5 +1,6 @@
 #include <sstream>
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Custom.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_Custom.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer.h"
 #include "FrameworkException.h"
 #include "private_inc/BuildSettings.h"
@@ -49,4 +50,9 @@ void D3D12_VertexBuffer_Custom::Upload(UINT buffer_start_index, const void* data
 UINT D3D12_VertexBuffer_Custom::GetNumVertices() const
 {
   return m_num;
+}
+
+void D3D12_VertexBuffer_Custom::PrepUpload(GraphicsCore& graphics, CommandList& command_list, const VertexBufferGPU_Custom& buffer)
+{
+  D3D12_VertexBuffer::PrepUpload(graphics, command_list, m_buffer, ((const D3D12_VertexBufferGPU_Custom&)buffer).GetResource());
 }

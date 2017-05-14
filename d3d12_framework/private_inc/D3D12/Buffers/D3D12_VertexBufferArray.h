@@ -61,7 +61,35 @@ class D3D12_VertexBufferArray : public VertexBufferArray
     /// <param name="buffer">
     /// buffer to set the element to
     /// </param>
-    void Set(UINT index, const VertexBuffer_PositionTexture& buffer);
+    void Set(UINT index, const VertexBuffer_PositionTextureU& buffer);
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If a vertex buffer is to be destroyed, then it must be cleared from this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    void Set(UINT index, const VertexBuffer_PositionTextureUV& buffer);
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If a vertex buffer is to be destroyed, then it must be cleared from this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    void Set(UINT index, const VertexBuffer_PositionTextureUVW& buffer);
 
     /// <summary>
     /// Sets the element at that specified index to the specified buffer
@@ -76,6 +104,91 @@ class D3D12_VertexBufferArray : public VertexBufferArray
     /// buffer to set the element to
     /// </param>
     void Set(UINT index, const VertexBuffer_PositionColor& buffer);
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If a vertex buffer is to be destroyed, then it must be cleared from
+    /// this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    void Set(UINT index, const VertexBufferGPU_Custom& buffer);
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If a vertex buffer is to be destroyed, then it must be cleared from this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    void Set(UINT index, const VertexBufferGPU_Position& buffer);
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If a vertex buffer is to be destroyed, then it must be cleared from this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    void Set(UINT index, const VertexBufferGPU_PositionTextureU& buffer);
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If a vertex buffer is to be destroyed, then it must be cleared from this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    void Set(UINT index, const VertexBufferGPU_PositionTextureUV& buffer);
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If a vertex buffer is to be destroyed, then it must be cleared from this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    void Set(UINT index, const VertexBufferGPU_PositionTextureUVW& buffer);
+
+    /// <summary>
+    /// Sets the element at that specified index to the specified buffer
+    /// <summary>
+    /// <remarks>
+    /// If a vertex buffer is to be destroyed, then it must be cleared from this before the array is used again
+    /// </remarks>
+    /// <param name="index">
+    /// where in the array to set the buffer
+    /// </param>
+    /// <param name="buffer">
+    /// buffer to set the element to
+    /// </param>
+    void Set(UINT index, const VertexBufferGPU_PositionColor& buffer);
 
     /// <summary>
     /// Sets the element at that specified index to the specified buffer

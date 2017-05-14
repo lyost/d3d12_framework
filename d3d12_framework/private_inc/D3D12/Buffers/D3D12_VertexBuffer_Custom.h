@@ -7,7 +7,7 @@
 class D3D12_VertexBufferArray;
 
 /// <summary>
-/// Vertex buffer whose elements are position and texture values
+/// Vertex buffer that applications define the data of
 /// </summary>
 class D3D12_VertexBuffer_Custom : public VertexBuffer_Custom
 {
@@ -64,6 +64,24 @@ class D3D12_VertexBuffer_Custom : public VertexBuffer_Custom
     /// number of entries
     /// </returns>
     UINT GetNumVertices() const;
+
+    /// <summary>
+    /// Preps the command list for uploading the contents of the vertex buffer to the specified GPU-only accessible vertex buffer.  The command list must execute followed by a fence for the transfer to be
+    /// completed.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="command_list">
+    /// command list to use for uploading
+    /// </param>
+    /// <param name="buffer">
+    /// GPU-only vertex buffer to upload to
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, const VertexBufferGPU_Custom& buffer);
     
   private:
     // disabled

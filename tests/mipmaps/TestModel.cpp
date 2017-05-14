@@ -46,7 +46,7 @@ TestModel::TestModel(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buff
   };
   try
   {
-    m_verts = VertexBuffer_PositionTexture::CreateD3D12(graphics, ARRAYSIZE(vertices), vertices);
+    m_verts = VertexBuffer_PositionTextureUVW::CreateD3D12(graphics, ARRAYSIZE(vertices), vertices);
   }
   catch (const FrameworkException& err)
   {
@@ -279,7 +279,7 @@ TestModel::~TestModel()
   delete m_verts;
 }
 
-const VertexBuffer_PositionTexture* TestModel::GetVertexBuffer() const
+const VertexBuffer_PositionTextureUVW* TestModel::GetVertexBuffer() const
 {
   return m_verts;
 }

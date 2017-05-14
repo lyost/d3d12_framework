@@ -1,8 +1,11 @@
 #ifndef VERTEXBUFFER_POSITION_H
 #define VERTEXBUFFER_POSITION_H
 
+class VertexBufferGPU_Position;
+
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/Buffers/VertexBuffer.h"
+#include "Graphics/Buffers/VertexBufferGPU_Position.h"
 #include "Graphics/VertexDeclarations/Vertex_Position.h"
 
 /// <summary>
@@ -52,6 +55,24 @@ class VertexBuffer_Position : public VertexBuffer
     /// Thrown when an error is encountered
     /// </exception>
     virtual void Upload(UINT buffer_start_index, const Vertex_Position* data, UINT num_entries) = 0;
+
+    /// <summary>
+    /// Preps the command list for uploading the contents of the vertex buffer to the specified GPU-only accessible vertex buffer.  The command list must execute followed by a fence for the transfer to be
+    /// completed.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="command_list">
+    /// command list to use for uploading
+    /// </param>
+    /// <param name="buffer">
+    /// GPU-only vertex buffer to upload to
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, const VertexBufferGPU_Position& buffer) = 0;
 
   protected:
     VertexBuffer_Position();

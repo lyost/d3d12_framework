@@ -61,6 +61,24 @@ class D3D12_VertexBuffer_PositionColor : public VertexBuffer_PositionColor
     /// Thrown when an error is encountered
     /// </exception>
     void Upload(UINT buffer_start_index, const Vertex_PositionColor* data, UINT num_entries);
+
+    /// <summary>
+    /// Preps the command list for uploading the contents of the vertex buffer to the specified GPU-only accessible vertex buffer.  The command list must execute followed by a fence for the transfer to be
+    /// completed.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="command_list">
+    /// command list to use for uploading
+    /// </param>
+    /// <param name="buffer">
+    /// GPU-only vertex buffer to upload to
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, const VertexBufferGPU_PositionColor& buffer);
     
   private:
     // disabled

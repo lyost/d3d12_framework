@@ -40,27 +40,39 @@ void GameMain::LoadContent()
 
   CreateDepthStencil(graphics);
 
-  m_pipeline_pos = new TestGraphicsPipelinePos(graphics);
-  m_model_pos = new TestModelPos(graphics);
-  m_pipeline_pos->SetModel(m_model_pos);
+  try
+  {
+    m_pipeline_pos = new TestGraphicsPipelinePos(graphics);
+    m_model_pos = new TestModelPos(graphics, *m_command_list);
+    m_pipeline_pos->SetModel(m_model_pos);
 
-  m_pipeline_pos_color = new TestGraphicsPipelinePosColor(graphics);
-  m_model_pos_color = new TestModelPosColor(graphics);
-  m_pipeline_pos_color->SetModel(m_model_pos_color);
+    m_pipeline_pos_color = new TestGraphicsPipelinePosColor(graphics);
+    m_model_pos_color = new TestModelPosColor(graphics, *m_command_list);
+    m_pipeline_pos_color->SetModel(m_model_pos_color);
 
-  m_pipeline_pos_tex_u = new TestGraphicsPipelinePosTexU(graphics);
-  m_model_pos_tex_u = new TestModelPosTexU(graphics, m_pipeline_pos_tex_u->GetShaderResourceDescHeap(), m_command_list);
-  m_pipeline_pos_tex_u->SetModel(m_model_pos_tex_u);
+    m_command_list->Close();
+    graphics.ExecuteCommandList(*m_command_list);
+    graphics.WaitOnFence();
 
-  m_command_list->Reset(NULL);
-  m_pipeline_pos_tex_uv = new TestGraphicsPipelinePosTexUV(graphics);
-  m_model_pos_tex_uv = new TestModelPosTexUV(graphics, m_pipeline_pos_tex_uv->GetShaderResourceDescHeap(), m_command_list);
-  m_pipeline_pos_tex_uv->SetModel(m_model_pos_tex_uv);
+    m_pipeline_pos_tex_u = new TestGraphicsPipelinePosTexU(graphics);
+    m_model_pos_tex_u = new TestModelPosTexU(graphics, m_pipeline_pos_tex_u->GetShaderResourceDescHeap(), *m_command_list);
+    m_pipeline_pos_tex_u->SetModel(m_model_pos_tex_u);
 
-  m_command_list->Reset(NULL);
-  m_pipeline_pos_tex_uvw = new TestGraphicsPipelinePosTexUVW(graphics);
-  m_model_pos_tex_uvw = new TestModelPosTexUVW(graphics, m_pipeline_pos_tex_uvw->GetShaderResourceDescHeap(), m_command_list);
-  m_pipeline_pos_tex_uvw->SetModel(m_model_pos_tex_uvw);
+    m_pipeline_pos_tex_uv = new TestGraphicsPipelinePosTexUV(graphics);
+    m_model_pos_tex_uv = new TestModelPosTexUV(graphics, m_pipeline_pos_tex_uv->GetShaderResourceDescHeap(), *m_command_list);
+    m_pipeline_pos_tex_uv->SetModel(m_model_pos_tex_uv);
+
+    m_pipeline_pos_tex_uvw = new TestGraphicsPipelinePosTexUVW(graphics);
+    m_model_pos_tex_uvw = new TestModelPosTexUVW(graphics, m_pipeline_pos_tex_uvw->GetShaderResourceDescHeap(), *m_command_list);
+    m_pipeline_pos_tex_uvw->SetModel(m_model_pos_tex_uvw);
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to create all test pipelines and models:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
 
   // setup the cameras for the viewport
   m_camera_angle = 3 * XM_PI / 2;
@@ -155,11 +167,19 @@ void GameMain::Update(UINT step_ms, UINT actual_ms)
     else if (num_1_down)
     {
       num_1_down = false;
-      m_model_pos->UpdateVertexBuffer(true);
-      m_model_pos_color->UpdateVertexBuffer(true);
-      m_model_pos_tex_u->UpdateVertexBuffer(true);
-      m_model_pos_tex_uv->UpdateVertexBuffer(true);
-      m_model_pos_tex_uvw->UpdateVertexBuffer(true);
+
+      GraphicsCore& graphics = GetGraphics();
+      m_command_list->Reset(NULL);
+      
+      m_model_pos->UpdateVertexBuffer(graphics, true, *m_command_list);
+      m_model_pos_color->UpdateVertexBuffer(graphics, true, *m_command_list);
+      m_model_pos_tex_u->UpdateVertexBuffer(graphics, true, *m_command_list);
+      m_model_pos_tex_uv->UpdateVertexBuffer(graphics, true, *m_command_list);
+      m_model_pos_tex_uvw->UpdateVertexBuffer(graphics, true, *m_command_list);
+      
+      m_command_list->Close();
+      graphics.ExecuteCommandList(*m_command_list);
+      graphics.WaitOnFence();
     }
     if (keyboard.IsKeyDown(VK_NUMPAD2, false))
     {
@@ -168,11 +188,19 @@ void GameMain::Update(UINT step_ms, UINT actual_ms)
     else if (num_2_down)
     {
       num_2_down = false;
-      m_model_pos->UpdateVertexBuffer(false);
-      m_model_pos_color->UpdateVertexBuffer(false);
-      m_model_pos_tex_u->UpdateVertexBuffer(false);
-      m_model_pos_tex_uv->UpdateVertexBuffer(false);
-      m_model_pos_tex_uvw->UpdateVertexBuffer(false);
+
+      GraphicsCore& graphics = GetGraphics();
+      m_command_list->Reset(NULL);
+      
+      m_model_pos->UpdateVertexBuffer(graphics, false, *m_command_list);
+      m_model_pos_color->UpdateVertexBuffer(graphics, false, *m_command_list);
+      m_model_pos_tex_u->UpdateVertexBuffer(graphics, false, *m_command_list);
+      m_model_pos_tex_uv->UpdateVertexBuffer(graphics, false, *m_command_list);
+      m_model_pos_tex_uvw->UpdateVertexBuffer(graphics, false, *m_command_list);
+      
+      m_command_list->Close();
+      graphics.ExecuteCommandList(*m_command_list);
+      graphics.WaitOnFence();
     }
   }
   catch (const FrameworkException& err)

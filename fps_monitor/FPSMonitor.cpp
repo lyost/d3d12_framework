@@ -1,7 +1,6 @@
 #include <sstream>
 #include <iomanip>
 #include "FPSMonitor.h"
-#include "Graphics/VertexDeclarations/Vertex_PositionTexture.h"
 #include "Graphics/Textures/TextureUploadBuffer.h"
 #include "FrameworkException.h"
 #include "log.h"

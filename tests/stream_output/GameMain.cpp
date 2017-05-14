@@ -5,7 +5,6 @@
 #include "Graphics/RootSignatureConfig.h"
 #include "Graphics/RenderTargetViewConfig.h"
 #include "Graphics/RenderTargetViewFormats.h"
-#include "Graphics/VertexDeclarations/Vertex_PositionTexture.h"
 #include "Graphics/StreamOutputConfig.h"
 #include "Graphics/DepthEnums.h"
 #include "FrameworkException.h"

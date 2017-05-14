@@ -8,17 +8,39 @@
 class TestModelPosTexU
 {
   public:
-    TestModelPosTexU(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buffer_heap, CommandList* command_list);
+    /// <summary>
+    /// Creates a test model.  The command list is executed internally.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="shader_buffer_heap">
+    /// descriptor heap for the texture
+    /// </param>
+    /// <param name="command_list">
+    /// command list to write the upload commands to
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    TestModelPosTexU(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buffer_heap, CommandList& command_list);
+
     ~TestModelPosTexU();
 
     /// <summary>
-    /// Updates the vertex buffer to either its initial state or a modified state
+    /// Preps the command list for uploading the initial or modified state to the vertex buffer.  The command list must execute followed by a fence for the transfer to be completed.
     /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
     /// <param name="initial">
     /// true if the vertex buffer should be updated to its initial false
     /// false for a modified state
-    /// </param?
-    void UpdateVertexBuffer(bool initial);
+    /// </param>
+    /// <param name="command_list">
+    /// command list to write the upload commands to
+    /// </param>
+    void UpdateVertexBuffer(GraphicsCore& graphics, bool initial, CommandList& command_list);
 
     /// <summary>
     /// Retrieves the vertex buffer for the model
@@ -26,7 +48,7 @@ class TestModelPosTexU
     /// <returns>
     /// vertex buffer
     /// </returns>
-    const VertexBuffer_PositionTexture* GetVertexBuffer() const;
+    const VertexBufferGPU_PositionTextureU* GetVertexBuffer() const;
 
     /// <summary>
     /// Retrieves the index buffer for the model
@@ -67,7 +89,12 @@ class TestModelPosTexU
     /// <summary>
     /// vertex buffer for the test case
     /// </summary>
-    VertexBuffer_PositionTexture* m_verts;
+    VertexBuffer_PositionTextureU* m_verts;
+
+    /// <summary>
+    /// GPU-only vertex buffer for the test case
+    /// </summary>
+    VertexBufferGPU_PositionTextureU* m_gpu_verts;
 
     /// <summary>
     /// index buffer for the test case

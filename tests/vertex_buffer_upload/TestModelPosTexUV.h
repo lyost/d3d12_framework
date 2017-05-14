@@ -8,17 +8,39 @@
 class TestModelPosTexUV
 {
   public:
-    TestModelPosTexUV(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buffer_heap, CommandList* command_list);
+    /// <summary>
+    /// Creates a test model.  The command list is executed internally.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="shader_buffer_heap">
+    /// descriptor heap for the texture
+    /// </param>
+    /// <param name="command_list">
+    /// command list to write the upload commands to
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    TestModelPosTexUV(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buffer_heap, CommandList& command_list);
+
     ~TestModelPosTexUV();
 
     /// <summary>
     /// Updates the vertex buffer to either its initial state or a modified state
     /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
     /// <param name="initial">
     /// true if the vertex buffer should be updated to its initial false
     /// false for a modified state
-    /// </param?
-    void UpdateVertexBuffer(bool initial);
+    /// </param>
+    /// <param name="command_list">
+    /// command list to write the upload commands to
+    /// </param>
+    void UpdateVertexBuffer(GraphicsCore& graphics, bool initial, CommandList& command_list);
 
     /// <summary>
     /// Retrieves the vertex buffer for the model
@@ -26,7 +48,7 @@ class TestModelPosTexUV
     /// <returns>
     /// vertex buffer
     /// </returns>
-    const VertexBuffer_PositionTexture* GetVertexBuffer() const;
+    const VertexBufferGPU_PositionTextureUV* GetVertexBuffer() const;
 
     /// <summary>
     /// Retrieves the index buffer for the model
@@ -70,7 +92,12 @@ class TestModelPosTexUV
     /// <summary>
     /// vertex buffer for the test case
     /// </summary>
-    VertexBuffer_PositionTexture* m_verts;
+    VertexBuffer_PositionTextureUV* m_verts;
+
+    /// <summary>
+    /// GPU-only vertex buffer for the test case
+    /// </summary>
+    VertexBufferGPU_PositionTextureUV* m_gpu_verts;
 
     /// <summary>
     /// index buffer for the test case

@@ -1,7 +1,10 @@
 #ifndef VERTEX_BUFFER_CUSTOM_H
 #define VERTEX_BUFFER_CUSTOM_H
 
+class VertexBufferGPU_Custom;
+
 #include "Graphics/GraphicsCore.h"
+#include "Graphics/Buffers/VertexBufferGPU_Custom.h"
 #include "Graphics/Buffers/VertexBuffer.h"
 
 /// <summary>
@@ -54,6 +57,24 @@ class VertexBuffer_Custom : public VertexBuffer
     /// Thrown when an error is encountered
     /// </exception>
     virtual void Upload(UINT buffer_start_index, const void* data, UINT num_bytes) = 0;
+
+    /// <summary>
+    /// Preps the command list for uploading the contents of the vertex buffer to the specified GPU-only accessible vertex buffer.  The command list must execute followed by a fence for the transfer to be
+    /// completed.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="command_list">
+    /// command list to use for uploading
+    /// </param>
+    /// <param name="buffer">
+    /// GPU-only vertex buffer to upload to
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, const VertexBufferGPU_Custom& buffer) = 0;
 
   protected:
     VertexBuffer_Custom();

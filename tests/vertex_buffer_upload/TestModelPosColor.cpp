@@ -6,7 +6,7 @@
 using namespace DirectX;
 using namespace std;
 
-TestModelPosColor::TestModelPosColor(GraphicsCore& graphics)
+TestModelPosColor::TestModelPosColor(GraphicsCore& graphics, CommandList& command_list)
 {
   // create the vertex buffer
   const Viewport& default_viewport = graphics.GetDefaultViewport();
@@ -23,6 +23,32 @@ TestModelPosColor::TestModelPosColor(GraphicsCore& graphics)
   {
     ostringstream out;
     out << "Unable to create vertex buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+
+  // create the gpu vertex buffer
+  try
+  {
+    m_gpu_verts = VertexBufferGPU_PositionColor::CreateD3D12(graphics, m_verts->GetNumVertices());
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to create GPU vertex buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+
+  // upload to the GPU vertex buffer
+  try
+  {
+    m_verts->PrepUpload(graphics, command_list, *m_gpu_verts);
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to upload to GPU vertex buffer:\n" << err.what();
     log_print(out.str().c_str());
     exit(1);
   }
@@ -50,9 +76,10 @@ TestModelPosColor::~TestModelPosColor()
 {
   delete m_indices;
   delete m_verts;
+  delete m_gpu_verts;
 }
 
-void TestModelPosColor::UpdateVertexBuffer(bool initial)
+void TestModelPosColor::UpdateVertexBuffer(GraphicsCore& graphics, bool initial, CommandList& command_list)
 {
   if (initial)
   {
@@ -79,11 +106,24 @@ void TestModelPosColor::UpdateVertexBuffer(bool initial)
     log_print(out.str().c_str());
     exit(1);
   }
+
+  // upload to the GPU vertex buffer
+  try
+  {
+    m_verts->PrepUpload(graphics, command_list, *m_gpu_verts);
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to upload to GPU vertex buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
 }
 
-const VertexBuffer_PositionColor* TestModelPosColor::GetVertexBuffer() const
+const VertexBufferGPU_PositionColor* TestModelPosColor::GetVertexBuffer() const
 {
-  return m_verts;
+  return m_gpu_verts;
 }
 
 const IndexBuffer16* TestModelPosColor::GetIndexBuffer() const

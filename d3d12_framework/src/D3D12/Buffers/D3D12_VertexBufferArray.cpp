@@ -1,8 +1,16 @@
 #include "private_inc/D3D12/Buffers/D3D12_VertexBufferArray.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Custom.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Position.h"
-#include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTexture.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTextureU.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTextureUV.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTextureUVW.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionColor.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_Custom.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_Position.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionTextureU.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionTextureUV.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionTextureUVW.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionColor.h"
 #include "private_inc/D3D12/Buffers/D3D12_StreamOutputBuffer.h"
 #include "private_inc/BuildSettings.h"
 #include "FrameworkException.h"
@@ -47,7 +55,7 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_Position& buffe
   m_vertex_buffers[index] = vertex_buffer.m_view;
 }
 
-void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTexture& buffer)
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTextureU& buffer)
 {
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (index >= m_num)
@@ -56,7 +64,35 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTexture
   }
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
-  const D3D12_VertexBuffer_PositionTexture& vertex_buffer = (const D3D12_VertexBuffer_PositionTexture&)buffer;
+  const D3D12_VertexBuffer_PositionTextureU& vertex_buffer = (const D3D12_VertexBuffer_PositionTextureU&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTextureUV& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBuffer_PositionTextureUV& vertex_buffer = (const D3D12_VertexBuffer_PositionTextureUV&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTextureUVW& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBuffer_PositionTextureUVW& vertex_buffer = (const D3D12_VertexBuffer_PositionTextureUVW&)buffer;
 
   m_vertex_buffers[index] = vertex_buffer.m_view;
 }
@@ -71,6 +107,90 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionColor& 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   const D3D12_VertexBuffer_PositionColor& vertex_buffer = (const D3D12_VertexBuffer_PositionColor&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBufferGPU_Custom& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBufferGPU_Custom& vertex_buffer = (const D3D12_VertexBufferGPU_Custom&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBufferGPU_Position& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBufferGPU_Position& vertex_buffer = (const D3D12_VertexBufferGPU_Position&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBufferGPU_PositionTextureU& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBufferGPU_PositionTextureU& vertex_buffer = (const D3D12_VertexBufferGPU_PositionTextureU&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBufferGPU_PositionTextureUV& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBufferGPU_PositionTextureUV& vertex_buffer = (const D3D12_VertexBufferGPU_PositionTextureUV&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBufferGPU_PositionTextureUVW& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBufferGPU_PositionTextureUVW& vertex_buffer = (const D3D12_VertexBufferGPU_PositionTextureUVW&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBufferGPU_PositionColor& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBufferGPU_PositionColor& vertex_buffer = (const D3D12_VertexBufferGPU_PositionColor&)buffer;
 
   m_vertex_buffers[index] = vertex_buffer.m_view;
 }

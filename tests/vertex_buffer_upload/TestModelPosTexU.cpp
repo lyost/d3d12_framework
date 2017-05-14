@@ -6,8 +6,10 @@
 using namespace DirectX;
 using namespace std;
 
-TestModelPosTexU::TestModelPosTexU(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buffer_heap, CommandList* command_list)
+TestModelPosTexU::TestModelPosTexU(GraphicsCore& graphics, ShaderResourceDescHeap* shader_buffer_heap, CommandList& command_list)
 {
+  command_list.Reset(NULL);
+
   // create the vertex buffer
   const Viewport& default_viewport = graphics.GetDefaultViewport();
   float aspect_ratio = default_viewport.width / default_viewport.height;
@@ -17,12 +19,38 @@ TestModelPosTexU::TestModelPosTexU(GraphicsCore& graphics, ShaderResourceDescHea
   m_vert_data[3] = { XMFLOAT3(-4.0f,-2.0f, 1.0f), 0 };
   try
   {
-    m_verts = VertexBuffer_PositionTexture::CreateD3D12(graphics, ARRAYSIZE(m_vert_data), m_vert_data);
+    m_verts = VertexBuffer_PositionTextureU::CreateD3D12(graphics, ARRAYSIZE(m_vert_data), m_vert_data);
   }
   catch (const FrameworkException& err)
   {
     ostringstream out;
     out << "Unable to create vertex buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+
+  // create the gpu vertex buffer
+  try
+  {
+    m_gpu_verts = VertexBufferGPU_PositionTextureU::CreateD3D12(graphics, m_verts->GetNumVertices());
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to create GPU vertex buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+
+  // upload to the GPU vertex buffer
+  try
+  {
+    m_verts->PrepUpload(graphics, command_list, *m_gpu_verts);
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to upload to GPU vertex buffer:\n" << err.what();
     log_print(out.str().c_str());
     exit(1);
   }
@@ -79,7 +107,7 @@ TestModelPosTexU::TestModelPosTexU(GraphicsCore& graphics, ShaderResourceDescHea
   // start uploading the texture
   try
   {
-    upload_texture->PrepUpload(graphics, *command_list, *m_texture, tex_bytes);
+    upload_texture->PrepUpload(graphics, command_list, *m_texture, tex_bytes);
   }
   catch (const FrameworkException& err)
   {
@@ -92,8 +120,8 @@ TestModelPosTexU::TestModelPosTexU(GraphicsCore& graphics, ShaderResourceDescHea
   // finish uploading the textures
   try
   {
-    command_list->Close();
-    graphics.ExecuteCommandList(*command_list);
+    command_list.Close();
+    graphics.ExecuteCommandList(command_list);
     graphics.WaitOnFence();
   }
   catch (const FrameworkException& err)
@@ -112,9 +140,10 @@ TestModelPosTexU::~TestModelPosTexU()
   delete m_texture;
   delete m_indices;
   delete m_verts;
+  delete m_gpu_verts;
 }
 
-void TestModelPosTexU::UpdateVertexBuffer(bool initial)
+void TestModelPosTexU::UpdateVertexBuffer(GraphicsCore& graphics, bool initial, CommandList& command_list)
 {
   if (initial)
   {
@@ -141,11 +170,24 @@ void TestModelPosTexU::UpdateVertexBuffer(bool initial)
     log_print(out.str().c_str());
     exit(1);
   }
+
+  // upload to the GPU vertex buffer
+  try
+  {
+    m_verts->PrepUpload(graphics, command_list, *m_gpu_verts);
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to upload to GPU vertex buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
 }
 
-const VertexBuffer_PositionTexture* TestModelPosTexU::GetVertexBuffer() const
+const VertexBufferGPU_PositionTextureU* TestModelPosTexU::GetVertexBuffer() const
 {
-  return m_verts;
+  return m_gpu_verts;
 }
 
 const IndexBuffer16* TestModelPosTexU::GetIndexBuffer() const
