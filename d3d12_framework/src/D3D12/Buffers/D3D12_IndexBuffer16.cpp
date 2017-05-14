@@ -1,5 +1,6 @@
 #include "private_inc/D3D12/Buffers/D3D12_IndexBuffer16.h"
 #include "private_inc/D3D12/Buffers/D3D12_IndexBuffer.h"
+#include "private_inc/D3D12/Buffers/D3D12_IndexBufferGPU16.h"
 
 D3D12_IndexBuffer16* D3D12_IndexBuffer16::Create(GraphicsCore& graphics, UINT num, const WORD* data)
 {
@@ -24,6 +25,11 @@ D3D12_IndexBuffer16::~D3D12_IndexBuffer16()
 UINT D3D12_IndexBuffer16::GetNumIndices() const
 {
   return m_num;
+}
+
+void D3D12_IndexBuffer16::PrepUpload(GraphicsCore& graphics, CommandList& command_list, const IndexBufferGPU16& buffer)
+{
+  D3D12_IndexBuffer::PrepUpload(graphics, command_list, m_buffer, ((const D3D12_IndexBufferGPU16&)buffer).GetResource());
 }
 
 const D3D12_INDEX_BUFFER_VIEW& D3D12_IndexBuffer16::GetBuffer() const

@@ -46,7 +46,7 @@ class D3D12_VertexBufferGPU_PositionColor : public VertexBufferGPU_PositionColor
     /// Retrieves the D3D12 resource
     /// </summary>
     /// <returns>
-    /// D3D12 resource for the texture
+    /// D3D12 resource for the vertex buffer
     /// </returns>
     ID3D12Resource* GetResource() const;
     

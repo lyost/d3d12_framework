@@ -141,6 +141,7 @@
     <ClCompile Include="src\D3D12\Buffers\D3D12_DepthStencilDescHeap.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBuffer.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBuffer16.cpp" />
+    <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBufferGPU16.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_ReadbackBuffer.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_StreamOutputBuffer.cpp" />
     <ClCompile Include="src\D3D12\Buffers\D3D12_StreamOutputBufferArray.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="src\Graphics\Buffers\ConstantBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\IndexBuffer16.cpp" />
+    <ClCompile Include="src\Graphics\Buffers\IndexBufferGPU16.cpp" />
     <ClCompile Include="src\Graphics\Buffers\ReadbackBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\StreamOutputBuffer.cpp" />
     <ClCompile Include="src\Graphics\Buffers\StreamOutputBufferArray.cpp" />
@@ -251,6 +253,7 @@
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_DepthStencilDescHeap.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBuffer.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBuffer16.h" />
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBufferGPU16.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_ReadbackBuffer.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_StreamOutputBuffer.h" />
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_StreamOutputBufferArray.h" />
@@ -305,6 +308,7 @@
     <ClInclude Include="public_inc\Graphics\Buffers\ConstantBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\IndexBuffer16.h" />
+    <ClInclude Include="public_inc\Graphics\Buffers\IndexBufferGPU16.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\ReadbackBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\StreamOutputBuffer.h" />
     <ClInclude Include="public_inc\Graphics\Buffers\StreamOutputBufferArray.h" />

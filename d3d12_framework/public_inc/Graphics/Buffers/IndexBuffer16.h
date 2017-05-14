@@ -3,6 +3,7 @@
 
 #include "Graphics/GraphicsCore.h"
 #include "Graphics/Buffers/IndexBuffer.h"
+#include "Graphics/Buffers/IndexBufferGPU16.h"
 
 /// <summary>
 /// Index buffer with 16bit entries
@@ -34,6 +35,24 @@ class IndexBuffer16 : public IndexBuffer
     /// Cleans up the index buffer
     /// </summary>
     virtual ~IndexBuffer16();
+
+    /// <summary>
+    /// Preps the command list for uploading the contents of the index buffer to the specified GPU-only accessible index buffer.  The command list must execute followed by a fence for the transfer to be
+    /// completed.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="command_list">
+    /// command list to use for uploading
+    /// </param>
+    /// <param name="buffer">
+    /// GPU-only index buffer to upload to
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    virtual void PrepUpload(GraphicsCore& graphics, CommandList& command_list, const IndexBufferGPU16& buffer) = 0;
     
   protected:
     IndexBuffer16();

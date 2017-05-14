@@ -46,7 +46,7 @@ class D3D12_VertexBufferGPU_PositionTextureU : public VertexBufferGPU_PositionTe
     /// Retrieves the D3D12 resource
     /// </summary>
     /// <returns>
-    /// D3D12 resource for the texture
+    /// D3D12 resource for the vertex buffer
     /// </returns>
     ID3D12Resource* GetResource() const;
     

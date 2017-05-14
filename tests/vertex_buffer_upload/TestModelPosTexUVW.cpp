@@ -73,6 +73,32 @@ TestModelPosTexUVW::TestModelPosTexUVW(GraphicsCore& graphics, ShaderResourceDes
     exit(1);
   }
 
+  // create the gpu index buffer
+  try
+  {
+    m_gpu_indices = IndexBufferGPU16::CreateD3D12(graphics, m_indices->GetNumIndices());
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to create GPU index buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+
+  // upload to the GPU index buffer
+  try
+  {
+    m_indices->PrepUpload(graphics, command_list, *m_gpu_indices);
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to upload to GPU index buffer:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+
   // create the texture image
   UINT   width;
   UINT   height;
@@ -143,6 +169,7 @@ TestModelPosTexUVW::~TestModelPosTexUVW()
   delete m_indices;
   delete m_verts;
   delete m_gpu_verts;
+  delete m_gpu_indices;
 }
 
 void TestModelPosTexUVW::UpdateVertexBuffer(GraphicsCore& graphics, bool initial, CommandList& command_list)
@@ -192,9 +219,9 @@ const VertexBufferGPU_PositionTextureUVW* TestModelPosTexUVW::GetVertexBuffer() 
   return m_gpu_verts;
 }
 
-const IndexBuffer16* TestModelPosTexUVW::GetIndexBuffer() const
+const IndexBufferGPU16* TestModelPosTexUVW::GetIndexBuffer() const
 {
-  return m_indices;
+  return m_gpu_indices;
 }
 
 const Texture3D* TestModelPosTexUVW::GetTexture() const

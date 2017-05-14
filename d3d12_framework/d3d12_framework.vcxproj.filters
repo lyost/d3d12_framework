@@ -393,6 +393,12 @@
     <ClCompile Include="src\Graphics\Buffers\VertexBufferGPU_Custom.cpp">
       <Filter>Source Files\Graphics\Buffers</Filter>
     </ClCompile>
+    <ClCompile Include="src\D3D12\Buffers\D3D12_IndexBufferGPU16.cpp">
+      <Filter>Source Files\D3D12\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffers\IndexBufferGPU16.cpp">
+      <Filter>Source Files\Graphics\Buffers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h">
@@ -756,6 +762,12 @@
       <Filter>public_inc\Graphics\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferGPU_Custom.h">
+      <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\Buffers\IndexBufferGPU16.h">
+      <Filter>public_inc\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBufferGPU16.h">
       <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -186,7 +186,7 @@ void TestGraphicsPipelinePosTexU::Draw(GraphicsCore& graphics, CommandList& comm
 {
   try
   {
-    const IndexBuffer16* index_buffer = m_model->GetIndexBuffer();
+    const IndexBuffer* index_buffer = m_model->GetIndexBuffer();
 
     command_list.SetPipeline(*m_pipeline);
     command_list.SetRootSignature(*m_root_sig);

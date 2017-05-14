@@ -41,6 +41,24 @@ class D3D12_IndexBuffer16 : public IndexBuffer16
     UINT GetNumIndices() const;
 
     /// <summary>
+    /// Preps the command list for uploading the contents of the index buffer to the specified GPU-only accessible index buffer.  The command list must execute followed by a fence for the transfer to be
+    /// completed.
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    /// <param name="command_list">
+    /// command list to use for uploading
+    /// </param>
+    /// <param name="buffer">
+    /// GPU-only index buffer to upload to
+    /// </param>
+    /// <exception cref="FrameworkException">
+    /// Thrown when an error is encountered
+    /// </exception>
+    void PrepUpload(GraphicsCore& graphics, CommandList& command_list, const IndexBufferGPU16& buffer);
+
+    /// <summary>
     /// Retrieves the D3D12 index buffer
     /// </summary>
     /// <returns>

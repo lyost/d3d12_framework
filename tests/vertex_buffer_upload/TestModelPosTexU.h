@@ -56,7 +56,7 @@ class TestModelPosTexU
     /// <returns>
     /// index buffer
     /// </returns>
-    const IndexBuffer16* GetIndexBuffer() const;
+    const IndexBufferGPU16* GetIndexBuffer() const;
 
     /// <summary>
     /// Retrieves the first texture in the descriptor heap for the model
@@ -100,6 +100,11 @@ class TestModelPosTexU
     /// index buffer for the test case
     /// </summary>
     IndexBuffer16* m_indices;
+
+    /// <summary>
+    /// GPU-only index buffer for the test case
+    /// </summary>
+    IndexBufferGPU16* m_gpu_indices;
 
     /// <summary>
     /// texture
