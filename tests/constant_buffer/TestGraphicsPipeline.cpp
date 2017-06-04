@@ -71,7 +71,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(const GraphicsCore& graphics)
     rtv_config->SetAlphaToCoverageEnable(false);
     rtv_config->SetIndependentBlendEnable(false);
     rtv_config->SetFormat(0, RTVF_R8G8B8A8_UNORM);
-    m_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader, *rtv_config, *m_root_sig);
+    m_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader, NULL, *rtv_config, *m_root_sig);
     delete rtv_config;
     delete input_layout;
     delete pixel_shader;

@@ -76,7 +76,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
     stream_output = StreamOutputConfig::CreateD3D12(1);
     stream_output->SetEntry(0, 0, SEM_SV_POSITION, 0, 0, 4, 0, sizeof(XMFLOAT4));
 
-    m_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, stream_output, *pixel_shader, *rtv_config, *m_root_sig, 1, 0, true);
+    m_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, stream_output, *pixel_shader, NULL, *rtv_config, *m_root_sig, 1, 0, true);
 
     delete rtv_config;
     delete input_layout;

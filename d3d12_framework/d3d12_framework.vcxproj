@@ -329,7 +329,6 @@
     <ClInclude Include="public_inc\Graphics\CommandList.h" />
     <ClInclude Include="public_inc\Graphics\CommandListBundle.h" />
     <ClInclude Include="public_inc\Graphics\CompareFuncs.h" />
-    <ClInclude Include="public_inc\Graphics\DepthEnums.h" />
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h" />
     <ClInclude Include="public_inc\Graphics\GraphicsDataFormat.h" />
     <ClInclude Include="public_inc\Graphics\HeapArray.h" />
@@ -344,6 +343,7 @@
     <ClInclude Include="public_inc\Graphics\Shader.h" />
     <ClInclude Include="public_inc\Graphics\ShaderResourceDescHeap.h" />
     <ClInclude Include="public_inc\Graphics\ShaderVisibility.h" />
+    <ClInclude Include="public_inc\Graphics\DepthStencilConfig.h" />
     <ClInclude Include="public_inc\Graphics\StreamOutputConfig.h" />
     <ClInclude Include="public_inc\Graphics\TextureEnums.h" />
     <ClInclude Include="public_inc\Graphics\Textures\DepthStencil.h" />

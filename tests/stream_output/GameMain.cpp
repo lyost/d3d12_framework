@@ -6,7 +6,6 @@
 #include "Graphics/RenderTargetViewConfig.h"
 #include "Graphics/RenderTargetViewFormats.h"
 #include "Graphics/StreamOutputConfig.h"
-#include "Graphics/DepthEnums.h"
 #include "FrameworkException.h"
 #include "log.h"
 using namespace DirectX;

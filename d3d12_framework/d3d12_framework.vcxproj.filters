@@ -575,9 +575,6 @@
     <ClInclude Include="public_inc\Graphics\Textures\TextureUploadBuffer.h">
       <Filter>public_inc\Graphics\Textures</Filter>
     </ClInclude>
-    <ClInclude Include="public_inc\Graphics\DepthEnums.h">
-      <Filter>public_inc\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="public_inc\Graphics\Textures\DepthStencil.h">
       <Filter>public_inc\Graphics\Textures</Filter>
     </ClInclude>
@@ -769,6 +766,9 @@
     </ClInclude>
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_IndexBufferGPU16.h">
       <Filter>private_inc\D3D12\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="public_inc\Graphics\DepthStencilConfig.h">
+      <Filter>public_inc\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

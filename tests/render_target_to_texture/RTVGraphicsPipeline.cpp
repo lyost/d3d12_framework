@@ -29,13 +29,19 @@ RTVGraphicsPipeline::RTVGraphicsPipeline(GraphicsCore& graphics, const TestGraph
   
   try
   {
+    DepthStencilConfig ds_config;
+    ds_config.depth_enable        = true;
+    ds_config.stencil_enable      = false;
+    ds_config.dsv_format          = D32_FLOAT;
+    ds_config.depth_write_enabled = true;
+    ds_config.depth_comparison    = COMPARISON_FUNC_LESS_EQUAL;
     InputLayout* input_layout = main_pipeline.m_input_layout;
     Shader* vertex_shader = main_pipeline.m_vertex_shader;
     RenderTargetViewConfig* rtv_config = RenderTargetViewConfig::CreateD3D12(1);
     rtv_config->SetAlphaToCoverageEnable(false);
     rtv_config->SetIndependentBlendEnable(false);
     rtv_config->SetFormat(0, RTVF_R8G8B8A8_UNORM);
-    m_rtv_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *m_rtv_pixel_shader, DEPTH_FUNC_LESS_EQUAL, *rtv_config, *m_root_sig);
+    m_rtv_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *m_rtv_pixel_shader, &ds_config, *rtv_config, *m_root_sig);
     delete rtv_config;
   }
   catch (const FrameworkException& err)

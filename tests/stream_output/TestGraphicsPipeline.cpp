@@ -98,6 +98,13 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
   StreamOutputConfig* stream_output;
   try
   {
+    DepthStencilConfig ds_config;
+    ds_config.depth_enable        = true;
+    ds_config.stencil_enable      = false;
+    ds_config.dsv_format          = D32_FLOAT;
+    ds_config.depth_write_enabled = true;
+    ds_config.depth_comparison    = COMPARISON_FUNC_LESS_EQUAL;
+
     RenderTargetViewConfig* rtv_config = RenderTargetViewConfig::CreateD3D12(1);
     rtv_config->SetAlphaToCoverageEnable(false);
     rtv_config->SetIndependentBlendEnable(false);
@@ -108,7 +115,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
     stream_output->SetEntry(0, 0, SEM_POSITION, 0, 0, 4, 0, sizeof(XMFLOAT4)); // just want the raw position, not the transformed that gets passed to the pixel shader as well
 
     m_pipeline = Pipeline::CreateD3D12(graphics, *m_input_layout, TOPOLOGY_PATCH, *m_vertex_shader, *m_hull_shader, *m_domain_shader, *m_geometry_shader, stream_output, *m_pixel_shader,
-      DEPTH_FUNC_LESS_EQUAL, *rtv_config, *m_root_sig, 1, 0, true);
+      &ds_config, *rtv_config, *m_root_sig, 1, 0, true);
 
     delete rtv_config;
   }
