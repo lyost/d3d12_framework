@@ -3,12 +3,14 @@
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_Position.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTextureU.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTextureUV.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTextureUVNormal.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionTextureUVW.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBuffer_PositionColor.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_Custom.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_Position.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionTextureU.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionTextureUV.h"
+#include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionTextureUVNormal.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionTextureUVW.h"
 #include "private_inc/D3D12/Buffers/D3D12_VertexBufferGPU_PositionColor.h"
 #include "private_inc/D3D12/Buffers/D3D12_StreamOutputBuffer.h"
@@ -79,6 +81,20 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTexture
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   const D3D12_VertexBuffer_PositionTextureUV& vertex_buffer = (const D3D12_VertexBuffer_PositionTextureUV&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBuffer_PositionTextureUVNormal& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBuffer_PositionTextureUVNormal& vertex_buffer = (const D3D12_VertexBuffer_PositionTextureUVNormal&)buffer;
 
   m_vertex_buffers[index] = vertex_buffer.m_view;
 }
@@ -163,6 +179,20 @@ void D3D12_VertexBufferArray::Set(UINT index, const VertexBufferGPU_PositionText
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   const D3D12_VertexBufferGPU_PositionTextureUV& vertex_buffer = (const D3D12_VertexBufferGPU_PositionTextureUV&)buffer;
+
+  m_vertex_buffers[index] = vertex_buffer.m_view;
+}
+
+void D3D12_VertexBufferArray::Set(UINT index, const VertexBufferGPU_PositionTextureUVNormal& buffer)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    throw FrameworkException("index beyond number of vertex buffers");
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  const D3D12_VertexBufferGPU_PositionTextureUVNormal& vertex_buffer = (const D3D12_VertexBufferGPU_PositionTextureUVNormal&)buffer;
 
   m_vertex_buffers[index] = vertex_buffer.m_view;
 }

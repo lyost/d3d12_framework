@@ -22,6 +22,16 @@ struct Vertex_PositionTextureUV
 };
 
 /// <summary>
+/// For vertices that are comprised of just a position, uv coordinates, and a 3d normal vector
+/// </summary>
+struct Vertex_PositionTextureUVNormal
+{
+  DirectX::XMFLOAT3 pos;
+  DirectX::XMFLOAT2 uv;
+  DirectX::XMFLOAT3 normal;
+};
+
+/// <summary>
 /// For vertices that are comprised of just a position and uvw coordinates
 /// </summary>
 struct Vertex_PositionTextureUVW
