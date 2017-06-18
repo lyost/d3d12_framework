@@ -60,5 +60,6 @@
   <ItemGroup>
     <FxCompile Include="stencil_ps.hlsl" />
     <FxCompile Include="stencil_vs.hlsl" />
+    <FxCompile Include="stencil_ps_shadow.hlsl" />
   </ItemGroup>
 </Project>

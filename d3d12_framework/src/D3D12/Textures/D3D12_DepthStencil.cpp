@@ -5,7 +5,7 @@
 #include "private_inc/BuildSettings.h"
 using namespace std;
 
-DepthStencil* D3D12_DepthStencil::Create(const GraphicsCore& graphics, UINT width, UINT height, float default_depth_clear)
+DepthStencil* D3D12_DepthStencil::Create(const GraphicsCore& graphics, UINT width, UINT height, float default_depth_clear, bool with_stencil)
 {
   const D3D12_Core& core   = (const D3D12_Core&)graphics;
   ID3D12Device*     device = core.GetDevice();
@@ -17,7 +17,7 @@ DepthStencil* D3D12_DepthStencil::Create(const GraphicsCore& graphics, UINT widt
   desc_heap->GetNextDescriptor(cpu_handle, gpu_handle);
 
   D3D12_RESOURCE_DESC resource_desc;
-  GetResourceDesc(width, height, resource_desc);
+  GetResourceDesc(width, height, with_stencil, resource_desc);
   D3D12_HEAP_PROPERTIES heap_prop;
   heap_prop.Type                 = D3D12_HEAP_TYPE_DEFAULT;
   heap_prop.CPUPageProperty      = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
@@ -26,7 +26,7 @@ DepthStencil* D3D12_DepthStencil::Create(const GraphicsCore& graphics, UINT widt
   heap_prop.VisibleNodeMask      = 0;
 
   D3D12_CLEAR_VALUE clear;
-  clear.Format               = DXGI_FORMAT_D32_FLOAT;
+  clear.Format               = with_stencil ? DXGI_FORMAT_D32_FLOAT_S8X24_UINT : DXGI_FORMAT_D32_FLOAT;
   clear.DepthStencil.Depth   = default_depth_clear;
   clear.DepthStencil.Stencil = 0;
 
@@ -38,7 +38,7 @@ DepthStencil* D3D12_DepthStencil::Create(const GraphicsCore& graphics, UINT widt
   }
 
   D3D12_DEPTH_STENCIL_VIEW_DESC view_desc;
-  view_desc.Format             = DXGI_FORMAT_D32_FLOAT;
+  view_desc.Format             = with_stencil ? DXGI_FORMAT_D32_FLOAT_S8X24_UINT : DXGI_FORMAT_D32_FLOAT;;
   view_desc.ViewDimension      = D3D12_DSV_DIMENSION_TEXTURE2D;
   view_desc.Flags              = D3D12_DSV_FLAG_NONE;
   view_desc.Texture2D.MipSlice = 0;
@@ -85,7 +85,7 @@ const D3D12_CPU_DESCRIPTOR_HANDLE& D3D12_DepthStencil::GetHandle() const
   return m_cpu_handle;
 }
 
-void D3D12_DepthStencil::GetResourceDesc(UINT width, UINT height, D3D12_RESOURCE_DESC& resource_desc)
+void D3D12_DepthStencil::GetResourceDesc(UINT width, UINT height, bool with_stencil, D3D12_RESOURCE_DESC& resource_desc)
 {
   resource_desc.Dimension          = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
   resource_desc.Alignment          = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
@@ -93,7 +93,7 @@ void D3D12_DepthStencil::GetResourceDesc(UINT width, UINT height, D3D12_RESOURCE
   resource_desc.Height             = height;
   resource_desc.DepthOrArraySize   = 1;
   resource_desc.MipLevels          = 1;
-  resource_desc.Format             = DXGI_FORMAT_D32_FLOAT;
+  resource_desc.Format             = with_stencil ? DXGI_FORMAT_D32_FLOAT_S8X24_UINT : DXGI_FORMAT_D32_FLOAT;
   resource_desc.SampleDesc.Count   = 1;
   resource_desc.SampleDesc.Quality = 0;
   resource_desc.Layout             = D3D12_TEXTURE_LAYOUT_UNKNOWN;

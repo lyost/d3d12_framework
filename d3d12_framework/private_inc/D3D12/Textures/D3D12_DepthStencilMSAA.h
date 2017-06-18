@@ -30,13 +30,17 @@ class D3D12_DepthStencilMSAA : public DepthStencilMSAA
     /// <param name="default_depth_clear">
     /// default value to use for clearing the depth stencil
     /// </param>
+    /// <param name="with_stencil">
+    /// true  if the a byte per pixel for the stencil should be part of the buffer
+    /// false if the buffer should be just depth data
+    /// </param>
     /// <returns>
     /// D3D12 depth stencil
     /// </returns>
     /// <exception cref="FrameworkException">
     /// Thrown when an error is encountered
     /// </exception>
-    static DepthStencilMSAA* Create(const GraphicsCore& graphics, UINT width, UINT height, UINT sample_count, UINT quality, float default_depth_clear);
+    static DepthStencilMSAA* Create(const GraphicsCore& graphics, UINT width, UINT height, UINT sample_count, UINT quality, float default_depth_clear, bool with_stencil);
 
     ~D3D12_DepthStencilMSAA();
 
@@ -88,10 +92,14 @@ class D3D12_DepthStencilMSAA : public DepthStencilMSAA
     /// <param name="quality">
     /// image quality level
     /// </param>
+    /// <param name="with_stencil">
+    /// true  if the a byte per pixel for the stencil should be part of the buffer
+    /// false if the buffer should be just depth data
+    /// </param>
     /// <param name="resource_desc">
     /// output paramenter of the resource description struct to fill in
     /// </param>
-    static void GetResourceDesc(UINT width, UINT height, UINT sample_count, UINT quality, D3D12_RESOURCE_DESC& resource_desc);
+    static void GetResourceDesc(UINT width, UINT height, UINT sample_count, UINT quality, bool with_stencil, D3D12_RESOURCE_DESC& resource_desc);
 
     /// <summary>
     /// D3D12 depth stencil resource

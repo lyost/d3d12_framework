@@ -100,6 +100,36 @@ void D3D12_RenderTargetViewConfig::EnableBlend(UINT index, bool enable_logic_op,
   blend.RenderTargetWriteMask           = (UINT8)write_mask;
 }
 
+void D3D12_RenderTargetViewConfig::DisableColorWrite(UINT index)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    ostringstream out;
+    out << "Index of " << index << "exceeds created size of " << m_num;
+    throw FrameworkException(out.str());
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  D3D12_RENDER_TARGET_BLEND_DESC& blend = m_desc.RenderTarget[index];
+  blend.RenderTargetWriteMask = 0;
+}
+
+void D3D12_RenderTargetViewConfig::EnableColorWrite(UINT index)
+{
+#ifdef VALIDATE_FUNCTION_ARGUMENTS
+  if (index >= m_num)
+  {
+    ostringstream out;
+    out << "Index of " << index << "exceeds created size of " << m_num;
+    throw FrameworkException(out.str());
+  }
+#endif /* VALIDATE_FUNCTION_ARGUMENTS */
+
+  D3D12_RENDER_TARGET_BLEND_DESC& blend = m_desc.RenderTarget[index];
+  blend.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+}
+
 UINT D3D12_RenderTargetViewConfig::GetNumRenderTargets() const
 {
   return m_num;

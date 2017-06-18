@@ -12,6 +12,7 @@ enum GraphicsDataFormat
   R32G32B32A32_FLOAT = 2,
   R32G32B32_FLOAT    = 6,
   R32G32_FLOAT       = 16,
+  D32_FLOAT_S8_UINT  = 20,
   R8B8G8A8_UNORM     = 28,
   D32_FLOAT          = 40,
   R32_FLOAT          = 41,

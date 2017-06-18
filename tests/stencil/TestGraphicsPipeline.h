@@ -99,6 +99,30 @@ class TestGraphicsPipeline
     void CreateDepthStencil(GraphicsCore& graphics);
 
     /// <summary>
+    /// Draws the shadow pass for the current frame
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    void DrawShadowPass(GraphicsCore& graphics, const RenderTarget& render_target);
+
+    /// <summary>
+    /// Draws the depth fail pass for the current frame
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    void DrawDepthFailPass(GraphicsCore& graphics, const RenderTarget& render_target);
+
+    /// <summary>
+    /// Draws the shadow pass for the current frame
+    /// </summary>
+    /// <param name="graphics">
+    /// core graphics interface
+    /// </param>
+    void DrawLitPass(GraphicsCore& graphics, const RenderTarget& render_target);
+
+    /// <summary>
     /// light source position
     /// </summary>
     DirectX::XMFLOAT3 m_light_pos;
@@ -124,9 +148,19 @@ class TestGraphicsPipeline
     RootSignature* m_root_sig;
 
     /// <summary>
-    /// graphics pipeline
+    /// graphics pipeline for the shadow pass
     /// </summary>
-    Pipeline* m_pipeline;
+    Pipeline* m_pipeline_shadow;
+
+    /// <summary>
+    /// graphics pipeline for the depth fail pass
+    /// </summary>
+    Pipeline* m_pipeline_depth_fail;
+
+    /// <summary>
+    /// graphics pipeline for the lit pass
+    /// </summary>
+    Pipeline* m_pipeline_lit;
 
     /// <summary>
     /// command list to draw with

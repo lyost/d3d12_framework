@@ -32,6 +32,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
   }
 
   Shader* vertex_shader;
+  Shader* pixel_shader_shadow;
   Shader* pixel_shader;
   InputLayout* input_layout;
   try
@@ -42,6 +43,17 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
   {
     ostringstream out;
     out << "Unable to load vertex shader:\n" << err.what();
+    log_print(out.str().c_str());
+    exit(1);
+  }
+  try
+  {
+    pixel_shader_shadow = Shader::LoadD3D12("stencil_ps_shadow.cso");
+  }
+  catch (const FrameworkException& err)
+  {
+    ostringstream out;
+    out << "Unable to load pixel shader:\n" << err.what();
     log_print(out.str().c_str());
     exit(1);
   }
@@ -77,16 +89,45 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
     DepthStencilConfig ds_config;
     ds_config.depth_enable        = true;
     ds_config.stencil_enable      = false;
-    ds_config.dsv_format          = D32_FLOAT;
+    ds_config.dsv_format          = D32_FLOAT_S8_UINT;
     ds_config.depth_write_enabled = true;
     ds_config.depth_comparison    = COMPARISON_FUNC_LESS_EQUAL;
     RenderTargetViewConfig* rtv_config = RenderTargetViewConfig::CreateD3D12(1);
     rtv_config->SetAlphaToCoverageEnable(false);
     rtv_config->SetIndependentBlendEnable(false);
     rtv_config->SetFormat(0, RTVF_R8G8B8A8_UNORM);
-    m_pipeline = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader, &ds_config, *rtv_config, *m_root_sig);
+    m_pipeline_shadow = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader_shadow, &ds_config, *rtv_config, *m_root_sig);
+    
+    ds_config.stencil_enable      = true;
+    ds_config.depth_write_enabled = false;
+    ds_config.stencil_read_mask   = 0xff;
+    ds_config.stencil_write_mask  = 0xff;
+    ds_config.stencil_front_face.stencil_fail = SOP_KEEP;
+    ds_config.stencil_front_face.depth_fail   = SOP_DECREMENT_ROLLOVER;
+    ds_config.stencil_front_face.pass         = SOP_KEEP;
+    ds_config.stencil_front_face.comparison   = COMPARISON_FUNC_ALWAYS;
+    ds_config.stencil_back_face.stencil_fail  = SOP_KEEP;
+    ds_config.stencil_back_face.depth_fail    = SOP_INCREMENT_ROLLOVER;
+    ds_config.stencil_back_face.pass          = SOP_KEEP;
+    ds_config.stencil_back_face.comparison    = COMPARISON_FUNC_ALWAYS;
+    rtv_config->DisableColorWrite(0);
+    m_pipeline_depth_fail = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader_shadow, &ds_config, *rtv_config, *m_root_sig);
+
+    ds_config.depth_write_enabled = true;
+    ds_config.stencil_front_face.stencil_fail = SOP_REPLACE;
+    ds_config.stencil_front_face.depth_fail   = SOP_REPLACE;
+    ds_config.stencil_front_face.pass         = SOP_REPLACE;
+    ds_config.stencil_front_face.comparison   = COMPARISON_FUNC_EQUAL;
+    ds_config.stencil_back_face.stencil_fail  = SOP_REPLACE;
+    ds_config.stencil_back_face.depth_fail    = SOP_REPLACE;
+    ds_config.stencil_back_face.pass          = SOP_REPLACE;
+    ds_config.stencil_back_face.comparison    = COMPARISON_FUNC_EQUAL;
+    rtv_config->EnableColorWrite(0);
+    m_pipeline_lit = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader, &ds_config, *rtv_config, *m_root_sig);
+
     delete rtv_config;
     delete input_layout;
+    delete pixel_shader_shadow;
     delete pixel_shader;
     delete vertex_shader;
   }
@@ -100,7 +141,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
 
   try
   {
-    m_command_list = CommandList::CreateD3D12Direct(graphics, m_pipeline);
+    m_command_list = CommandList::CreateD3D12Direct(graphics, m_pipeline_lit);
   }
   catch (const FrameworkException& err)
   {
@@ -182,7 +223,9 @@ TestGraphicsPipeline::~TestGraphicsPipeline()
   delete m_constant_buffer_model;
   delete m_vert_array;
   delete m_command_list;
-  delete m_pipeline;
+  delete m_pipeline_shadow;
+  delete m_pipeline_depth_fail;
+  delete m_pipeline_lit;
   delete m_root_sig;
 }
 
@@ -237,54 +280,9 @@ void TestGraphicsPipeline::Draw(GraphicsCore& graphics)
   try
   {
     const RenderTarget& current_render_target = graphics.GetBackBuffer().GetCurrentRenderTarget();
-    m_command_list->Reset(m_pipeline);
-    m_command_list->SetRootSignature(*m_root_sig);
-    m_command_list->RSSetViewport(graphics.GetDefaultViewport());
-    m_command_list->RSSetScissorRect(m_scissor_rect);
-
-    m_command_list->SetConstantBuffer(2, *m_constant_buffer_lighting);
-
-    XMFLOAT3 pos = m_model->GetWorldPos();
-    XMMATRIX tmp = XMMatrixTranslation(pos.x, pos.y, pos.z);
-    m_constant_buffer_model->Upload(&tmp, 0, sizeof(tmp));
-    tmp = XMMatrixIdentity();
-    m_constant_buffer_occluder->Upload(&tmp, 0, sizeof(tmp));
-
-    m_camera->GetView(tmp);
-    m_constant_buffer_model->Upload(   &tmp, sizeof(tmp), sizeof(tmp));
-    m_constant_buffer_occluder->Upload(&tmp, sizeof(tmp), sizeof(tmp));
-
-    m_camera->GetProjection(tmp);
-    m_constant_buffer_model->Upload(   &tmp, sizeof(tmp) * 2, sizeof(tmp));
-    m_constant_buffer_occluder->Upload(&tmp, sizeof(tmp) * 2, sizeof(tmp));
-
-    m_command_list->SetHeapArray(*m_heap_array);
-
-    float clear_color[4] = { .3f, .3f, .3f, 1 };
-    m_command_list->PrepRenderTarget(current_render_target);
-    m_command_list->OMSetRenderTarget(current_render_target, *m_depth_stencil);
-    m_command_list->ClearRenderTarget(current_render_target, clear_color);
-    m_command_list->ClearDepthStencil(*m_depth_stencil, 1);
-
-    // draw test model
-    m_command_list->SetConstantBuffer(1, *m_constant_buffer_model);
-    m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_model->GetTexture());
-    m_vert_array->Set(0, *m_model->GetVertexBuffer());
-    const IndexBuffer16* index_buffer = m_model->GetIndexBuffer();
-    m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
-    m_command_list->IASetVertexBuffers(*m_vert_array);
-    m_command_list->IASetIndexBuffer(*index_buffer);
-    m_command_list->DrawIndexedInstanced(index_buffer->GetNumIndices(), 1, 0);
-
-    // draw occluder
-    m_command_list->SetConstantBuffer(1, *m_constant_buffer_occluder);
-    m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_occluder->GetTexture());
-    m_vert_array->Set(0, *m_occluder->GetVertexBuffer());
-    index_buffer = m_occluder->GetIndexBuffer();
-    m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
-    m_command_list->IASetVertexBuffers(*m_vert_array);
-    m_command_list->IASetIndexBuffer(*index_buffer);
-    m_command_list->DrawIndexedInstanced(index_buffer->GetNumIndices(), 1, 0);
+    DrawShadowPass(graphics, current_render_target);
+    DrawDepthFailPass(graphics, current_render_target);
+    DrawLitPass(graphics, current_render_target);
 
     m_command_list->RenderTargetToPresent(current_render_target);
     m_command_list->Close();
@@ -317,7 +315,7 @@ void TestGraphicsPipeline::CreateDepthStencil(GraphicsCore& graphics)
 
   try
   {
-    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1);
+    m_depth_stencil = DepthStencil::CreateD3D12(graphics, (UINT)full_viewport.width, (UINT)full_viewport.height, 1, true);
   }
   catch (const FrameworkException& err)
   {
@@ -326,4 +324,93 @@ void TestGraphicsPipeline::CreateDepthStencil(GraphicsCore& graphics)
     log_print(out.str().c_str());
     exit(1);
   }
+}
+
+void TestGraphicsPipeline::DrawShadowPass(GraphicsCore& graphics, const RenderTarget& render_target)
+{
+  m_command_list->Reset(m_pipeline_shadow);
+  m_command_list->SetRootSignature(*m_root_sig);
+  m_command_list->RSSetViewport(graphics.GetDefaultViewport());
+  m_command_list->RSSetScissorRect(m_scissor_rect);
+
+  m_command_list->SetConstantBuffer(2, *m_constant_buffer_lighting);
+
+  XMFLOAT3 pos = m_model->GetWorldPos();
+  XMMATRIX tmp = XMMatrixTranslation(pos.x, pos.y, pos.z);
+  m_constant_buffer_model->Upload(&tmp, 0, sizeof(tmp));
+  tmp = XMMatrixIdentity();
+  m_constant_buffer_occluder->Upload(&tmp, 0, sizeof(tmp));
+
+  m_camera->GetView(tmp);
+  m_constant_buffer_model->Upload(&tmp, sizeof(tmp), sizeof(tmp));
+  m_constant_buffer_occluder->Upload(&tmp, sizeof(tmp), sizeof(tmp));
+
+  m_camera->GetProjection(tmp);
+  m_constant_buffer_model->Upload(&tmp, sizeof(tmp) * 2, sizeof(tmp));
+  m_constant_buffer_occluder->Upload(&tmp, sizeof(tmp) * 2, sizeof(tmp));
+
+  m_command_list->SetHeapArray(*m_heap_array);
+
+  float clear_color[4] = { .3f, .3f, .3f, 1 };
+  m_command_list->PrepRenderTarget(render_target);
+  m_command_list->OMSetRenderTarget(render_target, *m_depth_stencil);
+  m_command_list->ClearRenderTarget(render_target, clear_color);
+  m_command_list->ClearDepthStencil(*m_depth_stencil, 1);
+
+  // draw test model
+  m_command_list->SetConstantBuffer(1, *m_constant_buffer_model);
+  m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_model->GetTexture());
+  m_vert_array->Set(0, *m_model->GetVertexBuffer());
+  const IndexBuffer16* index_buffer = m_model->GetIndexBuffer();
+  m_command_list->IASetTopology(IA_TOPOLOGY_TRIANGLE_LIST);
+  m_command_list->IASetVertexBuffers(*m_vert_array);
+  m_command_list->IASetIndexBuffer(*index_buffer);
+  m_command_list->DrawIndexedInstanced(index_buffer->GetNumIndices(), 1, 0);
+
+  // draw occluder
+  m_command_list->SetConstantBuffer(1, *m_constant_buffer_occluder);
+  m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_occluder->GetTexture());
+  m_vert_array->Set(0, *m_occluder->GetVertexBuffer());
+  index_buffer = m_occluder->GetIndexBuffer();
+  m_command_list->IASetVertexBuffers(*m_vert_array);
+  m_command_list->IASetIndexBuffer(*index_buffer);
+  m_command_list->DrawIndexedInstanced(index_buffer->GetNumIndices(), 1, 0);
+}
+
+void TestGraphicsPipeline::DrawDepthFailPass(GraphicsCore& graphics, const RenderTarget& render_target)
+{
+  m_command_list->SetPipeline(*m_pipeline_depth_fail);
+
+  // draw shadow volume
+  const ShadowVolume* shadow_volume = m_occluder->GetShadowVolume();
+  m_command_list->SetConstantBuffer(1, *m_constant_buffer_occluder);
+  m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_occluder->GetTexture());
+  m_vert_array->Set(0, *shadow_volume->GetVertexBuffer());
+  const IndexBuffer16* index_buffer = shadow_volume->GetIndexBuffer();
+  m_command_list->IASetVertexBuffers(*m_vert_array);
+  m_command_list->IASetIndexBuffer(*index_buffer);
+  m_command_list->DrawIndexedInstanced(index_buffer->GetNumIndices(), 1, 0);
+}
+
+void TestGraphicsPipeline::DrawLitPass(GraphicsCore& graphics, const RenderTarget& render_target)
+{
+  m_command_list->SetPipeline(*m_pipeline_lit);
+
+  // draw test model
+  m_command_list->SetConstantBuffer(1, *m_constant_buffer_model);
+  m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_model->GetTexture());
+  m_vert_array->Set(0, *m_model->GetVertexBuffer());
+  const IndexBuffer16* index_buffer = m_model->GetIndexBuffer();
+  m_command_list->IASetVertexBuffers(*m_vert_array);
+  m_command_list->IASetIndexBuffer(*index_buffer);
+  m_command_list->DrawIndexedInstanced(index_buffer->GetNumIndices(), 1, 0);
+
+  // draw occluder
+  m_command_list->SetConstantBuffer(1, *m_constant_buffer_occluder);
+  m_command_list->SetTextureAsStartOfDescriptorTable(0, *m_occluder->GetTexture());
+  m_vert_array->Set(0, *m_occluder->GetVertexBuffer());
+  index_buffer = m_occluder->GetIndexBuffer();
+  m_command_list->IASetVertexBuffers(*m_vert_array);
+  m_command_list->IASetIndexBuffer(*index_buffer);
+  m_command_list->DrawIndexedInstanced(index_buffer->GetNumIndices(), 1, 0);
 }

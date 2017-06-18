@@ -50,7 +50,7 @@ class RenderTargetViewConfig
     /// Sets the format of the specified entry's render target view
     /// </summary>
     /// <param name="index">
-    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS]
+    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS)
     /// </param>
     /// <param name="format">
     /// byte format of the render target view
@@ -61,7 +61,7 @@ class RenderTargetViewConfig
     /// Disables blending for the specified entry's render target view
     /// </summary>
     /// <param name="index">
-    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS]
+    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS)
     /// </param>
     virtual void DisableBlend(UINT index) = 0;
 
@@ -69,7 +69,7 @@ class RenderTargetViewConfig
     /// Enables blending for the specified entry's render target view with the associated configuration
     /// </summary>
     /// <param name="index">
-    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS]
+    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS)
     /// </param>
     /// <param name="enable_logic_op">
     /// true  to enable logic operation
@@ -101,6 +101,22 @@ class RenderTargetViewConfig
     /// </param>
     virtual void EnableBlend(UINT index, bool enable_logic_op, LogicOp logic_op, BlendModes src, BlendModes dst, BlendOp blend_op, BlendModes src_alpha, BlendModes dst_alpha , BlendOp alpha_op,
       COLOR_WRITE_MODE write_mask) = 0;
+
+    /// <summary>
+    /// Disables writing color information to the render target
+    /// </summary>
+    /// <param name="index">
+    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS)
+    /// </param>
+    virtual void DisableColorWrite(UINT index) = 0;
+
+    /// <summary>
+    /// Enables writing color information to the render target
+    /// </summary>
+    /// <param name="index">
+    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS)
+    /// </param>
+    virtual void EnableColorWrite(UINT index) = 0;
 
   protected:
     RenderTargetViewConfig();

@@ -15,13 +15,13 @@ ShadowVolume::ShadowVolume(GraphicsCore& graphics, DirectX::XMFLOAT3 light_pos, 
   Vertex_PositionTextureUVNormal vertices[8];
   for (int i = 0; i < 4; i++)
   {
-    vertices[i].pos = quad[i].pos;
+    vertices[i].pos    = quad[i].pos;
 
     XMFLOAT3 dir = quad[i].pos - light_pos;
     XMVECTOR dir_tmp = XMLoadFloat3(&dir);
     XMVector3Normalize(dir_tmp);
     XMStoreFloat3(&dir, dir_tmp);
-    vertices[i + 4].pos = quad[i].pos + (dir * SHADOW_LENGTH);
+    vertices[i + 4].pos    = quad[i].pos + (dir * SHADOW_LENGTH);
   }
   try
   {

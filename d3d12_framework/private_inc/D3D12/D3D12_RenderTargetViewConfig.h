@@ -100,6 +100,22 @@ class D3D12_RenderTargetViewConfig : public RenderTargetViewConfig
       COLOR_WRITE_MODE write_mask);
 
     /// <summary>
+    /// Disables writing color information to the render target
+    /// </summary>
+    /// <param name="index">
+    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS)
+    /// </param>
+    void DisableColorWrite(UINT index);
+
+    /// <summary>
+    /// Enables writing color information to the render target
+    /// </summary>
+    /// <param name="index">
+    /// index of the render target view to set the configuration of, must be in the range [0,MAX_RENDER_TARGETS)
+    /// </param>
+    void EnableColorWrite(UINT index);
+
+    /// <summary>
     /// Retrieves number of supported render targets
     /// </summary>
     /// <returns>
