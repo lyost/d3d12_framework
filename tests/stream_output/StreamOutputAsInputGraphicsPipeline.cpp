@@ -51,7 +51,7 @@ StreamOutputAsInputGraphicsPipeline::StreamOutputAsInputGraphicsPipeline(Graphic
     rtv_config->SetFormat(0, RTVF_R8G8B8A8_UNORM);
 
     m_so_pipeline = Pipeline::CreateD3D12(graphics, *normal_pipeline.m_input_layout, TOPOLOGY_TRIANGLE, *m_so_vertex_shader, NULL, *normal_pipeline.m_pixel_shader, &ds_config, *rtv_config, *m_so_root_sig,
-      1, 0, true);
+      CULL_BACK, 1, 0, true);
     delete rtv_config;
   }
   catch (const FrameworkException& err)

@@ -4,6 +4,7 @@
 class GraphicsCore;
 
 #include "Graphics/GraphicsCore.h"
+#include "Graphics/CullMode.h"
 #include "Graphics/InputLayout.h"
 #include "Graphics/Topology.h"
 #include "Graphics/Shader.h"
@@ -50,6 +51,9 @@ class Pipeline
     /// <param name="root_sig">
     /// root signature
     /// </param>
+    /// <param name="cull_mode">
+    /// which type of triangles should be culled
+    /// </param>
     /// <param name="ms_count">
     /// number of multisamples per pixel.  1 means no multisampling
     /// </param>
@@ -67,8 +71,8 @@ class Pipeline
     /// Thrown when an error is encountered in creating the instance
     /// </exception>
     static Pipeline* CreateD3D12(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const StreamOutputConfig* stream_output,
-      const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count = 1, UINT ms_quality = 0,
-      bool wireframe = false);
+      const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, CullMode cull_mode = CULL_BACK, UINT ms_count = 1,
+      UINT ms_quality = 0, bool wireframe = false);
 
     /// <summary>
     /// Creates a graphics pipeline with the specified configuation, and with rasterizer state set to defaults, multisampling disabled, and only the vertex, hull, domain, and pixel shaders active
@@ -111,6 +115,9 @@ class Pipeline
     /// <param name="ms_count">
     /// number of multisamples per pixel.  1 means no multisampling
     /// </param>
+    /// <param name="cull_mode">
+    /// which type of triangles should be culled
+    /// </param>
     /// <param name="ms_quality">
     /// multisampling quality
     /// </param>
@@ -126,7 +133,7 @@ class Pipeline
     /// </exception>
     static Pipeline* CreateD3D12(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
       const Shader& domain_shader, const StreamOutputConfig* stream_output, const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config, const RenderTargetViewConfig& rtv_config,
-      const RootSignature& root_sig, UINT ms_count = 1, UINT ms_quality = 0, bool wireframe = false);
+      const RootSignature& root_sig, CullMode cull_mode = CULL_BACK, UINT ms_count = 1, UINT ms_quality = 0, bool wireframe = false);
 
     /// <summary>
     /// Creates a graphics pipeline with the specified configuation, and with rasterizer state set to defaults, multisampling disabled, and only the vertex, geometry, and pixel shaders active
@@ -163,6 +170,9 @@ class Pipeline
     /// <param name="root_sig">
     /// root signature
     /// </param>
+    /// <param name="cull_mode">
+    /// which type of triangles should be culled
+    /// </param>
     /// <param name="ms_count">
     /// number of multisamples per pixel.  1 means no multisampling
     /// </param>
@@ -181,7 +191,7 @@ class Pipeline
     /// </exception>
     static Pipeline* CreateD3D12(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& geometry_shader,
       const StreamOutputConfig* stream_output, const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig,
-      UINT ms_count = 1, UINT ms_quality = 0, bool wireframe = false);
+      CullMode cull_mode = CULL_BACK, UINT ms_count = 1, UINT ms_quality = 0, bool wireframe = false);
 
     /// <summary>
     /// Creates a graphics pipeline with the specified configuation, and with rasterizer state set to defaults, multisampling disabled, and only the vertex, hull, domain, geometry, and pixel shaders
@@ -225,6 +235,9 @@ class Pipeline
     /// <param name="root_sig">
     /// root signature
     /// </param>
+    /// <param name="cull_mode">
+    /// which type of triangles should be culled
+    /// </param>
     /// <param name="ms_count">
     /// number of multisamples per pixel.  1 means no multisampling
     /// </param>
@@ -243,7 +256,7 @@ class Pipeline
     /// </exception>
     static Pipeline* CreateD3D12(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
       const Shader& domain_shader, const Shader& geometry_shader, const StreamOutputConfig* stream_output, const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config,
-      const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count = 1, UINT ms_quality = 0, bool wireframe = false);
+      const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, CullMode cull_mode = CULL_BACK, UINT ms_count = 1, UINT ms_quality = 0, bool wireframe = false);
 
     /// <summary>
     /// Creates a graphics pipeline without rasterization

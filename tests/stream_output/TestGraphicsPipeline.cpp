@@ -115,7 +115,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
     stream_output->SetEntry(0, 0, SEM_POSITION, 0, 0, 4, 0, sizeof(XMFLOAT4)); // just want the raw position, not the transformed that gets passed to the pixel shader as well
 
     m_pipeline = Pipeline::CreateD3D12(graphics, *m_input_layout, TOPOLOGY_PATCH, *m_vertex_shader, *m_hull_shader, *m_domain_shader, *m_geometry_shader, stream_output, *m_pixel_shader,
-      &ds_config, *rtv_config, *m_root_sig, 1, 0, true);
+      &ds_config, *rtv_config, *m_root_sig, CULL_BACK, 1, 0, true);
 
     delete rtv_config;
   }

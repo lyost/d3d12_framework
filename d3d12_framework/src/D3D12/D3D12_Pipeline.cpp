@@ -60,7 +60,8 @@ void dump_pso_desc(const D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc)
 #endif /* 0 */
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const StreamOutputConfig* stream_output,
-  const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe)
+  const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, CullMode cull_mode, UINT ms_count, UINT ms_quality,
+  bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -82,7 +83,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, depth_stencil_config, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, ms_count, ms_quality, wireframe, stream_output);
+  CreateDefaultPipelineDesc(desc, layout, depth_stencil_config, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, cull_mode, ms_count, ms_quality, wireframe, stream_output);
   desc.VS = vs.GetShader();
   desc.PS = ps.GetShader();
   desc.SampleMask                       = UINT_MAX;
@@ -101,7 +102,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
   const Shader& domain_shader, const StreamOutputConfig* stream_output, const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config, const RenderTargetViewConfig& rtv_config,
-  const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe)
+  const RootSignature& root_sig, CullMode cull_mode, UINT ms_count, UINT ms_quality, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -138,7 +139,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, depth_stencil_config, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, ms_count, ms_quality, wireframe, stream_output);
+  CreateDefaultPipelineDesc(desc, layout, depth_stencil_config, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, cull_mode, ms_count, ms_quality, wireframe, stream_output);
   desc.VS                               = vs.GetShader();
   desc.HS                               = hs.GetShader();
   desc.DS                               = ds.GetShader();
@@ -159,7 +160,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& geometry_shader,
   const StreamOutputConfig* stream_output, const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config, const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig,
-  UINT ms_count, UINT ms_quality, bool wireframe)
+  CullMode cull_mode, UINT ms_count, UINT ms_quality, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -186,7 +187,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, depth_stencil_config, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, ms_count, ms_quality, wireframe, stream_output);
+  CreateDefaultPipelineDesc(desc, layout, depth_stencil_config, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, cull_mode, ms_count, ms_quality, wireframe, stream_output);
   desc.VS                               = vs.GetShader();
   desc.GS                               = gs.GetShader();
   desc.PS                               = ps.GetShader();
@@ -206,7 +207,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 
 D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputLayout& input_layout, Topology topology, const Shader& vertex_shader, const Shader& hull_shader,
   const Shader& domain_shader, const Shader& geometry_shader, const StreamOutputConfig* stream_output, const Shader& pixel_shader, const DepthStencilConfig* depth_stencil_config,
-  const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, UINT ms_count, UINT ms_quality, bool wireframe)
+  const RenderTargetViewConfig& rtv_config, const RootSignature& root_sig, CullMode cull_mode, UINT ms_count, UINT ms_quality, bool wireframe)
 {
   const D3D12_Core&                   core   = (const D3D12_Core&)graphics_core;
   const D3D12_InputLayout&            layout = (const D3D12_InputLayout&)input_layout;
@@ -248,7 +249,7 @@ D3D12_Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const 
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
   
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, depth_stencil_config, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, ms_count, ms_quality, wireframe, stream_output);
+  CreateDefaultPipelineDesc(desc, layout, depth_stencil_config, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, cull_mode, ms_count, ms_quality, wireframe, stream_output);
   desc.VS                               = vs.GetShader();
   desc.HS                               = hs.GetShader();
   desc.DS                               = ds.GetShader();
@@ -290,7 +291,7 @@ Pipeline* D3D12_Pipeline::Create(const GraphicsCore& graphics_core, const InputL
 #endif /* VALIDATE_FUNCTION_ARGUMENTS */
 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC desc = {};
-  CreateDefaultPipelineDesc(desc, layout, NULL, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, 1, 0, false, stream_output);
+  CreateDefaultPipelineDesc(desc, layout, NULL, rtv, root, (D3D12_PRIMITIVE_TOPOLOGY_TYPE)topology, CULL_BACK, 1, 0, false, stream_output);
   desc.VS = vs.GetShader();
 
   ID3D12PipelineState* pipeline = NULL;
@@ -321,7 +322,8 @@ ID3D12PipelineState* D3D12_Pipeline::GetPipeline() const
 }
 
 void D3D12_Pipeline::CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DESC& desc, const D3D12_InputLayout& layout, const DepthStencilConfig* depth_stencil_config,
-  const D3D12_RenderTargetViewConfig& rtv, const D3D12_RootSignature& root, D3D12_PRIMITIVE_TOPOLOGY_TYPE topology, UINT ms_count, UINT ms_quality, bool wireframe, const StreamOutputConfig* stream_output)
+  const D3D12_RenderTargetViewConfig& rtv, const D3D12_RootSignature& root, D3D12_PRIMITIVE_TOPOLOGY_TYPE topology, CullMode cull_mode, UINT ms_count, UINT ms_quality, bool wireframe,
+  const StreamOutputConfig* stream_output)
 {
 #ifdef VALIDATE_FUNCTION_ARGUMENTS
   if (layout.GetNextIndex() != layout.GetNum())
@@ -342,7 +344,7 @@ void D3D12_Pipeline::CreateDefaultPipelineDesc(D3D12_GRAPHICS_PIPELINE_STATE_DES
   desc.InputLayout.pInputElementDescs        = layout.GetLayout();
   desc.InputLayout.NumElements               = layout.GetNum();
   desc.RasterizerState.FillMode              = wireframe ? D3D12_FILL_MODE_WIREFRAME : D3D12_FILL_MODE_SOLID;
-  desc.RasterizerState.CullMode              = D3D12_CULL_MODE_BACK;
+  desc.RasterizerState.CullMode              = (D3D12_CULL_MODE)cull_mode;
   desc.RasterizerState.FrontCounterClockwise = false;
   desc.RasterizerState.DepthBias             = D3D12_DEFAULT_DEPTH_BIAS;
   desc.RasterizerState.DepthBiasClamp        = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;

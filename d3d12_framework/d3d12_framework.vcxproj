@@ -337,6 +337,7 @@
     <ClInclude Include="public_inc\Graphics\CommandList.h" />
     <ClInclude Include="public_inc\Graphics\CommandListBundle.h" />
     <ClInclude Include="public_inc\Graphics\CompareFuncs.h" />
+    <ClInclude Include="public_inc\Graphics\CullMode.h" />
     <ClInclude Include="public_inc\Graphics\GraphicsCore.h" />
     <ClInclude Include="public_inc\Graphics\GraphicsDataFormat.h" />
     <ClInclude Include="public_inc\Graphics\HeapArray.h" />

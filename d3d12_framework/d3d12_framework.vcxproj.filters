@@ -794,5 +794,8 @@
     <ClInclude Include="private_inc\D3D12\Buffers\D3D12_VertexBufferGPU_PositionTextureUVNormal.h">
       <Filter>private_inc\D3D12\Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="public_inc\Graphics\CullMode.h">
+      <Filter>public_inc\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

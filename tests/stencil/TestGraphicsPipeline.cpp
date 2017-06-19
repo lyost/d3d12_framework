@@ -111,7 +111,7 @@ TestGraphicsPipeline::TestGraphicsPipeline(GraphicsCore& graphics)
     ds_config.stencil_back_face.pass          = SOP_KEEP;
     ds_config.stencil_back_face.comparison    = COMPARISON_FUNC_ALWAYS;
     rtv_config->DisableColorWrite(0);
-    m_pipeline_depth_fail = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader_shadow, &ds_config, *rtv_config, *m_root_sig);
+    m_pipeline_depth_fail = Pipeline::CreateD3D12(graphics, *input_layout, TOPOLOGY_TRIANGLE, *vertex_shader, NULL, *pixel_shader_shadow, &ds_config, *rtv_config, *m_root_sig, CULL_NONE);
 
     ds_config.depth_write_enabled = true;
     ds_config.stencil_front_face.stencil_fail = SOP_REPLACE;
