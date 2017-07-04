@@ -1,0 +1,4 @@
+This framework and its various test programs are an exercise I'm doing for learning Direct3D12.  The journal discussing this can be found at https://www.gamedev.net/blogs/blog/1291-lyosts-journal/.  The goals of this project are:
+# Get hands on experience with Direct3D12.
+# Build a framework that uses compile time type checking to try to avoid invalid operations.
+# A natural extension of the previous point is that inclusion of d3d12 headers should be restricted to inside the framework and the consuming application should not include d3d12 headers or have them included indirectly from the framework's public headers.
